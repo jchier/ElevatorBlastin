@@ -1,0 +1,69 @@
+[gd_scene format=3 uid="uid://c2rgnnuoe4mpu"]
+
+[ext_resource type="Script" uid="uid://b2dvl12tkj5s6" path="res://entities/player/player.gd" id="1_abrql"]
+[ext_resource type="Texture2D" uid="uid://781bkm5o7opp" path="res://entities/player/player-medium.png" id="1_symyc"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_oark8"]
+radius = 8.0
+height = 26.0
+
+[node name="Player" type="CharacterBody2D" unique_id=834976139]
+script = ExtResource("1_abrql")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=865724498]
+texture_filter = 1
+position = Vector2(3, 0)
+texture = ExtResource("1_symyc")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1143118710]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=554777545]
+shape = SubResource("CapsuleShape2D_oark8")
+
+[node name="CoyoteTimer" type="Timer" parent="." unique_id=199497401]
+wait_time = 0.12
+one_shot = true
+
+[node name="JumpBufferTimer" type="Timer" parent="." unique_id=1802234213]
+wait_time = 0.1
+one_shot = true
+
+[node name="Left_HeadNudge" type="RayCast2D" parent="." unique_id=1237240158]
+position = Vector2(-7, -7)
+target_position = Vector2(0, -2)
+hit_from_inside = true
+
+[node name="Left_HeadNudge2" type="RayCast2D" parent="." unique_id=536797746]
+position = Vector2(-5, -7)
+target_position = Vector2(0, -2)
+hit_from_inside = true
+
+[node name="Right_HeadNudge" type="RayCast2D" parent="." unique_id=1405691314]
+position = Vector2(7, -7)
+target_position = Vector2(0, -2)
+hit_from_inside = true
+
+[node name="Right_HeadNudge2" type="RayCast2D" parent="." unique_id=625796264]
+position = Vector2(5, -7)
+target_position = Vector2(0, -2)
+hit_from_inside = true
+
+[node name="Right_LedgeHop" type="RayCast2D" parent="." unique_id=1656320833]
+position = Vector2(7, 6)
+target_position = Vector2(2, 0)
+hit_from_inside = true
+
+[node name="Right_LedgeHop2" type="RayCast2D" parent="." unique_id=1172898688]
+position = Vector2(7, 2)
+target_position = Vector2(2, 0)
+hit_from_inside = true
+
+[node name="Left_LedgeHop" type="RayCast2D" parent="." unique_id=45225844]
+position = Vector2(-7, 6)
+target_position = Vector2(-2, 0)
+hit_from_inside = true
+
+[node name="Left_LedgeHop2" type="RayCast2D" parent="." unique_id=1811661079]
+position = Vector2(-7, 2)
+target_position = Vector2(-2, 0)
+hit_from_inside = true
