@@ -27,6 +27,8 @@ var gravity: float = 12.0
 var fall_gravity = 1124
 
 
+func ready
+
 
 func _physics_process(delta: float) -> void:
 	

@@ -53,6 +53,13 @@ jump={
 ]
 }
 
+[layer_names]
+
+2d_physics/layer_1="ground"
+2d_physics/layer_2="bumper"
+2d_physics/layer_3="player"
+2d_physics/layer_4="enemy"
+
 [physics]
 
 3d/physics_engine="Jolt Physics"
@@ -60,4 +67,3 @@ jump={
 [rendering]
 
 rendering_device/driver.windows="d3d12"
-textures/default_filters/use_nearest_mipmap_filter=true
