@@ -1,5 +1,6 @@
 [gd_scene format=4 uid="uid://cfyd878hm8vrp"]
 
+[ext_resource type="PackedScene" uid="uid://cptp4opi28g3m" path="res://entities/elevator/elevator.tscn" id="1_6fnve"]
 [ext_resource type="Texture2D" uid="uid://bgbmv5jwinb3m" path="res://level_assets/tiles_1.png" id="1_64fjj"]
 [ext_resource type="PackedScene" uid="uid://c2rgnnuoe4mpu" path="res://entities/player/player.tscn" id="1_rfpkf"]
 
@@ -178,6 +179,9 @@ terrain_set_0/terrain_0/color = Color(0.94394726, 0.8705242, 0.8288316, 1)
 sources/0 = SubResource("TileSetAtlasSource_rfpkf")
 
 [node name="TestArea" type="Node2D" unique_id=1920541780]
+
+[node name="Elevator" parent="." unique_id=1398215485 instance=ExtResource("1_6fnve")]
+position = Vector2(49, 0)
 
 [node name="Player" parent="." unique_id=834976139 instance=ExtResource("1_rfpkf")]
 position = Vector2(5, -33)

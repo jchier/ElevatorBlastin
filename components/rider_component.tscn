@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://b3rjse2q2hp5v"]
+
+[ext_resource type="Script" uid="uid://bo1h1ktye3rdu" path="res://components/rider_component.gd" id="1_70ahn"]
+
+[node name="RiderComponent" type="Area2D" unique_id=145831594]
+script = ExtResource("1_70ahn")

@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://byct6l41li67v"]
+
+[ext_resource type="Script" uid="uid://clna7b1085geo" path="res://components/occupant_component.gd" id="1_36ufb"]
+
+[node name="Occupant_Area" type="Area2D" unique_id=313727146]
+collision_layer = 2
+script = ExtResource("1_36ufb")

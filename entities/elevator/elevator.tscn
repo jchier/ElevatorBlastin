@@ -1,30 +1,26 @@
 [gd_scene format=3 uid="uid://cptp4opi28g3m"]
 
 [ext_resource type="Script" uid="uid://k5hk33gsmhnt" path="res://entities/elevator/elevator.gd" id="1_3c2c0"]
+[ext_resource type="PackedScene" uid="uid://byct6l41li67v" path="res://components/occupant_component.tscn" id="2_rtcbl"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j5ip0"]
+size = Vector2(18, 15)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oark8"]
+size = Vector2(30, 2)
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_jr1kj"]
 width = 30
 height = 40
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_jr1kj"]
-size = Vector2(16, 29)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_oark8"]
-size = Vector2(30, 2)
-
 [node name="Elevator" type="CharacterBody2D" unique_id=1398215485]
 script = ExtResource("1_3c2c0")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=356011068]
-texture = SubResource("NoiseTexture2D_jr1kj")
-offset = Vector2(0, -20)
+[node name="Occupant_Area" parent="." unique_id=313727146 instance=ExtResource("2_rtcbl")]
 
-[node name="Occupant_Area" type="Area2D" parent="." unique_id=1459139026]
-collision_layer = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Occupant_Area" unique_id=1250918054]
-position = Vector2(0, -15.5)
-shape = SubResource("RectangleShape2D_jr1kj")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Occupant_Area" unique_id=1510941172]
+position = Vector2(0, -7.5)
+shape = SubResource("RectangleShape2D_j5ip0")
 
 [node name="Bumper_Top" type="Area2D" parent="." unique_id=242653965]
 position = Vector2(0, -40)
@@ -38,3 +34,7 @@ collision_layer = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Bumper_Bottom" unique_id=596138774]
 shape = SubResource("RectangleShape2D_oark8")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=356011068]
+texture = SubResource("NoiseTexture2D_jr1kj")
+offset = Vector2(0, -20)
