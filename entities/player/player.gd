@@ -13,6 +13,7 @@ extends CharacterBody2D
 @onready var right_ledge_hop_2: RayCast2D = $Right_LedgeHop2
 @onready var left_ledge_hop: RayCast2D = $Left_LedgeHop
 @onready var left_ledge_hop_2: RayCast2D = $Left_LedgeHop2
+@onready var rider_component: Area2D = $RiderComponent
 
 var speed_multiplier = 30.0
 var jump_multiplier = -30.0
@@ -30,7 +31,7 @@ var _current_elevator: Elevator = null
 var _current_occupancy: Occupant_Component = null
 
 func _ready():
-	area_entered.connect(_on_area_entered)
+	rider_component.set_current_occupancy.connect(_set_current_occupancy)
 
 
 func _physics_process(delta: float) -> void:
@@ -55,15 +56,14 @@ func _physics_process(delta: float) -> void:
 	if was_on_floor and not is_on_floor() and velocity.y > 0:
 		coyote_timer.start()
 	
-	if _current_elevator:	
+	if _current_occupancy:	
 		if Input.is_action_pressed("up"):
 			_current_occupancy.change_direction(Global.UP)
 		if Input.is_action_pressed("down"):
-			pass
+			_current_occupancy.change_direction(Global.DOWN)
 		
-func _on_area_entered(other_area: Area2D):
-	if other_area is not Occupant_Component:
-		_current_occupancy = other_area
+func _set_current_occupancy(occupancy: Occupant_Component):
+		_current_occupancy = occupancy
 		
 	
 	
