@@ -13,11 +13,15 @@ size = Vector2(18, 15)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jr1kj"]
 size = Vector2(30, 40)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oark8"]
+size = Vector2(30, 2)
+
 [node name="Elevator" type="CharacterBody2D" unique_id=1398215485]
 collision_layer = 0
 script = ExtResource("1_3c2c0")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=356011068]
+z_index = 1
 texture = SubResource("NoiseTexture2D_jr1kj")
 offset = Vector2(0, -20)
 
@@ -36,3 +40,11 @@ shape = SubResource("RectangleShape2D_jr1kj")
 [node name="WaitTimer" type="Timer" parent="." unique_id=590063343]
 wait_time = 3.0
 one_shot = true
+
+[node name="Floor_Area" type="Area2D" parent="." unique_id=1598471896]
+collision_layer = 64
+collision_mask = 128
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor_Area" unique_id=1053187207]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_oark8")

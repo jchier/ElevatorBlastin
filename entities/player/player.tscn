@@ -18,6 +18,7 @@ collision_mask = 17
 script = ExtResource("1_abrql")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=865724498]
+z_index = 2
 texture_filter = 1
 position = Vector2(3, 0)
 texture = ExtResource("1_symyc")

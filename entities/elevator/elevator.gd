@@ -1,10 +1,9 @@
 class_name Elevator
 
 extends CharacterBody2D
-@onready var bumper_top: Area2D = $Bumper_Top
-@onready var bumper_bottom: Area2D = $Bumper_Bottom
 @onready var occupant_area: Occupant_Component = $Occupant_Area
 @onready var wait_timer: Timer = $WaitTimer
+@onready var floor_area: Area2D = $Floor_Area
 
 var direction: int
 var elevator_speed: float = 30.0
@@ -12,6 +11,7 @@ var elevator_speed: float = 30.0
 func _ready():
 	direction = Global.DOWN
 	occupant_area._set_direction.connect(_set_direction)
+	floor_area.body_entered.connect(_on_floor_area_entered)
 	wait_timer.timeout.connect(on_wait_timer_timeout)
 
 func _physics_process(delta: float) -> void:
@@ -19,12 +19,14 @@ func _physics_process(delta: float) -> void:
 		velocity.y = direction * elevator_speed
 		move_and_slide()
 
-	#what happens when the elevator touches the ground or ceiling?
-	#if velocity.y == 0 and wait_timer.is_stopped():
+	#when the elevator touches the ground or ceiling?
 	if is_on_floor() and wait_timer.is_stopped() or is_on_ceiling() and wait_timer.is_stopped():
 		wait_timer.start()
 		_flip_direction()
-
+		
+	#when the elevator reaches intermediate stop
+	
+	
 
 func go_up():
 	direction = Global.UP
@@ -43,3 +45,6 @@ func _flip_direction():
 		
 func on_wait_timer_timeout():
 	pass
+
+func _on_floor_area_entered(body: Node2D):
+	wait_timer.start()
