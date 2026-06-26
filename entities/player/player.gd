@@ -32,7 +32,7 @@ var _current_occupancy: Occupant_Component = null
 
 func _ready():
 	rider_component.set_current_occupancy.connect(_set_current_occupancy)
-
+	rider_component.clear_current_occupancy.connect(_clear_current_occupancy)
 
 func _physics_process(delta: float) -> void:
 	
@@ -58,12 +58,14 @@ func _physics_process(delta: float) -> void:
 	
 	if _current_occupancy:	
 		if Input.is_action_pressed("up"):
-			_current_occupancy.change_direction(Global.UP)
+			_current_occupancy.set_direction(Global.UP)
 		if Input.is_action_pressed("down"):
-			_current_occupancy.change_direction(Global.DOWN)
+			_current_occupancy.set_direction(Global.DOWN)
 		
 func _set_current_occupancy(occupancy: Occupant_Component):
 		_current_occupancy = occupancy
 		
+func _clear_current_occupancy():
+	_current_occupancy = null
 	
 	

@@ -65,6 +65,8 @@ jump={
 2d_physics/layer_4="enemy"
 2d_physics/layer_5="occupancy"
 2d_physics/layer_6="rider"
+2d_physics/layer_7="elevator_floor"
+2d_physics/layer_8="elevator_stop"
 
 [physics]
 
