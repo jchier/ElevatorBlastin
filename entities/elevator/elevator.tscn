@@ -3,9 +3,14 @@
 [ext_resource type="Script" uid="uid://k5hk33gsmhnt" path="res://entities/elevator/elevator.gd" id="1_3c2c0"]
 [ext_resource type="PackedScene" uid="uid://byct6l41li67v" path="res://components/occupant_component.tscn" id="2_rtcbl"]
 
+[sub_resource type="Gradient" id="Gradient_rtcbl"]
+offsets = PackedFloat32Array(0.20869565, 0.28695652, 0.973913, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1, 0.70869565, 0.70869565, 0.70869565, 1, 1, 1, 1, 1)
+
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_jr1kj"]
 width = 30
 height = 40
+color_ramp = SubResource("Gradient_rtcbl")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_j5ip0"]
 size = Vector2(18, 15)
@@ -48,3 +53,18 @@ collision_mask = 128
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Floor_Area" unique_id=1053187207]
 position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_oark8")
+
+[node name="Floor_Animatable_Body" type="AnimatableBody2D" parent="." unique_id=1039586584]
+collision_layer = 64
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor_Animatable_Body" unique_id=1347955668]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_oark8")
+
+[node name="Sprite2D" type="Sprite2D" parent="Floor_Animatable_Body" unique_id=1200565358]
+z_index = 1
+rotation = -3.1415927
+scale = Vector2(1, 0.05)
+texture = SubResource("NoiseTexture2D_jr1kj")
+offset = Vector2(0, -20)

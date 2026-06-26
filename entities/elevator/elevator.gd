@@ -4,11 +4,13 @@ extends CharacterBody2D
 @onready var occupant_area: Occupant_Component = $Occupant_Area
 @onready var wait_timer: Timer = $WaitTimer
 @onready var floor_area: Area2D = $Floor_Area
+@onready var floor_animatable_body: AnimatableBody2D = $Floor_Animatable_Body
 
 var direction: int
 var elevator_speed: float = 30.0
 
 func _ready():
+	floor_animatable_body.sync_to_physics = false
 	direction = Global.DOWN
 	occupant_area._set_direction.connect(_set_direction)
 	floor_area.body_entered.connect(_on_floor_area_entered)
@@ -35,6 +37,7 @@ func go_down():
 	direction = Global.DOWN
 
 func _set_direction(_direction: int):
+	wait_timer.stop()
 	direction = _direction
 
 func _flip_direction():

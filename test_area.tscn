@@ -187,7 +187,7 @@ sources/0 = SubResource("TileSetAtlasSource_rfpkf")
 [node name="TestArea" type="Node2D" unique_id=1920541780]
 
 [node name="Elevator" parent="." unique_id=1398215485 instance=ExtResource("1_6fnve")]
-position = Vector2(48, -29)
+position = Vector2(49, -4)
 
 [node name="Player" parent="." unique_id=834976139 instance=ExtResource("1_rfpkf")]
 position = Vector2(5, -33)
