@@ -7,8 +7,9 @@ extends CharacterBody2D
 @onready var coyote_timer: Timer = $CoyoteTimer
 @onready var jump_buffer_timer: Timer = $JumpBufferTimer
 @onready var rider_component: Area2D = $RiderComponent
-@onready var sprite: Sprite2D = $Sprite2D
-@onready var gun_sprite: Sprite2D = $gun_sprite
+@onready var visuals: Node = $Visuals
+@onready var animation_player_torso: AnimationPlayer = $AnimationPlayerTorso
+@onready var animation_player_legs: AnimationPlayer = $AnimationPlayerLegs
 
 var speed_multiplier = 30.0
 var jump_multiplier = -30.0
@@ -64,11 +65,37 @@ func _physics_process(delta: float) -> void:
 			_current_occupancy.set_direction(Global.UP)
 		if Input.is_action_pressed("down"):
 			_current_occupancy.set_direction(Global.DOWN)
+			
+	if Input.is_action_just_pressed("shoot"):
+		try_fire()
+		
+	if velocity.x < -20.0 or velocity.x > 20.0:
+		play_walking_animation()
+	else:
+		stop_walking_animation()
+	
+
+func play_walking_animation():
+	if animation_player_legs.is_playing():
+		return
+	animation_player_legs.play("walk")
+
+func stop_walking_animation():
+	if animation_player_legs.is_playing():
+		animation_player_legs.stop()
+
+func try_fire():
+	if animation_player_torso.is_playing():
+		animation_player_torso.stop()
+	animation_player_torso.play("shoot")
+	
+	#TODO: instantiate bullet scene here
+	
+	
 
 func flip_horizontal():
-	sprite.scale.x *= -1.0
+	visuals.scale.x *= -1.0
 	forward = !forward
-	gun_sprite.position.x *= -1.0
 		
 func _set_current_occupancy(occupancy: Occupant_Component):
 		_current_occupancy = occupancy
