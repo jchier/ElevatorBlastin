@@ -10,6 +10,9 @@ extends CharacterBody2D
 @onready var visuals: Node = $Visuals
 @onready var animation_player_torso: AnimationPlayer = $AnimationPlayerTorso
 @onready var animation_player_legs: AnimationPlayer = $AnimationPlayerLegs
+@onready var bullet_marker_2d: Marker2D = $BulletMarker2D
+
+var bullet_scene: PackedScene = preload("uid://rnaqg1ycr0e1")
 
 var speed_multiplier = 30.0
 var jump_multiplier = -30.0
@@ -89,12 +92,16 @@ func try_fire():
 		animation_player_torso.stop()
 	animation_player_torso.play("shoot")
 	
-	#TODO: instantiate bullet scene here
-	
-	
+	var bullet = bullet_scene.instantiate() as Bullet
+	bullet.global_position = bullet_marker_2d.global_position
+	bullet.start(bullet_marker_2d.global_rotation)
+	get_parent().add_child(bullet, true)
+	#TODO: fire rate timer, effects go here
 
 func flip_horizontal():
 	visuals.scale.x *= -1.0
+	bullet_marker_2d.position.x *= -1.0
+	bullet_marker_2d.rotation *= -1.0
 	forward = !forward
 		
 func _set_current_occupancy(occupancy: Occupant_Component):

@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://rnaqg1ycr0e1"]
+
+[ext_resource type="Script" uid="uid://ckbf0aerjidft" path="res://entities/bullet/bullet.gd" id="1_5h0jh"]
+[ext_resource type="Texture2D" uid="uid://d2knprmldk68q" path="res://entities/bullet/bullet.png" id="2_25cl0"]
+[ext_resource type="PackedScene" uid="uid://bd1y545fug0x2" path="res://components/hitbox_component.tscn" id="3_b4ffb"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_oark8"]
+
+[node name="Bullet" type="Node2D" unique_id=1703273686]
+script = ExtResource("1_5h0jh")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=286930186]
+texture_filter = 1
+texture = ExtResource("2_25cl0")
+
+[node name="LifeTimer" type="Timer" parent="." unique_id=1861537467]
+
+[node name="HitboxComponent" parent="." unique_id=331922973 instance=ExtResource("3_b4ffb")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent" unique_id=1200185108]
+shape = SubResource("CircleShape2D_oark8")
