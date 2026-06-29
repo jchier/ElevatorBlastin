@@ -11,6 +11,7 @@ extends CharacterBody2D
 @onready var animation_player_torso: AnimationPlayer = $AnimationPlayerTorso
 @onready var animation_player_legs: AnimationPlayer = $AnimationPlayerLegs
 @onready var bullet_marker_2d: Marker2D = $BulletMarker2D
+@onready var state_chart: StateChart = $StateChart
 
 var bullet_scene: PackedScene = preload("uid://rnaqg1ycr0e1")
 
@@ -69,13 +70,19 @@ func _physics_process(delta: float) -> void:
 		if Input.is_action_pressed("down"):
 			_current_occupancy.set_direction(Global.DOWN)
 			
+	if Input.is_action_just_pressed("down"):
+		state_chart.send_event("player_duck")
+			
+	if Input.is_action_just_released("down"):
+		state_chart.send_event("player_stand")
+		
 	if Input.is_action_just_pressed("shoot"):
 		try_fire()
 		
 	if velocity.x < -20.0 or velocity.x > 20.0:
-		play_walking_animation()
+		state_chart.send_event("player_walking")
 	else:
-		stop_walking_animation()
+		state_chart.send_event("player_stand")
 	
 
 func play_walking_animation():
@@ -110,3 +117,18 @@ func _set_current_occupancy(occupancy: Occupant_Component):
 func _clear_current_occupancy():
 	_current_occupancy = null
 	
+
+
+func _on_stand_state_entered() -> void:
+	animation_player_legs.play("idle")
+
+
+
+func _on_duck_state_entered() -> void:
+	animation_player_legs.play("duck")
+
+
+
+
+func _on_walking_state_entered() -> void:
+	animation_player_legs.play("walk")
