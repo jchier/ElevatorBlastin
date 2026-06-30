@@ -219,10 +219,10 @@ delay_in_seconds = "0.1"
 [node name="Duck" type="Node" parent="StateChart/Root" unique_id=694636133]
 script = ExtResource("8_a1qjk")
 
-[node name="ToStand" type="Node" parent="StateChart/Root/Duck" unique_id=1781552016]
+[node name="ToStandFromDuck" type="Node" parent="StateChart/Root/Duck" unique_id=1781552016]
 script = ExtResource("9_j3ovn")
 to = NodePath("../../Stand")
-event = &"player_stand"
+event = &"player_stand_from_duck"
 delay_in_seconds = "0.0"
 
 [node name="Jump" type="Node" parent="StateChart/Root" unique_id=404053671]
@@ -246,4 +246,6 @@ initial_node_to_watch = NodePath("../StateChart")
 
 [connection signal="state_entered" from="StateChart/Root/Stand" to="." method="_on_stand_state_entered"]
 [connection signal="state_entered" from="StateChart/Root/Duck" to="." method="_on_duck_state_entered"]
+[connection signal="taken" from="StateChart/Root/Duck/ToStandFromDuck" to="." method="_on_to_stand_from_duck_taken"]
 [connection signal="state_entered" from="StateChart/Root/Walking" to="." method="_on_walking_state_entered"]
+[connection signal="taken" from="StateChart/Root/Walking/ToStand" to="." method="_on_to_stand_taken"]

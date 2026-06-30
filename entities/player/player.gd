@@ -81,10 +81,12 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("down"):
 		state_chart.send_event("player_duck")
 			
-	if Input.is_action_just_released("down")\
-	or Input.is_action_just_released("left")\
+	if Input.is_action_just_released("left")\
 	or Input.is_action_just_released("right"):
 		state_chart.send_event("player_stand")
+		
+	if Input.is_action_just_released("down"):
+		state_chart.send_event("player_stand_from_duck")
 		
 	if Input.is_action_just_pressed("shoot"):
 		try_fire()
@@ -131,6 +133,7 @@ func _clear_current_occupancy():
 
 
 func _on_stand_state_entered() -> void:
+	await animation_player_legs.animation_finished
 	animation_player_legs.play("idle")
 
 
@@ -143,3 +146,11 @@ func _on_duck_state_entered() -> void:
 
 func _on_walking_state_entered() -> void:
 	animation_player_legs.play("walk")
+
+
+func _on_to_stand_from_duck_taken() -> void:
+	animation_player_legs.play_backwards("duck")
+
+
+func _on_to_stand_taken() -> void:
+	animation_player_legs.stop()
