@@ -214,7 +214,7 @@ delay_in_seconds = "0.0"
 script = ExtResource("9_j3ovn")
 to = NodePath("../../Walking")
 event = &"player_walking"
-delay_in_seconds = "0.0"
+delay_in_seconds = "0.1"
 
 [node name="Duck" type="Node" parent="StateChart/Root" unique_id=694636133]
 script = ExtResource("8_a1qjk")
@@ -235,7 +235,7 @@ script = ExtResource("8_a1qjk")
 script = ExtResource("9_j3ovn")
 to = NodePath("../../Stand")
 event = &"player_stand"
-delay_in_seconds = "0.0"
+delay_in_seconds = "0.1"
 
 [node name="StateChartDebugger" parent="." unique_id=839851318 instance=ExtResource("10_afbqv")]
 offset_left = 102.0

@@ -1,6 +1,8 @@
 class_name Player
 extends CharacterBody2D
 
+
+
 @export var max_speed: float = 80.0
 @export var jump_velocity: float = -200.0
 @onready var camera: Camera2D = $Camera2D
@@ -60,8 +62,8 @@ func _physics_process(delta: float) -> void:
 	if was_on_floor and not is_on_floor() and velocity.y > 0:
 		coyote_timer.start()
 	
-	if Input.is_action_just_pressed("left") and forward == true \
-		or Input.is_action_just_pressed("right") and forward == false:
+	if velocity.x < 0 and forward == true \
+		or velocity.x > 0 and forward == false:
 		flip_horizontal()
 	
 	if _current_occupancy:	
@@ -70,19 +72,28 @@ func _physics_process(delta: float) -> void:
 		if Input.is_action_pressed("down"):
 			_current_occupancy.set_direction(Global.DOWN)
 			
+	if Input.is_action_pressed("left") and\
+	Input.is_action_pressed("right"):
+			state_chart.send_event("player_stand")
+			velocity.x = 0
+			return
+			
 	if Input.is_action_just_pressed("down"):
 		state_chart.send_event("player_duck")
 			
-	if Input.is_action_just_released("down"):
+	if Input.is_action_just_released("down")\
+	or Input.is_action_just_released("left")\
+	or Input.is_action_just_released("right"):
 		state_chart.send_event("player_stand")
 		
 	if Input.is_action_just_pressed("shoot"):
 		try_fire()
 		
-	if velocity.x < -20.0 or velocity.x > 20.0:
+	#if velocity.x < -20.0 or velocity.x > 20.0:
+	if Input.is_action_pressed("left")\
+	or Input.is_action_pressed("right"):
 		state_chart.send_event("player_walking")
-	else:
-		state_chart.send_event("player_stand")
+
 	
 
 func play_walking_animation():
