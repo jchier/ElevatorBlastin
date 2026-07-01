@@ -15,6 +15,10 @@
 radius = 8.0
 height = 44.642857
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_b6dgu"]
+radius = 8.035714
+height = 35.714287
+
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jr1kj"]
 radius = 7.0
 height = 28.0
@@ -96,6 +100,23 @@ tracks/0/keys = {
 "values": [0, 1, 2, 3, 0]
 }
 
+[sub_resource type="Animation" id="Animation_7thud"]
+resource_name = "stand"
+length = 0.25
+step = 0.083333336
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visuals/Sprite2DLegs:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.083333336, 0.16666667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [10, 8, 0]
+}
+
 [sub_resource type="Animation" id="Animation_26q78"]
 resource_name = "walk"
 length = 0.5
@@ -120,8 +141,62 @@ _data = {
 &"duck": SubResource("Animation_bectd"),
 &"idle": SubResource("Animation_wvtmh"),
 &"shoot": SubResource("Animation_qiwj3"),
+&"stand": SubResource("Animation_7thud"),
 &"walk": SubResource("Animation_26q78")
 }
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_a1qjk"]
+animation = &"duck"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_j3ovn"]
+animation = &"idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_7thud"]
+animation = &"walk"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_afbqv"]
+animation = &"walk"
+
+[sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_7thud"]
+blend_mode = 1
+blend_point_0/node = SubResource("AnimationNodeAnimation_7thud")
+blend_point_0/pos = -1.0
+blend_point_0/name = &"walk"
+blend_point_1/node = SubResource("AnimationNodeAnimation_afbqv")
+blend_point_1/pos = 0.0
+blend_point_1/name = &"walk 2"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_wvtmh"]
+animation = &"stand"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_a1qjk"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_j3ovn"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_afbqv"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_gx6sm"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_yqrof"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_3wlsy"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_b2kln"]
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_jr1kj"]
+states/duck/node = SubResource("AnimationNodeAnimation_a1qjk")
+states/duck/position = Vector2(578, 129)
+states/idle/node = SubResource("AnimationNodeAnimation_j3ovn")
+states/idle/position = Vector2(300, 68)
+states/move/node = SubResource("AnimationNodeBlendSpace1D_7thud")
+states/move/position = Vector2(412, 85)
+states/stand/node = SubResource("AnimationNodeAnimation_wvtmh")
+states/stand/position = Vector2(590, 207)
+transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_a1qjk"), "idle", "move", SubResource("AnimationNodeStateMachineTransition_j3ovn"), "move", "idle", SubResource("AnimationNodeStateMachineTransition_afbqv"), "move", "duck", SubResource("AnimationNodeStateMachineTransition_gx6sm"), "duck", "stand", SubResource("AnimationNodeStateMachineTransition_yqrof"), "stand", "move", SubResource("AnimationNodeStateMachineTransition_3wlsy"), "stand", "duck", SubResource("AnimationNodeStateMachineTransition_b2kln")]
+graph_offset = Vector2(-56, 15)
 
 [node name="Player" type="CharacterBody2D" unique_id=834976139]
 collision_layer = 4
@@ -155,11 +230,17 @@ vframes = 3
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1143118710]
 visible = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=554777545]
+[node name="StandingCollisionShape" type="CollisionShape2D" parent="." unique_id=554777545]
 z_index = 3
 position = Vector2(0, -25)
 scale = Vector2(1.12, 1.12)
 shape = SubResource("CapsuleShape2D_oark8")
+
+[node name="CrouchingCollisionShape" type="CollisionShape2D" parent="." unique_id=435291202]
+z_index = 3
+position = Vector2(0, -30)
+scale = Vector2(1.12, 1.12)
+shape = SubResource("CapsuleShape2D_b6dgu")
 
 [node name="CoyoteTimer" type="Timer" parent="." unique_id=199497401]
 wait_time = 0.12
@@ -222,7 +303,7 @@ script = ExtResource("8_a1qjk")
 [node name="ToStandFromDuck" type="Node" parent="StateChart/Root/Duck" unique_id=1781552016]
 script = ExtResource("9_j3ovn")
 to = NodePath("../../Stand")
-event = &"player_stand_from_duck"
+event = &"player_stand"
 delay_in_seconds = "0.0"
 
 [node name="Jump" type="Node" parent="StateChart/Root" unique_id=404053671]
@@ -244,8 +325,14 @@ offset_right = 325.0
 offset_bottom = 62.0
 initial_node_to_watch = NodePath("../StateChart")
 
+[node name="AnimationTree" type="AnimationTree" parent="." unique_id=690370865]
+tree_root = SubResource("AnimationNodeStateMachine_jr1kj")
+anim_player = NodePath("../AnimationPlayerLegs")
+parameters/move/blend_position = 0.0
+
 [connection signal="state_entered" from="StateChart/Root/Stand" to="." method="_on_stand_state_entered"]
 [connection signal="state_entered" from="StateChart/Root/Duck" to="." method="_on_duck_state_entered"]
+[connection signal="state_exited" from="StateChart/Root/Duck" to="." method="_on_duck_state_exited"]
 [connection signal="taken" from="StateChart/Root/Duck/ToStandFromDuck" to="." method="_on_to_stand_from_duck_taken"]
 [connection signal="state_entered" from="StateChart/Root/Walking" to="." method="_on_walking_state_entered"]
 [connection signal="taken" from="StateChart/Root/Walking/ToStand" to="." method="_on_to_stand_taken"]
