@@ -10,14 +10,15 @@ extends CharacterBody2D
 @onready var jump_buffer_timer: Timer = $JumpBufferTimer
 @onready var rider_component: Area2D = $RiderComponent
 @onready var visuals: Node = $Visuals
-@onready var animation_player_torso: AnimationPlayer = $AnimationPlayerTorso
-@onready var animation_player_legs: AnimationPlayer = $AnimationPlayerLegs
+#@onready var animation_player_torso: AnimationPlayer = $AnimationPlayerTorso
+#@onready var animation_player_legs: AnimationPlayer = $AnimationPlayerLegs
 @onready var bullet_marker_2d: Marker2D = $BulletMarker2D
 @onready var state_chart: StateChart = $StateChart
 @onready var standing_collision_shape: CollisionShape2D = $StandingCollisionShape
 @onready var crouching_collision_shape: CollisionShape2D = $CrouchingCollisionShape
-@onready var animation_tree: AnimationTree = $AnimationTree
-@onready var animation_state_machine: AnimationNodeStateMachinePlayback = animation_tree.get("parameters/playback")
+#@onready var animation_tree: AnimationTree = $AnimationTree
+#@onready var animation_state_machine: AnimationNodeStateMachinePlayback = animation_tree.get("parameters/playback")
+@onready var animation_component: Node = $AnimationComponent
 var bullet_scene: PackedScene = preload("uid://rnaqg1ycr0e1")
 
 var speed_multiplier = 30.0
@@ -92,29 +93,18 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_released("down"):
 		state_chart.send_event("player_stand")
 		
-	if Input.is_action_just_pressed("shoot"):
-		try_fire()
 		
 	#if velocity.x < -20.0 or velocity.x > 20.0:
 	if Input.is_action_pressed("left")\
 	or Input.is_action_pressed("right"):
 		state_chart.send_event("player_walking")
 
-	
+	if Input.is_action_just_pressed("shoot"):
+		try_fire()
 
-#func play_walking_animation():
-#	if animation_player_legs.is_playing():
-#		return
-#	animation_player_legs.play("walk")
-
-#func stop_walking_animation():
-#	if animation_player_legs.is_playing():
-#		animation_player_legs.stop()
 
 func try_fire():
-	if animation_player_torso.is_playing():
-		animation_player_torso.stop()
-	animation_player_torso.play("shoot")
+	animation_component.shoot()
 	
 	var bullet = bullet_scene.instantiate() as Bullet
 	bullet.global_position = bullet_marker_2d.global_position
@@ -137,35 +127,30 @@ func _clear_current_occupancy():
 
 
 func _on_stand_state_entered() -> void:
-	#await animation_player_legs.animation_finished
-	#animation_player_legs.play("idle")
-	animation_state_machine.travel("idle")
+	animation_component.play("idle")
 
 
 
 func _on_duck_state_entered() -> void:
 	standing_collision_shape.disabled = true
 	crouching_collision_shape.disabled = false
-	print(animation_player_legs.current_animation)
 	#animation_player_legs.stop()
 	#animation_player_legs.play("duck")
-	animation_state_machine.travel("duck")
-
+	#animation_state_machine.travel("duck")
+	animation_component.play("duck")
 
 
 
 func _on_walking_state_entered() -> void:
-	animation_state_machine.travel("move")
+	#animation_state_machine.travel("move")
+	animation_component.play("move")
 
 
-
-func _on_to_stand_taken() -> void:
-	animation_player_legs.stop()
+#func _on_to_stand_taken() -> void:
+#	animation_player_legs.stop()
 
 
 func _on_duck_state_exited() -> void:
 	standing_collision_shape.disabled = false
 	crouching_collision_shape.disabled = true
-	#animation_player_legs.stop()
-	#animation_player_legs.play_backwards("duck")
-	#animation_state_machine.travel("stand")
+	
