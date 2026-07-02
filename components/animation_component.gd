@@ -19,6 +19,9 @@ func play_duck():
 func play(to_play: String):
 	animation_state_machine.travel(to_play)
 
+func move(x: float):
+	animation_tree["parameters/move/blend_position"] = x
+
 func shoot():
 	if animation_torso.is_playing():
 		animation_torso.stop()

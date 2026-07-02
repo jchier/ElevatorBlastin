@@ -153,19 +153,25 @@ animation = &"duck"
 animation = &"idle"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_7thud"]
-animation = &"walk"
+animation = &"airborne"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_afbqv"]
 animation = &"walk"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_yqrof"]
+animation = &"airborne"
 
 [sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_7thud"]
 blend_mode = 1
 blend_point_0/node = SubResource("AnimationNodeAnimation_7thud")
 blend_point_0/pos = -1.0
-blend_point_0/name = &"walk"
+blend_point_0/name = &"airborne 2"
 blend_point_1/node = SubResource("AnimationNodeAnimation_afbqv")
 blend_point_1/pos = 0.0
-blend_point_1/name = &"walk 2"
+blend_point_1/name = &"walk"
+blend_point_2/node = SubResource("AnimationNodeAnimation_yqrof")
+blend_point_2/pos = 1.0
+blend_point_2/name = &"airborne"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_wvtmh"]
 animation = &"stand"
@@ -244,7 +250,7 @@ libraries/ = SubResource("AnimationLibrary_bectd")
 root_node = NodePath("../..")
 tree_root = SubResource("AnimationNodeStateMachine_jr1kj")
 anim_player = NodePath("../AnimationPlayerLegs")
-parameters/move/blend_position = 0.0
+parameters/move/blend_position = -0.27407408
 
 [node name="Visuals" type="Node2D" parent="." unique_id=876248669]
 
@@ -324,12 +330,6 @@ to = NodePath("../../Duck")
 event = &"player_duck"
 delay_in_seconds = "0.0"
 
-[node name="ToWalk" type="Node" parent="StateChart/Root/Stand" unique_id=2063862497]
-script = ExtResource("9_j3ovn")
-to = NodePath("../../Walking")
-event = &"player_walking"
-delay_in_seconds = "0.0"
-
 [node name="Airborne" type="Node" parent="StateChart/Root/Stand" unique_id=351135610]
 script = ExtResource("9_j3ovn")
 to = NodePath("../../Airborne")
@@ -347,21 +347,6 @@ delay_in_seconds = "0.0"
 
 [node name="Jump" type="Node" parent="StateChart/Root" unique_id=404053671]
 script = ExtResource("8_a1qjk")
-
-[node name="Walking" type="Node" parent="StateChart/Root" unique_id=626690185]
-script = ExtResource("8_a1qjk")
-
-[node name="ToStand" type="Node" parent="StateChart/Root/Walking" unique_id=1111791187]
-script = ExtResource("9_j3ovn")
-to = NodePath("../../Stand")
-event = &"player_stand"
-delay_in_seconds = "0.1"
-
-[node name="Airborne" type="Node" parent="StateChart/Root/Walking" unique_id=1373911446]
-script = ExtResource("9_j3ovn")
-to = NodePath("../../Airborne")
-event = &"airborne"
-delay_in_seconds = "0.0"
 
 [node name="Airborne" type="Node" parent="StateChart/Root" unique_id=414048615]
 script = ExtResource("8_a1qjk")
@@ -383,6 +368,4 @@ initial_node_to_watch = NodePath("../StateChart")
 [connection signal="state_entered" from="StateChart/Root/Duck" to="." method="_on_duck_state_entered"]
 [connection signal="state_exited" from="StateChart/Root/Duck" to="." method="_on_duck_state_exited"]
 [connection signal="taken" from="StateChart/Root/Duck/ToStandFromDuck" to="." method="_on_to_stand_from_duck_taken"]
-[connection signal="state_entered" from="StateChart/Root/Walking" to="." method="_on_walking_state_entered"]
-[connection signal="taken" from="StateChart/Root/Walking/ToStand" to="." method="_on_to_stand_taken"]
 [connection signal="state_entered" from="StateChart/Root/Airborne" to="." method="_on_airborne_state_entered"]

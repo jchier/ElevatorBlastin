@@ -86,27 +86,21 @@ func _physics_process(delta: float) -> void:
 		if Input.is_action_pressed("down"):
 			_current_occupancy.set_direction(Global.DOWN)
 			
-	if Input.is_action_pressed("left") and\
-	Input.is_action_pressed("right"):
-			state_chart.send_event("player_stand")
-			velocity.x = 0
-			return
 			
 	if Input.is_action_just_pressed("down"):
 		state_chart.send_event("player_duck")
 			
-	if Input.is_action_just_released("left")\
-	or Input.is_action_just_released("right"):
-		state_chart.send_event("player_stand")
 		
 	if Input.is_action_just_released("down"):
 		state_chart.send_event("player_stand")
 		
 		
-	#if velocity.x < -20.0 or velocity.x > 20.0:
-	if Input.is_action_pressed("left")\
-	or Input.is_action_pressed("right"):
-		state_chart.send_event("player_walking")
+	if velocity.length_squared() <= 0.005:
+		animation_component.play("idle")
+	else:
+		animation_component.play("move")
+		
+	animation_component.move(signf(velocity.y))	
 
 	if Input.is_action_just_pressed("shoot"):
 		try_fire()
@@ -143,20 +137,7 @@ func _on_stand_state_entered() -> void:
 func _on_duck_state_entered() -> void:
 	standing_collision_shape.disabled = true
 	crouching_collision_shape.disabled = false
-	#animation_player_legs.stop()
-	#animation_player_legs.play("duck")
-	#animation_state_machine.travel("duck")
 	animation_component.play("duck")
-
-
-
-func _on_walking_state_entered() -> void:
-	#animation_state_machine.travel("move")
-	animation_component.play("move")
-
-
-#func _on_to_stand_taken() -> void:
-#	animation_player_legs.stop()
 
 
 func _on_duck_state_exited() -> void:
