@@ -33,8 +33,6 @@ var min_gravity: float = 12.0
 var gravity: float = 12.0
 var fall_gravity = 1124
 
-
-var _current_elevator: Elevator = null
 var _current_occupancy: Occupant_Component = null
 var forward: bool = true
 var was_on_floor: bool = false
@@ -53,7 +51,7 @@ func _physics_process(delta: float) -> void:
 		velocity.y = clamp(velocity.y, 0, 300)
 		if not was_on_floor:
 			was_on_floor = true
-			state_chart.send_event("player_stand")				
+			state_chart.send_event("grounded")
 	else:
 		velocity += get_gravity() * delta
 		if was_on_floor:
@@ -89,18 +87,11 @@ func _physics_process(delta: float) -> void:
 			
 	if Input.is_action_just_pressed("down"):
 		state_chart.send_event("player_duck")
-			
 		
 	if Input.is_action_just_released("down"):
 		state_chart.send_event("player_stand")
 		
-		
-	if velocity.length_squared() <= 0.005:
-		animation_component.play("idle")
-	else:
-		animation_component.play("move")
-		
-	animation_component.move(signf(velocity.y))	
+
 
 	if Input.is_action_just_pressed("shoot"):
 		try_fire()
@@ -148,3 +139,12 @@ func _on_duck_state_exited() -> void:
 
 func _on_airborne_state_entered() -> void:
 	animation_component.play("airborne")
+
+
+func _on_stand_state_physics_processing(delta: float) -> void:
+	if velocity.length_squared() <= 0.005:
+		animation_component.play("idle")
+	else:
+		animation_component.play("move")
+		
+	animation_component.move(signf(velocity.y))	
