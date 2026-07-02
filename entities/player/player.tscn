@@ -27,6 +27,22 @@ tracks/0/keys = {
 "values": [0]
 }
 
+[sub_resource type="Animation" id="Animation_j3ovn"]
+resource_name = "airborne"
+length = 0.13333334
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visuals/Sprite2DLegs:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [9]
+}
+
 [sub_resource type="Animation" id="Animation_bectd"]
 resource_name = "duck"
 length = 0.25
@@ -98,6 +114,7 @@ tracks/0/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_bectd"]
 _data = {
 &"RESET": SubResource("Animation_8fjmc"),
+&"airborne": SubResource("Animation_j3ovn"),
 &"duck": SubResource("Animation_bectd"),
 &"idle": SubResource("Animation_wvtmh"),
 &"stand": SubResource("Animation_7thud"),
@@ -125,6 +142,9 @@ tracks/0/keys = {
 _data = {
 &"shoot": SubResource("Animation_a1qjk")
 }
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_gx6sm"]
+animation = &"airborne"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_a1qjk"]
 animation = &"duck"
@@ -167,7 +187,13 @@ advance_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_b2kln"]
 
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_we0b7"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_mtric"]
+
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_jr1kj"]
+states/airborne/node = SubResource("AnimationNodeAnimation_gx6sm")
+states/airborne/position = Vector2(729, 47)
 states/duck/node = SubResource("AnimationNodeAnimation_a1qjk")
 states/duck/position = Vector2(578, 129)
 states/idle/node = SubResource("AnimationNodeAnimation_j3ovn")
@@ -176,8 +202,8 @@ states/move/node = SubResource("AnimationNodeBlendSpace1D_7thud")
 states/move/position = Vector2(412, 85)
 states/stand/node = SubResource("AnimationNodeAnimation_wvtmh")
 states/stand/position = Vector2(590, 207)
-transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_a1qjk"), "idle", "move", SubResource("AnimationNodeStateMachineTransition_j3ovn"), "move", "idle", SubResource("AnimationNodeStateMachineTransition_afbqv"), "move", "duck", SubResource("AnimationNodeStateMachineTransition_gx6sm"), "duck", "stand", SubResource("AnimationNodeStateMachineTransition_yqrof"), "stand", "move", SubResource("AnimationNodeStateMachineTransition_3wlsy"), "stand", "duck", SubResource("AnimationNodeStateMachineTransition_b2kln")]
-graph_offset = Vector2(-56, 15)
+transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_a1qjk"), "idle", "move", SubResource("AnimationNodeStateMachineTransition_j3ovn"), "move", "idle", SubResource("AnimationNodeStateMachineTransition_afbqv"), "move", "duck", SubResource("AnimationNodeStateMachineTransition_gx6sm"), "duck", "stand", SubResource("AnimationNodeStateMachineTransition_yqrof"), "stand", "move", SubResource("AnimationNodeStateMachineTransition_3wlsy"), "stand", "duck", SubResource("AnimationNodeStateMachineTransition_b2kln"), "move", "airborne", SubResource("AnimationNodeStateMachineTransition_we0b7"), "airborne", "stand", SubResource("AnimationNodeStateMachineTransition_mtric")]
+graph_offset = Vector2(-51, 8)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_oark8"]
 radius = 8.0
@@ -304,6 +330,12 @@ to = NodePath("../../Walking")
 event = &"player_walking"
 delay_in_seconds = "0.0"
 
+[node name="Airborne" type="Node" parent="StateChart/Root/Stand" unique_id=351135610]
+script = ExtResource("9_j3ovn")
+to = NodePath("../../Airborne")
+event = &"airborne"
+delay_in_seconds = "0.0"
+
 [node name="Duck" type="Node" parent="StateChart/Root" unique_id=694636133]
 script = ExtResource("8_a1qjk")
 
@@ -325,6 +357,21 @@ to = NodePath("../../Stand")
 event = &"player_stand"
 delay_in_seconds = "0.1"
 
+[node name="Airborne" type="Node" parent="StateChart/Root/Walking" unique_id=1373911446]
+script = ExtResource("9_j3ovn")
+to = NodePath("../../Airborne")
+event = &"airborne"
+delay_in_seconds = "0.0"
+
+[node name="Airborne" type="Node" parent="StateChart/Root" unique_id=414048615]
+script = ExtResource("8_a1qjk")
+
+[node name="ToStand" type="Node" parent="StateChart/Root/Airborne" unique_id=286403581]
+script = ExtResource("9_j3ovn")
+to = NodePath("../../Stand")
+event = &"player_stand"
+delay_in_seconds = "0.0"
+
 [node name="StateChartDebugger" parent="." unique_id=839851318 instance=ExtResource("10_afbqv")]
 offset_left = 102.0
 offset_top = -156.0
@@ -338,3 +385,4 @@ initial_node_to_watch = NodePath("../StateChart")
 [connection signal="taken" from="StateChart/Root/Duck/ToStandFromDuck" to="." method="_on_to_stand_from_duck_taken"]
 [connection signal="state_entered" from="StateChart/Root/Walking" to="." method="_on_walking_state_entered"]
 [connection signal="taken" from="StateChart/Root/Walking/ToStand" to="." method="_on_to_stand_taken"]
+[connection signal="state_entered" from="StateChart/Root/Airborne" to="." method="_on_airborne_state_entered"]

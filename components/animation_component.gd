@@ -20,5 +20,6 @@ func play(to_play: String):
 	animation_state_machine.travel(to_play)
 
 func shoot():
-	#animation_state_machine.travel("shoot")
+	if animation_torso.is_playing():
+		animation_torso.stop()
 	animation_torso.play("torso/shoot")

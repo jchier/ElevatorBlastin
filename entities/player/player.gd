@@ -37,6 +37,8 @@ var fall_gravity = 1124
 var _current_elevator: Elevator = null
 var _current_occupancy: Occupant_Component = null
 var forward: bool = true
+var was_on_floor: bool = false
+
 
 func _ready():
 	rider_component.set_current_occupancy.connect(_set_current_occupancy)
@@ -45,12 +47,19 @@ func _ready():
 	
 func _physics_process(delta: float) -> void:
 	
-	if not is_on_floor():
-		velocity += get_gravity() * delta
-	else:
+	if is_on_floor():
+		velocity.y = 0
 		velocity.y += fall_gravity * delta
 		velocity.y = clamp(velocity.y, 0, 300)
-					
+		if not was_on_floor:
+			was_on_floor = true
+			state_chart.send_event("player_stand")				
+	else:
+		velocity += get_gravity() * delta
+		if was_on_floor:
+			was_on_floor = false
+			state_chart.send_event("airborne")
+			
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = jump_velocity
 		
@@ -60,12 +69,12 @@ func _physics_process(delta: float) -> void:
 	var velocity_weight : float = delta * (acceleration if x_input else friction)
 	velocity.x = lerp(velocity.x, x_input * max_speed, velocity_weight)
 
-	var was_on_floor = is_on_floor()
 
 	move_and_slide()
 
+
 	if was_on_floor and not is_on_floor() and velocity.y > 0:
-		coyote_timer.start()
+		state_chart.send_event("airborne")
 	
 	if velocity.x < 0 and forward == true \
 		or velocity.x > 0 and forward == false:
@@ -154,3 +163,7 @@ func _on_duck_state_exited() -> void:
 	standing_collision_shape.disabled = false
 	crouching_collision_shape.disabled = true
 	
+
+
+func _on_airborne_state_entered() -> void:
+	animation_component.play("airborne")
