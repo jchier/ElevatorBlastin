@@ -20,4 +20,5 @@ func play(to_play: String):
 	animation_state_machine.travel(to_play)
 
 func shoot():
-	animation_state_machine.travel("shoot")
+	#animation_state_machine.travel("shoot")
+	animation_torso.play("torso/shoot")

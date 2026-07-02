@@ -17,22 +17,10 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Visuals/Sprite2DTorso:frame")
+tracks/0/path = NodePath("Visuals/Sprite2DLegs:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Visuals/Sprite2DLegs:frame")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
@@ -70,23 +58,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [0]
-}
-
-[sub_resource type="Animation" id="Animation_qiwj3"]
-resource_name = "shoot"
-length = 0.41666666
-step = 0.083333336
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Visuals/Sprite2DTorso:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.083333336, 0.16666667, 0.25, 0.33333334),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
-"update": 1,
-"values": [0, 1, 2, 3, 0]
 }
 
 [sub_resource type="Animation" id="Animation_7thud"]
@@ -129,9 +100,30 @@ _data = {
 &"RESET": SubResource("Animation_8fjmc"),
 &"duck": SubResource("Animation_bectd"),
 &"idle": SubResource("Animation_wvtmh"),
-&"shoot": SubResource("Animation_qiwj3"),
 &"stand": SubResource("Animation_7thud"),
 &"walk": SubResource("Animation_26q78")
+}
+
+[sub_resource type="Animation" id="Animation_a1qjk"]
+resource_name = "shoot"
+length = 0.33333334
+step = 0.083333336
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visuals/Sprite2DTorso:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.083333336, 0.16666666, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [1, 2, 3, 0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_j3ovn"]
+_data = {
+&"shoot": SubResource("Animation_a1qjk")
 }
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_a1qjk"]
@@ -216,6 +208,7 @@ animation_tree = NodePath("AnimationTree")
 [node name="AnimationPlayerTorso" type="AnimationPlayer" parent="AnimationComponent" unique_id=2131665548]
 root_node = NodePath("../..")
 libraries/ = SubResource("AnimationLibrary_bectd")
+libraries/torso = SubResource("AnimationLibrary_j3ovn")
 
 [node name="AnimationPlayerLegs" type="AnimationPlayer" parent="AnimationComponent" unique_id=992654512]
 root_node = NodePath("../..")
