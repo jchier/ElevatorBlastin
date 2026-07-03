@@ -311,7 +311,7 @@ _data = {
 [sub_resource type="AnimationNodeAdd2" id="AnimationNodeAdd2_a1qjk"]
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_afbqv"]
-graph_offset = Vector2(-56.036377, -20.057022)
+graph_offset = Vector2(-435.81396, -33.88002)
 nodes/output/position = Vector2(360, 140)
 nodes/Add2/node = SubResource("AnimationNodeAdd2_a1qjk")
 nodes/Add2/position = Vector2(160, 120)
@@ -485,3 +485,4 @@ initial_node_to_watch = NodePath("../StateChart")
 [connection signal="state_exited" from="StateChart/Root/Grounded/Duck" to="." method="_on_duck_state_exited"]
 [connection signal="state_input" from="StateChart/Root/Grounded/Duck" to="." method="_on_duck_state_input"]
 [connection signal="state_entered" from="StateChart/Root/Airborne" to="." method="_on_airborne_state_entered"]
+[connection signal="state_input" from="StateChart/Root/Airborne" to="." method="_on_airborne_state_input"]

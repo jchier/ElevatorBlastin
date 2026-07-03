@@ -166,3 +166,8 @@ func _on_duck_state_input(event: InputEvent) -> void:
 func _on_stand_state_input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("shoot"):
 		try_stand_fire()
+
+
+func _on_airborne_state_input(event: InputEvent) -> void:
+	if Input.is_action_just_pressed("shoot"):
+		try_stand_fire()
