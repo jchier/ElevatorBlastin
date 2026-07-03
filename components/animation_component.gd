@@ -21,9 +21,9 @@ func play_duck():
 func play(to_play: String):
 #	var current_animation = state_machine_legs.get_current_node()
 #	print(current_animation)
-	animation_legs.stop()
+	state_machine_torso.travel(to_play)
 	state_machine_legs.travel(to_play)
-
+	
 func move(x: float):
 	animation_tree["parameters/StateMachineLegs/move/blend_position"] = x
 
@@ -32,6 +32,6 @@ func shoot():
 	#	animation_torso.stop()
 	#animation_torso.play("torso/shoot")
 	#state_machine_legs.travel("shoot")
-	state_machine_torso.travel("torso_shoot")
+	state_machine_torso.start("shoot")
 	var current_animation = state_machine_legs.get_current_node()
 	print(current_animation)
