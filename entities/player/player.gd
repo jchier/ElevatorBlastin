@@ -36,12 +36,13 @@ var fall_gravity = 1124
 var _current_occupancy: Occupant_Component = null
 var forward: bool = true
 var was_on_floor: bool = false
-
+var current_speed: float
 
 func _ready():
 	rider_component.set_current_occupancy.connect(_set_current_occupancy)
 	rider_component.clear_current_occupancy.connect(_clear_current_occupancy)
 	crouching_collision_shape.disabled = true
+	current_speed = max_speed
 	
 func _physics_process(delta: float) -> void:
 	
@@ -65,7 +66,7 @@ func _physics_process(delta: float) -> void:
 	
 	var x_input: float = Input.get_action_strength("right") - Input.get_action_strength("left")
 	var velocity_weight : float = delta * (acceleration if x_input else friction)
-	velocity.x = lerp(velocity.x, x_input * max_speed, velocity_weight)
+	velocity.x = lerp(velocity.x, x_input * current_speed, velocity_weight)
 
 
 	move_and_slide()
@@ -129,12 +130,13 @@ func _on_duck_state_entered() -> void:
 	standing_collision_shape.disabled = true
 	crouching_collision_shape.disabled = false
 	animation_component.play("duck")
+	current_speed = 0
 
 
 func _on_duck_state_exited() -> void:
 	standing_collision_shape.disabled = false
 	crouching_collision_shape.disabled = true
-	
+	current_speed = max_speed
 
 
 func _on_airborne_state_entered() -> void:
@@ -142,7 +144,7 @@ func _on_airborne_state_entered() -> void:
 
 
 func _on_stand_state_physics_processing(delta: float) -> void:
-	if velocity.length_squared() <= 0.005:
+	if velocity.length_squared() <= 0.555:
 		animation_component.play("idle")
 	else:
 		animation_component.play("move")

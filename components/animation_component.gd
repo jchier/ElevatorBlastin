@@ -18,7 +18,8 @@ func play_duck():
 	
 func play(to_play: String):
 	var current_animation = animation_state_machine.get_current_node()
-	print(current_animation)
+	#print(current_animation)
+	animation_legs.stop()
 	animation_state_machine.travel(to_play)
 
 func move(x: float):
