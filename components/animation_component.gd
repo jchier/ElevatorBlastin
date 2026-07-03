@@ -32,5 +32,3 @@ func stand_shoot():
 
 func duck_shoot():
 	state_machine_torso.start("duck_shoot")
-	var current_animation = state_machine_torso.get_current_node()
-	print(current_animation)
