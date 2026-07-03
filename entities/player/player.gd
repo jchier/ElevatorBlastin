@@ -12,7 +12,9 @@ extends CharacterBody2D
 @onready var visuals: Node = $Visuals
 #@onready var animation_player_torso: AnimationPlayer = $AnimationPlayerTorso
 #@onready var animation_player_legs: AnimationPlayer = $AnimationPlayerLegs
-@onready var bullet_marker_2d: Marker2D = $BulletMarker2D
+#@onready var bullet_marker_2d: Marker2D = $BulletMarker2D
+@onready var bullet_container: Node2D = $BulletContainer
+@onready var bullet_marker_2d: Marker2D = %BulletMarker2D
 @onready var state_chart: StateChart = $StateChart
 @onready var standing_collision_shape: CollisionShape2D = $StandingCollisionShape
 @onready var crouching_collision_shape: CollisionShape2D = $CrouchingCollisionShape
@@ -91,16 +93,19 @@ func _physics_process(delta: float) -> void:
 		
 	if Input.is_action_just_released("down"):
 		state_chart.send_event("player_stand")
-		
-
-
-	if Input.is_action_just_pressed("shoot"):
-		try_fire()
-
-
-func try_fire():
-	animation_component.shoot()
 	
+
+
+		
+func try_duck_fire():
+	animation_component.duck_shoot()
+	fire()
+	
+func try_stand_fire():
+	animation_component.stand_shoot()
+	fire()
+	
+func fire():
 	var bullet = bullet_scene.instantiate() as Bullet
 	bullet.global_position = bullet_marker_2d.global_position
 	bullet.start(bullet_marker_2d.global_rotation)
@@ -109,8 +114,9 @@ func try_fire():
 
 func flip_horizontal():
 	visuals.scale.x *= -1.0
-	bullet_marker_2d.position.x *= -1.0
+	#bullet_marker_2d.position.x *= -1.0
 	bullet_marker_2d.rotation *= -1.0
+	bullet_container.scale.x *= -1
 	forward = !forward
 		
 func _set_current_occupancy(occupancy: Occupant_Component):
@@ -150,3 +156,13 @@ func _on_stand_state_physics_processing(delta: float) -> void:
 			animation_component.play("move")
 		
 	animation_component.move(signf(velocity.y))	
+
+
+func _on_duck_state_input(event: InputEvent) -> void:
+	if Input.is_action_just_pressed("shoot"):
+		try_duck_fire()
+
+
+func _on_stand_state_input(event: InputEvent) -> void:
+	if Input.is_action_just_pressed("shoot"):
+		try_stand_fire()

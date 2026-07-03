@@ -27,11 +27,10 @@ func play(to_play: String):
 func move(x: float):
 	animation_tree["parameters/StateMachineLegs/move/blend_position"] = x
 
-func shoot():
-	#if animation_torso.is_playing():
-	#	animation_torso.stop()
-	#animation_torso.play("torso/shoot")
-	#state_machine_legs.travel("shoot")
+func stand_shoot():
 	state_machine_torso.start("shoot")
-	var current_animation = state_machine_legs.get_current_node()
+
+func duck_shoot():
+	state_machine_torso.start("duck_shoot")
+	var current_animation = state_machine_torso.get_current_node()
 	print(current_animation)
