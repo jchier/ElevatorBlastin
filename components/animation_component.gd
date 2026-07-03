@@ -4,31 +4,34 @@ extends Node
 @export var animation_torso: AnimationPlayer
 @export var animation_legs: AnimationPlayer
 @export var animation_tree: AnimationTree
-@onready var animation_state_machine: AnimationNodeStateMachinePlayback = \
-animation_tree.get("parameters/playback")
+@onready var state_machine_legs: AnimationNodeStateMachinePlayback = \
+animation_tree.get("parameters/StateMachineLegs/playback")
+@onready var state_machine_torso: AnimationNodeStateMachinePlayback = \
+animation_tree.get("parameters/StateMachineTorso/playback")
 
 func play_idle():
 	animation_tree.travel("idle")
 
 func play_walk():
-	animation_state_machine.travel("walk")
+	state_machine_legs.travel("walk")
 	
 func play_duck():
-	animation_state_machine.travel("duck")
+	state_machine_legs.travel("duck")
 	
 func play(to_play: String):
-#	var current_animation = animation_state_machine.get_current_node()
+#	var current_animation = state_machine_legs.get_current_node()
 #	print(current_animation)
 	animation_legs.stop()
-	animation_state_machine.travel(to_play)
+	state_machine_legs.travel(to_play)
 
 func move(x: float):
-	animation_tree["parameters/move/blend_position"] = x
+	animation_tree["parameters/StateMachineLegs/move/blend_position"] = x
 
 func shoot():
 	#if animation_torso.is_playing():
 	#	animation_torso.stop()
 	#animation_torso.play("torso/shoot")
-	animation_state_machine.travel("shoot")
-	var current_animation = animation_state_machine.get_current_node()
+	#state_machine_legs.travel("shoot")
+	state_machine_torso.travel("torso_shoot")
+	var current_animation = state_machine_legs.get_current_node()
 	print(current_animation)

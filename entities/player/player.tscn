@@ -235,6 +235,19 @@ _data = {
 &"walk": SubResource("Animation_b2kln")
 }
 
+[sub_resource type="AnimationNodeAdd2" id="AnimationNodeAdd2_a1qjk"]
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_afbqv"]
+graph_offset = Vector2(-558.1636, 3.8431091)
+nodes/output/position = Vector2(360, 140)
+nodes/Add2/node = SubResource("AnimationNodeAdd2_a1qjk")
+nodes/Add2/position = Vector2(160, 120)
+nodes/StateMachineTorso/node = ExtResource("4_a1qjk")
+nodes/StateMachineTorso/position = Vector2(-180, 80)
+nodes/StateMachineLegs/node = ExtResource("4_a1qjk")
+nodes/StateMachineLegs/position = Vector2(-180, 320)
+node_connections = [&"output", 0, &"Add2", &"Add2", 0, &"StateMachineTorso", &"Add2", 1, &"StateMachineLegs"]
+
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_oark8"]
 radius = 8.0
 height = 44.642857
@@ -273,11 +286,15 @@ libraries/ = SubResource("AnimationLibrary_bectd")
 
 [node name="AnimationTree" type="AnimationTree" parent="AnimationComponent" unique_id=690370865]
 root_node = NodePath("../..")
-tree_root = ExtResource("4_a1qjk")
+tree_root = SubResource("AnimationNodeBlendTree_afbqv")
 anim_player = NodePath("../AnimationPlayerTorso")
-parameters/duck/Add2/add_amount = 1.0
-parameters/idle/Add2/add_amount = 0.0
-parameters/move/blend_position = 0.0
+parameters/Add2/add_amount = 1.0
+parameters/StateMachineTorso/duck/Add2/add_amount = 0.0
+parameters/StateMachineTorso/idle/Add2/add_amount = 0.0
+parameters/StateMachineTorso/move/blend_position = 0.0
+parameters/StateMachineLegs/duck/Add2/add_amount = 0.0
+parameters/StateMachineLegs/idle/Add2/add_amount = 0.0
+parameters/StateMachineLegs/move/blend_position = 0.0
 
 [node name="Visuals" type="Node2D" parent="." unique_id=876248669]
 

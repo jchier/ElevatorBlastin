@@ -33,7 +33,7 @@ animation = &"torso/idle"
 animation = &"idle"
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_omg23"]
-graph_offset = Vector2(-215.13568, -77.16243)
+graph_offset = Vector2(-137.57137, -109.78186)
 nodes/output/position = Vector2(880, 100)
 nodes/Add2/node = SubResource("AnimationNodeAdd2_qcwvm")
 nodes/Add2/position = Vector2(480, 80)
@@ -67,18 +67,15 @@ blend_point_2/node = SubResource("AnimationNodeAnimation_yqrof")
 blend_point_2/pos = 1.0
 blend_point_2/name = &"airborne"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_qcwvm"]
-animation = &"torso/shoot"
-
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_wvtmh"]
 animation = &"stand"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_qcwvm"]
+animation = &"torso/shoot"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_we0b7"]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_mtric"]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_a1qjk"]
-advance_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_j3ovn"]
 
@@ -91,6 +88,9 @@ advance_mode = 2
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_7thud"]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_yqrof"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_a1qjk"]
+advance_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_sw5rj"]
 
@@ -107,14 +107,14 @@ states/duck/position = Vector2(239, 244)
 states/duck2/node = SubResource("AnimationNodeAnimation_a1qjk")
 states/duck2/position = Vector2(41, 10)
 states/idle/node = SubResource("AnimationNodeBlendTree_omg23")
-states/idle/position = Vector2(306, 39)
+states/idle/position = Vector2(313, 35)
 states/idle3/node = SubResource("AnimationNodeAnimation_j3ovn")
 states/idle3/position = Vector2(113, -22)
 states/move/node = SubResource("AnimationNodeBlendSpace1D_7thud")
 states/move/position = Vector2(476, 70)
-states/shoot/node = SubResource("AnimationNodeAnimation_qcwvm")
-states/shoot/position = Vector2(331, -134)
 states/stand/node = SubResource("AnimationNodeAnimation_wvtmh")
 states/stand/position = Vector2(451, 270)
-transitions = ["move", "airborne", SubResource("AnimationNodeStateMachineTransition_we0b7"), "airborne", "stand", SubResource("AnimationNodeStateMachineTransition_mtric"), "Start", "idle", SubResource("AnimationNodeStateMachineTransition_a1qjk"), "idle", "move", SubResource("AnimationNodeStateMachineTransition_j3ovn"), "move", "idle", SubResource("AnimationNodeStateMachineTransition_afbqv"), "stand", "idle", SubResource("AnimationNodeStateMachineTransition_gx6sm"), "idle", "duck", SubResource("AnimationNodeStateMachineTransition_7thud"), "duck", "stand", SubResource("AnimationNodeStateMachineTransition_yqrof"), "idle", "shoot", SubResource("AnimationNodeStateMachineTransition_sw5rj"), "shoot", "idle", SubResource("AnimationNodeStateMachineTransition_4iqsr")]
-graph_offset = Vector2(-101, -229)
+states/torso_shoot/node = SubResource("AnimationNodeAnimation_qcwvm")
+states/torso_shoot/position = Vector2(313, -71)
+transitions = ["move", "airborne", SubResource("AnimationNodeStateMachineTransition_we0b7"), "airborne", "stand", SubResource("AnimationNodeStateMachineTransition_mtric"), "idle", "move", SubResource("AnimationNodeStateMachineTransition_j3ovn"), "move", "idle", SubResource("AnimationNodeStateMachineTransition_afbqv"), "stand", "idle", SubResource("AnimationNodeStateMachineTransition_gx6sm"), "idle", "duck", SubResource("AnimationNodeStateMachineTransition_7thud"), "duck", "stand", SubResource("AnimationNodeStateMachineTransition_yqrof"), "Start", "idle", SubResource("AnimationNodeStateMachineTransition_a1qjk"), "idle", "torso_shoot", SubResource("AnimationNodeStateMachineTransition_sw5rj"), "torso_shoot", "idle", SubResource("AnimationNodeStateMachineTransition_4iqsr")]
+graph_offset = Vector2(-101, -62)

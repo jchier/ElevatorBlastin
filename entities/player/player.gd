@@ -20,7 +20,6 @@ extends CharacterBody2D
 #@onready var animation_state_machine: AnimationNodeStateMachinePlayback = animation_tree.get("parameters/playback")
 @onready var animation_component: Node = $AnimationComponent
 var bullet_scene: PackedScene = preload("uid://rnaqg1ycr0e1")
-
 var speed_multiplier = 30.0
 var jump_multiplier = -30.0
 var direction = 0
@@ -36,6 +35,7 @@ var fall_gravity = 1124
 var _current_occupancy: Occupant_Component = null
 var forward: bool = true
 var was_on_floor: bool = false
+var was_idle:bool = false
 var current_speed: float
 
 func _ready():
@@ -145,8 +145,8 @@ func _on_airborne_state_entered() -> void:
 
 func _on_stand_state_physics_processing(delta: float) -> void:
 	if velocity.length_squared() <= 0.555:
-		animation_component.play("idle")
+			animation_component.play("idle")
 	else:
-		animation_component.play("move")
+			animation_component.play("move")
 		
 	animation_component.move(signf(velocity.y))	
