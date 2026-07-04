@@ -128,7 +128,7 @@ func _clear_current_occupancy():
 
 
 func _on_stand_state_entered() -> void:
-	animation_component.play("idle")
+	animation_component.start("stand")
 
 
 
@@ -171,3 +171,7 @@ func _on_stand_state_input(event: InputEvent) -> void:
 func _on_airborne_state_input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("shoot"):
 		try_stand_fire()
+
+
+func _on_to_grounded_taken() -> void:
+	animation_component.start("stand")

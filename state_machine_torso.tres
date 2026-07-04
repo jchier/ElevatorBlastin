@@ -47,8 +47,6 @@ animation = &"torso/stand"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_we0b7"]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_mtric"]
-
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_a1qjk"]
 advance_mode = 2
 
@@ -65,6 +63,7 @@ advance_mode = 2
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_sw5rj"]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_4iqsr"]
+priority = 2
 switch_mode = 2
 advance_mode = 2
 
@@ -82,16 +81,22 @@ advance_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_5cpnx"]
 
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_comsh"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_4tjak"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_mtric"]
+
 [resource]
 states/Start/position = Vector2(135, 85)
 states/airborne/node = SubResource("AnimationNodeAnimation_gx6sm")
-states/airborne/position = Vector2(705, 70)
+states/airborne/position = Vector2(411, -12)
 states/duck/node = SubResource("AnimationNodeAnimation_a1qjk")
-states/duck/position = Vector2(238, 228)
+states/duck/position = Vector2(252, 201)
 states/duck_shoot/node = SubResource("AnimationNodeAnimation_5cpnx")
 states/duck_shoot/position = Vector2(135, 471)
 states/ducking/node = SubResource("AnimationNodeAnimation_y0102")
-states/ducking/position = Vector2(195, 319)
+states/ducking/position = Vector2(192, 338)
 states/idle/node = SubResource("AnimationNodeAnimation_j3ovn")
 states/idle/position = Vector2(295, 63)
 "states/idle 2/node" = SubResource("AnimationNodeAnimation_sw5rj")
@@ -99,8 +104,8 @@ states/idle/position = Vector2(295, 63)
 states/move/node = SubResource("AnimationNodeBlendSpace1D_7thud")
 states/move/position = Vector2(476, 70)
 states/shoot/node = SubResource("AnimationNodeAnimation_qcwvm")
-states/shoot/position = Vector2(304, -76)
+states/shoot/position = Vector2(25, 240)
 states/stand/node = SubResource("AnimationNodeAnimation_wvtmh")
-states/stand/position = Vector2(451, 270)
-transitions = ["move", "airborne", SubResource("AnimationNodeStateMachineTransition_we0b7"), "airborne", "stand", SubResource("AnimationNodeStateMachineTransition_mtric"), "Start", "idle", SubResource("AnimationNodeStateMachineTransition_a1qjk"), "idle", "duck", SubResource("AnimationNodeStateMachineTransition_7thud"), "stand", "idle", SubResource("AnimationNodeStateMachineTransition_gx6sm"), "idle", "move", SubResource("AnimationNodeStateMachineTransition_j3ovn"), "move", "idle", SubResource("AnimationNodeStateMachineTransition_afbqv"), "idle", "shoot", SubResource("AnimationNodeStateMachineTransition_sw5rj"), "shoot", "idle", SubResource("AnimationNodeStateMachineTransition_4iqsr"), "duck_shoot", "ducking", SubResource("AnimationNodeStateMachineTransition_uksp6"), "ducking", "duck_shoot", SubResource("AnimationNodeStateMachineTransition_y0102"), "duck", "ducking", SubResource("AnimationNodeStateMachineTransition_88ao8"), "ducking", "stand", SubResource("AnimationNodeStateMachineTransition_yqrof"), "duck_shoot", "stand", SubResource("AnimationNodeStateMachineTransition_5cpnx")]
-graph_offset = Vector2(-293, 47)
+states/stand/position = Vector2(453, 257)
+transitions = ["move", "airborne", SubResource("AnimationNodeStateMachineTransition_we0b7"), "Start", "idle", SubResource("AnimationNodeStateMachineTransition_a1qjk"), "idle", "duck", SubResource("AnimationNodeStateMachineTransition_7thud"), "stand", "idle", SubResource("AnimationNodeStateMachineTransition_gx6sm"), "idle", "move", SubResource("AnimationNodeStateMachineTransition_j3ovn"), "move", "idle", SubResource("AnimationNodeStateMachineTransition_afbqv"), "idle", "shoot", SubResource("AnimationNodeStateMachineTransition_sw5rj"), "shoot", "idle", SubResource("AnimationNodeStateMachineTransition_4iqsr"), "duck_shoot", "ducking", SubResource("AnimationNodeStateMachineTransition_uksp6"), "ducking", "duck_shoot", SubResource("AnimationNodeStateMachineTransition_y0102"), "duck", "ducking", SubResource("AnimationNodeStateMachineTransition_88ao8"), "ducking", "stand", SubResource("AnimationNodeStateMachineTransition_yqrof"), "shoot", "duck", SubResource("AnimationNodeStateMachineTransition_5cpnx"), "duck_shoot", "stand", SubResource("AnimationNodeStateMachineTransition_comsh"), "shoot", "stand", SubResource("AnimationNodeStateMachineTransition_4tjak"), "airborne", "idle", SubResource("AnimationNodeStateMachineTransition_mtric")]
+graph_offset = Vector2(-111, -91)
