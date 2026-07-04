@@ -27,7 +27,7 @@ var bullet_scene: PackedScene = preload("uid://rnaqg1ycr0e1")
 var speed_multiplier = 30.0
 var jump_multiplier = -30.0
 var direction = 0
-
+var stance_distance_modifier = 18
 var acceleration: float = 8.0
 var friction: float = 10.0
 var coyote_time_activated: bool = false
@@ -40,7 +40,8 @@ var forward: bool = true
 var was_on_floor: bool = false
 var was_idle:bool = false
 var current_speed: float
-var can_shoot: bool = true
+var can_shoot: bool = false
+
 func _ready():
 	rider_component.set_current_occupancy.connect(_set_current_occupancy)
 	rider_component.clear_current_occupancy.connect(_clear_current_occupancy)
@@ -140,6 +141,7 @@ func _on_stand_state_entered() -> void:
 
 
 func _on_duck_state_entered() -> void:
+	bullet_marker_2d.global_position.y += stance_distance_modifier
 	standing_collision_shape.disabled = true
 	crouching_collision_shape.disabled = false
 	animation_component.play("duck")
@@ -147,6 +149,7 @@ func _on_duck_state_entered() -> void:
 
 
 func _on_duck_state_exited() -> void:
+	bullet_marker_2d.global_position.y -= stance_distance_modifier
 	standing_collision_shape.disabled = false
 	crouching_collision_shape.disabled = true
 	current_speed = max_speed
