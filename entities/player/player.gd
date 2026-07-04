@@ -21,6 +21,8 @@ extends CharacterBody2D
 #@onready var animation_tree: AnimationTree = $AnimationTree
 #@onready var animation_state_machine: AnimationNodeStateMachinePlayback = animation_tree.get("parameters/playback")
 @onready var animation_component: Node = $AnimationComponent
+@onready var fire_rate_timer: Timer = $FireRateTimer
+
 var bullet_scene: PackedScene = preload("uid://rnaqg1ycr0e1")
 var speed_multiplier = 30.0
 var jump_multiplier = -30.0
@@ -98,10 +100,14 @@ func _physics_process(delta: float) -> void:
 
 		
 func try_duck_fire():
+	if !fire_rate_timer.is_stopped():
+		return
 	animation_component.duck_shoot()
 	fire()
 	
 func try_stand_fire():
+	if !fire_rate_timer.is_stopped():
+		return
 	animation_component.stand_shoot()
 	fire()
 	
@@ -110,6 +116,7 @@ func fire():
 	bullet.global_position = bullet_marker_2d.global_position
 	bullet.start(bullet_marker_2d.global_rotation)
 	get_parent().add_child(bullet, true)
+	fire_rate_timer.start()
 	#TODO: fire rate timer, effects go here
 
 func flip_horizontal():
