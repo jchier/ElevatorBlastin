@@ -35,7 +35,6 @@ var max_gravity: float = 14.5
 var min_gravity: float = 12.0
 var gravity: float = 12.0
 var fall_gravity = 1124
-
 var _current_occupancy: Occupant_Component = null
 var forward: bool = true
 var was_on_floor: bool = false
