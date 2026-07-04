@@ -1,6 +1,8 @@
 class_name AnimationComponent
 extends Node
 
+signal can_shoot
+
 @export var animation_torso: AnimationPlayer
 @export var animation_legs: AnimationPlayer
 @export var animation_tree: AnimationTree
@@ -44,7 +46,16 @@ func move(x: float):
 	animation_tree["parameters/StateMachineLegs/move/blend_position"] = x
 
 func stand_shoot():
+	if state_machine_torso.get_current_node() == "duck_shoot":
+		state_machine_torso.travel("shoot")
+		return
 	state_machine_torso.start("shoot")
 
 func duck_shoot():
+	if state_machine_torso.get_current_node() == "shoot":
+		state_machine_torso.travel("duck_shoot")
+		return
 	state_machine_torso.start("duck_shoot")
+
+func _can_shoot():
+	can_shoot.emit()

@@ -41,10 +41,11 @@ var forward: bool = true
 var was_on_floor: bool = false
 var was_idle:bool = false
 var current_speed: float
-
+var can_shoot: bool = true
 func _ready():
 	rider_component.set_current_occupancy.connect(_set_current_occupancy)
 	rider_component.clear_current_occupancy.connect(_clear_current_occupancy)
+	animation_component.can_shoot.connect(_can_shoot)
 	crouching_collision_shape.disabled = true
 	current_speed = max_speed
 	
@@ -100,13 +101,13 @@ func _physics_process(delta: float) -> void:
 
 		
 func try_duck_fire():
-	if !fire_rate_timer.is_stopped():
+	if !fire_rate_timer.is_stopped() and can_shoot:
 		return
 	animation_component.duck_shoot()
 	fire()
 	
 func try_stand_fire():
-	if !fire_rate_timer.is_stopped():
+	if !fire_rate_timer.is_stopped() and can_shoot:
 		return
 	animation_component.stand_shoot()
 	fire()
@@ -182,3 +183,6 @@ func _on_airborne_state_input(event: InputEvent) -> void:
 
 func _on_to_grounded_taken() -> void:
 	animation_component.start("stand")
+
+func _can_shoot():
+	can_shoot = !can_shoot
