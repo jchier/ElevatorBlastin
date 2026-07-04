@@ -3,13 +3,13 @@
 [ext_resource type="Script" uid="uid://b2dvl12tkj5s6" path="res://entities/player/player.gd" id="1_abrql"]
 [ext_resource type="Script" uid="uid://sphex7yy6a2e" path="res://components/health_component.gd" id="2_fkugw"]
 [ext_resource type="PackedScene" uid="uid://b1imkaubtmk14" path="res://components/animation_component.tscn" id="3_7thud"]
-[ext_resource type="Texture2D" uid="uid://c0fyf2vjfidew" path="res://entities/player/player-legs.png" id="3_fkugw"]
 [ext_resource type="PackedScene" uid="uid://b3rjse2q2hp5v" path="res://components/rider_component.tscn" id="3_sglur"]
-[ext_resource type="Texture2D" uid="uid://0bmx6br1uicj" path="res://entities/player/player_torso.png" id="4_7thud"]
 [ext_resource type="AnimationNodeStateMachine" uid="uid://vqwerxuxtc6o" path="res://state_machine_torso.tres" id="4_a1qjk"]
 [ext_resource type="AnimationNodeStateMachine" uid="uid://cb7raff26gw6f" path="res://state_machine_legs.tres" id="4_j3ovn"]
+[ext_resource type="Texture2D" uid="uid://dl5ololkaxnip" path="res://entities/player/player_torso2.png" id="6_j3ovn"]
 [ext_resource type="Script" uid="uid://couw105c3bde4" path="res://addons/godot_state_charts/state_chart.gd" id="6_wvtmh"]
 [ext_resource type="Script" uid="uid://jk2jm1g6q853" path="res://addons/godot_state_charts/compound_state.gd" id="7_7thud"]
+[ext_resource type="Texture2D" uid="uid://dccqr7iuuq4f0" path="res://entities/player/player_legs2.png" id="7_j3ovn"]
 [ext_resource type="Script" uid="uid://cytafq8i1y8qm" path="res://addons/godot_state_charts/atomic_state.gd" id="8_a1qjk"]
 [ext_resource type="Script" uid="uid://cf1nsco3w0mf6" path="res://addons/godot_state_charts/transition.gd" id="9_j3ovn"]
 [ext_resource type="PackedScene" uid="uid://bcwkugn6v3oy7" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="10_afbqv"]
@@ -40,6 +40,18 @@ tracks/1/keys = {
 "update": 0,
 "values": [Vector2(26, -27)]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Visuals/Sprite2DTorso:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
 
 [sub_resource type="Animation" id="Animation_j3ovn"]
 resource_name = "airborne"
@@ -51,10 +63,10 @@ tracks/0/path = NodePath("Visuals/Sprite2DLegs:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.033333335),
+"transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [9]
+"values": [10, 11]
 }
 
 [sub_resource type="Animation" id="Animation_bectd"]
@@ -71,7 +83,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.083333336),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [8, 10]
+"values": [7, 8]
 }
 
 [sub_resource type="Animation" id="Animation_wvtmh"]
@@ -105,7 +117,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.083333336),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [10, 8]
+"values": [7, 0]
 }
 
 [sub_resource type="Animation" id="Animation_26q78"]
@@ -120,7 +132,7 @@ tracks/0/path = NodePath("Visuals/Sprite2DLegs:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.083333336, 0.16666666, 0.25, 0.33333334, 0.41666666),
+"times": PackedFloat32Array(0, 0.083333336, 0.16666667, 0.25, 0.33333334, 0.4166667),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [1, 2, 3, 4, 5, 6]
@@ -167,7 +179,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.083333336),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [4, 5]
+"values": [1, 2]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -193,10 +205,10 @@ tracks/0/path = NodePath("Visuals/Sprite2DTorso:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.083333336, 0.16666666, 0.25),
+"times": PackedFloat32Array(0, 0.083333336, 0.16666667, 0.25),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
-"values": [7, 8, 9, 5]
+"values": [3, 4, 5, 2]
 }
 
 [sub_resource type="Animation" id="Animation_mtric"]
@@ -213,7 +225,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [5]
+"values": [2]
 }
 
 [sub_resource type="Animation" id="Animation_3wlsy"]
@@ -244,10 +256,10 @@ tracks/0/path = NodePath("Visuals/Sprite2DTorso:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.083333336, 0.16666666, 0.25),
+"times": PackedFloat32Array(0, 0.083333336, 0.16666667, 0.25),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
-"values": [1, 2, 3, 0]
+"values": [6, 7, 8, 9]
 }
 
 [sub_resource type="Animation" id="Animation_gx6sm"]
@@ -264,7 +276,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.083333336),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [5, 4]
+"values": [1, 0]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -311,7 +323,7 @@ _data = {
 [sub_resource type="AnimationNodeAdd2" id="AnimationNodeAdd2_a1qjk"]
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_afbqv"]
-graph_offset = Vector2(-435.81396, -33.88002)
+graph_offset = Vector2(-161.43161, -92.12835)
 nodes/output/position = Vector2(360, 140)
 nodes/Add2/node = SubResource("AnimationNodeAdd2_a1qjk")
 nodes/Add2/position = Vector2(160, 120)
@@ -371,19 +383,20 @@ parameters/StateMachineLegs/move/blend_position = 0.0
 unique_name_in_owner = true
 z_index = 2
 texture_filter = 1
-texture = ExtResource("4_7thud")
-offset = Vector2(0, -26)
-hframes = 4
-vframes = 3
+texture = ExtResource("6_j3ovn")
+offset = Vector2(0, -21)
+hframes = 5
+vframes = 4
+frame = 1
 
 [node name="Sprite2DLegs" type="Sprite2D" parent="Visuals" unique_id=1040317593]
 unique_name_in_owner = true
 z_index = 2
 texture_filter = 1
-texture = ExtResource("3_fkugw")
+texture = ExtResource("7_j3ovn")
 offset = Vector2(0, -26)
 hframes = 4
-vframes = 3
+vframes = 4
 
 [node name="StandingCollisionShape" type="CollisionShape2D" parent="." unique_id=554777545]
 z_index = 3
