@@ -23,6 +23,7 @@ extends CharacterBody2D
 @onready var animation_component: Node = $AnimationComponent
 @onready var fire_rate_timer: Timer = $FireRateTimer
 @onready var ray_cast_2d: RayCast2D = $RayCast2D
+@onready var edge_detection: RayCast2D = $EdgeDetection
 
 var bullet_scene: PackedScene = preload("uid://rnaqg1ycr0e1")
 var speed_multiplier = 30.0
@@ -79,8 +80,8 @@ func _physics_process(delta: float) -> void:
 	if was_on_floor and not is_on_floor() and velocity.y > 0:
 		state_chart.send_event("airborne")
 	
-	if velocity.x < 0 and forward == true \
-		or velocity.x > 0 and forward == false:
+	if direction < 0 and forward == true \
+		or direction > 0 and forward == false:
 		flip_horizontal()
 	
 	if _current_occupancy:	
@@ -90,7 +91,9 @@ func _physics_process(delta: float) -> void:
 	if ray_cast_2d.is_colliding():
 		state_chart.send_event("aggro")
 		
-	
+	if !edge_detection.is_colliding():
+		flip_horizontal()
+		direction *= -1
 
 		
 func try_duck_fire():
@@ -119,7 +122,10 @@ func flip_horizontal():
 	bullet_marker_2d.rotation *= -1.0
 	bullet_container.scale.x *= -1
 	ray_cast_2d.scale.x *= -1
-	direction *= -1
+	edge_detection.scale.x *= -1
+	forward = !forward
+	edge_detection.position.x *= -1
+	#direction *= -1
 		
 func _set_current_occupancy(occupancy: Occupant_Component):
 		_current_occupancy = occupancy
@@ -174,6 +180,8 @@ func _on_aggro_state_entered() -> void:
 
 
 func _on_docile_state_processing(delta: float) -> void:
+	#current_speed = 0
 	if patrol_timer.is_stopped():
-		#if randi_range(0, 4) >= 1:
-		patrol_timer.start(randf_range(1,5))
+		direction *= -1
+		current_speed = max_speed
+		patrol_timer.start(randf_range(1,2))
