@@ -2,7 +2,7 @@ class_name Enemy
 extends CharacterBody2D
 
 
-
+@onready var patrol_timer: Timer = $PatrolTimer
 @export var max_speed: float = 80.0
 @export var jump_velocity: float = -200.0
 @onready var camera: Camera2D = $Camera2D
@@ -51,7 +51,7 @@ func _ready():
 	crouching_collision_shape.disabled = true
 	current_speed = max_speed
 	state_chart.send_event("docile")
-	direction = 0
+	direction = 1
 	
 func _physics_process(delta: float) -> void:
 	
@@ -118,7 +118,7 @@ func flip_horizontal():
 	#bullet_marker_2d.position.x *= -1.0
 	bullet_marker_2d.rotation *= -1.0
 	bullet_container.scale.x *= -1
-	forward = !forward
+	ray_cast_2d.scale.x *= -1
 	direction *= -1
 		
 func _set_current_occupancy(occupancy: Occupant_Component):
@@ -171,3 +171,9 @@ func _can_shoot():
 
 func _on_aggro_state_entered() -> void:
 	try_stand_fire()
+
+
+func _on_docile_state_processing(delta: float) -> void:
+	if patrol_timer.is_stopped():
+		#if randi_range(0, 4) >= 1:
+		patrol_timer.start(randf_range(1,5))
