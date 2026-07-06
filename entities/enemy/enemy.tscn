@@ -7,7 +7,7 @@
 [ext_resource type="AnimationNodeStateMachine" uid="uid://vqwerxuxtc6o" path="res://state_machine_torso.tres" id="5_2t1u4"]
 [ext_resource type="Texture2D" uid="uid://dl5ololkaxnip" path="res://entities/player/player_torso2.png" id="6_kgxwm"]
 [ext_resource type="Texture2D" uid="uid://dccqr7iuuq4f0" path="res://entities/player/player_legs2.png" id="7_2kpvj"]
-[ext_resource type="Texture2D" uid="uid://b3m20gsesp4i0" path="res://addons/godot_state_charts/animation_player_state.svg" id="8_8r8lm"]
+[ext_resource type="PackedScene" uid="uid://b7k4uoekj8gqj" path="res://components/bullet_component.tscn" id="8_jfjhj"]
 [ext_resource type="PackedScene" uid="uid://b3rjse2q2hp5v" path="res://components/rider_component.tscn" id="9_ttrsd"]
 [ext_resource type="Script" uid="uid://couw105c3bde4" path="res://addons/godot_state_charts/state_chart.gd" id="10_5f25h"]
 [ext_resource type="Script" uid="uid://c1vp0ojjvaby1" path="res://addons/godot_state_charts/parallel_state.gd" id="11_jfjhj"]
@@ -391,18 +391,7 @@ position = Vector2(0, -14)
 scale = Vector2(1.12, 1.12)
 shape = SubResource("CapsuleShape2D_b6dgu")
 
-[node name="BulletContainer" type="Node2D" parent="." unique_id=2014518259]
-
-[node name="BulletMarker2D" type="Marker2D" parent="BulletContainer" unique_id=78952143]
-unique_name_in_owner = true
-position = Vector2(29, -41)
-rotation = 1.5707964
-
-[node name="Sprite2D" type="Sprite2D" parent="BulletContainer/BulletMarker2D" unique_id=536880454]
-z_index = 4
-rotation = -1.5707964
-scale = Vector2(0.23255089, 0.20310712)
-texture = ExtResource("8_8r8lm")
+[node name="BulletComponent" parent="." unique_id=815253983 instance=ExtResource("8_jfjhj")]
 
 [node name="RiderComponent" parent="." unique_id=145831594 instance=ExtResource("9_ttrsd")]
 visible = false

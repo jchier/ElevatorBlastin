@@ -18,7 +18,6 @@ func _process(delta: float):
 func start(dir: float):
 	self.direction = dir
 
-
 	
 func _on_life_timer_timeout():
 	queue_free()

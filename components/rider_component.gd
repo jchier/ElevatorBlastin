@@ -14,5 +14,5 @@ func _on_area_entered(other_area: Area2D):
 
 	set_current_occupancy.emit(other_area)
 
-func _on_area_exited(occupancy: Occupant_Component):
+func _on_area_exited(_occupancy: Occupant_Component):
 	clear_current_occupancy.emit()

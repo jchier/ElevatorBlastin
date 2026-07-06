@@ -1,36 +1,22 @@
 class_name Player
 extends CharacterBody2D
 
-
-
 @export var max_speed: float = 80.0
 @export var jump_velocity: float = -200.0
-@onready var camera: Camera2D = $Camera2D
-@onready var coyote_timer: Timer = $CoyoteTimer
-@onready var jump_buffer_timer: Timer = $JumpBufferTimer
 @onready var rider_component: Area2D = $RiderComponent
 @onready var visuals: Node = $Visuals
-#@onready var animation_player_torso: AnimationPlayer = $AnimationPlayerTorso
-#@onready var animation_player_legs: AnimationPlayer = $AnimationPlayerLegs
-#@onready var bullet_marker_2d: Marker2D = $BulletMarker2D
-@onready var bullet_container: Node2D = $BulletContainer
-@onready var bullet_marker_2d: Marker2D = %BulletMarker2D
+@onready var bullet_component: Node2D = $BulletComponent
 @onready var state_chart: StateChart = $StateChart
 @onready var standing_collision_shape: CollisionShape2D = $StandingCollisionShape
 @onready var crouching_collision_shape: CollisionShape2D = $CrouchingCollisionShape
-#@onready var animation_tree: AnimationTree = $AnimationTree
-#@onready var animation_state_machine: AnimationNodeStateMachinePlayback = animation_tree.get("parameters/playback")
 @onready var animation_component: Node = $AnimationComponent
 @onready var fire_rate_timer: Timer = $FireRateTimer
 
-var bullet_scene: PackedScene = preload("uid://rnaqg1ycr0e1")
 var speed_multiplier = 30.0
 var jump_multiplier = -30.0
 var direction = 0
-var stance_distance_modifier = 18
 var acceleration: float = 8.0
 var friction: float = 10.0
-var coyote_time_activated: bool = false
 var max_gravity: float = 14.5
 var min_gravity: float = 12.0
 var gravity: float = 12.0
@@ -113,18 +99,13 @@ func try_stand_fire():
 	fire()
 	
 func fire():
-	var bullet = bullet_scene.instantiate() as Bullet
-	bullet.global_position = bullet_marker_2d.global_position
-	bullet.start(bullet_marker_2d.global_rotation)
-	get_parent().add_child(bullet, true)
+	bullet_component.fire()
 	fire_rate_timer.start()
 	#TODO: fire rate timer, effects go here
 
 func flip_horizontal():
+	bullet_component.flip_horizontal()
 	visuals.scale.x *= -1.0
-	#bullet_marker_2d.position.x *= -1.0
-	bullet_marker_2d.rotation *= -1.0
-	bullet_container.scale.x *= -1
 	forward = !forward
 		
 func _set_current_occupancy(occupancy: Occupant_Component):
@@ -141,7 +122,7 @@ func _on_stand_state_entered() -> void:
 
 
 func _on_duck_state_entered() -> void:
-	bullet_marker_2d.global_position.y += stance_distance_modifier
+	bullet_component.toggle_stance()
 	standing_collision_shape.disabled = true
 	crouching_collision_shape.disabled = false
 	animation_component.play("duck")
@@ -149,7 +130,7 @@ func _on_duck_state_entered() -> void:
 
 
 func _on_duck_state_exited() -> void:
-	bullet_marker_2d.global_position.y -= stance_distance_modifier
+	bullet_component.toggle_stance()
 	standing_collision_shape.disabled = false
 	crouching_collision_shape.disabled = true
 	current_speed = max_speed
@@ -159,7 +140,7 @@ func _on_airborne_state_entered() -> void:
 	animation_component.play("airborne")
 
 
-func _on_stand_state_physics_processing(delta: float) -> void:
+func _on_stand_state_physics_processing(_delta: float) -> void:
 	if velocity.length_squared() <= 0.555:
 			animation_component.play("idle")
 	else:
@@ -168,17 +149,17 @@ func _on_stand_state_physics_processing(delta: float) -> void:
 	animation_component.move(signf(velocity.y))	
 
 
-func _on_duck_state_input(event: InputEvent) -> void:
+func _on_duck_state_input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("shoot"):
 		try_duck_fire()
 
 
-func _on_stand_state_input(event: InputEvent) -> void:
+func _on_stand_state_input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("shoot"):
 		try_stand_fire()
 
 
-func _on_airborne_state_input(event: InputEvent) -> void:
+func _on_airborne_state_input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("shoot"):
 		try_stand_fire()
 

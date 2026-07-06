@@ -11,7 +11,7 @@
 [ext_resource type="Script" uid="uid://jk2jm1g6q853" path="res://addons/godot_state_charts/compound_state.gd" id="7_7thud"]
 [ext_resource type="Texture2D" uid="uid://dccqr7iuuq4f0" path="res://entities/player/player_legs2.png" id="7_j3ovn"]
 [ext_resource type="Script" uid="uid://cytafq8i1y8qm" path="res://addons/godot_state_charts/atomic_state.gd" id="8_a1qjk"]
-[ext_resource type="Texture2D" uid="uid://b3m20gsesp4i0" path="res://addons/godot_state_charts/animation_player_state.svg" id="8_afbqv"]
+[ext_resource type="PackedScene" uid="uid://b7k4uoekj8gqj" path="res://components/bullet_component.tscn" id="8_afbqv"]
 [ext_resource type="Script" uid="uid://cf1nsco3w0mf6" path="res://addons/godot_state_charts/transition.gd" id="9_j3ovn"]
 [ext_resource type="PackedScene" uid="uid://bcwkugn6v3oy7" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="10_afbqv"]
 
@@ -389,26 +389,7 @@ position = Vector2(0, -14)
 scale = Vector2(1.12, 1.12)
 shape = SubResource("CapsuleShape2D_b6dgu")
 
-[node name="CoyoteTimer" type="Timer" parent="." unique_id=199497401]
-wait_time = 0.12
-one_shot = true
-
-[node name="JumpBufferTimer" type="Timer" parent="." unique_id=1802234213]
-wait_time = 0.1
-one_shot = true
-
-[node name="BulletContainer" type="Node2D" parent="." unique_id=2014518259]
-
-[node name="BulletMarker2D" type="Marker2D" parent="BulletContainer" unique_id=78952143]
-unique_name_in_owner = true
-position = Vector2(29, -41)
-rotation = 1.5707964
-
-[node name="Sprite2D" type="Sprite2D" parent="BulletContainer/BulletMarker2D" unique_id=536880454]
-z_index = 4
-rotation = -1.5707964
-scale = Vector2(0.23255089, 0.20310712)
-texture = ExtResource("8_afbqv")
+[node name="BulletComponent" parent="." unique_id=815253983 instance=ExtResource("8_afbqv")]
 
 [node name="RiderComponent" parent="." unique_id=145831594 instance=ExtResource("3_sglur")]
 visible = false

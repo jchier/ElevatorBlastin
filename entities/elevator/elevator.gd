@@ -16,7 +16,7 @@ func _ready():
 	floor_area.body_entered.connect(_on_floor_area_entered)
 	wait_timer.timeout.connect(on_wait_timer_timeout)
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if wait_timer.is_stopped():
 		velocity.y = direction * elevator_speed
 		move_and_slide()
@@ -49,5 +49,5 @@ func _flip_direction():
 func on_wait_timer_timeout():
 	pass
 
-func _on_floor_area_entered(body: Node2D):
+func _on_floor_area_entered(_body: Node2D):
 	wait_timer.start()

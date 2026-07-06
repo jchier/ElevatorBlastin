@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://b7k4uoekj8gqj"]
+
+[ext_resource type="Script" uid="uid://cpro4h58noed0" path="res://components/bullet_component.gd" id="1_qqmil"]
+
+[node name="BulletComponent" type="Node2D" unique_id=815253983]
+script = ExtResource("1_qqmil")
+
+[node name="BulletMarker2DStand" type="Marker2D" parent="." unique_id=1235233455]
+unique_name_in_owner = true
+position = Vector2(29, -41)
+rotation = 1.5707964
+
+[node name="BulletMarker2DCrouch" type="Marker2D" parent="." unique_id=145612635]
+unique_name_in_owner = true
+position = Vector2(29, -23)
+rotation = 1.5707964
