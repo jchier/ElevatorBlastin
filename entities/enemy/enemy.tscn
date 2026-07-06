@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://dl5ololkaxnip" path="res://entities/player/player_torso2.png" id="6_kgxwm"]
 [ext_resource type="Texture2D" uid="uid://dccqr7iuuq4f0" path="res://entities/player/player_legs2.png" id="7_2kpvj"]
 [ext_resource type="PackedScene" uid="uid://b7k4uoekj8gqj" path="res://components/bullet_component.tscn" id="8_jfjhj"]
+[ext_resource type="PackedScene" uid="uid://cmh5yetqv4k2r" path="res://components/hurtbox_component.tscn" id="8_t1g2p"]
 [ext_resource type="PackedScene" uid="uid://b3rjse2q2hp5v" path="res://components/rider_component.tscn" id="9_ttrsd"]
 [ext_resource type="Script" uid="uid://couw105c3bde4" path="res://addons/godot_state_charts/state_chart.gd" id="10_5f25h"]
 [ext_resource type="Script" uid="uid://c1vp0ojjvaby1" path="res://addons/godot_state_charts/parallel_state.gd" id="11_jfjhj"]
@@ -378,6 +379,8 @@ texture = ExtResource("7_2kpvj")
 offset = Vector2(0, -26)
 hframes = 4
 vframes = 4
+
+[node name="HurtboxComponent" parent="." unique_id=1378213332 instance=ExtResource("8_t1g2p")]
 
 [node name="StandingCollisionShape" type="CollisionShape2D" parent="." unique_id=554777545]
 z_index = 3

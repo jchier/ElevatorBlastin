@@ -9,6 +9,7 @@ signal hit_by_hitbox
 
 
 func _ready() -> void:
+	crouching_collision_shape.disabled = true
 	area_entered.connect(_on_area_entered)
 	
 func _handle_hit(hitbox_component: Area2D):
@@ -22,7 +23,7 @@ func _on_area_entered(other_area: Area2D):
 
 	_handle_hit(other_area)
 
-func toggle_crouch():
+func toggle_stance():
 	if !standing_collision_shape.disabled and crouching_collision_shape.disabled:
 		standing_collision_shape.disabled = true
 		crouching_collision_shape.disabled = false

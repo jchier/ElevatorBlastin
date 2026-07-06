@@ -3,6 +3,9 @@
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_gx6sm"]
 animation = &"airborne"
 
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_uu7uf"]
+animation = &"dead"
+
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_a1qjk"]
 animation = &"duck"
 
@@ -52,10 +55,14 @@ advance_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_afbqv"]
 
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_8r5wa"]
+
 [resource]
 states/Start/position = Vector2(135, 85)
 states/airborne/node = SubResource("AnimationNodeAnimation_gx6sm")
 states/airborne/position = Vector2(705, 70)
+states/dead/node = SubResource("AnimationNodeAnimation_uu7uf")
+states/dead/position = Vector2(379, -105)
 states/duck/node = SubResource("AnimationNodeAnimation_a1qjk")
 states/duck/position = Vector2(238, 228)
 states/idle/node = SubResource("AnimationNodeAnimation_j3ovn")
@@ -64,5 +71,5 @@ states/move/node = SubResource("AnimationNodeBlendSpace1D_7thud")
 states/move/position = Vector2(476, 70)
 states/stand/node = SubResource("AnimationNodeAnimation_wvtmh")
 states/stand/position = Vector2(451, 270)
-transitions = ["move", "airborne", SubResource("AnimationNodeStateMachineTransition_we0b7"), "airborne", "stand", SubResource("AnimationNodeStateMachineTransition_mtric"), "duck", "stand", SubResource("AnimationNodeStateMachineTransition_yqrof"), "Start", "idle", SubResource("AnimationNodeStateMachineTransition_a1qjk"), "idle", "duck", SubResource("AnimationNodeStateMachineTransition_7thud"), "stand", "idle", SubResource("AnimationNodeStateMachineTransition_gx6sm"), "idle", "move", SubResource("AnimationNodeStateMachineTransition_j3ovn"), "move", "idle", SubResource("AnimationNodeStateMachineTransition_afbqv")]
+transitions = ["move", "airborne", SubResource("AnimationNodeStateMachineTransition_we0b7"), "airborne", "stand", SubResource("AnimationNodeStateMachineTransition_mtric"), "duck", "stand", SubResource("AnimationNodeStateMachineTransition_yqrof"), "Start", "idle", SubResource("AnimationNodeStateMachineTransition_a1qjk"), "idle", "duck", SubResource("AnimationNodeStateMachineTransition_7thud"), "stand", "idle", SubResource("AnimationNodeStateMachineTransition_gx6sm"), "idle", "move", SubResource("AnimationNodeStateMachineTransition_j3ovn"), "move", "idle", SubResource("AnimationNodeStateMachineTransition_afbqv"), "idle", "dead", SubResource("AnimationNodeStateMachineTransition_8r5wa")]
 graph_offset = Vector2(-57, -149)

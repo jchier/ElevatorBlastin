@@ -12,6 +12,9 @@ extends CharacterBody2D
 @onready var animation_component: Node = $AnimationComponent
 @onready var fire_rate_timer: Timer = $FireRateTimer
 @onready var hurtbox_component: HurtboxComponent = $HurtboxComponent
+@onready var health_component: HealthComponent = $HealthComponent
+
+signal died
 
 var speed_multiplier = 30.0
 var jump_multiplier = -30.0
@@ -33,6 +36,7 @@ func _ready():
 	rider_component.set_current_occupancy.connect(_set_current_occupancy)
 	rider_component.clear_current_occupancy.connect(_clear_current_occupancy)
 	animation_component.can_shoot.connect(_can_shoot)
+	health_component.died.connect(_on_died)
 	crouching_collision_shape.disabled = true
 	current_speed = max_speed
 	
@@ -124,6 +128,7 @@ func _on_stand_state_entered() -> void:
 
 func _on_duck_state_entered() -> void:
 	bullet_component.toggle_stance()
+	hurtbox_component.toggle_stance()
 	standing_collision_shape.disabled = true
 	crouching_collision_shape.disabled = false
 	animation_component.play("duck")
@@ -132,6 +137,7 @@ func _on_duck_state_entered() -> void:
 
 func _on_duck_state_exited() -> void:
 	bullet_component.toggle_stance()
+	hurtbox_component.toggle_stance()
 	standing_collision_shape.disabled = false
 	crouching_collision_shape.disabled = true
 	current_speed = max_speed
@@ -170,3 +176,13 @@ func _on_to_grounded_taken() -> void:
 
 func _can_shoot():
 	can_shoot = !can_shoot
+	
+	
+func _on_died():
+	state_chart.send_event("dead")
+
+
+func _on_dead_state_entered() -> void:
+	animation_component.start("dead")
+	current_speed = 0
+	died.emit()

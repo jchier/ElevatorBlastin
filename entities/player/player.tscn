@@ -16,6 +16,21 @@
 [ext_resource type="Script" uid="uid://cf1nsco3w0mf6" path="res://addons/godot_state_charts/transition.gd" id="9_j3ovn"]
 [ext_resource type="PackedScene" uid="uid://bcwkugn6v3oy7" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="10_afbqv"]
 
+[sub_resource type="Animation" id="Animation_eyb6c"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visuals/Sprite2DTorso:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
+"update": 1,
+"values": []
+}
+
 [sub_resource type="Animation" id="Animation_j3ovn"]
 resource_name = "airborne"
 length = 0.06666667
@@ -30,6 +45,23 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [10, 11]
+}
+
+[sub_resource type="Animation" id="Animation_221hk"]
+resource_name = "dead"
+length = 0.75
+step = 0.083333336
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visuals/Sprite2DLegs:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [12]
 }
 
 [sub_resource type="Animation" id="Animation_bectd"]
@@ -103,7 +135,9 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_bectd"]
 _data = {
+&"RESET": SubResource("Animation_eyb6c"),
 &"airborne": SubResource("Animation_j3ovn"),
+&"dead": SubResource("Animation_221hk"),
 &"duck": SubResource("Animation_bectd"),
 &"idle": SubResource("Animation_wvtmh"),
 &"stand": SubResource("Animation_7thud"),
@@ -125,6 +159,23 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_ghoj8"]
+resource_name = "dead"
+length = 0.6666667
+step = 0.083333336
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visuals/Sprite2DTorso:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.083333336, 0.16666666, 0.25, 0.33333334, 0.41666666, 0.50000006, 0.5833334),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [11, 12, 13, 14, 15, 16, 17, 18]
 }
 
 [sub_resource type="Animation" id="Animation_afbqv"]
@@ -291,6 +342,7 @@ tracks/0/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_j3ovn"]
 _data = {
 &"airborne": SubResource("Animation_yqrof"),
+&"dead": SubResource("Animation_ghoj8"),
 &"duck": SubResource("Animation_afbqv"),
 &"duck_shoot": SubResource("Animation_we0b7"),
 &"ducking": SubResource("Animation_mtric"),
@@ -303,6 +355,7 @@ _data = {
 [sub_resource type="AnimationNodeAdd2" id="AnimationNodeAdd2_a1qjk"]
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_afbqv"]
+graph_offset = Vector2(-445.16956, 58.557068)
 nodes/output/position = Vector2(360, 140)
 nodes/Add2/node = SubResource("AnimationNodeAdd2_a1qjk")
 nodes/Add2/position = Vector2(160, 120)
@@ -379,12 +432,14 @@ hframes = 4
 vframes = 4
 
 [node name="StandingCollisionShape" type="CollisionShape2D" parent="." unique_id=554777545]
+visible = false
 z_index = 3
 position = Vector2(0, -25)
 scale = Vector2(1.12, 1.12)
 shape = SubResource("CapsuleShape2D_oark8")
 
 [node name="CrouchingCollisionShape" type="CollisionShape2D" parent="." unique_id=435291202]
+visible = false
 z_index = 3
 position = Vector2(0, -14)
 scale = Vector2(1.12, 1.12)
@@ -447,6 +502,12 @@ to = NodePath("../../Stand")
 event = &"player_stand"
 delay_in_seconds = "0.0"
 
+[node name="ToDie" type="Node" parent="StateChart/Root/Grounded" unique_id=954766725]
+script = ExtResource("9_j3ovn")
+to = NodePath("../../Dead")
+event = &"dead"
+delay_in_seconds = "0.0"
+
 [node name="Airborne" type="Node" parent="StateChart/Root" unique_id=414048615]
 script = ExtResource("8_a1qjk")
 
@@ -454,6 +515,12 @@ script = ExtResource("8_a1qjk")
 script = ExtResource("9_j3ovn")
 to = NodePath("../../Grounded")
 event = &"grounded"
+delay_in_seconds = "0.0"
+
+[node name="ToDie" type="Node" parent="StateChart/Root/Airborne" unique_id=230029214]
+script = ExtResource("9_j3ovn")
+to = NodePath("../../Dead")
+event = &"dead"
 delay_in_seconds = "0.0"
 
 [node name="Dead" type="Node" parent="StateChart/Root" unique_id=281422517]
@@ -475,3 +542,4 @@ initial_node_to_watch = NodePath("../StateChart")
 [connection signal="state_entered" from="StateChart/Root/Airborne" to="." method="_on_airborne_state_entered"]
 [connection signal="state_input" from="StateChart/Root/Airborne" to="." method="_on_airborne_state_input"]
 [connection signal="taken" from="StateChart/Root/Airborne/ToGrounded" to="." method="_on_to_grounded_taken"]
+[connection signal="state_entered" from="StateChart/Root/Dead" to="." method="_on_dead_state_entered"]
