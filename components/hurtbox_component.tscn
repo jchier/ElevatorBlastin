@@ -2,5 +2,25 @@
 
 [ext_resource type="Script" uid="uid://bwtjw0jfeig8r" path="res://components/hurtbox_component.gd" id="1_prfln"]
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_prfln"]
+radius = 8.0
+height = 44.642857
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8jj4i"]
+radius = 8.035714
+height = 25.0
+
 [node name="HurtboxComponent" type="Area2D" unique_id=1378213332]
 script = ExtResource("1_prfln")
+
+[node name="StandingCollisionShape" type="CollisionShape2D" parent="." unique_id=397904015]
+z_index = 3
+position = Vector2(0, -25)
+scale = Vector2(1.12, 1.12)
+shape = SubResource("CapsuleShape2D_prfln")
+
+[node name="CrouchingCollisionShape" type="CollisionShape2D" parent="." unique_id=1024277257]
+z_index = 3
+position = Vector2(0, -14)
+scale = Vector2(1.12, 1.12)
+shape = SubResource("CapsuleShape2D_8jj4i")

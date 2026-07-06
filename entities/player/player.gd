@@ -11,6 +11,7 @@ extends CharacterBody2D
 @onready var crouching_collision_shape: CollisionShape2D = $CrouchingCollisionShape
 @onready var animation_component: Node = $AnimationComponent
 @onready var fire_rate_timer: Timer = $FireRateTimer
+@onready var hurtbox_component: HurtboxComponent = $HurtboxComponent
 
 var speed_multiplier = 30.0
 var jump_multiplier = -30.0

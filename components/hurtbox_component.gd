@@ -4,6 +4,8 @@ extends Area2D
 signal hit_by_hitbox
 
 @export var health_component: HealthComponent
+@onready var standing_collision_shape: CollisionShape2D = $StandingCollisionShape
+@onready var crouching_collision_shape: CollisionShape2D = $CrouchingCollisionShape
 
 
 func _ready() -> void:
@@ -19,3 +21,11 @@ func _on_area_entered(other_area: Area2D):
 		return
 
 	_handle_hit(other_area)
+
+func toggle_crouch():
+	if !standing_collision_shape.disabled and crouching_collision_shape.disabled:
+		standing_collision_shape.disabled = true
+		crouching_collision_shape.disabled = false
+	elif standing_collision_shape.disabled and !crouching_collision_shape.disabled:
+		standing_collision_shape.disabled = false
+		crouching_collision_shape.disabled = true

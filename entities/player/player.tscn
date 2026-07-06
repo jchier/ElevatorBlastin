@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://dccqr7iuuq4f0" path="res://entities/player/player_legs2.png" id="7_j3ovn"]
 [ext_resource type="Script" uid="uid://cytafq8i1y8qm" path="res://addons/godot_state_charts/atomic_state.gd" id="8_a1qjk"]
 [ext_resource type="PackedScene" uid="uid://b7k4uoekj8gqj" path="res://components/bullet_component.tscn" id="8_afbqv"]
+[ext_resource type="PackedScene" uid="uid://cmh5yetqv4k2r" path="res://components/hurtbox_component.tscn" id="9_gx6sm"]
 [ext_resource type="Script" uid="uid://cf1nsco3w0mf6" path="res://addons/godot_state_charts/transition.gd" id="9_j3ovn"]
 [ext_resource type="PackedScene" uid="uid://bcwkugn6v3oy7" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="10_afbqv"]
 
@@ -390,6 +391,9 @@ scale = Vector2(1.12, 1.12)
 shape = SubResource("CapsuleShape2D_b6dgu")
 
 [node name="BulletComponent" parent="." unique_id=815253983 instance=ExtResource("8_afbqv")]
+
+[node name="HurtboxComponent" parent="." unique_id=1378213332 node_paths=PackedStringArray("health_component") instance=ExtResource("9_gx6sm")]
+health_component = NodePath("../HealthComponent")
 
 [node name="RiderComponent" parent="." unique_id=145831594 instance=ExtResource("3_sglur")]
 visible = false
