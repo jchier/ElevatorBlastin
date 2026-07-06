@@ -33,7 +33,7 @@ var was_on_floor: bool = false
 var was_idle:bool = false
 var current_speed: float
 var can_shoot: bool = false
-
+var patrol: bool = false
 
 func _ready():
 	rider_component.set_current_occupancy.connect(_set_current_occupancy)
@@ -83,7 +83,7 @@ func _physics_process(delta: float) -> void:
 		
 	if !edge_detection.is_colliding():
 		flip_horizontal()
-		direction *= -1
+
 
 		
 func try_duck_fire():
@@ -101,6 +101,7 @@ func try_stand_fire():
 	fire_rate_timer.start()
 
 func flip_horizontal():
+	direction *= -1
 	bullet_component.flip_horizontal()
 	visuals.scale.x *= -1.0
 	vision_ray.scale.x *= -1
@@ -162,6 +163,13 @@ func _on_aggro_state_entered() -> void:
 
 func _on_docile_state_processing(_delta: float) -> void:
 	if patrol_timer.is_stopped():
-		direction *= -1
-		current_speed = max_speed
+		if patrol == true:
+			current_speed = max_speed
+		else:
+			current_speed = 0
 		patrol_timer.start(randf_range(1,2))
+
+
+
+func _on_patrol_timer_timeout() -> void:
+	patrol = !patrol

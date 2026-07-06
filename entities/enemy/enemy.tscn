@@ -496,7 +496,9 @@ wait_time = 3.0
 one_shot = true
 
 [node name="PatrolTimer" type="Timer" parent="." unique_id=1771987258]
+wait_time = 2.0
 one_shot = true
+autostart = true
 
 [node name="EdgeDetection" type="RayCast2D" parent="." unique_id=1498018219]
 position = Vector2(1, -19)
