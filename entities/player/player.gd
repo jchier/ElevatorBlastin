@@ -44,41 +44,12 @@ func _ready():
 	current_speed = max_speed
 	
 func _physics_process(delta: float) -> void:
-	
-#	if is_on_floor():
-#		velocity.y = 0
-#		velocity.y += fall_gravity * delta
-#		velocity.y = clamp(velocity.y, 0, 300)
-#		if not was_on_floor:
-#			was_on_floor = true
-#			state_chart.send_event("grounded")
-#	else:
-#		velocity += get_gravity() * delta
-#		if was_on_floor:
-#			was_on_floor = false
-#			state_chart.send_event("airborne")
-			
-#	if Input.is_action_just_pressed("jump") and is_on_floor():
-#		velocity.y = jump_velocity
 		
 	movement_component.toggle_on_floor(is_on_floor())
 	velocity = movement_component.generate_velocity(delta)
-	
-#	var x_input: float = Input.get_action_strength("right") - Input.get_action_strength("left")
-#	var velocity_weight : float = delta * (acceleration if x_input else friction)
-#	velocity.x = lerp(velocity.x, x_input * current_speed, velocity_weight)
-
 
 	move_and_slide()
 
-
-#	if was_on_floor and not is_on_floor() and velocity.y > 0:
-#		state_chart.send_event("airborne")
-	
-#	if velocity.x < 0 and forward == true \
-#		or velocity.x > 0 and forward == false:
-#		flip_horizontal()
-	
 	if _current_occupancy:	
 		if Input.is_action_pressed("up"):
 			_current_occupancy.set_direction(Global.UP)
@@ -92,7 +63,6 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_released("down"):
 		state_chart.send_event("player_stand")
 	
-
 
 		
 func try_duck_fire():
@@ -115,7 +85,6 @@ func fire():
 func flip_horizontal():
 	bullet_component.flip_horizontal()
 	visuals.scale.x *= -1.0
-	#forward = !forward
 		
 func _set_current_occupancy(occupancy: Occupant_Component):
 		_current_occupancy = occupancy
@@ -136,7 +105,7 @@ func _on_duck_state_entered() -> void:
 	standing_collision_shape.disabled = true
 	crouching_collision_shape.disabled = false
 	animation_component.play("duck")
-	current_speed = 0
+	movement_component.toggle_movement()
 
 
 func _on_duck_state_exited() -> void:
@@ -144,7 +113,7 @@ func _on_duck_state_exited() -> void:
 	hurtbox_component.toggle_stance()
 	standing_collision_shape.disabled = false
 	crouching_collision_shape.disabled = true
-	current_speed = max_speed
+	movement_component.toggle_movement()
 
 
 func _on_airborne_state_entered() -> void:
