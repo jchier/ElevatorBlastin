@@ -37,7 +37,7 @@ func _ready():
 	rider_component.set_current_occupancy.connect(_set_current_occupancy)
 	rider_component.clear_current_occupancy.connect(_clear_current_occupancy)
 	movement_component.state_chart_event.connect(_state_chart_event)
-	movement_component.flip_horizontal.connect(flip_horizontal)
+	movement_component.set_orientation.connect(set_orientation)
 	animation_component.can_shoot.connect(_can_shoot)
 	health_component.died.connect(_on_died)
 	crouching_collision_shape.disabled = true
@@ -82,9 +82,9 @@ func fire():
 	bullet_component.fire()
 	fire_rate_timer.start()
 
-func flip_horizontal():
+func set_orientation(signf: float):
 	bullet_component.flip_horizontal()
-	visuals.scale.x *= -1.0
+	visuals.scale.x = signf
 		
 func _set_current_occupancy(occupancy: Occupant_Component):
 		_current_occupancy = occupancy

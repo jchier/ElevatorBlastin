@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://bftk50lxpoojr"]
 
 [ext_resource type="Script" uid="uid://c6p3o8o6ic5ff" path="res://entities/enemy/enemy.gd" id="1_ogeq8"]
+[ext_resource type="PackedScene" uid="uid://cfm00blcnek3b" path="res://components/movement_component.tscn" id="2_0mv3s"]
 [ext_resource type="Script" uid="uid://sphex7yy6a2e" path="res://components/health_component.gd" id="2_lqjfw"]
 [ext_resource type="PackedScene" uid="uid://b1imkaubtmk14" path="res://components/animation_component.tscn" id="3_cql4q"]
 [ext_resource type="AnimationNodeStateMachine" uid="uid://cb7raff26gw6f" path="res://state_machine_legs.tres" id="4_wbwud"]
@@ -330,6 +331,8 @@ height = 28.0
 collision_layer = 4
 collision_mask = 81
 script = ExtResource("1_ogeq8")
+
+[node name="MovementComponent" parent="." unique_id=743977151 instance=ExtResource("2_0mv3s")]
 
 [node name="HealthComponent" type="Node" parent="." unique_id=1233727716]
 script = ExtResource("2_lqjfw")
