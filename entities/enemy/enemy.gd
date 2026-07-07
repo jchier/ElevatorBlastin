@@ -41,6 +41,7 @@ func _ready():
 func _physics_process(delta: float) -> void:
 	#t += delta * .0004
 	#position = position.lerp(move_to.global_position, t)
+	movement_component.toggle_on_floor(is_on_floor())
 	
 	if !edge_detection.is_colliding():
 		set_direction(direction * -1)
@@ -150,8 +151,8 @@ func _on_patrol_timer_timeout() -> void:
 	if !movement_component.is_enabled:
 		if randi_range(0, 4 > 2):
 			set_direction(direction * -1)
-	print("direction: %s", direction)
-	print("movement enabled: %s", movement_component.is_enabled)
+	print("direction: ", direction)
+	print("movement enabled: ", movement_component.is_enabled)
 	patrol_timer.start(randf_range(1,2))
 	
 func _state_chart_event(event: String):
