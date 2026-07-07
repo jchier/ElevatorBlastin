@@ -44,9 +44,10 @@ func _ready():
 	current_speed = max_speed
 	
 func _physics_process(delta: float) -> void:
-		
+	
+	var x_input: float = Input.get_action_strength("right") - Input.get_action_strength("left")
 	movement_component.toggle_on_floor(is_on_floor())
-	velocity = movement_component.generate_velocity(delta)
+	velocity = movement_component.generate_velocity(delta, x_input)
 
 	move_and_slide()
 
@@ -80,7 +81,6 @@ func try_stand_fire():
 func fire():
 	bullet_component.fire()
 	fire_rate_timer.start()
-	#TODO: fire rate timer, effects go here
 
 func flip_horizontal():
 	bullet_component.flip_horizontal()

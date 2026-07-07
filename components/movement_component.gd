@@ -31,7 +31,7 @@ func toggle_movement():
 	else:
 		current_speed = 0
 
-func generate_velocity(delta: float) -> Vector2:
+func generate_velocity(delta: float, x_input: float) -> Vector2:
 	
 	if is_on_floor:
 		velocity.y = 0
@@ -49,8 +49,6 @@ func generate_velocity(delta: float) -> Vector2:
 	if Input.is_action_just_pressed("jump") and is_on_floor:
 		velocity.y = JUMP_VELOCITY
 		
-	
-	var x_input: float = Input.get_action_strength("right") - Input.get_action_strength("left")
 	var velocity_weight : float = delta * (ACCELERATION if x_input else FRICTION)
 	velocity.x = lerp(velocity.x, x_input * current_speed, velocity_weight)
 
