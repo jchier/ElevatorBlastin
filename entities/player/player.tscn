@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b2dvl12tkj5s6" path="res://entities/player/player.gd" id="1_abrql"]
 [ext_resource type="Script" uid="uid://sphex7yy6a2e" path="res://components/health_component.gd" id="2_fkugw"]
+[ext_resource type="PackedScene" uid="uid://cfm00blcnek3b" path="res://components/movement_component.tscn" id="2_yqrof"]
 [ext_resource type="PackedScene" uid="uid://b1imkaubtmk14" path="res://components/animation_component.tscn" id="3_7thud"]
 [ext_resource type="PackedScene" uid="uid://b3rjse2q2hp5v" path="res://components/rider_component.tscn" id="3_sglur"]
 [ext_resource type="AnimationNodeStateMachine" uid="uid://vqwerxuxtc6o" path="res://state_machine_torso.tres" id="4_a1qjk"]
@@ -355,7 +356,6 @@ _data = {
 [sub_resource type="AnimationNodeAdd2" id="AnimationNodeAdd2_a1qjk"]
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_afbqv"]
-graph_offset = Vector2(-445.16956, 58.557068)
 nodes/output/position = Vector2(360, 140)
 nodes/Add2/node = SubResource("AnimationNodeAdd2_a1qjk")
 nodes/Add2/position = Vector2(160, 120)
@@ -381,6 +381,8 @@ height = 28.0
 collision_layer = 4
 collision_mask = 81
 script = ExtResource("1_abrql")
+
+[node name="MovementComponent" parent="." unique_id=1459948917 instance=ExtResource("2_yqrof")]
 
 [node name="HealthComponent" type="Node" parent="." unique_id=1233727716]
 script = ExtResource("2_fkugw")

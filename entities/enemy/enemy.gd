@@ -15,6 +15,7 @@ extends CharacterBody2D
 @onready var fire_rate_timer: Timer = $FireRateTimer
 @onready var vision_ray: RayCast2D = $RayCast2D
 @onready var edge_detection: RayCast2D = $EdgeDetection
+@onready var move_to: Marker2D = $MoveTo
 
 
 var speed_multiplier = 30.0
@@ -34,7 +35,7 @@ var was_idle:bool = false
 var current_speed: float
 var can_shoot: bool = false
 var patrol: bool = false
-
+var t = 0
 func _ready():
 	rider_component.set_current_occupancy.connect(_set_current_occupancy)
 	rider_component.clear_current_occupancy.connect(_clear_current_occupancy)
@@ -43,8 +44,11 @@ func _ready():
 	current_speed = max_speed
 	state_chart.send_event("docile")
 	direction = 1
+	move_to.global_position = Vector2(0,0)
 	
 func _physics_process(delta: float) -> void:
+	#t += delta * .0004
+	#position = position.lerp(move_to.global_position, t)
 	
 	if is_on_floor():
 		velocity.y = 0
