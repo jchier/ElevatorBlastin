@@ -546,6 +546,12 @@ to = NodePath("../../Aggro")
 event = &"aggro"
 delay_in_seconds = "0.0"
 
+[node name="Dead" type="Node" parent="StateChart/Root/Behavior/Docile" unique_id=1956813833]
+script = ExtResource("13_402ev")
+to = NodePath("../../../Locomotion/Dead")
+event = &"dead"
+delay_in_seconds = "0.0"
+
 [node name="Aggro" type="Node" parent="StateChart/Root/Behavior" unique_id=896285963]
 script = ExtResource("12_xshm4")
 
@@ -553,6 +559,12 @@ script = ExtResource("12_xshm4")
 script = ExtResource("13_402ev")
 to = NodePath("../../Docile")
 event = &"docile"
+delay_in_seconds = "0.0"
+
+[node name="Dead" type="Node" parent="StateChart/Root/Behavior/Aggro" unique_id=1949597945]
+script = ExtResource("13_402ev")
+to = NodePath("../../../Locomotion/Dead")
+event = &"dead"
 delay_in_seconds = "0.0"
 
 [node name="StateChartDebugger" parent="." unique_id=839851318 instance=ExtResource("14_v7t4h")]
@@ -582,6 +594,10 @@ target_position = Vector2(21, 22)
 
 [node name="MoveTo" type="Marker2D" parent="." unique_id=715631499]
 
+[node name="DespawnTimer" type="Timer" parent="." unique_id=487666727]
+wait_time = 5.0
+one_shot = true
+
 [connection signal="state_entered" from="StateChart/Root/Locomotion/Grounded/Stand" to="." method="_on_stand_state_entered"]
 [connection signal="state_input" from="StateChart/Root/Locomotion/Grounded/Stand" to="." method="_on_stand_state_input"]
 [connection signal="state_physics_processing" from="StateChart/Root/Locomotion/Grounded/Stand" to="." method="_on_stand_state_physics_processing"]
@@ -595,3 +611,4 @@ target_position = Vector2(21, 22)
 [connection signal="state_processing" from="StateChart/Root/Behavior/Docile" to="." method="_on_docile_state_processing"]
 [connection signal="state_entered" from="StateChart/Root/Behavior/Aggro" to="." method="_on_aggro_state_entered"]
 [connection signal="timeout" from="PatrolTimer" to="." method="_on_patrol_timer_timeout"]
+[connection signal="timeout" from="DespawnTimer" to="." method="_on_despawn_timer_timeout"]

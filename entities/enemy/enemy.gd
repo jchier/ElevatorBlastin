@@ -19,6 +19,7 @@ signal died
 @onready var edge_detection: RayCast2D = $EdgeDetection
 @onready var move_to: Marker2D = $MoveTo
 @onready var health_component: HealthComponent = $HealthComponent
+@onready var despawn_timer: Timer = $DespawnTimer
 
 
 var direction: int = 1
@@ -158,3 +159,8 @@ func _on_dead_state_entered() -> void:
 	animation_component.start("dead")
 	direction = 0
 	died.emit()
+	despawn_timer.start()
+
+
+func _on_despawn_timer_timeout() -> void:
+	queue_free()
