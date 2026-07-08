@@ -1,6 +1,8 @@
 class_name Enemy
 extends CharacterBody2D
 
+signal died
+
 @onready var movement_component: MovementComponent = $MovementComponent
 @onready var patrol_timer: Timer = $PatrolTimer
 @export var max_speed: float = 80.0
@@ -16,6 +18,7 @@ extends CharacterBody2D
 @onready var vision_ray: RayCast2D = $RayCast2D
 @onready var edge_detection: RayCast2D = $EdgeDetection
 @onready var move_to: Marker2D = $MoveTo
+@onready var health_component: HealthComponent = $HealthComponent
 
 
 var direction: int = 1
@@ -34,6 +37,7 @@ func _ready():
 	movement_component.set_orientation.connect(set_orientation)
 	animation_component.can_shoot.connect(_can_shoot)
 	crouching_collision_shape.disabled = true
+	health_component.died.connect(_on_died)
 	state_chart.send_event("docile")
 	direction = 1
 	move_to.global_position = Vector2(0,0)
@@ -133,8 +137,8 @@ func _on_aggro_state_entered() -> void:
 	try_stand_fire()
 
 func _on_patrol_timer_timeout() -> void:
-	movement_component.is_enabled = !movement_component.is_enabled
-	if !movement_component.is_enabled:
+	movement_component.disabled = !movement_component.disabled
+	if movement_component.disabled:
 		if randi_range(0, 4 > 2):
 			set_direction(direction * -1)
 	#print("direction: ", direction)
@@ -146,3 +150,11 @@ func _state_chart_event(event: String):
 func set_direction(new_direction):
 	direction = new_direction
 	
+func _on_died():
+	state_chart.send_event("dead")
+
+func _on_dead_state_entered() -> void:
+	vision_ray.enabled = false
+	animation_component.start("dead")
+	direction = 0
+	died.emit()

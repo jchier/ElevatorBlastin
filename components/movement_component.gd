@@ -19,7 +19,7 @@ var was_on_floor: bool = false
 var was_idle:bool = false
 var current_speed: float
 var velocity: Vector2 = Vector2.ZERO
-var is_enabled: bool = true
+var disabled: bool = false
 var last_orientation = 1
 var _jump: bool = false
 func _ready():
@@ -56,7 +56,7 @@ func generate_velocity(delta: float, x_input: float):
 	if was_on_floor and not  _character_body.is_on_floor() and velocity.y > 0:
 		state_chart_event.emit("airborne")
 	
-	if is_enabled:
+	if !disabled:
 		if velocity.x != 0:
 			var orientation = signf(velocity.x)
 			if orientation != last_orientation:

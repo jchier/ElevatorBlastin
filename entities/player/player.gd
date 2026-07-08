@@ -17,20 +17,7 @@ extends CharacterBody2D
 
 signal died
 
-var speed_multiplier = 30.0
-var jump_multiplier = -30.0
-var direction = 0
-var acceleration: float = 8.0
-var friction: float = 10.0
-var max_gravity: float = 14.5
-var min_gravity: float = 12.0
-var gravity: float = 12.0
-var fall_gravity = 1124
 var _current_occupancy: Occupant_Component = null
-var forward: bool = true
-var was_on_floor: bool = false
-var was_idle:bool = false
-var current_speed: float
 var can_shoot: bool = false
 
 func _ready():
@@ -41,7 +28,6 @@ func _ready():
 	animation_component.can_shoot.connect(_can_shoot)
 	health_component.died.connect(_on_died)
 	crouching_collision_shape.disabled = true
-	current_speed = max_speed
 	
 func _physics_process(delta: float) -> void:
 	
@@ -159,7 +145,7 @@ func _on_died():
 
 func _on_dead_state_entered() -> void:
 	animation_component.start("dead")
-	current_speed = 0
+	movement_component.disabled = true
 	died.emit()
 	
 func _state_chart_event(event: String):
