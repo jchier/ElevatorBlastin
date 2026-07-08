@@ -44,7 +44,6 @@ func _physics_process(delta: float) -> void:
 		set_direction(direction * -1)
 
 	movement_component.generate_velocity(delta, direction)
-	print(velocity)
 	move_and_slide()
 
 	if _current_occupancy:	
@@ -133,23 +132,12 @@ func _can_shoot():
 func _on_aggro_state_entered() -> void:
 	try_stand_fire()
 
-
-#func _on_docile_state_processing(_delta: float) -> void:
-#	if patrol_timer.is_stopped():
-#		movement_component.is_enabled = false
-#		patrol_timer.start(randf_range(1,2))
-#	else:
-#		movement_component.is_enabled = true
-	#print(patrol_timer.time_left)
-	#print(set_direction)
-
 func _on_patrol_timer_timeout() -> void:
 	movement_component.is_enabled = !movement_component.is_enabled
 	if !movement_component.is_enabled:
 		if randi_range(0, 4 > 2):
 			set_direction(direction * -1)
-	print("direction: ", direction)
-	print("movement enabled: ", movement_component.is_enabled)
+	#print("direction: ", direction)
 	patrol_timer.start(randf_range(1,2))
 	
 func _state_chart_event(event: String):

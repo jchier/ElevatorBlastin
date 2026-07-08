@@ -20,7 +20,8 @@ var was_idle:bool = false
 var current_speed: float
 var velocity: Vector2 = Vector2.ZERO
 var is_enabled: bool = true
-
+var last_orientation = 1
+var _jump: bool = false
 func _ready():
 	current_speed = MAX_SPEED
 
@@ -45,8 +46,9 @@ func generate_velocity(delta: float, x_input: float):
 			was_on_floor = false
 			state_chart_event.emit("airborne")
 			
-	if Input.is_action_just_pressed("jump") and _character_body.is_on_floor():
+	if _jump:
 		velocity.y = JUMP_VELOCITY
+		_jump = false
 		
 	var velocity_weight : float = delta * (ACCELERATION if x_input else FRICTION)
 	velocity.x = lerp(velocity.x, x_input * current_speed, velocity_weight)
@@ -56,7 +58,14 @@ func generate_velocity(delta: float, x_input: float):
 	
 	if is_enabled:
 		if velocity.x != 0:
-			set_orientation.emit(signf(velocity.x))
+			var orientation = signf(velocity.x)
+			if orientation != last_orientation:
+				last_orientation = orientation
+				set_orientation.emit(orientation)
 		_character_body.velocity = velocity
 		return
 	_character_body.velocity = Vector2(0, velocity.y)
+	
+func jump():
+	if _character_body.is_on_floor():
+		_jump = true

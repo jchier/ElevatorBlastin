@@ -45,6 +45,9 @@ func _ready():
 	
 func _physics_process(delta: float) -> void:
 	
+	if Input.is_action_just_pressed("jump"):
+		movement_component.jump()	
+		
 	var x_input: float = Input.get_action_strength("right") - Input.get_action_strength("left")
 	movement_component.generate_velocity(delta, x_input)
 
@@ -62,7 +65,7 @@ func _physics_process(delta: float) -> void:
 		
 	if Input.is_action_just_released("down"):
 		state_chart.send_event("player_stand")
-	
+
 
 		
 func try_duck_fire():
