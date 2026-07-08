@@ -382,7 +382,8 @@ collision_layer = 4
 collision_mask = 81
 script = ExtResource("1_abrql")
 
-[node name="MovementComponent" parent="." unique_id=1459948917 instance=ExtResource("2_yqrof")]
+[node name="MovementComponent" parent="." unique_id=1459948917 node_paths=PackedStringArray("_character_body") instance=ExtResource("2_yqrof")]
+_character_body = NodePath("..")
 
 [node name="HealthComponent" type="Node" parent="." unique_id=1233727716]
 script = ExtResource("2_fkugw")

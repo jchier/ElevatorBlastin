@@ -39,14 +39,11 @@ func _ready():
 	move_to.global_position = Vector2(0,0)
 	
 func _physics_process(delta: float) -> void:
-	#t += delta * .0004
-	#position = position.lerp(move_to.global_position, t)
-	movement_component.toggle_on_floor(is_on_floor())
 	
 	if !edge_detection.is_colliding():
 		set_direction(direction * -1)
 
-	velocity = movement_component.generate_velocity(delta, direction)
+	movement_component.generate_velocity(delta, direction)
 	print(velocity)
 	move_and_slide()
 

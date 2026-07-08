@@ -46,8 +46,7 @@ func _ready():
 func _physics_process(delta: float) -> void:
 	
 	var x_input: float = Input.get_action_strength("right") - Input.get_action_strength("left")
-	movement_component.toggle_on_floor(is_on_floor())
-	velocity = movement_component.generate_velocity(delta, x_input)
+	movement_component.generate_velocity(delta, x_input)
 
 	move_and_slide()
 
