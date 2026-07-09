@@ -47,10 +47,10 @@ func _physics_process(delta: float) -> void:
 			
 			
 	if Input.is_action_just_pressed("down"):
-		state_chart.send_event("player_duck")
+		state_chart.send_event("duck")
 		
 	if Input.is_action_just_released("down"):
-		state_chart.send_event("player_stand")
+		state_chart.send_event("stand")
 
 
 		

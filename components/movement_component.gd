@@ -22,6 +22,7 @@ var velocity: Vector2 = Vector2.ZERO
 var disabled: bool = false
 var last_orientation = 1
 var _jump: bool = false
+
 func _ready():
 	current_speed = MAX_SPEED
 

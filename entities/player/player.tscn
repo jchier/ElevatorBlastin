@@ -387,6 +387,7 @@ _character_body = NodePath("..")
 
 [node name="HealthComponent" type="Node" parent="." unique_id=1233727716]
 script = ExtResource("2_fkugw")
+max_health = 99
 metadata/_custom_type_script = "uid://sphex7yy6a2e"
 
 [node name="AnimationComponent" parent="." unique_id=1019330946 node_paths=PackedStringArray("animation_torso", "animation_legs", "animation_tree") instance=ExtResource("3_7thud")]
@@ -487,7 +488,7 @@ script = ExtResource("8_a1qjk")
 [node name="ToDuck" type="Node" parent="StateChart/Root/Grounded/Stand" unique_id=324150903]
 script = ExtResource("9_j3ovn")
 to = NodePath("../../Duck")
-event = &"player_duck"
+event = &"duck"
 delay_in_seconds = "0.0"
 
 [node name="Airborne" type="Node" parent="StateChart/Root/Grounded/Stand" unique_id=351135610]
@@ -502,7 +503,7 @@ script = ExtResource("8_a1qjk")
 [node name="ToStandFromDuck" type="Node" parent="StateChart/Root/Grounded/Duck" unique_id=1781552016]
 script = ExtResource("9_j3ovn")
 to = NodePath("../../Stand")
-event = &"player_stand"
+event = &"stand"
 delay_in_seconds = "0.0"
 
 [node name="ToDie" type="Node" parent="StateChart/Root/Grounded" unique_id=954766725]

@@ -4,9 +4,6 @@ extends CharacterBody2D
 signal died
 
 @onready var movement_component: MovementComponent = $MovementComponent
-@onready var patrol_timer: Timer = $PatrolTimer
-@export var max_speed: float = 80.0
-@export var jump_velocity: float = -200.0
 @onready var rider_component: Area2D = $RiderComponent
 @onready var visuals: Node = $Visuals
 @onready var bullet_component: Node2D = $BulletComponent
@@ -14,12 +11,15 @@ signal died
 @onready var standing_collision_shape: CollisionShape2D = $StandingCollisionShape
 @onready var crouching_collision_shape: CollisionShape2D = $CrouchingCollisionShape
 @onready var animation_component: Node = $AnimationComponent
-@onready var fire_rate_timer: Timer = $FireRateTimer
-@onready var vision_ray: RayCast2D = $RayCast2D
+@onready var vision_ray: RayCast2D = $VisionRay
 @onready var edge_detection: RayCast2D = $EdgeDetection
 @onready var move_to: Marker2D = $MoveTo
 @onready var health_component: HealthComponent = $HealthComponent
+@onready var fire_rate_timer: Timer = $FireRateTimer
 @onready var despawn_timer: Timer = $DespawnTimer
+@onready var reaction_timer: Timer = $ReactionTimer
+@onready var stance_timer: Timer = $StanceTimer
+@onready var patrol_timer: Timer = $PatrolTimer
 
 
 var direction: int = 1
@@ -30,6 +30,7 @@ var was_idle:bool = false
 var can_shoot: bool = false
 var patrol: bool = false
 var t = 0
+var _destination: Vector2
 
 func _ready():
 	rider_component.set_current_occupancy.connect(_set_current_occupancy)
@@ -42,11 +43,9 @@ func _ready():
 	state_chart.send_event("docile")
 	direction = 1
 	move_to.global_position = Vector2(0,0)
+	reaction_timer.paused = true
 	
 func _physics_process(delta: float) -> void:
-	
-	if !edge_detection.is_colliding():
-		set_direction(direction * -1)
 
 	movement_component.generate_velocity(delta, direction)
 	move_and_slide()
@@ -56,18 +55,22 @@ func _physics_process(delta: float) -> void:
 		pass
 
 	if vision_ray.is_colliding():
+		if vision_ray.get_collider().is_class("player"):
+			_destination = vision_ray.get_collision_point()
 		state_chart.send_event("aggro")
 		return
-		
 
-
+func set_destination(destination: Vector2):
+	_destination = destination
+	
 		
 func try_duck_fire():
+	state_chart.send_event("duck")
 	if !fire_rate_timer.is_stopped() and can_shoot:
 		return
-	animation_component.duck_shoot()
 	bullet_component.fire()
 	fire_rate_timer.start()
+	stance_timer.start()
 	
 func try_stand_fire():
 	if !fire_rate_timer.is_stopped() and can_shoot:
@@ -104,14 +107,14 @@ func _on_duck_state_entered() -> void:
 	standing_collision_shape.disabled = true
 	crouching_collision_shape.disabled = false
 	animation_component.play("duck")
-	movement_component.is_enabled = false
+	movement_component.disabled = true
 
 
 func _on_duck_state_exited() -> void:
 	bullet_component.toggle_stance()
 	standing_collision_shape.disabled = false
 	crouching_collision_shape.disabled = true
-	movement_component.is_enabled = true
+	movement_component.disabled = false
 
 
 func _on_airborne_state_entered() -> void:
@@ -133,9 +136,28 @@ func _on_to_grounded_taken() -> void:
 func _can_shoot():
 	can_shoot = !can_shoot
 
+func set_direction(new_direction):
+	direction = new_direction
+	
+func _state_chart_event(event: String):
+	state_chart.send_event(event)
+	
+#====================================== BEHAVIOR STATES ===========================================================	
+#====================================== DOCILE STATE ==============================================================
+func _on_docile_state_entered() -> void:
+	patrol_timer.paused = false
 
-func _on_aggro_state_entered() -> void:
-	try_stand_fire()
+func _on_docile_state_exited() -> void:
+	patrol_timer.paused = true
+
+	
+func _on_docile_state_physics_processing(delta: float) -> void:
+	edge_detection.force_raycast_update()
+	
+	if !edge_detection.is_colliding() and is_on_floor():
+		set_direction(direction * -1)
+
+
 
 func _on_patrol_timer_timeout() -> void:
 	movement_component.disabled = !movement_component.disabled
@@ -144,12 +166,29 @@ func _on_patrol_timer_timeout() -> void:
 			set_direction(direction * -1)
 	#print("direction: ", direction)
 	patrol_timer.start(randf_range(1,2))
-	
-func _state_chart_event(event: String):
-	state_chart.send_event(event)
-	
-func set_direction(new_direction):
-	direction = new_direction
+
+#====================================== AGGRO STATE ==============================================================
+
+func _on_aggro_state_entered() -> void:
+	reaction_timer.paused = false
+	reaction_timer.start()
+
+func _on_aggro_state_processing(delta: float) -> void:
+	edge_detection.force_raycast_update()
+	if !edge_detection.is_colliding() and vision_ray.is_colliding():
+		set_direction(0)
+
+func _on_reaction_timer_timeout() -> void:
+	if randi_range(0, 4 > 2):
+		try_stand_fire()
+	else:
+		try_duck_fire()
+	reaction_timer.start(randf_range(0.5, 1.5))
+
+func _on_stance_timer_timeout() -> void:
+	state_chart.send_event("stand")
+
+#====================================== DEAD STATE ==============================================================
 	
 func _on_died():
 	state_chart.send_event("dead")
