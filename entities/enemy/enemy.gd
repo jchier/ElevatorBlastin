@@ -36,7 +36,7 @@ var t = 0
 var last_stance: String = "stand"
 var callable_shoot
 var _destination = CharacterBody2D
-
+var player: Player
 func _ready():
 	rider_component.set_current_occupancy.connect(_set_current_occupancy)
 	rider_component.clear_current_occupancy.connect(_clear_current_occupancy)
@@ -61,16 +61,18 @@ func _physics_process(delta: float) -> void:
 		pass
 
 	if vision_ray.is_colliding():
-		if vision_ray.get_collider() is Player:
-			_destination = vision_ray.get_collider()
-			set_destination()
+		var collided = vision_ray.get_collider()
+		if collided is Player:
+			set_destination(collided)
+			player = collided
+		#TODO: put logic to change desired elivator or stairs here
 		state_chart.send_event("aggro")
 		return
 		
 		
 
 
-func set_destination():
+func set_destination(body: CharacterBody2D):
 	if _destination:
 		if global_position.x < _destination.global_position.x:
 			direction = 1
@@ -202,10 +204,11 @@ func _on_aggro_state_processing(delta: float) -> void:
 	if !edge_detection.is_colliding() and vision_ray.is_colliding():
 		_destination = null
 		set_direction(0)
-	elif !edge_detection.is_colliding() and !vision_ray.is_colliding():
+	#elif !edge_detection.is_colliding() and !vision_ray.is_colliding():
+	elif !vision_ray.is_colliding():
 		#todo: change this line to seeking state
-		#state_chart.send_event("seek")
-		state_chart.send_event("docile")
+		state_chart.send_event("seek")
+		#state_chart.send_event("docile")
 
 	#print(reaction_timer.time_left)
 	
@@ -231,13 +234,26 @@ func _on_reaction_timer_timeout() -> void:
 			#print("stance changed to duck")
 			last_stance = "duck"
 		callable_shoot = try_duck_fire
-		
-	callable_shoot.call()	
+	if vision_ray.is_colliding():
+		callable_shoot.call()	
 	reaction_timer.start(randf_range(0.5, 1.0))
 	
 
 #====================================== SEEKING STATE ==============================================================
 
+func _on_seek_state_entered() -> void:
+	_destination = chosen_elevator
+	reaction_timer.paused = true
+	#chosen_elevator.request()
+	
+func _on_seek_state_physics_processing(delta: float) -> void:
+	edge_detection.force_raycast_update()
+	if !edge_detection.is_colliding():
+		set_direction(0)
+		if player.global_position.y > global_position.y:
+			chosen_elevator.go_up()
+		else:
+			chosen_elevator.go_down()
 
 
 

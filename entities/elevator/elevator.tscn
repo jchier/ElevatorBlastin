@@ -68,3 +68,6 @@ rotation = -3.1415927
 scale = Vector2(1, 0.05)
 texture = SubResource("NoiseTexture2D_jr1kj")
 offset = Vector2(0, -20)
+
+[connection signal="body_entered" from="Occupant_Area" to="." method="_on_occupant_area_body_entered"]
+[connection signal="body_exited" from="Occupant_Area" to="." method="_on_occupant_area_body_exited"]
