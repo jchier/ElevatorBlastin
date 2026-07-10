@@ -21,6 +21,8 @@ signal died
 @onready var stance_timer: Timer = $StanceTimer
 @onready var patrol_timer: Timer = $PatrolTimer
 
+@export var chosen_elevator: Elevator
+
 
 var direction: int = 1
 var last_direction: int = 1
@@ -30,8 +32,9 @@ var was_idle:bool = false
 var can_shoot: bool = false
 var patrol: bool = false
 var t = 0
-var _destination: Vector2
-var last_stance: String
+var last_stance: String = "stand"
+var callable_shoot
+var _destination = CharacterBody2D
 
 func _ready():
 	rider_component.set_current_occupancy.connect(_set_current_occupancy)
@@ -57,13 +60,23 @@ func _physics_process(delta: float) -> void:
 		pass
 
 	if vision_ray.is_colliding():
-		if vision_ray.get_collider().is_class("player"):
-			_destination = vision_ray.get_collision_point()
+		if vision_ray.get_collider() is Player:
+			_destination = vision_ray.get_collider()
+			set_destination()
 		state_chart.send_event("aggro")
 		return
+		
+		
 
-func set_destination(destination: Vector2):
-	_destination = destination
+
+func set_destination():
+	if _destination:
+		if global_position.x < _destination.global_position.x:
+			direction = 1
+		elif global_position.x > _destination.global_position.x:
+			direction = -1
+		else:
+			direction = 0
 	
 		
 func try_duck_fire():
@@ -100,7 +113,7 @@ func _clear_current_occupancy():
 
 
 func _on_stand_state_entered() -> void:
-	animation_component.start("stand")
+	animation_component.play("idle")
 
 
 
@@ -150,12 +163,13 @@ func _state_chart_event(event: String):
 #====================================== BEHAVIOR STATES ===========================================================	
 #====================================== DOCILE STATE ==============================================================
 func _on_docile_state_entered() -> void:
+	_destination = null
 	patrol_timer.paused = false
 	reaction_timer.paused = true
+	
 
 func _on_docile_state_exited() -> void:
 	patrol_timer.paused = true
-	reaction_timer.paused = false
 	
 func _on_docile_state_physics_processing(delta: float) -> void:
 	edge_detection.force_raycast_update()
@@ -177,41 +191,54 @@ func _on_patrol_timer_timeout() -> void:
 
 func _on_aggro_state_entered() -> void:
 	reaction_timer.paused = false
-	reaction_timer.start()
+	reaction_timer.start(randf_range(0.5, 1.0))
+	movement_component.disabled = false
 
 func _on_aggro_state_processing(delta: float) -> void:
 	edge_detection.force_raycast_update()
 	if !edge_detection.is_colliding() and vision_ray.is_colliding():
+		_destination = null
 		set_direction(0)
 	elif !edge_detection.is_colliding() and !vision_ray.is_colliding():
 		#todo: change this line to seeking state
+		#state_chart.send_event("seek")
 		state_chart.send_event("docile")
 
+	#print(reaction_timer.time_left)
 	
 func _on_reaction_timer_timeout() -> void:
-	if velocity.x != 0:
-		try_stand_fire()
-	else:		
-		if randi_range(0, 4) > 1:
-			if last_stance != "stand":
-				state_chart.send_event("stand")
-				await animation_component.stance_changed
-			try_stand_fire()
+#	if velocity.x != 0:
+#		try_stand_fire()
+	#else:		
+	if randi_range(0, 4) > 1:
+		if last_stance != "stand":
+			#print("stand")
+			state_chart.send_event("stand")
+			await animation_component.stance_changed
+			#print("stance changed to stand")
+			movement_component.disabled = false
 			last_stance = "stand"
-		else:
-			if last_stance != "duck":
-				print("duck")
-				state_chart.send_event("duck")
-				await animation_component.stance_changed
-			try_duck_fire()
+		callable_shoot = try_stand_fire
+	else:
+		if last_stance != "duck":
+			movement_component.disabled = true
+			#print("duck")
+			state_chart.send_event("duck")
+			await animation_component.stance_changed
+			#print("stance changed to duck")
 			last_stance = "duck"
+		callable_shoot = try_duck_fire
 		
+	callable_shoot.call()	
 	reaction_timer.start(randf_range(0.5, 1.0))
-#func _on_stance_timer_timeout() -> void:
-#	shoot_callable.call()
-#	
+	
 
-#====================================== DEAD STATE ==============================================================
+#====================================== SEEKING STATE ==============================================================
+
+
+
+
+#====================================== DEAD STATE =================================================================
 	
 func _on_died():
 	state_chart.send_event("dead")

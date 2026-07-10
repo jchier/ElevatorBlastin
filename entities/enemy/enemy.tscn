@@ -289,20 +289,6 @@ tracks/0/keys = {
 "update": 1,
 "values": [0]
 }
-tracks/1/type = "method"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("AnimationComponent")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [],
-"method": &"_stance_changed"
-}]
-}
 
 [sub_resource type="Animation" id="Animation_a1qjk"]
 resource_name = "shoot"
@@ -351,6 +337,20 @@ tracks/1/keys = {
 "method": &"_can_shoot"
 }]
 }
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimationComponent")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.16666667),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"_stance_changed"
+}]
+}
 
 [sub_resource type="Animation" id="Animation_b2kln"]
 resource_name = "walk"
@@ -385,7 +385,7 @@ _data = {
 [sub_resource type="AnimationNodeAdd2" id="AnimationNodeAdd2_a1qjk"]
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_5s4bh"]
-graph_offset = Vector2(-1108.5754, 37.190857)
+graph_offset = Vector2(-231, 11)
 nodes/output/position = Vector2(360, 140)
 nodes/Add2/node = SubResource("AnimationNodeAdd2_a1qjk")
 nodes/Add2/position = Vector2(160, 120)
@@ -594,7 +594,13 @@ to = NodePath("../../../Locomotion/Dead")
 event = &"dead"
 delay_in_seconds = "0.0"
 
-[node name="Seeking" type="Node" parent="StateChart/Root/Behavior" unique_id=1103732758]
+[node name="Seek" type="Node" parent="StateChart/Root/Behavior/Aggro" unique_id=1692328879]
+script = ExtResource("13_402ev")
+to = NodePath("../../Seek")
+event = &"seek"
+delay_in_seconds = "0.0"
+
+[node name="Seek" type="Node" parent="StateChart/Root/Behavior" unique_id=1103732758]
 script = ExtResource("12_xshm4")
 
 [node name="StateChartDebugger" parent="." unique_id=839851318 instance=ExtResource("14_v7t4h")]
