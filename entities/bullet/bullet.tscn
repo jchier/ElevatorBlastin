@@ -7,6 +7,7 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_oark8"]
 
 [node name="Bullet" type="Node2D" unique_id=1703273686]
+scale = Vector2(0.5, 0.5)
 script = ExtResource("1_5h0jh")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=286930186]
@@ -14,6 +15,7 @@ texture_filter = 1
 texture = ExtResource("2_25cl0")
 
 [node name="LifeTimer" type="Timer" parent="." unique_id=1861537467]
+wait_time = 10.0
 
 [node name="HitboxComponent" parent="." unique_id=331922973 instance=ExtResource("3_b4ffb")]
 

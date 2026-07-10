@@ -46,7 +46,7 @@ func _physics_process(delta: float) -> void:
 			_current_occupancy.set_direction(Global.DOWN)
 			
 			
-	if Input.is_action_just_pressed("down"):
+	if Input.is_action_pressed("down"):
 		state_chart.send_event("duck")
 		
 	if Input.is_action_just_released("down"):
@@ -106,7 +106,16 @@ func _on_duck_state_exited() -> void:
 
 func _on_airborne_state_entered() -> void:
 	animation_component.play("airborne")
+	hurtbox_component.toggle_airborne()
 
+
+func _on_airborne_state_exited() -> void:
+	hurtbox_component.toggle_airborne()
+
+
+func _on_airborne_state_input(_event: InputEvent) -> void:
+	if Input.is_action_just_pressed("shoot"):
+		try_stand_fire()
 
 func _on_stand_state_physics_processing(_delta: float) -> void:
 	if velocity.length_squared() <= 0.555:
@@ -123,11 +132,6 @@ func _on_duck_state_input(_event: InputEvent) -> void:
 
 
 func _on_stand_state_input(_event: InputEvent) -> void:
-	if Input.is_action_just_pressed("shoot"):
-		try_stand_fire()
-
-
-func _on_airborne_state_input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("shoot"):
 		try_stand_fire()
 

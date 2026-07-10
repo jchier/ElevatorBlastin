@@ -10,6 +10,10 @@ height = 44.642857
 radius = 8.035714
 height = 25.0
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_871ky"]
+radius = 8.035714
+height = 28.57143
+
 [node name="HurtboxComponent" type="Area2D" unique_id=1378213332]
 script = ExtResource("1_prfln")
 
@@ -24,3 +28,9 @@ z_index = 3
 position = Vector2(0, -14)
 scale = Vector2(1.12, 1.12)
 shape = SubResource("CapsuleShape2D_8jj4i")
+
+[node name="AirborneCollisionShape" type="CollisionShape2D" parent="." unique_id=2101770204]
+z_index = 3
+position = Vector2(0, -34)
+scale = Vector2(1.12, 1.12)
+shape = SubResource("CapsuleShape2D_871ky")

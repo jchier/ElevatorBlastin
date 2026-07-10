@@ -10,7 +10,7 @@ signal set_orientation(signf: float)
 const MAX_SPEED: float = 80.0
 const GRAVITY: Vector2 = Vector2(0,980)
 const FALL_GRAVITY = 1124
-const JUMP_VELOCITY: float = -200.0
+const JUMP_VELOCITY: float = -250.0
 const FRICTION: float = 10.0
 const ACCELERATION: float = 8.0
 

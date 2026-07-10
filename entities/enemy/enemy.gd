@@ -14,6 +14,7 @@ signal died
 @onready var vision_ray: RayCast2D = $VisionRay
 @onready var edge_detection: RayCast2D = $EdgeDetection
 @onready var move_to: Marker2D = $MoveTo
+@onready var hurtbox_component: HurtboxComponent = $HurtboxComponent
 @onready var health_component: HealthComponent = $HealthComponent
 @onready var fire_rate_timer: Timer = $FireRateTimer
 @onready var despawn_timer: Timer = $DespawnTimer
@@ -119,6 +120,7 @@ func _on_stand_state_entered() -> void:
 
 func _on_duck_state_entered() -> void:
 	bullet_component.toggle_stance()
+	hurtbox_component.toggle_stance()
 	standing_collision_shape.disabled = true
 	crouching_collision_shape.disabled = false
 	animation_component.play("duck")
@@ -127,6 +129,7 @@ func _on_duck_state_entered() -> void:
 
 func _on_duck_state_exited() -> void:
 	bullet_component.toggle_stance()
+	hurtbox_component.toggle_stance()
 	standing_collision_shape.disabled = false
 	crouching_collision_shape.disabled = true
 	movement_component.disabled = false

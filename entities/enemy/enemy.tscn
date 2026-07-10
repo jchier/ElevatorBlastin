@@ -465,18 +465,15 @@ hframes = 4
 vframes = 4
 
 [node name="HurtboxComponent" parent="." unique_id=1378213332 node_paths=PackedStringArray("health_component") instance=ExtResource("8_t1g2p")]
-visible = false
 health_component = NodePath("../HealthComponent")
 
 [node name="StandingCollisionShape" type="CollisionShape2D" parent="." unique_id=554777545]
-visible = false
 z_index = 3
 position = Vector2(0, -25)
 scale = Vector2(1.12, 1.12)
 shape = SubResource("CapsuleShape2D_oark8")
 
 [node name="CrouchingCollisionShape" type="CollisionShape2D" parent="." unique_id=435291202]
-visible = false
 z_index = 3
 position = Vector2(0, -14)
 scale = Vector2(1.12, 1.12)
