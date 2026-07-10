@@ -31,7 +31,7 @@ var can_shoot: bool = false
 var patrol: bool = false
 var t = 0
 var _destination: Vector2
-var shoot_callable
+var last_stance: String
 
 func _ready():
 	rider_component.set_current_occupancy.connect(_set_current_occupancy)
@@ -39,6 +39,7 @@ func _ready():
 	movement_component.state_chart_event.connect(_state_chart_event)
 	movement_component.set_orientation.connect(set_orientation)
 	animation_component.can_shoot.connect(_can_shoot)
+	animation_component.stance_changed.connect(_stance_changed)
 	crouching_collision_shape.disabled = true
 	health_component.died.connect(_on_died)
 	state_chart.send_event("docile")
@@ -137,6 +138,9 @@ func _on_to_grounded_taken() -> void:
 func _can_shoot():
 	can_shoot = !can_shoot
 
+func _stance_changed() -> bool:
+	return true
+
 func set_direction(new_direction):
 	direction = new_direction
 	
@@ -147,10 +151,11 @@ func _state_chart_event(event: String):
 #====================================== DOCILE STATE ==============================================================
 func _on_docile_state_entered() -> void:
 	patrol_timer.paused = false
+	reaction_timer.paused = true
 
 func _on_docile_state_exited() -> void:
 	patrol_timer.paused = true
-
+	reaction_timer.paused = false
 	
 func _on_docile_state_physics_processing(delta: float) -> void:
 	edge_detection.force_raycast_update()
@@ -178,21 +183,33 @@ func _on_aggro_state_processing(delta: float) -> void:
 	edge_detection.force_raycast_update()
 	if !edge_detection.is_colliding() and vision_ray.is_colliding():
 		set_direction(0)
+	elif !edge_detection.is_colliding() and !vision_ray.is_colliding():
+		#todo: change this line to seeking state
+		state_chart.send_event("docile")
+
 	
 func _on_reaction_timer_timeout() -> void:
+	if velocity.x != 0:
+		try_stand_fire()
+	else:		
+		if randi_range(0, 4) > 1:
+			if last_stance != "stand":
+				state_chart.send_event("stand")
+				await animation_component.stance_changed
+			try_stand_fire()
+			last_stance = "stand"
+		else:
+			if last_stance != "duck":
+				print("duck")
+				state_chart.send_event("duck")
+				await animation_component.stance_changed
+			try_duck_fire()
+			last_stance = "duck"
 		
-	if randi_range(0, 4 > 2):
-		state_chart.send_event("stand")
-		shoot_callable = try_stand_fire
-	else:
-		state_chart.send_event("duck")
-		shoot_callable = try_duck_fire
-		#consolidate the stand and duck fire into one function
-	stance_timer.start()
-	
-func _on_stance_timer_timeout() -> void:
-	shoot_callable.call()
-	reaction_timer.start(randf_range(0.5, 1.5))
+	reaction_timer.start(randf_range(0.5, 1.0))
+#func _on_stance_timer_timeout() -> void:
+#	shoot_callable.call()
+#	
 
 #====================================== DEAD STATE ==============================================================
 	

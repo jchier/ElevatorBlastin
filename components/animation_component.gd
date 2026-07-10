@@ -2,6 +2,7 @@ class_name AnimationComponent
 extends Node
 
 signal can_shoot
+signal stance_changed
 
 @export var animation_torso: AnimationPlayer
 @export var animation_legs: AnimationPlayer
@@ -45,6 +46,9 @@ func duck_shoot():
 
 func _can_shoot():
 	can_shoot.emit()
+	
+func _stance_changed():
+	stance_changed.emit()
 
 func dead():
 	state_machine_torso.start("dead")
