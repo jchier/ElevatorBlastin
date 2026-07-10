@@ -357,6 +357,7 @@ _data = {
 [sub_resource type="AnimationNodeAdd2" id="AnimationNodeAdd2_a1qjk"]
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_5s4bh"]
+graph_offset = Vector2(-1108.5754, 37.190857)
 nodes/output/position = Vector2(360, 140)
 nodes/Add2/node = SubResource("AnimationNodeAdd2_a1qjk")
 nodes/Add2/position = Vector2(160, 120)
@@ -467,10 +468,6 @@ visible = false
 z_index = 2
 position = Vector2(0, -15)
 shape = SubResource("CapsuleShape2D_jr1kj")
-
-[node name="FireRateTimer" type="Timer" parent="." unique_id=1793356038]
-wait_time = 0.3
-one_shot = true
 
 [node name="StateChart" type="Node" parent="." unique_id=248309767]
 script = ExtResource("10_5f25h")
@@ -607,6 +604,10 @@ one_shot = true
 one_shot = true
 
 [node name="StanceTimer" type="Timer" parent="." unique_id=238678177]
+one_shot = true
+
+[node name="FireRateTimer" type="Timer" parent="." unique_id=1793356038]
+wait_time = 0.3
 one_shot = true
 
 [connection signal="state_entered" from="StateChart/Root/Locomotion/Grounded/Stand" to="." method="_on_stand_state_entered"]

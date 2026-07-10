@@ -31,6 +31,7 @@ var can_shoot: bool = false
 var patrol: bool = false
 var t = 0
 var _destination: Vector2
+var shoot_callable
 
 func _ready():
 	rider_component.set_current_occupancy.connect(_set_current_occupancy)
@@ -65,9 +66,9 @@ func set_destination(destination: Vector2):
 	
 		
 func try_duck_fire():
-	state_chart.send_event("duck")
 	if !fire_rate_timer.is_stopped() and can_shoot:
 		return
+	animation_component.duck_shoot()
 	bullet_component.fire()
 	fire_rate_timer.start()
 	stance_timer.start()
@@ -177,16 +178,21 @@ func _on_aggro_state_processing(delta: float) -> void:
 	edge_detection.force_raycast_update()
 	if !edge_detection.is_colliding() and vision_ray.is_colliding():
 		set_direction(0)
-
+	
 func _on_reaction_timer_timeout() -> void:
+		
 	if randi_range(0, 4 > 2):
-		try_stand_fire()
+		state_chart.send_event("stand")
+		shoot_callable = try_stand_fire
 	else:
-		try_duck_fire()
-	reaction_timer.start(randf_range(0.5, 1.5))
-
+		state_chart.send_event("duck")
+		shoot_callable = try_duck_fire
+		#consolidate the stand and duck fire into one function
+	stance_timer.start()
+	
 func _on_stance_timer_timeout() -> void:
-	state_chart.send_event("stand")
+	shoot_callable.call()
+	reaction_timer.start(randf_range(0.5, 1.5))
 
 #====================================== DEAD STATE ==============================================================
 	

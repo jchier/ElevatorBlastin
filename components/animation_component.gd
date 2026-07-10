@@ -48,3 +48,8 @@ func _can_shoot():
 
 func dead():
 	state_machine_torso.start("dead")
+	
+func is_animation_playing() -> bool:
+	if animation_torso.is_playing() or animation_legs.is_playing():
+		return true
+	return false
