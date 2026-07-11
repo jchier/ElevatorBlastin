@@ -203,5 +203,5 @@ tile_set = SubResource("TileSet_oark8")
 position = Vector2(327, -103)
 
 [node name="Enemy" parent="." unique_id=880008235 node_paths=PackedStringArray("chosen_elevator") instance=ExtResource("4_od0h0")]
-position = Vector2(624, -115)
+position = Vector2(177, -125)
 chosen_elevator = NodePath("../Elevator")

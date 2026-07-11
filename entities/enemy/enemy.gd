@@ -4,7 +4,7 @@ extends CharacterBody2D
 signal died
 
 const FLOOR_DISTANCE: int = 50
-
+const ELEVATOR_WIDTH: int = 40
 @onready var movement_component: MovementComponent = $MovementComponent
 @onready var rider_component: Area2D = $RiderComponent
 @onready var visuals: Node = $Visuals
@@ -26,6 +26,9 @@ const FLOOR_DISTANCE: int = 50
 
 @export var chosen_elevator: Elevator
 
+enum {BELOW, EQUAL, ABOVE}
+
+enum {UNDER_ELEVATOR, FAR_FROM_ELEVATOR}
 
 var direction: int = 1
 var last_direction: int = 1
@@ -39,6 +42,7 @@ var last_stance: String = "stand"
 var callable_shoot
 var player: Player
 var _destination: Vector2
+var destination_met: bool = true
 
 func _ready():
 	rider_component.set_current_occupancy.connect(_set_current_occupancy)
@@ -205,10 +209,10 @@ func _on_aggro_state_processing(delta: float) -> void:
 	edge_detection.force_raycast_update()
 	if !edge_detection.is_colliding() and vision_ray.is_colliding():
 		set_direction(0)
-	if !vision_ray.is_colliding() and _player_is_on_same_floor():
+	if !vision_ray.is_colliding() and _player_floor_relation() == EQUAL:
 		flip_toward_player()
 	#elif !edge_detection.is_colliding() and !vision_ray.is_colliding():
-	elif !vision_ray.is_colliding() and !_player_is_on_same_floor():
+	elif !vision_ray.is_colliding() and _player_floor_relation() != EQUAL:
 		state_chart.send_event("seek")
 		#state_chart.send_event("docile")
 
@@ -247,33 +251,56 @@ func _on_seek_elevator_state_entered() -> void:
 	state_chart.send_event("stand")
 	set_destination(chosen_elevator.global_position)
 	reaction_timer.paused = true
+	destination_met = true
 
 func _on_seek_elevator_state_physics_processing(delta: float) -> void:
 	edge_detection.force_raycast_update()
-	if edge_detection.is_colliding() and !_chosen_elevator_is_on_same_floor()\
-		and global_position.x == chosen_elevator.global_position.x:
-			set_destination(Vector2(global_position.x + 3.0 * last_direction, global_position.y))
-	if !edge_detection.is_colliding():
-		set_direction(0)
-		if player.global_position.y > global_position.y:
-			chosen_elevator.request_up()
-		else:
-			chosen_elevator.request_down()
+	#if we are not at an edge, and the elevator is not on our floor, and we are directly
+	#below the elevator, we must scoot to the side a bit.
+#	if edge_detection.is_colliding() and !_chosen_elevator_floor_relation() == EQUAL\
+#		and abs(global_position.x - _destination.x) < 3 and destination_met == true:
+#			destination_met = false
+#			print("underneath elevator case")
+#			set_destination(Vector2(global_position.x + ELEVATOR_WIDTH * last_direction, global_position.y))	
+	if abs(global_position.x - _destination.x) < ELEVATOR_WIDTH:
+		state_chart.send_event("waiting_for_elevator")
 	else:
 		set_destination(chosen_elevator.global_position)
 	
+	#if we arrive at our destination, stop and look towards the chosen elevator
+	if global_position.x == _destination.x:
+		destination_met = true
+		direction = 0
+		print(signf(global_position.direction_to(_destination).x))
+		set_orientation(signf(global_position.direction_to(_destination).x))
+	
+	
+func _on_waiting_for_elevator_state_entered() -> void:
+	set_direction(0)
+	destination_met = true
+
+func _on_waiting_for_elevator_state_physics_processing(delta: float) -> void:
+	if destination_met == true:
+		if _chosen_elevator_floor_relation() == ABOVE:
+			chosen_elevator.request_up()
+		elif _chosen_elevator_floor_relation() == BELOW:
+			chosen_elevator.request_down()
+		else:
+			set_destination(chosen_elevator.global_position)
+			destination_met = false
+
 	if _current_occupancy:
 		state_chart.send_event("in_elevator")
-	
-
+		
 func _on_in_elevator_state_entered() -> void:
+	last_direction = direction
 	set_direction(0)
 
 
 func _on_in_elevator_state_physics_processing(delta: float) -> void:
-	if player.global_position.y < global_position.y - 0.5:
+	if player.global_position.y < global_position.y - 4:
 		chosen_elevator.go_up()
-	elif player.global_position.y > global_position.y + 0.5:
+	elif player.global_position.y > global_position.y + 4:
 		chosen_elevator.go_down()
 	else:
 		state_chart.send_event("docile")
@@ -296,23 +323,25 @@ func _on_despawn_timer_timeout() -> void:
 	queue_free()
 	
 #====================================== ============== =================================================================
-func _player_is_on_same_floor() -> bool:
+func _player_floor_relation() -> int:
 	if !player:
-		return false
-	if player.global_position.y < global_position.y - FLOOR_DISTANCE \
-	or player.global_position.y > global_position.y + FLOOR_DISTANCE:
-		return false
+		return -1
+	if player.global_position.y < global_position.y - FLOOR_DISTANCE:
+		return ABOVE
+	if player.global_position.y > global_position.y + FLOOR_DISTANCE:
+		return BELOW
 	else:
-		return true
+		return EQUAL
 
-func _chosen_elevator_is_on_same_floor() -> bool:
+func _chosen_elevator_floor_relation() -> int:
 	if !chosen_elevator:
-		return false
-	if chosen_elevator.global_position.y < global_position.y - 0.5 \
-	or chosen_elevator.global_position.y > global_position.y + 0.5:
-		return false
+		return -1
+	if chosen_elevator.global_position.y < global_position.y - 3:
+		return BELOW
+	if chosen_elevator.global_position.y > global_position.y + 3:
+		return ABOVE
 	else:
-		return true
+		return EQUAL
 
 func flip_toward_player():
 	if !player:

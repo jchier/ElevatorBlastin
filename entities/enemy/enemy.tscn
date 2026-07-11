@@ -605,7 +605,16 @@ initial_state = NodePath("SeekElevator")
 [node name="SeekElevator" type="Node" parent="StateChart/Root/Behavior/Seek" unique_id=1347166904]
 script = ExtResource("12_xshm4")
 
-[node name="InElevator" type="Node" parent="StateChart/Root/Behavior/Seek/SeekElevator" unique_id=985855824]
+[node name="WaitingForElevator" type="Node" parent="StateChart/Root/Behavior/Seek/SeekElevator" unique_id=985855824]
+script = ExtResource("13_402ev")
+to = NodePath("../../WaitingForElevator")
+event = &"waiting_for_elevator"
+delay_in_seconds = "0.0"
+
+[node name="WaitingForElevator" type="Node" parent="StateChart/Root/Behavior/Seek" unique_id=82856395]
+script = ExtResource("12_xshm4")
+
+[node name="InElevator" type="Node" parent="StateChart/Root/Behavior/Seek/WaitingForElevator" unique_id=1277185350]
 script = ExtResource("13_402ev")
 to = NodePath("../../InElevator")
 event = &"in_elevator"
@@ -679,6 +688,8 @@ one_shot = true
 [connection signal="state_processing" from="StateChart/Root/Behavior/Aggro" to="." method="_on_aggro_state_processing"]
 [connection signal="state_entered" from="StateChart/Root/Behavior/Seek/SeekElevator" to="." method="_on_seek_elevator_state_entered"]
 [connection signal="state_physics_processing" from="StateChart/Root/Behavior/Seek/SeekElevator" to="." method="_on_seek_elevator_state_physics_processing"]
+[connection signal="state_entered" from="StateChart/Root/Behavior/Seek/WaitingForElevator" to="." method="_on_waiting_for_elevator_state_entered"]
+[connection signal="state_physics_processing" from="StateChart/Root/Behavior/Seek/WaitingForElevator" to="." method="_on_waiting_for_elevator_state_physics_processing"]
 [connection signal="state_entered" from="StateChart/Root/Behavior/Seek/InElevator" to="." method="_on_in_elevator_state_entered"]
 [connection signal="state_physics_processing" from="StateChart/Root/Behavior/Seek/InElevator" to="." method="_on_in_elevator_state_physics_processing"]
 [connection signal="timeout" from="PatrolTimer" to="." method="_on_patrol_timer_timeout"]
