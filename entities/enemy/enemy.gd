@@ -3,6 +3,8 @@ extends CharacterBody2D
 
 signal died
 
+const FLOOR_DISTANCE: int = 50
+
 @onready var movement_component: MovementComponent = $MovementComponent
 @onready var rider_component: Area2D = $RiderComponent
 @onready var visuals: Node = $Visuals
@@ -35,8 +37,9 @@ var patrol: bool = false
 var t = 0
 var last_stance: String = "stand"
 var callable_shoot
-var _destination = CharacterBody2D
 var player: Player
+var _destination: Vector2
+
 func _ready():
 	rider_component.set_current_occupancy.connect(_set_current_occupancy)
 	rider_component.clear_current_occupancy.connect(_clear_current_occupancy)
@@ -63,23 +66,21 @@ func _physics_process(delta: float) -> void:
 	if vision_ray.is_colliding():
 		var collided = vision_ray.get_collider()
 		if collided is Player:
-			set_destination(collided)
+			set_destination(collided.global_position)
 			player = collided
 		#TODO: put logic to change desired elivator or stairs here
 		state_chart.send_event("aggro")
 		return
-		
-		
 
-
-func set_destination(body: CharacterBody2D):
-	if _destination:
-		if global_position.x < _destination.global_position.x:
-			direction = 1
-		elif global_position.x > _destination.global_position.x:
-			direction = -1
-		else:
-			direction = 0
+func set_destination(destination: Vector2):
+	last_direction = direction
+	_destination = destination
+	if global_position.x < destination.x:
+		direction = 1
+	elif global_position.x > destination.x:
+		direction = -1
+	else:
+		direction = 0
 	
 		
 func try_duck_fire():
@@ -109,6 +110,7 @@ func set_orientation(signf: float):
 		
 func _set_current_occupancy(occupancy: Occupant_Component):
 		_current_occupancy = occupancy
+		state_chart.send_event("in_elevator")
 		
 func _clear_current_occupancy():
 	_current_occupancy = null
@@ -168,9 +170,9 @@ func _state_chart_event(event: String):
 #====================================== BEHAVIOR STATES ===========================================================	
 #====================================== DOCILE STATE ==============================================================
 func _on_docile_state_entered() -> void:
-	_destination = null
 	patrol_timer.paused = false
 	reaction_timer.paused = true
+	direction = last_direction
 	
 
 func _on_docile_state_exited() -> void:
@@ -202,11 +204,11 @@ func _on_aggro_state_entered() -> void:
 func _on_aggro_state_processing(delta: float) -> void:
 	edge_detection.force_raycast_update()
 	if !edge_detection.is_colliding() and vision_ray.is_colliding():
-		_destination = null
 		set_direction(0)
+	if !vision_ray.is_colliding() and _player_is_on_same_floor():
+		flip_toward_player()
 	#elif !edge_detection.is_colliding() and !vision_ray.is_colliding():
-	elif !vision_ray.is_colliding():
-		#todo: change this line to seeking state
+	elif !vision_ray.is_colliding() and !_player_is_on_same_floor():
 		state_chart.send_event("seek")
 		#state_chart.send_event("docile")
 
@@ -241,21 +243,41 @@ func _on_reaction_timer_timeout() -> void:
 
 #====================================== SEEKING STATE ==============================================================
 
-func _on_seek_state_entered() -> void:
-	_destination = chosen_elevator
+func _on_seek_elevator_state_entered() -> void:
+	state_chart.send_event("stand")
+	set_destination(chosen_elevator.global_position)
 	reaction_timer.paused = true
-	#chosen_elevator.request()
-	
-func _on_seek_state_physics_processing(delta: float) -> void:
+
+func _on_seek_elevator_state_physics_processing(delta: float) -> void:
 	edge_detection.force_raycast_update()
+	if edge_detection.is_colliding() and !_chosen_elevator_is_on_same_floor()\
+		and global_position.x == chosen_elevator.global_position.x:
+			set_destination(Vector2(global_position.x + 3.0 * last_direction, global_position.y))
 	if !edge_detection.is_colliding():
 		set_direction(0)
 		if player.global_position.y > global_position.y:
-			chosen_elevator.go_up()
+			chosen_elevator.request_up()
 		else:
-			chosen_elevator.go_down()
+			chosen_elevator.request_down()
+	else:
+		set_destination(chosen_elevator.global_position)
+	
+	if _current_occupancy:
+		state_chart.send_event("in_elevator")
+	
+
+func _on_in_elevator_state_entered() -> void:
+	set_direction(0)
 
 
+func _on_in_elevator_state_physics_processing(delta: float) -> void:
+	if player.global_position.y < global_position.y - 0.5:
+		chosen_elevator.go_up()
+	elif player.global_position.y > global_position.y + 0.5:
+		chosen_elevator.go_down()
+	else:
+		state_chart.send_event("docile")
+		
 
 #====================================== DEAD STATE =================================================================
 	
@@ -272,3 +294,31 @@ func _on_dead_state_entered() -> void:
 
 func _on_despawn_timer_timeout() -> void:
 	queue_free()
+	
+#====================================== ============== =================================================================
+func _player_is_on_same_floor() -> bool:
+	if !player:
+		return false
+	if player.global_position.y < global_position.y - FLOOR_DISTANCE \
+	or player.global_position.y > global_position.y + FLOOR_DISTANCE:
+		return false
+	else:
+		return true
+
+func _chosen_elevator_is_on_same_floor() -> bool:
+	if !chosen_elevator:
+		return false
+	if chosen_elevator.global_position.y < global_position.y - 0.5 \
+	or chosen_elevator.global_position.y > global_position.y + 0.5:
+		return false
+	else:
+		return true
+
+func flip_toward_player():
+	if !player:
+		return
+		
+	if direction == -1 and player.global_position.x > global_position.x:
+		direction = 1
+	if direction == 1 and player.global_position.x < global_position.x:
+		direction = -1

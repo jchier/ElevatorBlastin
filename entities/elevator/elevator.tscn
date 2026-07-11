@@ -2,10 +2,11 @@
 
 [ext_resource type="Script" uid="uid://k5hk33gsmhnt" path="res://entities/elevator/elevator.gd" id="1_3c2c0"]
 [ext_resource type="PackedScene" uid="uid://byct6l41li67v" path="res://components/occupant_component.tscn" id="2_rtcbl"]
+[ext_resource type="Texture2D" uid="uid://d0c3gh58tidko" path="res://entities/player/KritaTempPalettegen_000001.png" id="3_v33mf"]
 
 [sub_resource type="Gradient" id="Gradient_rtcbl"]
-offsets = PackedFloat32Array(0.20869565, 0.28695652, 0.973913, 1)
-colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1, 0.70869565, 0.70869565, 0.70869565, 1, 1, 1, 1, 1)
+offsets = PackedFloat32Array(0.20869565, 0.5344353, 0.6666667, 0.973913, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1, 0.45425028, 0.45425028, 0.45425028, 1, 0.70869565, 0.70869565, 0.70869565, 1, 1, 1, 1, 1)
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_jr1kj"]
 width = 30
@@ -68,6 +69,27 @@ rotation = -3.1415927
 scale = Vector2(1, 0.05)
 texture = SubResource("NoiseTexture2D_jr1kj")
 offset = Vector2(0, -20)
+
+[node name="ElevatorShaft" type="Area2D" parent="." unique_id=622980520]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="ElevatorShaft" unique_id=485022789]
+position = Vector2(-2.682209e-07, -56.707867)
+scale = Vector2(0.9374999, 2.9980807)
+polygon = PackedVector2Array(-3.2, -4.7670937, 3.2000005, -4.7670937, 3.2000005, 23.25083, -3.2, 23.25083)
+
+[node name="Sprite2D2" type="Sprite2D" parent="ElevatorShaft/CollisionPolygon2D" unique_id=1794616115]
+position = Vector2(-0.032194473, -26.042046)
+rotation = 3.1415908
+scale = Vector2(0.41850805, 1.7601157)
+texture = ExtResource("3_v33mf")
+offset = Vector2(0, -20)
+
+[node name="Detect_Floor" type="RayCast2D" parent="." unique_id=1999578225]
+target_position = Vector2(0, 257)
+
+[node name="Detect_Ceiling" type="RayCast2D" parent="." unique_id=1131919175]
+rotation = 3.1415927
+target_position = Vector2(0, 300)
 
 [connection signal="body_entered" from="Occupant_Area" to="." method="_on_occupant_area_body_entered"]
 [connection signal="body_exited" from="Occupant_Area" to="." method="_on_occupant_area_body_exited"]

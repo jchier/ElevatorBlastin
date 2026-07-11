@@ -186,6 +186,8 @@ terrain_set_0/terrain_0/color = Color(0.94394726, 0.8705242, 0.8288316, 1)
 sources/0 = SubResource("TileSetAtlasSource_rfpkf")
 
 [node name="TestArea" type="Node2D" unique_id=1920541780]
+metadata/_edit_horizontal_guides_ = [-44.0]
+metadata/_edit_vertical_guides_ = [34.0]
 
 [node name="Elevator" parent="." unique_id=1398215485 instance=ExtResource("1_6fnve")]
 position = Vector2(49, -4)

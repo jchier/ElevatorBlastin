@@ -404,7 +404,7 @@ radius = 8.035714
 height = 25.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jr1kj"]
-radius = 7.0
+radius = 2.0
 height = 28.0
 
 [node name="Enemy" type="CharacterBody2D" unique_id=834976139]
@@ -465,15 +465,18 @@ hframes = 4
 vframes = 4
 
 [node name="HurtboxComponent" parent="." unique_id=1378213332 node_paths=PackedStringArray("health_component") instance=ExtResource("8_t1g2p")]
+visible = false
 health_component = NodePath("../HealthComponent")
 
 [node name="StandingCollisionShape" type="CollisionShape2D" parent="." unique_id=554777545]
+visible = false
 z_index = 3
 position = Vector2(0, -25)
 scale = Vector2(1.12, 1.12)
 shape = SubResource("CapsuleShape2D_oark8")
 
 [node name="CrouchingCollisionShape" type="CollisionShape2D" parent="." unique_id=435291202]
+visible = false
 z_index = 3
 position = Vector2(0, -14)
 scale = Vector2(1.12, 1.12)
@@ -483,13 +486,11 @@ shape = SubResource("CapsuleShape2D_b6dgu")
 visible = false
 
 [node name="RiderComponent" parent="." unique_id=145831594 instance=ExtResource("9_ttrsd")]
-visible = false
 position = Vector2(0, 1)
 collision_layer = 32
 collision_mask = 16
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RiderComponent" unique_id=2128487551]
-visible = false
 z_index = 2
 position = Vector2(0, -15)
 shape = SubResource("CapsuleShape2D_jr1kj")
@@ -597,8 +598,27 @@ to = NodePath("../../Seek")
 event = &"seek"
 delay_in_seconds = "0.0"
 
-[node name="Seek" type="Node" parent="StateChart/Root/Behavior" unique_id=1103732758]
+[node name="Seek" type="Node" parent="StateChart/Root/Behavior" unique_id=1372163672]
+script = ExtResource("11_qmbk7")
+initial_state = NodePath("SeekElevator")
+
+[node name="SeekElevator" type="Node" parent="StateChart/Root/Behavior/Seek" unique_id=1347166904]
 script = ExtResource("12_xshm4")
+
+[node name="InElevator" type="Node" parent="StateChart/Root/Behavior/Seek/SeekElevator" unique_id=985855824]
+script = ExtResource("13_402ev")
+to = NodePath("../../InElevator")
+event = &"in_elevator"
+delay_in_seconds = "0.0"
+
+[node name="InElevator" type="Node" parent="StateChart/Root/Behavior/Seek" unique_id=1047974253]
+script = ExtResource("12_xshm4")
+
+[node name="Docile" type="Node" parent="StateChart/Root/Behavior/Seek/InElevator" unique_id=412482228]
+script = ExtResource("13_402ev")
+to = NodePath("../../../Docile")
+event = &"docile"
+delay_in_seconds = "0.0"
 
 [node name="StateChartDebugger" parent="." unique_id=839851318 instance=ExtResource("14_v7t4h")]
 offset_left = 102.0
@@ -624,6 +644,7 @@ autostart = true
 [node name="EdgeDetection" type="RayCast2D" parent="." unique_id=1498018219]
 position = Vector2(1, -19)
 target_position = Vector2(21, 22)
+collision_mask = 65
 
 [node name="MoveTo" type="Marker2D" parent="." unique_id=715631499]
 
@@ -656,8 +677,10 @@ one_shot = true
 [connection signal="state_physics_processing" from="StateChart/Root/Behavior/Docile" to="." method="_on_docile_state_physics_processing"]
 [connection signal="state_entered" from="StateChart/Root/Behavior/Aggro" to="." method="_on_aggro_state_entered"]
 [connection signal="state_processing" from="StateChart/Root/Behavior/Aggro" to="." method="_on_aggro_state_processing"]
-[connection signal="state_entered" from="StateChart/Root/Behavior/Seek" to="." method="_on_seek_state_entered"]
-[connection signal="state_physics_processing" from="StateChart/Root/Behavior/Seek" to="." method="_on_seek_state_physics_processing"]
+[connection signal="state_entered" from="StateChart/Root/Behavior/Seek/SeekElevator" to="." method="_on_seek_elevator_state_entered"]
+[connection signal="state_physics_processing" from="StateChart/Root/Behavior/Seek/SeekElevator" to="." method="_on_seek_elevator_state_physics_processing"]
+[connection signal="state_entered" from="StateChart/Root/Behavior/Seek/InElevator" to="." method="_on_in_elevator_state_entered"]
+[connection signal="state_physics_processing" from="StateChart/Root/Behavior/Seek/InElevator" to="." method="_on_in_elevator_state_physics_processing"]
 [connection signal="timeout" from="PatrolTimer" to="." method="_on_patrol_timer_timeout"]
 [connection signal="timeout" from="DespawnTimer" to="." method="_on_despawn_timer_timeout"]
 [connection signal="timeout" from="ReactionTimer" to="." method="_on_reaction_timer_timeout"]
