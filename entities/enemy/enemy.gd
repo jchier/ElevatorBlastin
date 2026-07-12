@@ -208,13 +208,16 @@ func _on_aggro_state_entered() -> void:
 
 func _on_aggro_state_processing(delta: float) -> void:
 	edge_detection.force_raycast_update()
+	if !_is_facing_player():
+		flip_toward_player()
+
 	if !edge_detection.is_colliding():
+		last_direction = direction
 		set_direction(0)
 
-	if !vision_ray.is_colliding() and _player_floor_relation() == EQUAL and !_is_facing_player():
-		flip_toward_player()
+	#if !vision_ray.is_colliding() and _player_floor_relation() == EQUAL and !_is_facing_player():
 	#elif !edge_detection.is_colliding() and !vision_ray.is_colliding():
-	elif !vision_ray.is_colliding() and _player_floor_relation() != EQUAL:
+	if !vision_ray.is_colliding() and _player_floor_relation() != EQUAL:
 		state_chart.send_event("seek")
 		#state_chart.send_event("docile")
 
@@ -371,11 +374,16 @@ func flip_toward_player():
 	if !player:
 		return
 		
+	if direction == 0:
+		direction = last_direction
+		
 	if direction == -1 and player.global_position.x > global_position.x:
 		direction = 1
-	if direction == 1 and player.global_position.x < global_position.x:
+	elif direction == 1 and player.global_position.x < global_position.x:
 		direction = -1
-
+		
+	set_orientation(direction)
+	
 func arrived_at_destination() -> bool:
 	if global_position.distance_to(_destination) <= 1:
 		return true

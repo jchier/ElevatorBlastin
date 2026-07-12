@@ -28,6 +28,7 @@ func _ready():
 	animation_component.can_shoot.connect(_can_shoot)
 	health_component.died.connect(_on_died)
 	crouching_collision_shape.disabled = true
+
 	
 func _physics_process(delta: float) -> void:
 	
