@@ -61,12 +61,9 @@ func _ready():
 	
 func _physics_process(delta: float) -> void:
 
+		
 	movement_component.generate_velocity(delta, direction)
 	move_and_slide()
-
-	if _current_occupancy:	
-		#TODO: insert elevator riding logic here
-		pass
 
 	if vision_ray.is_colliding():
 		var collided = vision_ray.get_collider()
@@ -208,6 +205,8 @@ func _on_aggro_state_entered() -> void:
 
 func _on_aggro_state_processing(delta: float) -> void:
 	edge_detection.force_raycast_update()
+
+	
 	if !_is_facing_player():
 		flip_toward_player()
 
@@ -388,3 +387,11 @@ func arrived_at_destination() -> bool:
 	if global_position.distance_to(_destination) <= 1:
 		return true
 	return false
+
+
+func _on_player_buffer_zone_area_entered(area: Area2D) -> void:
+	movement_component.disabled = true
+
+
+func _on_player_buffer_zone_area_exited(area: Area2D) -> void:
+	movement_component.disabled = false

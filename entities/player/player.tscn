@@ -356,6 +356,7 @@ _data = {
 [sub_resource type="AnimationNodeAdd2" id="AnimationNodeAdd2_a1qjk"]
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_afbqv"]
+graph_offset = Vector2(-559.1001, -50.20099)
 nodes/output/position = Vector2(360, 140)
 nodes/Add2/node = SubResource("AnimationNodeAdd2_a1qjk")
 nodes/Add2/position = Vector2(160, 120)
@@ -379,7 +380,7 @@ height = 28.0
 
 [node name="Player" type="CharacterBody2D" unique_id=834976139]
 collision_layer = 4
-collision_mask = 81
+collision_mask = 89
 script = ExtResource("1_abrql")
 
 [node name="MovementComponent" parent="." unique_id=1459948917 node_paths=PackedStringArray("_character_body") instance=ExtResource("2_yqrof")]
@@ -450,6 +451,7 @@ shape = SubResource("CapsuleShape2D_b6dgu")
 [node name="BulletComponent" parent="." unique_id=815253983 instance=ExtResource("8_afbqv")]
 
 [node name="HurtboxComponent" parent="." unique_id=1378213332 node_paths=PackedStringArray("health_component") instance=ExtResource("9_gx6sm")]
+visible = false
 health_component = NodePath("../HealthComponent")
 
 [node name="RiderComponent" parent="." unique_id=145831594 instance=ExtResource("3_sglur")]
