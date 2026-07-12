@@ -20,12 +20,12 @@ var is_occupied
 var elevator_shaft_bottom: Vector2 = Vector2.ZERO
 var elevator_shaft_top: Vector2 = Vector2.ZERO
 
-func build_elevator_shaft():
-	points.append(Vector2(elevator_shaft_top.x - 2, elevator_shaft_top.y))
-	points.append(Vector2(elevator_shaft_top.x + 2, elevator_shaft_top.y))
-	points.append(Vector2(elevator_shaft_bottom.x + 2, elevator_shaft_bottom.y))
-	points.append(Vector2(elevator_shaft_bottom.x - 2, elevator_shaft_bottom.y))
-	ev_poly.polygon = points
+#func build_elevator_shaft():
+#	points.append(Vector2(elevator_shaft_top.x - 2, elevator_shaft_top.y))
+#	points.append(Vector2(elevator_shaft_top.x + 2, elevator_shaft_top.y))
+#	points.append(Vector2(elevator_shaft_bottom.x + 2, elevator_shaft_bottom.y))
+#	points.append(Vector2(elevator_shaft_bottom.x - 2, elevator_shaft_bottom.y))
+#	ev_poly.polygon = points
 
 func _ready():
 	floor_animatable_body.sync_to_physics = false
@@ -35,14 +35,14 @@ func _ready():
 	wait_timer.timeout.connect(on_wait_timer_timeout)
 	
 func _physics_process(_delta: float) -> void:
-	if poly_set == false:
-		if detect_ceiling.is_colliding():
-			elevator_shaft_top = detect_ceiling.get_collision_point()
-		if detect_floor.is_colliding():
-			elevator_shaft_bottom = detect_floor.get_collision_point()
-		if elevator_shaft_bottom != Vector2.ZERO and elevator_shaft_top != Vector2.ZERO:
-			build_elevator_shaft()
-			poly_set = true
+#	if poly_set == false:
+#		if detect_ceiling.is_colliding():
+#			elevator_shaft_top = detect_ceiling.get_collision_point()
+#		if detect_floor.is_colliding():
+#			elevator_shaft_bottom = detect_floor.get_collision_point()
+#		if elevator_shaft_bottom != Vector2.ZERO and elevator_shaft_top != Vector2.ZERO:
+##			build_elevator_shaft()
+#			poly_set = true
 	
 	if wait_timer.is_stopped():
 		velocity.y = direction * elevator_speed

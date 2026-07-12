@@ -71,13 +71,16 @@ texture = SubResource("NoiseTexture2D_jr1kj")
 offset = Vector2(0, -20)
 
 [node name="ElevatorShaft" type="Area2D" parent="." unique_id=622980520]
+visible = false
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="ElevatorShaft" unique_id=485022789]
+visible = false
 position = Vector2(-2.682209e-07, -56.707867)
 scale = Vector2(0.9374999, 2.9980807)
 polygon = PackedVector2Array(-3.2, -4.7670937, 3.2000005, -4.7670937, 3.2000005, 23.25083, -3.2, 23.25083)
 
 [node name="Sprite2D2" type="Sprite2D" parent="ElevatorShaft/CollisionPolygon2D" unique_id=1794616115]
+visible = false
 position = Vector2(-0.032194473, -26.042046)
 rotation = 3.1415908
 scale = Vector2(0.41850805, 1.7601157)
@@ -85,9 +88,11 @@ texture = ExtResource("3_v33mf")
 offset = Vector2(0, -20)
 
 [node name="Detect_Floor" type="RayCast2D" parent="." unique_id=1999578225]
+visible = false
 target_position = Vector2(0, 257)
 
 [node name="Detect_Ceiling" type="RayCast2D" parent="." unique_id=1131919175]
+visible = false
 rotation = 3.1415927
 target_position = Vector2(0, 300)
 

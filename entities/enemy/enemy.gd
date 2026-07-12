@@ -208,9 +208,10 @@ func _on_aggro_state_entered() -> void:
 
 func _on_aggro_state_processing(delta: float) -> void:
 	edge_detection.force_raycast_update()
-	if !edge_detection.is_colliding() and vision_ray.is_colliding():
+	if !edge_detection.is_colliding():
 		set_direction(0)
-	if !vision_ray.is_colliding() and _player_floor_relation() == EQUAL:
+
+	if !vision_ray.is_colliding() and _player_floor_relation() == EQUAL and !_is_facing_player():
 		flip_toward_player()
 	#elif !edge_detection.is_colliding() and !vision_ray.is_colliding():
 	elif !vision_ray.is_colliding() and _player_floor_relation() != EQUAL:
@@ -245,6 +246,8 @@ func _on_reaction_timer_timeout() -> void:
 		callable_shoot.call()	
 	reaction_timer.start(randf_range(0.5, 1.0))
 	
+func _on_aggro_state_exited() -> void:
+	reaction_timer.paused = true
 
 #====================================== SEEKING STATE ==============================================================
 
@@ -332,6 +335,18 @@ func _on_despawn_timer_timeout() -> void:
 	queue_free()
 	
 #====================================== ============== =================================================================
+func _is_facing_player() -> bool:
+	var dir_to_player = global_position.direction_to(player.global_position).x
+	if direction == -1 and dir_to_player < 0 or direction == 1 and dir_to_player > 0:
+		return true
+	return false
+
+func _is_facing_elevator() -> bool:
+	var dir_to_elevator = global_position.direction_to(chosen_elevator.global_position).x
+	if direction == -1 and dir_to_elevator < 0 or direction == 1 and dir_to_elevator > 0:
+		return true
+	return false
+
 func _player_floor_relation() -> int:
 	if !player:
 		return -1
