@@ -414,6 +414,7 @@ script = ExtResource("1_ogeq8")
 
 [node name="MovementComponent" parent="." unique_id=743977151 node_paths=PackedStringArray("_character_body") instance=ExtResource("2_0mv3s")]
 _character_body = NodePath("..")
+max_speed = 60.0
 
 [node name="HealthComponent" type="Node" parent="." unique_id=1233727716]
 script = ExtResource("2_lqjfw")
@@ -465,7 +466,6 @@ hframes = 4
 vframes = 4
 
 [node name="HurtboxComponent" parent="." unique_id=1378213332 node_paths=PackedStringArray("health_component") instance=ExtResource("8_t1g2p")]
-visible = false
 health_component = NodePath("../HealthComponent")
 
 [node name="StandingCollisionShape" type="CollisionShape2D" parent="." unique_id=554777545]
@@ -483,7 +483,6 @@ scale = Vector2(1.12, 1.12)
 shape = SubResource("CapsuleShape2D_b6dgu")
 
 [node name="BulletComponent" parent="." unique_id=815253983 instance=ExtResource("8_jfjhj")]
-visible = false
 
 [node name="RiderComponent" parent="." unique_id=145831594 instance=ExtResource("9_ttrsd")]
 position = Vector2(0, 1)
@@ -627,6 +626,12 @@ script = ExtResource("12_xshm4")
 script = ExtResource("13_402ev")
 to = NodePath("../../../Docile")
 event = &"docile"
+delay_in_seconds = "0.0"
+
+[node name="Aggro" type="Node" parent="StateChart/Root/Behavior/Seek" unique_id=558813462]
+script = ExtResource("13_402ev")
+to = NodePath("../../Aggro")
+event = &"aggro"
 delay_in_seconds = "0.0"
 
 [node name="StateChartDebugger" parent="." unique_id=839851318 instance=ExtResource("14_v7t4h")]

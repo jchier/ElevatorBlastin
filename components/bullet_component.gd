@@ -18,10 +18,10 @@ func fire():
 
 	#TODO: fire rate timer, effects go here
 	
-func flip_horizontal():
-	scale.x *= -1.0
-	bullet_marker_2d_stand.rotation *= -1.0
-	bullet_marker_2d_crouch.rotation *= -1.0
+func flip_horizontal(sign: float):
+	scale.x = sign
+	bullet_marker_2d_stand.rotation = sign
+	bullet_marker_2d_crouch.rotation = sign
 
 func toggle_stance():
 	crouch_toggled = !crouch_toggled

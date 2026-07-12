@@ -4,7 +4,7 @@ extends CharacterBody2D
 signal died
 
 const FLOOR_DISTANCE: int = 50
-const ELEVATOR_WIDTH: int = 40
+const ELEVATOR_BUFFER: int = 40
 @onready var movement_component: MovementComponent = $MovementComponent
 @onready var rider_component: Area2D = $RiderComponent
 @onready var visuals: Node = $Visuals
@@ -45,6 +45,7 @@ var _destination: Vector2
 var destination_met: bool = true
 
 func _ready():
+	#player.is_close_connect(_player_is_close)
 	rider_component.set_current_occupancy.connect(_set_current_occupancy)
 	rider_component.clear_current_occupancy.connect(_clear_current_occupancy)
 	movement_component.state_chart_event.connect(_state_chart_event)
@@ -102,15 +103,15 @@ func try_stand_fire():
 	bullet_component.fire()
 	fire_rate_timer.start()
 
-func set_orientation(signf: float):
-	if signf == 0:
+func set_orientation(sign: float):
+	if sign == 0:
 		return
-	set_direction(signf)
-	bullet_component.flip_horizontal()
-	visuals.scale.x = signf
-	vision_ray.scale.x = signf
-	edge_detection.scale.x = signf
-	edge_detection.position.x = signf
+	set_direction(sign)
+	bullet_component.flip_horizontal(sign)
+	visuals.scale.x = sign
+	vision_ray.scale.x = sign
+	edge_detection.scale.x = sign
+	edge_detection.position.x = sign
 		
 func _set_current_occupancy(occupancy: Occupant_Component):
 		_current_occupancy = occupancy
@@ -255,14 +256,8 @@ func _on_seek_elevator_state_entered() -> void:
 
 func _on_seek_elevator_state_physics_processing(delta: float) -> void:
 	edge_detection.force_raycast_update()
-	#if we are not at an edge, and the elevator is not on our floor, and we are directly
-	#below the elevator, we must scoot to the side a bit.
-#	if edge_detection.is_colliding() and !_chosen_elevator_floor_relation() == EQUAL\
-#		and abs(global_position.x - _destination.x) < 3 and destination_met == true:
-#			destination_met = false
-#			print("underneath elevator case")
-#			set_destination(Vector2(global_position.x + ELEVATOR_WIDTH * last_direction, global_position.y))	
-	if abs(global_position.x - _destination.x) < ELEVATOR_WIDTH:
+
+	if abs(global_position.x - _destination.x) < ELEVATOR_BUFFER:
 		state_chart.send_event("waiting_for_elevator")
 	else:
 		set_destination(chosen_elevator.global_position)
@@ -271,15 +266,28 @@ func _on_seek_elevator_state_physics_processing(delta: float) -> void:
 	if global_position.x == _destination.x:
 		destination_met = true
 		direction = 0
-		print(signf(global_position.direction_to(_destination).x))
 		set_orientation(signf(global_position.direction_to(_destination).x))
 	
 	
 func _on_waiting_for_elevator_state_entered() -> void:
-	set_direction(0)
-	destination_met = true
-
+	#if we are not at an edge, and the elevator is not on our floor, and we are directly
+	#below the elevator, we must scoot to the side a bit.
+	destination_met = false
+	if global_position.x > chosen_elevator.global_position.x:
+		set_destination(Vector2(chosen_elevator.global_position.x + ELEVATOR_BUFFER, global_position.y))
+	elif global_position.x <= chosen_elevator.global_position.x:
+		set_destination(Vector2(chosen_elevator.global_position.x - ELEVATOR_BUFFER, global_position.y))
+	else:
+		destination_met = true
+		
 func _on_waiting_for_elevator_state_physics_processing(delta: float) -> void:
+
+	if arrived_at_destination():
+		destination_met = true
+		#set_orientation(signf(global_position.direction_to(chosen_elevator.global_position).x))
+		set_orientation(signf(global_position.direction_to(chosen_elevator.global_position).x))
+		set_direction(0)
+	
 	if destination_met == true:
 		if _chosen_elevator_floor_relation() == ABOVE:
 			chosen_elevator.request_up()
@@ -289,6 +297,7 @@ func _on_waiting_for_elevator_state_physics_processing(delta: float) -> void:
 			set_destination(chosen_elevator.global_position)
 			destination_met = false
 
+		
 	if _current_occupancy:
 		state_chart.send_event("in_elevator")
 		
@@ -351,3 +360,8 @@ func flip_toward_player():
 		direction = 1
 	if direction == 1 and player.global_position.x < global_position.x:
 		direction = -1
+
+func arrived_at_destination() -> bool:
+	if global_position.distance_to(_destination) <= 1:
+		return true
+	return false

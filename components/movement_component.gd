@@ -7,7 +7,7 @@ signal set_orientation(signf: float)
 
 @export var _character_body: CharacterBody2D
 
-const MAX_SPEED: float = 80.0
+@export var max_speed: float = 80.0
 const GRAVITY: Vector2 = Vector2(0,980)
 const FALL_GRAVITY = 1124
 const JUMP_VELOCITY: float = -250.0
@@ -24,11 +24,11 @@ var last_orientation = 1
 var _jump: bool = false
 
 func _ready():
-	current_speed = MAX_SPEED
+	current_speed = max_speed
 
 func toggle_movement():
 	if current_speed == 0:
-		current_speed = MAX_SPEED
+		current_speed = max_speed
 	else:
 		current_speed = 0
 
