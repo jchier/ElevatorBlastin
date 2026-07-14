@@ -10,8 +10,8 @@ const ELEVATOR_BUFFER: int = 40
 
 var _destination: float
 var _state: String
-var _last_direction: float
-var _direction: float
+var _last_direction: float = 1.0
+var _direction: float = 1.0
 
 func set_direction(direction):
 	_direction = direction
@@ -75,7 +75,7 @@ func reverse_direction():
 
 
 func on_docile_state_entered():
-	set_direction(1)
+	set_direction(_last_direction)
 	
 
 func stop():

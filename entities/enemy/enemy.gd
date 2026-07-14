@@ -158,9 +158,7 @@ func _state_chart_event(event: String):
 #====================================== DOCILE STATE ==============================================================
 func _on_docile_state_entered() -> void:
 	patrol_timer.paused = false
-	reaction_timer.paused = true
 	navigation_component.on_docile_state_entered()
-	
 
 func _on_docile_state_exited() -> void:
 	patrol_timer.paused = true
