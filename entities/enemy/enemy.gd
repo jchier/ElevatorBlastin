@@ -24,6 +24,7 @@ const ELEVATOR_BUFFER: int = 40
 @onready var reaction_timer: Timer = $ReactionTimer
 @onready var stance_timer: Timer = $StanceTimer
 @onready var patrol_timer: Timer = $PatrolTimer
+@onready var cool_down_timer: Timer = $CoolDownTimer
 
 @export var chosen_elevator: Elevator
 
@@ -54,7 +55,7 @@ func _ready():
 	movement_component.set_orientation.connect(set_orientation)
 #	navigation_component.navigation_complete.connect(navigation_complete)
 	navigation_component.set_orientation.connect(set_orientation)
-	chosen_elevator.stopped.connect(elevator_stopped)
+
 	animation_component.can_shoot.connect(_can_shoot)
 	animation_component.stance_changed.connect(_stance_changed)
 	crouching_collision_shape.disabled = true
@@ -207,6 +208,7 @@ func _on_aggro_state_entered() -> void:
 	reaction_timer.paused = false
 	reaction_timer.start(randf_range(0.5, 1.0))
 	movement_component.disabled = false
+	cool_down_timer.start()
 
 func _on_aggro_state_processing(delta: float) -> void:
 	edge_detection.force_raycast_update()
@@ -286,6 +288,7 @@ func _on_waiting_for_elevator_state_entered() -> void:
 	#below the elevator, we must scoot to the side a bit.
 	#navigation_component._on_waiting_for_elevator()
 	#direction = 0
+	chosen_elevator.stopped.connect(elevator_stopped)
 	navigation_component.navigation_complete.connect(navigation_complete)
 	set_orientation(signf(global_position.direction_to(chosen_elevator.global_position).x))
 	#destination_met = false
@@ -317,7 +320,10 @@ func _on_waiting_for_elevator_state_physics_processing(delta: float) -> void:
 		
 	if _current_occupancy:
 		state_chart.send_event("in_elevator")
-		
+
+func _on_waiting_for_elevator_state_exited() -> void:
+	chosen_elevator.stopped.disconnect(elevator_stopped)
+	navigation_component.navigation_complete.disconnect(navigation_complete)
 func _on_in_elevator_state_entered() -> void:
 	#last_direction = direction
 	#set_direction(0)
@@ -401,11 +407,12 @@ func arrived_at_destination() -> bool:
 	return false
 
 func elevator_stopped():
+	print("elevator stopped")
 	if _chosen_elevator_floor_relation() == ABOVE:
 		chosen_elevator.request_up()
 	elif _chosen_elevator_floor_relation() == BELOW:
 		chosen_elevator.request_down()
-	else:
+	elif !_current_occupancy:
 		navigation_component.set_destination(chosen_elevator.global_position.x)
 	
 
@@ -422,3 +429,7 @@ func _on_player_buffer_zone_body_exited(body: Node2D) -> void:
 
 	player_close = false
 	print("player far")
+
+
+func _on_cool_down_timer_timeout() -> void:
+	state_chart.send_event("docile")

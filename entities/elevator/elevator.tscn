@@ -98,3 +98,4 @@ target_position = Vector2(0, 300)
 
 [connection signal="body_entered" from="Occupant_Area" to="." method="_on_occupant_area_body_entered"]
 [connection signal="body_exited" from="Occupant_Area" to="." method="_on_occupant_area_body_exited"]
+[connection signal="timeout" from="WaitTimer" to="." method="_on_wait_timer_timeout"]
