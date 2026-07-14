@@ -48,14 +48,11 @@ var destination_met: bool = true
 var player_close = false
 
 func _ready():
-	#player.is_close_connect(_player_is_close)
 	rider_component.set_current_occupancy.connect(_set_current_occupancy)
 	rider_component.clear_current_occupancy.connect(_clear_current_occupancy)
 	movement_component.state_chart_event.connect(_state_chart_event)
 	movement_component.set_orientation.connect(set_orientation)
-#	navigation_component.navigation_complete.connect(navigation_complete)
 	navigation_component.set_orientation.connect(set_orientation)
-
 	animation_component.can_shoot.connect(_can_shoot)
 	animation_component.stance_changed.connect(_stance_changed)
 	crouching_collision_shape.disabled = true
@@ -65,12 +62,9 @@ func _ready():
 	move_to.global_position = Vector2(0,0)
 	reaction_timer.paused = true
 	
-func _physics_process(delta: float) -> void:
-
-		
+func _physics_process(delta: float) -> void:		
 	movement_component.generate_velocity(delta, navigation_component.get_direction())
 	move_and_slide()
-
 
 	if vision_ray.is_colliding():
 		var collided = vision_ray.get_collider()
@@ -79,18 +73,7 @@ func _physics_process(delta: float) -> void:
 			player = collided
 		state_chart.send_event("aggro")
 		return
-
-#func set_destination(destination: Vector2):
-#	last_direction = direction
-#	_destination = destination
-#	if global_position.x < destination.x:
-#		direction = 1
-#	elif global_position.x > destination.x:
-#		direction = -1
-#	else:
-#		direction = 0
-	
-		
+			
 func try_duck_fire():
 	if !fire_rate_timer.is_stopped() and can_shoot:
 		return
@@ -123,7 +106,6 @@ func _set_current_occupancy(occupancy: Occupant_Component):
 func _clear_current_occupancy():
 	_current_occupancy = null
 	
-
 
 func _on_stand_state_entered() -> void:
 	animation_component.play("idle")
@@ -168,9 +150,6 @@ func _can_shoot():
 
 func _stance_changed() -> bool:
 	return true
-
-#func set_direction(new_direction):
-#	direction = new_direction
 	
 func _state_chart_event(event: String):
 	state_chart.send_event(event)
@@ -199,7 +178,7 @@ func _on_patrol_timer_timeout() -> void:
 	if movement_component.disabled:
 		if randi_range(0, 4 > 2):
 			navigation_component.reverse_direction()
-	#print("direction: ", direction)
+
 	patrol_timer.start(randf_range(1,2))
 
 #====================================== AGGRO STATE ==============================================================
@@ -212,25 +191,17 @@ func _on_aggro_state_entered() -> void:
 
 func _on_aggro_state_processing(delta: float) -> void:
 	edge_detection.force_raycast_update()
-
 	navigation_component.track_target(player.global_position.x)
-	
-#	if !_is_facing_player():
-#		flip_toward_player()
 
 	if !edge_detection.is_colliding():
 		navigation_component.stop()
-	#	last_direction = direction
-	#	navigation_component.set_direction(0)
+
 
 	if !vision_ray.is_colliding() and _player_floor_relation() != EQUAL:
 		state_chart.send_event("seek")
 
 	
-func _on_reaction_timer_timeout() -> void:
-#	if velocity.x != 0:
-#		try_stand_fire()
-	#else:		
+func _on_reaction_timer_timeout() -> void:	
 	if randi_range(0, 4) > 1:
 		if last_stance != "stand":
 			#print("stand")
@@ -262,20 +233,11 @@ func _on_seek_elevator_state_entered() -> void:
 	state_chart.send_event("stand")
 	navigation_component.navigation_complete.connect(arrived_to_elevator_stop)
 	navigation_component.set_destination(chosen_elevator.global_position.x)
-#	destination_met = true
 
 func _on_seek_elevator_state_physics_processing(delta: float) -> void:
 	edge_detection.force_raycast_update()
-
-#	if abs(global_position.x - _destination.x) < ELEVATOR_BUFFER:
-#		state_chart.send_event("waiting_for_elevator")
-#	else:
 	navigation_component.navigate_to_elevator()
 
-	#if we arrive at our destination, stop and look towards the chosen elevator
-	#if global_position.x == _destination.x:
-	#	destination_met = true
-	
 func arrived_to_elevator_stop():
 	navigation_component.stop()
 	state_chart.send_event("waiting_for_elevator")
@@ -284,49 +246,24 @@ func _on_seek_elevator_state_exited() -> void:
 		navigation_component.navigation_complete.disconnect(arrived_to_elevator_stop)
 	
 func _on_waiting_for_elevator_state_entered() -> void:
-	#if we are not at an edge, and the elevator is not on our floor, and we are directly
-	#below the elevator, we must scoot to the side a bit.
-	#navigation_component._on_waiting_for_elevator()
-	#direction = 0
 	chosen_elevator.stopped.connect(elevator_stopped)
 	navigation_component.navigation_complete.connect(navigation_complete)
 	set_orientation(signf(global_position.direction_to(chosen_elevator.global_position).x))
-	#destination_met = false
 	if global_position.x > chosen_elevator.global_position.x:
 		navigation_component.set_destination(chosen_elevator.global_position.x + ELEVATOR_BUFFER)
 	elif global_position.x <= chosen_elevator.global_position.x:
 		navigation_component.set_destination(chosen_elevator.global_position.x - ELEVATOR_BUFFER)
 		
 func _on_waiting_for_elevator_state_physics_processing(delta: float) -> void:
-
-#	if arrived_at_destination():
-#		destination_met = true
-#		#set_orientation(signf(global_position.direction_to(chosen_elevator.global_position).x))
-#		set_orientation(signf(global_position.direction_to(chosen_elevator.global_position).x))
-#		set_direction(0)
-	
-	#TODO: replace this logic with recieving a signal from the elevator about reaching a floor,
-	#compare floor of elevator and floor of enemy, and rquest floor accordingly
-	#if destination_met == true:
-	#	if _chosen_elevator_floor_relation() == ABOVE:
-	#		chosen_elevator.request_up()
-	#	elif _chosen_elevator_floor_relation() == BELOW:
-	#		chosen_elevator.request_down()
-	#	else:
-	#		navigation_component.set_destination(chosen_elevator.global_position.x)
-	#		destination_met = false
-
 	navigation_component.navigate()
-		
 	if _current_occupancy:
 		state_chart.send_event("in_elevator")
 
 func _on_waiting_for_elevator_state_exited() -> void:
 	chosen_elevator.stopped.disconnect(elevator_stopped)
 	navigation_component.navigation_complete.disconnect(navigation_complete)
+	
 func _on_in_elevator_state_entered() -> void:
-	#last_direction = direction
-	#set_direction(0)
 	navigation_component.stop()
 
 func _on_in_elevator_state_physics_processing(delta: float) -> void:
@@ -355,18 +292,6 @@ func _on_despawn_timer_timeout() -> void:
 	queue_free()
 	
 #====================================== ============== =================================================================
-func _is_facing_player() -> bool:
-	var dir_to_player = global_position.direction_to(player.global_position).x
-	if direction == -1 and dir_to_player < 0 or direction == 1 and dir_to_player > 0:
-		return true
-	return false
-
-func _is_facing_elevator() -> bool:
-	var dir_to_elevator = global_position.direction_to(chosen_elevator.global_position).x
-	if direction == -1 and dir_to_elevator < 0 or direction == 1 and dir_to_elevator > 0:
-		return true
-	return false
-
 func _player_floor_relation() -> int:
 	if !player:
 		return -1
@@ -387,25 +312,6 @@ func _chosen_elevator_floor_relation() -> int:
 	else:
 		return EQUAL
 
-func flip_toward_player():
-	if !player:
-		return
-		
-	if direction == 0:
-		direction = last_direction
-		
-	if direction == -1 and player.global_position.x > global_position.x:
-		direction = 1
-	elif direction == 1 and player.global_position.x < global_position.x:
-		direction = -1
-		
-	set_orientation(direction)
-	
-func arrived_at_destination() -> bool:
-	if global_position.distance_to(_destination) <= 1:
-		return true
-	return false
-
 func elevator_stopped():
 	print("elevator stopped")
 	if _chosen_elevator_floor_relation() == ABOVE:
@@ -421,14 +327,12 @@ func navigation_complete():
 	navigation_component.stop()
 
 func _on_player_buffer_zone_body_entered(body: Node2D) -> void:
-
 	player_close = true
-	print("player close")
+
 
 func _on_player_buffer_zone_body_exited(body: Node2D) -> void:
-
 	player_close = false
-	print("player far")
+
 
 
 func _on_cool_down_timer_timeout() -> void:
