@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="ElevatorBlastin"
-run/main_scene="uid://cfyd878hm8vrp"
+run/main_scene="uid://cflxxyn4pet7d"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -73,6 +73,9 @@ jump={
 2d_physics/layer_6="rider"
 2d_physics/layer_7="elevator_floor"
 2d_physics/layer_8="elevator_stop"
+2d_physics/layer_9="door"
+2d_physics/layer_10="bullet"
+2d_physics/layer_11="hurtbox"
 
 [physics]
 

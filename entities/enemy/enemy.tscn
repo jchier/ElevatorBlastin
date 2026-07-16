@@ -413,6 +413,7 @@ radius = 2.0
 height = 28.0
 
 [node name="Enemy" type="CharacterBody2D" unique_id=834976139]
+z_as_relative = false
 collision_layer = 4
 collision_mask = 81
 script = ExtResource("1_ogeq8")
@@ -462,11 +463,12 @@ target_position = Vector2(21, 22)
 collision_mask = 65
 
 [node name="Visuals" type="Node2D" parent="." unique_id=876248669]
-y_sort_enabled = true
+z_as_relative = false
 
 [node name="Sprite2DTorso" type="Sprite2D" parent="Visuals" unique_id=865724498]
 unique_name_in_owner = true
-z_index = 2
+z_index = 1
+z_as_relative = false
 texture_filter = 1
 position = Vector2(0, -4)
 texture = ExtResource("8_kh7fx")
@@ -476,7 +478,8 @@ vframes = 4
 
 [node name="Sprite2DLegs" type="Sprite2D" parent="Visuals" unique_id=1040317593]
 unique_name_in_owner = true
-z_index = 2
+z_index = 1
+z_as_relative = false
 texture_filter = 1
 position = Vector2(0, -4)
 texture = ExtResource("9_5s4bh")

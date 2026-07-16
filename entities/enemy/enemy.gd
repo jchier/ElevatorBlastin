@@ -166,7 +166,8 @@ func _on_docile_state_exited() -> void:
 func _on_docile_state_physics_processing(delta: float) -> void:
 	edge_detection.force_raycast_update()
 	
-	if !edge_detection.is_colliding() and is_on_floor():
+	if !edge_detection.is_colliding() and is_on_floor()\
+	or is_on_wall():
 		navigation_component.reverse_direction()
 
 
@@ -196,7 +197,10 @@ func _on_aggro_state_processing(delta: float) -> void:
 
 
 	if !vision_ray.is_colliding() and _player_floor_relation() != EQUAL:
-		state_chart.send_event("seek")
+		if chosen_elevator:
+			state_chart.send_event("seek")
+		else:
+			state_chart.send_event("docile")
 
 	
 func _on_reaction_timer_timeout() -> void:	
@@ -279,12 +283,14 @@ func _on_died():
 	state_chart.send_event("dead")
 
 func _on_dead_state_entered() -> void:
+	hurtbox_component.disabled = true
 	vision_ray.enabled = false
 	animation_component.start("dead")
 	navigation_component.stop()
 	movement_component.disabled = true
 	standing_collision_shape.disabled = true
 	crouching_collision_shape.disabled = true
+	hurtbox_component.disabled = true
 	died.emit()
 	despawn_timer.start()
 

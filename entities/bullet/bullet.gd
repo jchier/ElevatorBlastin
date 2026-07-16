@@ -2,7 +2,7 @@ class_name Bullet
 extends Node2D
 
 const SPEED: int = 500
-var direction: float
+var direction: float = 1.0
 
 @onready var life_timer: Timer = $LifeTimer
 @onready var hitbox_component: HitboxComponent = $HitboxComponent

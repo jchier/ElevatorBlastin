@@ -9,6 +9,12 @@ signal hit_by_hitbox
 @onready var airborne_collision_shape: CollisionShape2D = $AirborneCollisionShape
 
 var last_grounded_collision_shape: CollisionShape2D
+var disabled: bool:
+	set(value):
+		crouching_collision_shape.set_deferred("disabled", value)
+		standing_collision_shape.set_deferred("disabled", value)
+		airborne_collision_shape.set_deferred("disabled", value)
+		disabled = value
 
 func _ready() -> void:
 	last_grounded_collision_shape = standing_collision_shape
