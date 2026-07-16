@@ -7,10 +7,10 @@
 [ext_resource type="PackedScene" uid="uid://dcvp37of238fb" path="res://components/navigation_component.tscn" id="3_kh7fx"]
 [ext_resource type="AnimationNodeStateMachine" uid="uid://cb7raff26gw6f" path="res://state_machine_legs.tres" id="4_wbwud"]
 [ext_resource type="AnimationNodeStateMachine" uid="uid://vqwerxuxtc6o" path="res://state_machine_torso.tres" id="5_2t1u4"]
-[ext_resource type="Texture2D" uid="uid://dl5ololkaxnip" path="res://entities/player/player_torso2.png" id="6_kgxwm"]
-[ext_resource type="Texture2D" uid="uid://dccqr7iuuq4f0" path="res://entities/player/player_legs2.png" id="7_2kpvj"]
 [ext_resource type="PackedScene" uid="uid://b7k4uoekj8gqj" path="res://components/bullet_component.tscn" id="8_jfjhj"]
+[ext_resource type="Texture2D" uid="uid://i6ikaqlmp1mv" path="res://entities/enemy/enemy_torso.png" id="8_kh7fx"]
 [ext_resource type="PackedScene" uid="uid://cmh5yetqv4k2r" path="res://components/hurtbox_component.tscn" id="8_t1g2p"]
+[ext_resource type="Texture2D" uid="uid://de4k3b7syjkop" path="res://entities/enemy/enemy_legs.png" id="9_5s4bh"]
 [ext_resource type="PackedScene" uid="uid://b3rjse2q2hp5v" path="res://components/rider_component.tscn" id="9_ttrsd"]
 [ext_resource type="Script" uid="uid://couw105c3bde4" path="res://addons/godot_state_charts/state_chart.gd" id="10_5f25h"]
 [ext_resource type="Script" uid="uid://c1vp0ojjvaby1" path="res://addons/godot_state_charts/parallel_state.gd" id="11_jfjhj"]
@@ -468,7 +468,7 @@ unique_name_in_owner = true
 z_index = 2
 texture_filter = 1
 position = Vector2(0, -4)
-texture = ExtResource("6_kgxwm")
+texture = ExtResource("8_kh7fx")
 offset = Vector2(0, -26)
 hframes = 5
 vframes = 4
@@ -478,12 +478,13 @@ unique_name_in_owner = true
 z_index = 2
 texture_filter = 1
 position = Vector2(0, -4)
-texture = ExtResource("7_2kpvj")
+texture = ExtResource("9_5s4bh")
 offset = Vector2(0, -26)
 hframes = 4
 vframes = 4
 
 [node name="HurtboxComponent" parent="." unique_id=1378213332 node_paths=PackedStringArray("health_component") instance=ExtResource("8_t1g2p")]
+visible = false
 health_component = NodePath("../HealthComponent")
 
 [node name="StandingCollisionShape" type="CollisionShape2D" parent="." unique_id=554777545]
@@ -511,6 +512,7 @@ position = Vector2(0, -25)
 shape = SubResource("CapsuleShape2D_j5ip0")
 
 [node name="RiderComponent" parent="." unique_id=145831594 instance=ExtResource("9_ttrsd")]
+visible = false
 position = Vector2(0, 1)
 collision_layer = 32
 collision_mask = 16
@@ -661,6 +663,7 @@ event = &"aggro"
 delay_in_seconds = "0.0"
 
 [node name="StateChartDebugger" parent="." unique_id=839851318 instance=ExtResource("14_v7t4h")]
+visible = false
 offset_left = 102.0
 offset_top = -156.0
 offset_right = 325.0

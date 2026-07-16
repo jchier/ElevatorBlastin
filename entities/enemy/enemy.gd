@@ -281,7 +281,10 @@ func _on_died():
 func _on_dead_state_entered() -> void:
 	vision_ray.enabled = false
 	animation_component.start("dead")
-	direction = 0
+	navigation_component.stop()
+	movement_component.disabled = true
+	standing_collision_shape.disabled = true
+	crouching_collision_shape.disabled = true
 	died.emit()
 	despawn_timer.start()
 
@@ -334,4 +337,5 @@ func _on_player_buffer_zone_body_exited(body: Node2D) -> void:
 
 
 func _on_cool_down_timer_timeout() -> void:
-	state_chart.send_event("docile")
+	if !_current_occupancy:
+		state_chart.send_event("docile")
