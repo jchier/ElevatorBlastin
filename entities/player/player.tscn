@@ -547,6 +547,8 @@ offset_bottom = 62.0
 enabled = false
 initial_node_to_watch = NodePath("../StateChart")
 
+[node name="Camera2D" type="Camera2D" parent="." unique_id=162436934]
+
 [connection signal="state_entered" from="StateChart/Root/Grounded/Stand" to="." method="_on_stand_state_entered"]
 [connection signal="state_input" from="StateChart/Root/Grounded/Stand" to="." method="_on_stand_state_input"]
 [connection signal="state_physics_processing" from="StateChart/Root/Grounded/Stand" to="." method="_on_stand_state_physics_processing"]
