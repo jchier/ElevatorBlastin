@@ -9,7 +9,6 @@ var direction: float = 1.0
 
 func _ready() -> void:
 	hitbox_component.hit_hurtbox.connect(_on_hit_hurtbox)
-	hitbox_component.hit_hurtbox.connect(_register_collision)
 	life_timer.timeout.connect(_on_life_timer_timeout)
 	life_timer.start()
 
