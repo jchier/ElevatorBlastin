@@ -384,7 +384,7 @@ terrain_set_0/terrain_0/color = Color(0.5, 0.34375, 0.25, 1)
 sources/0 = SubResource("TileSetAtlasSource_bt44k")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oark8"]
-size = Vector2(78, 6)
+size = Vector2(78, 1)
 
 [node name="Level1" type="Node2D" unique_id=1570879048]
 z_as_relative = false
@@ -427,8 +427,8 @@ collision_layer = 128
 collision_mask = 64
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1121542843]
-position = Vector2(-2, 7)
+position = Vector2(-1, -1.5)
 shape = SubResource("RectangleShape2D_oark8")
 
 [node name="Elevator" parent="." unique_id=1398215485 instance=ExtResource("6_btoec")]
-position = Vector2(92, 222)
+position = Vector2(92, 226)
