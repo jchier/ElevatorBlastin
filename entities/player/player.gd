@@ -71,9 +71,9 @@ func fire():
 	bullet_component.fire()
 	fire_rate_timer.start()
 
-func set_orientation(sign: float):
-	bullet_component.flip_horizontal(sign)
-	visuals.scale.x = sign
+func set_orientation(sign_f: float):
+	bullet_component.flip_horizontal(sign_f)
+	visuals.scale.x = sign_f
 		
 func _set_current_occupancy(occupancy: Occupant_Component):
 		_current_occupancy = occupancy

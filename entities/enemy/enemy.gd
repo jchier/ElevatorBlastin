@@ -43,7 +43,6 @@ var t = 0
 var last_stance: String = "stand"
 var callable_shoot
 var player: Player
-var _destination: Vector2
 var destination_met: bool = true
 var player_close = false
 
@@ -89,15 +88,15 @@ func try_stand_fire():
 	bullet_component.fire()
 	fire_rate_timer.start()
 
-func set_orientation(sign: float):
-	if sign == 0:
+func set_orientation(sign_f: float):
+	if sign_f == 0:
 		return
-	navigation_component.set_direction(sign)
-	bullet_component.flip_horizontal(sign)
-	visuals.scale.x = sign
-	vision_ray.scale.x = sign
-	edge_detection.scale.x = sign
-	edge_detection.position.x = sign
+	navigation_component.set_direction(sign_f)
+	bullet_component.flip_horizontal(sign_f)
+	visuals.scale.x = sign_f
+	vision_ray.scale.x = sign_f
+	edge_detection.scale.x = sign_f
+	edge_detection.position.x = sign_f
 		
 func _set_current_occupancy(occupancy: Occupant_Component):
 		_current_occupancy = occupancy
@@ -163,7 +162,7 @@ func _on_docile_state_entered() -> void:
 func _on_docile_state_exited() -> void:
 	patrol_timer.paused = true
 	
-func _on_docile_state_physics_processing(delta: float) -> void:
+func _on_docile_state_physics_processing(_delta: float) -> void:
 	edge_detection.force_raycast_update()
 	
 	if !edge_detection.is_colliding() and is_on_floor()\
@@ -188,7 +187,7 @@ func _on_aggro_state_entered() -> void:
 	movement_component.disabled = false
 	cool_down_timer.start()
 
-func _on_aggro_state_processing(delta: float) -> void:
+func _on_aggro_state_processing(_delta: float) -> void:
 	edge_detection.force_raycast_update()
 	navigation_component.track_target(player.global_position.x)
 
@@ -236,7 +235,7 @@ func _on_seek_elevator_state_entered() -> void:
 	navigation_component.navigation_complete.connect(arrived_to_elevator_stop)
 	navigation_component.set_destination(chosen_elevator.global_position.x)
 
-func _on_seek_elevator_state_physics_processing(delta: float) -> void:
+func _on_seek_elevator_state_physics_processing(_delta: float) -> void:
 	edge_detection.force_raycast_update()
 	navigation_component.navigate_to_elevator()
 
@@ -256,7 +255,7 @@ func _on_waiting_for_elevator_state_entered() -> void:
 	elif global_position.x <= chosen_elevator.global_position.x:
 		navigation_component.set_destination(chosen_elevator.global_position.x - ELEVATOR_BUFFER)
 		
-func _on_waiting_for_elevator_state_physics_processing(delta: float) -> void:
+func _on_waiting_for_elevator_state_physics_processing(_delta: float) -> void:
 	navigation_component.navigate()
 	if _current_occupancy:
 		state_chart.send_event("in_elevator")
@@ -268,7 +267,7 @@ func _on_waiting_for_elevator_state_exited() -> void:
 func _on_in_elevator_state_entered() -> void:
 	navigation_component.stop()
 
-func _on_in_elevator_state_physics_processing(delta: float) -> void:
+func _on_in_elevator_state_physics_processing(_delta: float) -> void:
 	if player.global_position.y < global_position.y - 4:
 		chosen_elevator.go_up()
 	elif player.global_position.y > global_position.y + 4:
@@ -288,8 +287,6 @@ func _on_dead_state_entered() -> void:
 	animation_component.start("dead")
 	navigation_component.stop()
 	movement_component.disabled = true
-	standing_collision_shape.disabled = true
-	crouching_collision_shape.disabled = true
 	hurtbox_component.disabled = true
 	died.emit()
 	despawn_timer.start()
@@ -333,11 +330,11 @@ func navigation_complete():
 	set_orientation(signf(global_position.direction_to(chosen_elevator.global_position).x))
 	navigation_component.stop()
 
-func _on_player_buffer_zone_body_entered(body: Node2D) -> void:
+func _on_player_buffer_zone_body_entered(_body: Node2D) -> void:
 	player_close = true
 
 
-func _on_player_buffer_zone_body_exited(body: Node2D) -> void:
+func _on_player_buffer_zone_body_exited(_body: Node2D) -> void:
 	player_close = false
 
 

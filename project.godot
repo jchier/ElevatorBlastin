@@ -84,4 +84,5 @@ jump={
 [rendering]
 
 rendering_device/driver.windows="d3d12"
+textures/default_filters/use_nearest_mipmap_filter=true
 environment/defaults/default_clear_color=Color(0.07165215, 0.19502002, 0.166807, 1)

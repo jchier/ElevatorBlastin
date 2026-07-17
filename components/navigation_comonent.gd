@@ -9,7 +9,6 @@ signal set_orientation(signf: float)
 const ELEVATOR_BUFFER: int = 40
 
 var _destination: float
-var _state: String
 var _last_direction: float = 1.0
 var _direction: float = 1.0
 

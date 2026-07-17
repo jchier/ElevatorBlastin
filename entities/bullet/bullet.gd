@@ -33,7 +33,7 @@ func _register_collision():
 
 
 
-func _on_hitbox_component_area_entered(area: Area2D) -> void:
+func _on_hitbox_component_area_entered(_area: Area2D) -> void:
 	_register_collision()
 
 

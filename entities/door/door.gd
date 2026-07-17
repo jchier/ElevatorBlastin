@@ -8,13 +8,13 @@ var open: bool = false
 
 
 
-func _on_use_l_body_entered(body: Node2D) -> void:
+func _on_use_l_body_entered(_body: Node2D) -> void:
 	if !open:
 		animation_player.play("open_l")
 		open = true
 
 
-func _on_use_r_body_entered(body: Node2D) -> void:
+func _on_use_r_body_entered(_body: Node2D) -> void:
 	if !open:
 		animation_player.play("open_r")
 		open = true
