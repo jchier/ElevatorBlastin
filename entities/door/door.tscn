@@ -78,6 +78,7 @@ vframes = 3
 libraries/ = SubResource("AnimationLibrary_kgyc3")
 
 [node name="Use_L" type="Area2D" parent="." unique_id=739042443]
+visible = false
 collision_layer = 256
 collision_mask = 4
 
@@ -86,6 +87,7 @@ position = Vector2(-5, 0)
 shape = SubResource("RectangleShape2D_oark8")
 
 [node name="Use_R" type="Area2D" parent="." unique_id=1915881217]
+visible = false
 collision_layer = 256
 collision_mask = 4
 
@@ -94,6 +96,7 @@ position = Vector2(13, 0)
 shape = SubResource("RectangleShape2D_oark8")
 
 [node name="Area2D" type="Area2D" parent="." unique_id=1064145519]
+visible = false
 collision_layer = 256
 collision_mask = 524
 
@@ -103,3 +106,4 @@ shape = SubResource("RectangleShape2D_jr1kj")
 
 [connection signal="body_entered" from="Use_L" to="." method="_on_use_l_body_entered"]
 [connection signal="body_entered" from="Use_R" to="." method="_on_use_r_body_entered"]
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]

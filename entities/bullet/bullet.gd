@@ -9,6 +9,7 @@ var direction: float = 1.0
 
 func _ready() -> void:
 	hitbox_component.hit_hurtbox.connect(_on_hit_hurtbox)
+	hitbox_component.hit_hurtbox.connect(_register_collision)
 	life_timer.timeout.connect(_on_life_timer_timeout)
 	life_timer.start()
 
@@ -26,5 +27,16 @@ func _on_hit_hurtbox(_hurtbox_component: HurtboxComponent):
 	_register_collision()
 
 
+
 func _register_collision():
 	queue_free()
+
+
+
+func _on_hitbox_component_area_entered(area: Area2D) -> void:
+	_register_collision()
+
+
+func _on_hitbox_component_body_entered(body: Node2D) -> void:
+	if body is TileMapLayer:
+		_register_collision()
