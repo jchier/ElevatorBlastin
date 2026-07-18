@@ -189,9 +189,10 @@ func _on_aggro_state_entered() -> void:
 
 func _on_aggro_state_processing(_delta: float) -> void:
 	edge_detection.force_raycast_update()
-	navigation_component.track_target(player.global_position.x)
+	if !player_close:
+		navigation_component.track_target(player.global_position.x)
 
-	if !edge_detection.is_colliding():
+	if !edge_detection.is_colliding() or player_close:
 		navigation_component.stop()
 
 
@@ -331,11 +332,17 @@ func navigation_complete():
 	navigation_component.stop()
 
 func _on_player_buffer_zone_body_entered(_body: Node2D) -> void:
+	if _body is not Player:
+		return
+	#navigation_component.stop()
 	player_close = true
 
 
 func _on_player_buffer_zone_body_exited(_body: Node2D) -> void:
+	if _body is not Player:
+		return
 	player_close = false
+	navigation_component.start()
 
 
 

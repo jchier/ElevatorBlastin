@@ -23,11 +23,11 @@ z_index = 1
 position = Vector2(180, 360)
 
 [node name="Enemy" parent="." unique_id=1003276322 node_paths=PackedStringArray("chosen_elevator") instance=ExtResource("3_n46q3")]
-position = Vector2(240, 386)
+position = Vector2(-47, 264)
 chosen_elevator = NodePath("../Elevator")
 
 [node name="Player" parent="." unique_id=834976139 instance=ExtResource("2_jirdo")]
-position = Vector2(22, 263)
+position = Vector2(17, 263)
 
 [node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=590717441]
 z_index = -1

@@ -31,7 +31,7 @@ func set_destination(destination_x: float):
 	
 func track_target(target_x: float):
 	if _direction == 0:
-		set_direction(_last_direction)
+		set_direction(signf(_navigator.global_position.distance_to(Vector2(target_x, 0))))
 		
 	if _direction == -1 and target_x > _navigator.global_position.x:
 		set_direction(1)
@@ -76,6 +76,8 @@ func reverse_direction():
 func on_docile_state_entered():
 	set_direction(_last_direction)
 	
+func start():
+	set_direction(_last_direction)
 
 func stop():
 	_last_direction = _direction
