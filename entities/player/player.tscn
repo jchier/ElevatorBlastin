@@ -379,6 +379,7 @@ radius = 7.0
 height = 28.0
 
 [node name="Player" type="CharacterBody2D" unique_id=834976139]
+z_index = 2
 z_as_relative = false
 collision_layer = 4
 collision_mask = 89
