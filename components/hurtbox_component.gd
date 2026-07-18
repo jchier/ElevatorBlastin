@@ -35,12 +35,12 @@ func _on_area_entered(other_area: Area2D):
 
 func toggle_stance():
 	if !standing_collision_shape.disabled and crouching_collision_shape.disabled:
-		standing_collision_shape.disabled = true
-		crouching_collision_shape.disabled = false
+		standing_collision_shape.set_deferred("disabled", true)
+		crouching_collision_shape.set_deferred("disabled", false)
 		last_grounded_collision_shape = crouching_collision_shape
 	elif standing_collision_shape.disabled and !crouching_collision_shape.disabled:
-		standing_collision_shape.disabled = false
-		crouching_collision_shape.disabled = true
+		standing_collision_shape.set_deferred("disabled", false)
+		crouching_collision_shape.set_deferred("disabled", true)
 		last_grounded_collision_shape = standing_collision_shape
 
 func toggle_airborne():
