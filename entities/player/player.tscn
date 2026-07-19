@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://c2rgnnuoe4mpu"]
 
 [ext_resource type="Script" uid="uid://b2dvl12tkj5s6" path="res://entities/player/player.gd" id="1_abrql"]
+[ext_resource type="PackedScene" uid="uid://du6fvxgccikwp" path="res://components/floor_detector_component.tscn" id="2_3wlsy"]
 [ext_resource type="Script" uid="uid://sphex7yy6a2e" path="res://components/health_component.gd" id="2_fkugw"]
 [ext_resource type="PackedScene" uid="uid://cfm00blcnek3b" path="res://components/movement_component.tscn" id="2_yqrof"]
 [ext_resource type="PackedScene" uid="uid://b1imkaubtmk14" path="res://components/animation_component.tscn" id="3_7thud"]
@@ -384,6 +385,9 @@ z_as_relative = false
 collision_layer = 4
 collision_mask = 89
 script = ExtResource("1_abrql")
+
+[node name="FloorDetectorComponent" parent="." unique_id=1055282861 instance=ExtResource("2_3wlsy")]
+position = Vector2(0, -4)
 
 [node name="MovementComponent" parent="." unique_id=1459948917 node_paths=PackedStringArray("_character_body") instance=ExtResource("2_yqrof")]
 _character_body = NodePath("..")

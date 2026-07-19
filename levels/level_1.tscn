@@ -1,5 +1,6 @@
 [gd_scene format=4 uid="uid://cflxxyn4pet7d"]
 
+[ext_resource type="PackedScene" uid="uid://fb5pvrms6cc" path="res://components/floor_marker_component.tscn" id="1_l53as"]
 [ext_resource type="PackedScene" uid="uid://ddo3hnjqf5y25" path="res://entities/door/door.tscn" id="1_n46q3"]
 [ext_resource type="PackedScene" uid="uid://c2rgnnuoe4mpu" path="res://entities/player/player.tscn" id="2_jirdo"]
 [ext_resource type="PackedScene" uid="uid://bftk50lxpoojr" path="res://entities/enemy/enemy.tscn" id="3_n46q3"]
@@ -13,6 +14,18 @@ size = Vector2(78, 1)
 
 [node name="Level1" type="Node2D" unique_id=1570879048]
 z_as_relative = false
+
+[node name="FloorMarkerComponent3" parent="." unique_id=349425407 instance=ExtResource("1_l53as")]
+position = Vector2(92, 270)
+floor_number = 3
+
+[node name="FloorMarkerComponent2" parent="." unique_id=1359104942 instance=ExtResource("1_l53as")]
+position = Vector2(92, 390)
+floor_number = 2
+
+[node name="FloorMarkerComponent1" parent="." unique_id=21431043 instance=ExtResource("1_l53as")]
+position = Vector2(92, 570)
+floor_number = 1
 
 [node name="Door" parent="." unique_id=162893821 instance=ExtResource("1_n46q3")]
 z_index = 1
@@ -39,6 +52,7 @@ tile_set = ExtResource("4_gwceb")
 metadata/_edit_lock_ = true
 
 [node name="TileMapLayerY1" type="TileMapLayer" parent="." unique_id=1199198018]
+visible = false
 z_as_relative = false
 texture_filter = 1
 position = Vector2(-990, 0)
@@ -47,6 +61,7 @@ tile_set = ExtResource("5_l53as")
 metadata/_edit_lock_ = true
 
 [node name="TileMapLayerY2WhiteCorner" type="TileMapLayer" parent="." unique_id=1400982622]
+visible = false
 z_index = 1
 z_as_relative = false
 texture_filter = 1

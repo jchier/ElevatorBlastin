@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://fb5pvrms6cc"]
+
+[ext_resource type="Script" uid="uid://c30n88su7mdb" path="res://components/floor_marker_component.gd" id="1_4ql7r"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oark8"]
+size = Vector2(3000, 2)
+
+[node name="FloorMarkerComponent" type="Area2D" unique_id=349425407]
+collision_layer = 2176
+collision_mask = 4096
+script = ExtResource("1_4ql7r")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1473989874]
+position = Vector2(1, -1)
+shape = SubResource("RectangleShape2D_oark8")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

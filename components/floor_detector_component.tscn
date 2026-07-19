@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://du6fvxgccikwp"]
+
+[ext_resource type="Script" uid="uid://dpivimtebm2of" path="res://components/floor_detector_component.gd" id="1_ty767"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4ssn0"]
+size = Vector2(8, 7.875)
+
+[node name="FloorDetectorComponent" type="Area2D" unique_id=1055282861]
+collision_layer = 4096
+collision_mask = 2048
+script = ExtResource("1_ty767")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1513883988]
+position = Vector2(0, -0.0625)
+shape = SubResource("RectangleShape2D_4ssn0")
