@@ -22,11 +22,11 @@ size = Vector2(30, 57)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_83u65"]
 size = Vector2(53, 1)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_huxcw"]
-size = Vector2(53, 8)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oark8"]
 size = Vector2(55, 8)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ksmh2"]
+size = Vector2(55, 5)
 
 [node name="Elevator" type="CharacterBody2D" unique_id=1398215485]
 collision_layer = 0
@@ -57,7 +57,6 @@ position = Vector2(47, 16.75)
 shape = SubResource("RectangleShape2D_j5ip0")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=471479015]
-visible = false
 position = Vector2(0, -19.5)
 shape = SubResource("RectangleShape2D_jr1kj")
 
@@ -66,30 +65,30 @@ wait_time = 3.0
 one_shot = true
 
 [node name="Floor_Area" type="Area2D" parent="." unique_id=1598471896]
-visible = false
 collision_layer = 64
 collision_mask = 128
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Floor_Area" unique_id=1053187207]
-visible = false
 position = Vector2(-1, 8.5)
 shape = SubResource("RectangleShape2D_83u65")
 
 [node name="Floor_Animatable_Body" type="AnimatableBody2D" parent="." unique_id=1039586584]
-visible = false
 collision_layer = 64
 collision_mask = 4
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="Floor_Animatable_Body" unique_id=1418652692]
-visible = false
-position = Vector2(-0.5, -51)
-shape = SubResource("RectangleShape2D_huxcw")
+sync_to_physics = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Floor_Animatable_Body" unique_id=1347955668]
-visible = false
 position = Vector2(-0.5, 9)
 shape = SubResource("RectangleShape2D_oark8")
-metadata/_edit_lock_ = true
+
+[node name="RoofAnimatableBody" type="AnimatableBody2D" parent="." unique_id=154619614]
+collision_layer = 8192
+collision_mask = 4
+sync_to_physics = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RoofAnimatableBody" unique_id=956839247]
+position = Vector2(-0.5, -52.5)
+shape = SubResource("RectangleShape2D_ksmh2")
 
 [connection signal="body_entered" from="Occupant_Area" to="." method="_on_occupant_area_body_entered"]
 [connection signal="body_exited" from="Occupant_Area" to="." method="_on_occupant_area_body_exited"]

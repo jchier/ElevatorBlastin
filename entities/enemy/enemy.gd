@@ -26,6 +26,7 @@ const ELEVATOR_BUFFER: int = 40
 @onready var patrol_timer: Timer = $PatrolTimer
 @onready var cool_down_timer: Timer = $CoolDownTimer
 @onready var floor_detector_component: FloorDetectorComponent = $FloorDetectorComponent
+@onready var elevator_floor_detector: RayCast2D = $ElevatorFloorDetector
 
 @export var chosen_elevator: Elevator
 @export var starting_floor: int
@@ -75,7 +76,10 @@ func _physics_process(delta: float) -> void:
 			navigation_component.set_destination(collided.global_position.x)
 		state_chart.send_event("aggro")
 		return
-			
+				
+	if _current_occupancy:
+		state_chart.send_event("in_elevator")
+		
 func try_duck_fire():
 	if !fire_rate_timer.is_stopped() and can_shoot:
 		return
@@ -100,6 +104,8 @@ func set_orientation(sign_f: float):
 	vision_ray.scale.x = sign_f
 	edge_detection.scale.x = sign_f
 	edge_detection.position.x = sign_f
+	elevator_floor_detector.scale.x = sign_f
+	elevator_floor_detector.position.x = sign_f
 		
 func _set_current_occupancy(occupancy: Occupant_Component):
 		_current_occupancy = occupancy
@@ -159,6 +165,7 @@ func _state_chart_event(event: String):
 #====================================== BEHAVIOR STATES ===========================================================	
 #====================================== DOCILE STATE ==============================================================
 func _on_docile_state_entered() -> void:
+	chosen_elevator = null
 	patrol_timer.paused = false
 	navigation_component.on_docile_state_entered()
 
@@ -167,18 +174,31 @@ func _on_docile_state_exited() -> void:
 	
 func _on_docile_state_physics_processing(_delta: float) -> void:
 	edge_detection.force_raycast_update()
-	
+	elevator_floor_detector.force_raycast_update()
 	if !edge_detection.is_colliding() and is_on_floor()\
 	or is_on_wall():
 		navigation_component.reverse_direction()
+		
+	if elevator_floor_detector.is_colliding() and randi_range(1,2) == 2 and !chosen_elevator\
+	and _player_floor_relation() != EQUAL:
+		var collider = elevator_floor_detector.get_collider()
+		var elevator = collider.get_parent() as Elevator
+		if elevator:
+			chosen_elevator = elevator
+		state_chart.send_event("go_in_elevator")
+
 
 
 
 func _on_patrol_timer_timeout() -> void:
 	movement_component.disabled = !movement_component.disabled
 	if movement_component.disabled:
-		if randi_range(0, 4 > 2):
+		var random_value = randi_range(0,4)
+		if random_value <= 1:
 			navigation_component.reverse_direction()
+		if random_value >= 3:
+			movement_component.disabled = false
+			
 
 	patrol_timer.start(randf_range(1,2))
 
@@ -200,9 +220,6 @@ func _on_aggro_state_processing(_delta: float) -> void:
 
 
 	if !vision_ray.is_colliding() and _player_floor_relation() != EQUAL:
-		if chosen_elevator:
-			state_chart.send_event("seek")
-		else:
 			state_chart.send_event("docile")
 
 	
@@ -230,55 +247,52 @@ func _on_reaction_timer_timeout() -> void:
 	reaction_timer.start(randf_range(0.5, 1.0))
 	
 func _on_aggro_state_exited() -> void:
+	state_chart.send_event("stand")
 	reaction_timer.paused = true
 
 #====================================== SEEKING STATE ==============================================================
 
-func _on_seek_elevator_state_entered() -> void:
-	state_chart.send_event("stand")
-	navigation_component.navigation_complete.connect(arrived_to_elevator_stop)
+func _on_go_in_elevator_state_entered() -> void:
+	navigation_component.navigation_complete.connect(inside_elevator)
 	navigation_component.set_destination(chosen_elevator.global_position.x)
 
-func _on_seek_elevator_state_physics_processing(_delta: float) -> void:
+func _on_go_in_elevator_state_physics_processing(_delta: float) -> void:
 	edge_detection.force_raycast_update()
-	navigation_component.navigate_to_elevator()
-
-func arrived_to_elevator_stop():
-	navigation_component.stop()
-	state_chart.send_event("waiting_for_elevator")
-	
-func _on_seek_elevator_state_exited() -> void:
-		navigation_component.navigation_complete.disconnect(arrived_to_elevator_stop)
-	
-func _on_waiting_for_elevator_state_entered() -> void:
-	chosen_elevator.stopped.connect(elevator_stopped)
-	navigation_component.navigation_complete.connect(navigation_complete)
-	set_orientation(signf(global_position.direction_to(chosen_elevator.global_position).x))
-	if global_position.x > chosen_elevator.global_position.x:
-		navigation_component.set_destination(chosen_elevator.global_position.x + ELEVATOR_BUFFER)
-	elif global_position.x <= chosen_elevator.global_position.x:
-		navigation_component.set_destination(chosen_elevator.global_position.x - ELEVATOR_BUFFER)
-		
-func _on_waiting_for_elevator_state_physics_processing(_delta: float) -> void:
 	navigation_component.navigate()
-	if _current_occupancy:
-		state_chart.send_event("in_elevator")
 
-func _on_waiting_for_elevator_state_exited() -> void:
-	chosen_elevator.stopped.disconnect(elevator_stopped)
-	navigation_component.navigation_complete.disconnect(navigation_complete)
-	
-func _on_in_elevator_state_entered() -> void:
+func inside_elevator():
 	navigation_component.stop()
+	state_chart.send_event("in_elevator")
+	
+func _on_go_in_elevator_state_exited() -> void:
+	navigation_component.navigation_complete.disconnect(inside_elevator)
 
-func _on_in_elevator_state_physics_processing(_delta: float) -> void:
-	if player.global_position.y < global_position.y - 4:
+
+func _on_in_elevator_state_entered() -> void:
+	chosen_elevator.stopped.connect(make_elevator_choice)
+	navigation_component.stop()
+	make_elevator_choice()
+	
+func make_elevator_choice():
+	if _player_floor_relation() == ABOVE:
 		chosen_elevator.go_up()
-	elif player.global_position.y > global_position.y + 4:
+	elif _player_floor_relation() == BELOW:
 		chosen_elevator.go_down()
 	else:
 		state_chart.send_event("docile")
 		
+
+func _on_in_elevator_state_exited() -> void:
+	chosen_elevator.stopped.disconnect(make_elevator_choice)
+
+func _on_get_off_elevator_state_entered() -> void:
+	navigation_component.start()
+
+
+func _on_get_off_elevator_state_physics_processing(_delta: float) -> void:
+	elevator_floor_detector.force_raycast_update()
+	if !elevator_floor_detector.is_colliding():
+		state_chart.send_event("docile")
 
 #====================================== DEAD STATE =================================================================
 	
@@ -303,9 +317,9 @@ func _on_despawn_timer_timeout() -> void:
 func _player_floor_relation() -> int:
 	if !player:
 		return -1
-	if player.get_floor() < get_floor():
-		return ABOVE
 	if player.get_floor() > get_floor():
+		return ABOVE
+	if player.get_floor() < get_floor():
 		return BELOW
 	else:
 		return EQUAL
@@ -358,4 +372,4 @@ func get_floor() -> int:
 	return floor_detector_component.get_floor()
 
 func set_floor(new_floor: int):
-	floor_detector_component.set_current_floor(new_floor)
+	floor_detector_component.set_starting_floor(new_floor)

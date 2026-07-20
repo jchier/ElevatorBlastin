@@ -18,6 +18,8 @@ func spawn_player():
 			var player_scene: Player = PLAYER_SCENE.instantiate()
 			add_child(player_scene)
 			player_scene.global_position = player_marker.global_position
+			player_scene.set_floor(player_marker.starting_floor)
+
 			GameEvent.player_spawned.emit(player_scene)
 
 func spawn_enemy():

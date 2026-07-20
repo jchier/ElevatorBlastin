@@ -368,7 +368,7 @@ nodes/StateMachineLegs/position = Vector2(-180, 320)
 node_connections = [&"output", 0, &"Add2", &"Add2", 0, &"StateMachineTorso", &"Add2", 1, &"StateMachineLegs"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_oark8"]
-radius = 15.178572
+radius = 9.821428
 height = 44.642857
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_b6dgu"]
@@ -383,7 +383,7 @@ height = 28.0
 z_index = 2
 z_as_relative = false
 collision_layer = 4
-collision_mask = 89
+collision_mask = 8281
 script = ExtResource("1_abrql")
 
 [node name="FloorDetectorComponent" parent="." unique_id=1055282861 instance=ExtResource("2_3wlsy")]

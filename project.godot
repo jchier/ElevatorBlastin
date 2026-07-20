@@ -80,6 +80,7 @@ jump={
 2d_physics/layer_11="hurtbox"
 2d_physics/layer_12="floor_marker"
 2d_physics/layer_13="floor_detector"
+2d_physics/layer_14="elevator_roof"
 
 [physics]
 

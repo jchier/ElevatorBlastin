@@ -159,3 +159,6 @@ func _state_chart_event(event: String):
 	
 func get_floor() -> int:
 	return floor_detector_component.get_floor()
+	
+func set_floor(new_floor):
+	floor_detector_component.set_starting_floor(new_floor)

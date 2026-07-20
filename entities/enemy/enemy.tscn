@@ -466,6 +466,11 @@ position = Vector2(1, -19)
 target_position = Vector2(21, 22)
 collision_mask = 65
 
+[node name="ElevatorFloorDetector" type="RayCast2D" parent="." unique_id=993807371]
+position = Vector2(1, -19)
+target_position = Vector2(21, 22)
+collision_mask = 64
+
 [node name="Visuals" type="Node2D" parent="." unique_id=876248669]
 z_as_relative = false
 
@@ -560,6 +565,12 @@ to = NodePath("../../../../Dead")
 event = &"dead"
 delay_in_seconds = "0.0"
 
+[node name="GoInElevator" type="Node" parent="StateChart/Root/Alive/Behavior/Docile" unique_id=1796835007]
+script = ExtResource("13_402ev")
+to = NodePath("../../Seek/GoInElevator")
+event = &"go_in_elevator"
+delay_in_seconds = "0.0"
+
 [node name="Aggro" type="Node" parent="StateChart/Root/Alive/Behavior" unique_id=896285963]
 script = ExtResource("12_xshm4")
 
@@ -583,21 +594,12 @@ delay_in_seconds = "0.0"
 
 [node name="Seek" type="Node" parent="StateChart/Root/Alive/Behavior" unique_id=1372163672]
 script = ExtResource("11_qmbk7")
-initial_state = NodePath("SeekElevator")
+initial_state = NodePath("GoInElevator")
 
-[node name="SeekElevator" type="Node" parent="StateChart/Root/Alive/Behavior/Seek" unique_id=1347166904]
+[node name="GoInElevator" type="Node" parent="StateChart/Root/Alive/Behavior/Seek" unique_id=1347166904]
 script = ExtResource("12_xshm4")
 
-[node name="WaitingForElevator" type="Node" parent="StateChart/Root/Alive/Behavior/Seek/SeekElevator" unique_id=985855824]
-script = ExtResource("13_402ev")
-to = NodePath("../../WaitingForElevator")
-event = &"waiting_for_elevator"
-delay_in_seconds = "0.0"
-
-[node name="WaitingForElevator" type="Node" parent="StateChart/Root/Alive/Behavior/Seek" unique_id=82856395]
-script = ExtResource("12_xshm4")
-
-[node name="InElevator" type="Node" parent="StateChart/Root/Alive/Behavior/Seek/WaitingForElevator" unique_id=1277185350]
+[node name="InElevator" type="Node" parent="StateChart/Root/Alive/Behavior/Seek/GoInElevator" unique_id=985855824]
 script = ExtResource("13_402ev")
 to = NodePath("../../InElevator")
 event = &"in_elevator"
@@ -606,9 +608,9 @@ delay_in_seconds = "0.0"
 [node name="InElevator" type="Node" parent="StateChart/Root/Alive/Behavior/Seek" unique_id=1047974253]
 script = ExtResource("12_xshm4")
 
-[node name="Docile" type="Node" parent="StateChart/Root/Alive/Behavior/Seek/InElevator" unique_id=412482228]
+[node name="GetOffElevator" type="Node" parent="StateChart/Root/Alive/Behavior/Seek/InElevator" unique_id=412482228]
 script = ExtResource("13_402ev")
-to = NodePath("../../../Docile")
+to = NodePath("../../GetOffElevator")
 event = &"docile"
 delay_in_seconds = "0.0"
 
@@ -616,6 +618,15 @@ delay_in_seconds = "0.0"
 script = ExtResource("13_402ev")
 to = NodePath("../../Aggro")
 event = &"aggro"
+delay_in_seconds = "0.0"
+
+[node name="GetOffElevator" type="Node" parent="StateChart/Root/Alive/Behavior/Seek" unique_id=864323951]
+script = ExtResource("12_xshm4")
+
+[node name="Docile" type="Node" parent="StateChart/Root/Alive/Behavior/Seek/GetOffElevator" unique_id=1273532667]
+script = ExtResource("13_402ev")
+to = NodePath("../../../Docile")
+event = &"docile"
 delay_in_seconds = "0.0"
 
 [node name="Locomotion" type="Node" parent="StateChart/Root/Alive" unique_id=1392986819]
@@ -719,14 +730,14 @@ one_shot = true
 [connection signal="state_entered" from="StateChart/Root/Alive/Behavior/Aggro" to="." method="_on_aggro_state_entered"]
 [connection signal="state_exited" from="StateChart/Root/Alive/Behavior/Aggro" to="." method="_on_aggro_state_exited"]
 [connection signal="state_processing" from="StateChart/Root/Alive/Behavior/Aggro" to="." method="_on_aggro_state_processing"]
-[connection signal="state_entered" from="StateChart/Root/Alive/Behavior/Seek/SeekElevator" to="." method="_on_seek_elevator_state_entered"]
-[connection signal="state_exited" from="StateChart/Root/Alive/Behavior/Seek/SeekElevator" to="." method="_on_seek_elevator_state_exited"]
-[connection signal="state_physics_processing" from="StateChart/Root/Alive/Behavior/Seek/SeekElevator" to="." method="_on_seek_elevator_state_physics_processing"]
-[connection signal="state_entered" from="StateChart/Root/Alive/Behavior/Seek/WaitingForElevator" to="." method="_on_waiting_for_elevator_state_entered"]
-[connection signal="state_exited" from="StateChart/Root/Alive/Behavior/Seek/WaitingForElevator" to="." method="_on_waiting_for_elevator_state_exited"]
-[connection signal="state_physics_processing" from="StateChart/Root/Alive/Behavior/Seek/WaitingForElevator" to="." method="_on_waiting_for_elevator_state_physics_processing"]
+[connection signal="state_entered" from="StateChart/Root/Alive/Behavior/Seek/GoInElevator" to="." method="_on_go_in_elevator_state_entered"]
+[connection signal="state_exited" from="StateChart/Root/Alive/Behavior/Seek/GoInElevator" to="." method="_on_go_in_elevator_state_exited"]
+[connection signal="state_physics_processing" from="StateChart/Root/Alive/Behavior/Seek/GoInElevator" to="." method="_on_go_in_elevator_state_physics_processing"]
 [connection signal="state_entered" from="StateChart/Root/Alive/Behavior/Seek/InElevator" to="." method="_on_in_elevator_state_entered"]
-[connection signal="state_physics_processing" from="StateChart/Root/Alive/Behavior/Seek/InElevator" to="." method="_on_in_elevator_state_physics_processing"]
+[connection signal="state_exited" from="StateChart/Root/Alive/Behavior/Seek/InElevator" to="." method="_on_in_elevator_state_exited"]
+[connection signal="state_entered" from="StateChart/Root/Alive/Behavior/Seek/GetOffElevator" to="." method="_on_get_off_elevator_state_entered"]
+[connection signal="state_input" from="StateChart/Root/Alive/Behavior/Seek/GetOffElevator" to="." method="_on_get_off_elevator_state_input"]
+[connection signal="state_physics_processing" from="StateChart/Root/Alive/Behavior/Seek/GetOffElevator" to="." method="_on_get_off_elevator_state_physics_processing"]
 [connection signal="state_entered" from="StateChart/Root/Alive/Locomotion/Grounded/Stand" to="." method="_on_stand_state_entered"]
 [connection signal="state_input" from="StateChart/Root/Alive/Locomotion/Grounded/Stand" to="." method="_on_stand_state_input"]
 [connection signal="state_physics_processing" from="StateChart/Root/Alive/Locomotion/Grounded/Stand" to="." method="_on_stand_state_physics_processing"]

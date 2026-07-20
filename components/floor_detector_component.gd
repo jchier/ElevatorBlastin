@@ -8,6 +8,9 @@ var current_floor: int
 func _ready():
 	current_floor = starting_floor
 
+func set_starting_floor(starting_floor):
+	current_floor = starting_floor
+
 func set_current_floor(new_floor: int):
 	if current_floor == 0:
 		current_floor = new_floor - 1
