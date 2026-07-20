@@ -7,6 +7,8 @@ signal stopped
 @onready var wait_timer: Timer = $WaitTimer
 @onready var floor_area: Area2D = $Floor_Area
 @onready var floor_animatable_body: AnimatableBody2D = $Floor_Animatable_Body
+@onready var floor_detector_component: FloorDetectorComponent = $FloorDetectorComponent
+
 
 var points: PackedVector2Array
 var poly_set: bool = false
@@ -89,3 +91,6 @@ func _on_floor_area_area_entered(_area: Area2D) -> void:
 	activate_requested_dir()
 	stopped.emit()
 	wait_timer.start()
+
+func get_floor() -> int:
+	return floor_detector_component.get_floor()

@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://k5hk33gsmhnt" path="res://entities/elevator/elevator.gd" id="1_3c2c0"]
 [ext_resource type="Texture2D" uid="uid://dmyv7axs33q5h" path="res://entities/elevator/elevator.png" id="2_4sa0j"]
 [ext_resource type="PackedScene" uid="uid://byct6l41li67v" path="res://components/occupant_component.tscn" id="2_rtcbl"]
+[ext_resource type="PackedScene" uid="uid://du6fvxgccikwp" path="res://components/floor_detector_component.tscn" id="3_4sa0j"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_l53as"]
 atlas = ExtResource("2_4sa0j")
@@ -43,6 +44,8 @@ texture_filter = 1
 position = Vector2(29, 0)
 texture = SubResource("AtlasTexture_v33mf")
 offset = Vector2(0, -20)
+
+[node name="FloorDetectorComponent" parent="." unique_id=1055282861 instance=ExtResource("3_4sa0j")]
 
 [node name="Occupant_Area" parent="." unique_id=313727146 instance=ExtResource("2_rtcbl")]
 visible = false

@@ -385,6 +385,8 @@ z_as_relative = false
 collision_layer = 4
 collision_mask = 89
 script = ExtResource("1_abrql")
+max_speed = null
+jump_velocity = null
 
 [node name="FloorDetectorComponent" parent="." unique_id=1055282861 instance=ExtResource("2_3wlsy")]
 position = Vector2(0, -4)

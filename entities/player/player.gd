@@ -14,6 +14,7 @@ extends CharacterBody2D
 @onready var hurtbox_component: HurtboxComponent = $HurtboxComponent
 @onready var health_component: HealthComponent = $HealthComponent
 @onready var movement_component: MovementComponent = $MovementComponent
+@onready var floor_detector_component: FloorDetectorComponent = $FloorDetectorComponent
 
 signal died
 
@@ -155,3 +156,6 @@ func _on_dead_state_entered() -> void:
 	
 func _state_chart_event(event: String):
 	state_chart.send_event(event)
+	
+func get_floor() -> int:
+	return floor_detector_component.get_floor()

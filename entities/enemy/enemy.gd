@@ -25,8 +25,10 @@ const ELEVATOR_BUFFER: int = 40
 @onready var stance_timer: Timer = $StanceTimer
 @onready var patrol_timer: Timer = $PatrolTimer
 @onready var cool_down_timer: Timer = $CoolDownTimer
+@onready var floor_detector_component: FloorDetectorComponent = $FloorDetectorComponent
 
 @export var chosen_elevator: Elevator
+@export var starting_floor: int
 
 enum {BELOW, EQUAL, ABOVE}
 
@@ -54,6 +56,7 @@ func _ready():
 	navigation_component.set_orientation.connect(set_orientation)
 	animation_component.can_shoot.connect(_can_shoot)
 	animation_component.stance_changed.connect(_stance_changed)
+	floor_detector_component.set_current_floor(starting_floor)
 	crouching_collision_shape.disabled = true
 	health_component.died.connect(_on_died)
 	state_chart.send_event("docile")
@@ -300,9 +303,9 @@ func _on_despawn_timer_timeout() -> void:
 func _player_floor_relation() -> int:
 	if !player:
 		return -1
-	if player.global_position.y < global_position.y - FLOOR_DISTANCE:
+	if player.get_floor() < get_floor():
 		return ABOVE
-	if player.global_position.y > global_position.y + FLOOR_DISTANCE:
+	if player.get_floor() > get_floor():
 		return BELOW
 	else:
 		return EQUAL
@@ -310,9 +313,11 @@ func _player_floor_relation() -> int:
 func _chosen_elevator_floor_relation() -> int:
 	if !chosen_elevator:
 		return -1
-	if chosen_elevator.global_position.y < global_position.y - 3:
+	#if chosen_elevator.global_position.y < global_position.y - 3:
+	if chosen_elevator.get_floor() < get_floor():
 		return BELOW
-	if chosen_elevator.global_position.y > global_position.y + 3:
+	#if chosen_elevator.global_position.y > global_position.y + 3:
+	if chosen_elevator.get_floor() > get_floor():
 		return ABOVE
 	else:
 		return EQUAL
@@ -345,7 +350,9 @@ func _on_player_buffer_zone_body_exited(_body: Node2D) -> void:
 	navigation_component.start()
 
 
-
 func _on_cool_down_timer_timeout() -> void:
 	if !_current_occupancy:
 		state_chart.send_event("docile")
+
+func get_floor() -> int:
+	return floor_detector_component.get_floor()

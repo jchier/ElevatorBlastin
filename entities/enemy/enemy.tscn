@@ -430,6 +430,9 @@ _navigator = NodePath("..")
 script = ExtResource("2_lqjfw")
 metadata/_custom_type_script = "uid://sphex7yy6a2e"
 
+[node name="FloorDetectorComponent" parent="." unique_id=1055282861 instance=ExtResource("19_5s4bh")]
+position = Vector2(0, -4)
+
 [node name="AnimationComponent" parent="." unique_id=1019330946 node_paths=PackedStringArray("animation_torso", "animation_legs", "animation_tree") instance=ExtResource("3_cql4q")]
 animation_torso = NodePath("AnimationPlayerTorso")
 animation_legs = NodePath("AnimationPlayerLegs")
@@ -679,6 +682,8 @@ offset_right = 325.0
 offset_bottom = 62.0
 initial_node_to_watch = NodePath("../StateChart")
 
+[node name="MoveTo" type="Marker2D" parent="." unique_id=715631499]
+
 [node name="Timer" type="Timer" parent="." unique_id=639281135]
 wait_time = 3.0
 one_shot = true
@@ -687,8 +692,6 @@ one_shot = true
 wait_time = 2.0
 one_shot = true
 autostart = true
-
-[node name="MoveTo" type="Marker2D" parent="." unique_id=715631499]
 
 [node name="DespawnTimer" type="Timer" parent="." unique_id=487666727]
 wait_time = 5.0
@@ -707,9 +710,6 @@ one_shot = true
 [node name="CoolDownTimer" type="Timer" parent="." unique_id=1961956213]
 wait_time = 15.0
 one_shot = true
-
-[node name="FloorDetectorComponent" parent="." unique_id=1055282861 instance=ExtResource("19_5s4bh")]
-position = Vector2(0, -4)
 
 [connection signal="body_entered" from="PlayerBufferZone" to="." method="_on_player_buffer_zone_body_entered"]
 [connection signal="body_exited" from="PlayerBufferZone" to="." method="_on_player_buffer_zone_body_exited"]
