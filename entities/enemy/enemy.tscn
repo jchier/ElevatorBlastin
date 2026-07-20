@@ -18,6 +18,7 @@
 [ext_resource type="Script" uid="uid://cytafq8i1y8qm" path="res://addons/godot_state_charts/atomic_state.gd" id="12_xshm4"]
 [ext_resource type="Script" uid="uid://cf1nsco3w0mf6" path="res://addons/godot_state_charts/transition.gd" id="13_402ev"]
 [ext_resource type="PackedScene" uid="uid://bcwkugn6v3oy7" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="14_v7t4h"]
+[ext_resource type="PackedScene" uid="uid://du6fvxgccikwp" path="res://components/floor_detector_component.tscn" id="19_5s4bh"]
 
 [sub_resource type="Animation" id="Animation_eyb6c"]
 length = 0.001
@@ -706,6 +707,9 @@ one_shot = true
 [node name="CoolDownTimer" type="Timer" parent="." unique_id=1961956213]
 wait_time = 15.0
 one_shot = true
+
+[node name="FloorDetectorComponent" parent="." unique_id=1055282861 instance=ExtResource("19_5s4bh")]
+position = Vector2(0, -4)
 
 [connection signal="body_entered" from="PlayerBufferZone" to="." method="_on_player_buffer_zone_body_entered"]
 [connection signal="body_exited" from="PlayerBufferZone" to="." method="_on_player_buffer_zone_body_exited"]
