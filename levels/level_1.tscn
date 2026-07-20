@@ -2,11 +2,11 @@
 
 [ext_resource type="PackedScene" uid="uid://fb5pvrms6cc" path="res://components/floor_marker_component.tscn" id="1_l53as"]
 [ext_resource type="PackedScene" uid="uid://ddo3hnjqf5y25" path="res://entities/door/door.tscn" id="1_n46q3"]
-[ext_resource type="PackedScene" uid="uid://bftk50lxpoojr" path="res://entities/enemy/enemy.tscn" id="3_n46q3"]
 [ext_resource type="TileSet" uid="uid://dcpicyh2ebhcf" path="res://level_assets/tile.tres" id="4_gwceb"]
 [ext_resource type="TileSet" uid="uid://b87e14execfyn" path="res://level_assets/tileY1.tres" id="5_l53as"]
 [ext_resource type="TileSet" uid="uid://dasiua747450b" path="res://level_assets/tileY2.tres" id="6_3sk1a"]
 [ext_resource type="PackedScene" uid="uid://cptp4opi28g3m" path="res://entities/elevator/elevator.tscn" id="6_btoec"]
+[ext_resource type="Script" uid="uid://bpv6re8vjeo51" path="res://entities/enemy/enemy_marker.gd" id="8_l53as"]
 [ext_resource type="Script" uid="uid://bgpd75t0gfyl7" path="res://entities/player/player_marker.gd" id="9_3sk1a"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oark8"]
@@ -34,11 +34,6 @@ position = Vector2(-120, 240)
 [node name="Door2" parent="." unique_id=929659065 instance=ExtResource("1_n46q3")]
 z_index = 1
 position = Vector2(180, 360)
-
-[node name="Enemy" parent="." unique_id=1003276322 node_paths=PackedStringArray("chosen_elevator") instance=ExtResource("3_n46q3")]
-position = Vector2(138, 382)
-chosen_elevator = NodePath("../Elevator")
-starting_floor = 2
 
 [node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=590717441]
 z_index = -1
@@ -84,3 +79,8 @@ position = Vector2(92, 251)
 [node name="PlayerMarker" type="Marker2D" parent="." unique_id=1946072525]
 position = Vector2(-53, 231)
 script = ExtResource("9_3sk1a")
+
+[node name="EnemyMarker" type="Marker2D" parent="." unique_id=1151110767]
+position = Vector2(134, 363)
+script = ExtResource("8_l53as")
+starting_floor = 2

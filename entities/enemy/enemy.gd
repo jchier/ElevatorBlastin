@@ -49,6 +49,7 @@ var destination_met: bool = true
 var player_close = false
 
 func _ready():
+	player = GameState.player
 	rider_component.set_current_occupancy.connect(_set_current_occupancy)
 	rider_component.clear_current_occupancy.connect(_clear_current_occupancy)
 	movement_component.state_chart_event.connect(_state_chart_event)
@@ -72,7 +73,6 @@ func _physics_process(delta: float) -> void:
 		var collided = vision_ray.get_collider()
 		if collided is Player:
 			navigation_component.set_destination(collided.global_position.x)
-			player = collided
 		state_chart.send_event("aggro")
 		return
 			
@@ -356,3 +356,6 @@ func _on_cool_down_timer_timeout() -> void:
 
 func get_floor() -> int:
 	return floor_detector_component.get_floor()
+
+func set_floor(new_floor: int):
+	floor_detector_component.set_current_floor(new_floor)
