@@ -507,6 +507,12 @@ to = NodePath("../../../Airborne")
 event = &"airborne"
 delay_in_seconds = "0.0"
 
+[node name="ToStairs" type="Node" parent="StateChart/Root/Grounded/Stand" unique_id=777988848]
+script = ExtResource("9_j3ovn")
+to = NodePath("../../OnStairs")
+event = &"stairs"
+delay_in_seconds = "0.0"
+
 [node name="Duck" type="Node" parent="StateChart/Root/Grounded" unique_id=694636133]
 script = ExtResource("8_a1qjk")
 
@@ -516,7 +522,7 @@ to = NodePath("../../Stand")
 event = &"stand"
 delay_in_seconds = "0.0"
 
-[node name="Transition" type="Node" parent="StateChart/Root/Grounded/Duck" unique_id=968713799]
+[node name="Airborne" type="Node" parent="StateChart/Root/Grounded/Duck" unique_id=968713799]
 script = ExtResource("9_j3ovn")
 to = NodePath("../../../Airborne")
 event = &"airborne"
@@ -526,6 +532,15 @@ delay_in_seconds = "0.0"
 script = ExtResource("9_j3ovn")
 to = NodePath("../../Dead")
 event = &"dead"
+delay_in_seconds = "0.0"
+
+[node name="OnStairs" type="Node" parent="StateChart/Root/Grounded" unique_id=1870361140]
+script = ExtResource("8_a1qjk")
+
+[node name="ToStand" type="Node" parent="StateChart/Root/Grounded/OnStairs" unique_id=639169820]
+script = ExtResource("9_j3ovn")
+to = NodePath("../../Stand")
+event = &"to_stand_from_stairs"
 delay_in_seconds = "0.0"
 
 [node name="Airborne" type="Node" parent="StateChart/Root" unique_id=414048615]
@@ -547,12 +562,10 @@ delay_in_seconds = "0.0"
 script = ExtResource("8_a1qjk")
 
 [node name="StateChartDebugger" parent="." unique_id=839851318 instance=ExtResource("10_afbqv")]
-visible = false
 offset_left = 102.0
 offset_top = -156.0
 offset_right = 325.0
 offset_bottom = 62.0
-enabled = false
 initial_node_to_watch = NodePath("../StateChart")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=162436934]
@@ -563,6 +576,9 @@ initial_node_to_watch = NodePath("../StateChart")
 [connection signal="state_entered" from="StateChart/Root/Grounded/Duck" to="." method="_on_duck_state_entered"]
 [connection signal="state_exited" from="StateChart/Root/Grounded/Duck" to="." method="_on_duck_state_exited"]
 [connection signal="state_input" from="StateChart/Root/Grounded/Duck" to="." method="_on_duck_state_input"]
+[connection signal="state_entered" from="StateChart/Root/Grounded/OnStairs" to="." method="_on_on_stairs_state_entered"]
+[connection signal="state_exited" from="StateChart/Root/Grounded/OnStairs" to="." method="_on_on_stairs_state_exited"]
+[connection signal="state_physics_processing" from="StateChart/Root/Grounded/OnStairs" to="." method="_on_on_stairs_state_physics_processing"]
 [connection signal="state_entered" from="StateChart/Root/Airborne" to="." method="_on_airborne_state_entered"]
 [connection signal="state_exited" from="StateChart/Root/Airborne" to="." method="_on_airborne_state_exited"]
 [connection signal="state_input" from="StateChart/Root/Airborne" to="." method="_on_airborne_state_input"]

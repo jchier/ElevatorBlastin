@@ -17,10 +17,17 @@ extends CharacterBody2D
 @onready var floor_detector_component: FloorDetectorComponent = $FloorDetectorComponent
 
 signal died
-
+var current_stairs: Stairs = null
+var stairs_destination: Vector2
+var t: float = 0.0
 var _current_occupancy: Occupant_Component = null
 var can_shoot: bool = false
+var physics_disabled: bool:
+	set(value):
+		crouching_collision_shape.set_deferred("disabled", value)
+		standing_collision_shape.set_deferred("disabled", value)
 
+	
 func _ready():
 	rider_component.set_current_occupancy.connect(_set_current_occupancy)
 	rider_component.clear_current_occupancy.connect(_clear_current_occupancy)
@@ -40,6 +47,10 @@ func _physics_process(delta: float) -> void:
 	movement_component.generate_velocity(delta, x_input)
 
 	move_and_slide()
+
+	if current_stairs:
+		if Input.is_action_just_pressed("up"):
+			state_chart.send_event("stairs")
 
 	if _current_occupancy:	
 		if Input.is_action_pressed("up"):
@@ -162,3 +173,13 @@ func get_floor() -> int:
 	
 func set_floor(new_floor):
 	floor_detector_component.set_starting_floor(new_floor)
+
+
+func _on_on_stairs_state_entered() -> void:
+	print("entered on_stairs")
+	var tween := create_tween()
+	tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+	tween.tween_property(self, "global_position", current_stairs.get_destination(), 1.0)
+	await tween.finished
+	print("tween finished, sending stand event")
+	state_chart.send_event("to_stand_from_stairs")

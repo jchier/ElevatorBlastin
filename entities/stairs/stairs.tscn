@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cw4f70u4bxktk"]
 
 [ext_resource type="Texture2D" uid="uid://bkll08a0oxbwr" path="res://entities/stairs/stairs.png" id="1_2unfa"]
+[ext_resource type="Script" uid="uid://e5tk4ha7fx3o" path="res://entities/stairs/stairs.gd" id="1_upq5q"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oark8"]
 size = Vector2(26, 26)
@@ -9,6 +10,7 @@ size = Vector2(26, 26)
 size = Vector2(26, 26)
 
 [node name="Stairs" type="Node2D" unique_id=652959830]
+script = ExtResource("1_upq5q")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=3946887]
 z_index = -1
@@ -22,13 +24,22 @@ position = Vector2(-38, -63)
 position = Vector2(39, 62)
 
 [node name="StairsTopArea" type="Area2D" parent="." unique_id=1662146973]
+collision_layer = 16384
+collision_mask = 12
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StairsTopArea" unique_id=1919324098]
 position = Vector2(-46, -63)
 shape = SubResource("RectangleShape2D_oark8")
 
 [node name="StairsBottomArea" type="Area2D" parent="." unique_id=1232210489]
+collision_layer = 32768
+collision_mask = 12
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StairsBottomArea" unique_id=1745094581]
 position = Vector2(43, 63)
 shape = SubResource("RectangleShape2D_jr1kj")
+
+[connection signal="body_entered" from="StairsTopArea" to="." method="_on_stairs_top_area_body_entered"]
+[connection signal="body_exited" from="StairsTopArea" to="." method="_on_stairs_top_area_body_exited"]
+[connection signal="body_entered" from="StairsBottomArea" to="." method="_on_stairs_bottom_area_body_entered"]
+[connection signal="body_exited" from="StairsBottomArea" to="." method="_on_stairs_bottom_area_body_exited"]

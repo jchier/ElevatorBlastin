@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://cptp4opi28g3m" path="res://entities/elevator/elevator.tscn" id="6_btoec"]
 [ext_resource type="Script" uid="uid://bpv6re8vjeo51" path="res://entities/enemy/enemy_marker.gd" id="8_l53as"]
 [ext_resource type="Script" uid="uid://bgpd75t0gfyl7" path="res://entities/player/player_marker.gd" id="9_3sk1a"]
+[ext_resource type="PackedScene" uid="uid://cw4f70u4bxktk" path="res://entities/stairs/stairs.tscn" id="9_08mmt"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oark8"]
 size = Vector2(78, 1)
@@ -76,11 +77,14 @@ z_index = -1
 position = Vector2(92, 254)
 
 [node name="PlayerMarker" type="Marker2D" parent="." unique_id=1946072525]
-position = Vector2(37, 214)
+position = Vector2(-80, 339)
 script = ExtResource("9_3sk1a")
-starting_floor = 4
+starting_floor = 3
 
 [node name="EnemyMarker" type="Marker2D" parent="." unique_id=1151110767]
 position = Vector2(-59, 219)
 script = ExtResource("8_l53as")
 starting_floor = 4
+
+[node name="Stairs" parent="." unique_id=652959830 instance=ExtResource("9_08mmt")]
+position = Vector2(-99, 430)
