@@ -11,6 +11,11 @@ var _bottom_area_occupied: bool = false
 
 var rider = CharacterBody2D
 
+func get_starting_point() -> Vector2:
+	if _top_area_occupied:
+		return stairs_top_marker.global_position
+	return stairs_bottom_marker.global_position
+
 func get_destination() -> Vector2:
 	if _top_area_occupied:
 		return stairs_bottom_marker.global_position

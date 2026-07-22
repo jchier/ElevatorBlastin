@@ -15,6 +15,7 @@ extends CharacterBody2D
 @onready var health_component: HealthComponent = $HealthComponent
 @onready var movement_component: MovementComponent = $MovementComponent
 @onready var floor_detector_component: FloorDetectorComponent = $FloorDetectorComponent
+@onready var sprite_2d_torso: Sprite2D = %Sprite2DTorso
 
 signal died
 var current_stairs: Stairs = null
@@ -176,10 +177,17 @@ func set_floor(new_floor):
 
 
 func _on_on_stairs_state_entered() -> void:
-	print("entered on_stairs")
+	animation_component.start("idle")
+	var old_z = z_index
+	var starting_point = current_stairs.get_starting_point()
+	var destination = current_stairs.get_destination()
+	z_index = z_index - 10
+	#set_orientation(signf(starting_point.direction_to(destination).x))
+	
 	var tween := create_tween()
 	tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+	tween.tween_property(self, "global_position", current_stairs.get_starting_point(), 0.2)
 	tween.tween_property(self, "global_position", current_stairs.get_destination(), 1.0)
 	await tween.finished
-	print("tween finished, sending stand event")
+	z_index = old_z
 	state_chart.send_event("to_stand_from_stairs")

@@ -10,10 +10,13 @@ size = Vector2(26, 26)
 size = Vector2(26, 26)
 
 [node name="Stairs" type="Node2D" unique_id=652959830]
+z_index = -1
+z_as_relative = false
 script = ExtResource("1_upq5q")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=3946887]
-z_index = -1
+z_index = -2
+z_as_relative = false
 texture_filter = 1
 texture = ExtResource("1_2unfa")
 

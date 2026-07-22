@@ -421,12 +421,9 @@ parameters/StateMachineTorso/move/blend_position = 0.0
 parameters/StateMachineLegs/move/blend_position = 0.0
 
 [node name="Visuals" type="Node2D" parent="." unique_id=876248669]
-z_as_relative = false
 
 [node name="Sprite2DTorso" type="Sprite2D" parent="Visuals" unique_id=865724498]
 unique_name_in_owner = true
-z_index = 1
-z_as_relative = false
 texture_filter = 1
 position = Vector2(0, -4)
 texture = ExtResource("6_j3ovn")
@@ -436,8 +433,6 @@ vframes = 4
 
 [node name="Sprite2DLegs" type="Sprite2D" parent="Visuals" unique_id=1040317593]
 unique_name_in_owner = true
-z_index = 1
-z_as_relative = false
 texture_filter = 1
 position = Vector2(0, -4)
 texture = ExtResource("7_j3ovn")

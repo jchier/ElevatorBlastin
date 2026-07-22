@@ -86,5 +86,5 @@ position = Vector2(-59, 219)
 script = ExtResource("8_l53as")
 starting_floor = 4
 
-[node name="Stairs" parent="." unique_id=652959830 instance=ExtResource("9_08mmt")]
-position = Vector2(-99, 430)
+[node name="Stairs2" parent="." unique_id=652959830 instance=ExtResource("9_08mmt")]
+position = Vector2(-101, 429)
