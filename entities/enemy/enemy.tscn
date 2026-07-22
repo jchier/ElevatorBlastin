@@ -419,6 +419,9 @@ collision_layer = 4
 collision_mask = 81
 script = ExtResource("1_ogeq8")
 
+[node name="FloorDetectorComponent" parent="." unique_id=1055282861 instance=ExtResource("19_5s4bh")]
+position = Vector2(0, -4)
+
 [node name="MovementComponent" parent="." unique_id=743977151 node_paths=PackedStringArray("_character_body") instance=ExtResource("2_0mv3s")]
 _character_body = NodePath("..")
 max_speed = 60.0
@@ -429,9 +432,6 @@ _navigator = NodePath("..")
 [node name="HealthComponent" type="Node" parent="." unique_id=1233727716]
 script = ExtResource("2_lqjfw")
 metadata/_custom_type_script = "uid://sphex7yy6a2e"
-
-[node name="FloorDetectorComponent" parent="." unique_id=1055282861 instance=ExtResource("19_5s4bh")]
-position = Vector2(0, -4)
 
 [node name="AnimationComponent" parent="." unique_id=1019330946 node_paths=PackedStringArray("animation_torso", "animation_legs", "animation_tree") instance=ExtResource("3_cql4q")]
 animation_torso = NodePath("AnimationPlayerTorso")
@@ -571,6 +571,12 @@ to = NodePath("../../Seek/GoInElevator")
 event = &"go_in_elevator"
 delay_in_seconds = "0.0"
 
+[node name="OnStairs" type="Node" parent="StateChart/Root/Alive/Behavior/Docile" unique_id=878630844]
+script = ExtResource("13_402ev")
+to = NodePath("../../Seek/OnStairs")
+event = &"stairs"
+delay_in_seconds = "0.0"
+
 [node name="Aggro" type="Node" parent="StateChart/Root/Alive/Behavior" unique_id=896285963]
 script = ExtResource("12_xshm4")
 
@@ -627,6 +633,15 @@ script = ExtResource("12_xshm4")
 script = ExtResource("13_402ev")
 to = NodePath("../../../Docile")
 event = &"docile"
+delay_in_seconds = "0.0"
+
+[node name="OnStairs" type="Node" parent="StateChart/Root/Alive/Behavior/Seek" unique_id=2110329221]
+script = ExtResource("12_xshm4")
+
+[node name="ToStandFromStairs" type="Node" parent="StateChart/Root/Alive/Behavior/Seek/OnStairs" unique_id=1736756523]
+script = ExtResource("13_402ev")
+to = NodePath("../../../../Locomotion/Grounded/Stand")
+event = &"to_stand_from_stairs"
 delay_in_seconds = "0.0"
 
 [node name="Locomotion" type="Node" parent="StateChart/Root/Alive" unique_id=1392986819]
@@ -738,6 +753,7 @@ one_shot = true
 [connection signal="state_entered" from="StateChart/Root/Alive/Behavior/Seek/GetOffElevator" to="." method="_on_get_off_elevator_state_entered"]
 [connection signal="state_input" from="StateChart/Root/Alive/Behavior/Seek/GetOffElevator" to="." method="_on_get_off_elevator_state_input"]
 [connection signal="state_physics_processing" from="StateChart/Root/Alive/Behavior/Seek/GetOffElevator" to="." method="_on_get_off_elevator_state_physics_processing"]
+[connection signal="state_entered" from="StateChart/Root/Alive/Behavior/Seek/OnStairs" to="." method="_on_on_stairs_state_entered"]
 [connection signal="state_entered" from="StateChart/Root/Alive/Locomotion/Grounded/Stand" to="." method="_on_stand_state_entered"]
 [connection signal="state_input" from="StateChart/Root/Alive/Locomotion/Grounded/Stand" to="." method="_on_stand_state_input"]
 [connection signal="state_physics_processing" from="StateChart/Root/Alive/Locomotion/Grounded/Stand" to="." method="_on_stand_state_physics_processing"]

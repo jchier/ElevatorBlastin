@@ -28,8 +28,10 @@ const ELEVATOR_BUFFER: int = 40
 @onready var floor_detector_component: FloorDetectorComponent = $FloorDetectorComponent
 @onready var elevator_floor_detector: RayCast2D = $ElevatorFloorDetector
 
-@export var chosen_elevator: Elevator
+var chosen_elevator: Elevator
+var current_stairs: Stairs
 @export var starting_floor: int
+
 
 enum {BELOW, EQUAL, ABOVE}
 
@@ -80,6 +82,7 @@ func _physics_process(delta: float) -> void:
 	if _current_occupancy:
 		state_chart.send_event("in_elevator")
 		
+
 func try_duck_fire():
 	if !fire_rate_timer.is_stopped() and can_shoot:
 		return
@@ -187,7 +190,10 @@ func _on_docile_state_physics_processing(_delta: float) -> void:
 			chosen_elevator = elevator
 		state_chart.send_event("go_in_elevator")
 
-
+	if current_stairs:
+		var player_floor_relation = _player_floor_relation()
+		if player_floor_relation == ABOVE or player_floor_relation == BELOW:
+			state_chart.send_event("stairs")
 
 
 func _on_patrol_timer_timeout() -> void:
@@ -373,3 +379,15 @@ func get_floor() -> int:
 
 func set_floor(new_floor: int):
 	floor_detector_component.set_starting_floor(new_floor)
+	
+func _on_on_stairs_state_entered() -> void:
+	animation_component.start("idle")
+	var old_z = z_index
+	z_index = z_index - 10
+	var tween := create_tween()
+	tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+	tween.tween_property(self, "global_position", current_stairs.get_starting_point(), 0.2)
+	tween.tween_property(self, "global_position", current_stairs.get_destination(), 1.0)
+	await tween.finished
+	z_index = old_z
+	state_chart.send_event("to_stand_from_stairs")

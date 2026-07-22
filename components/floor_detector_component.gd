@@ -19,7 +19,7 @@ func set_current_floor(new_floor: int):
 		current_floor = new_floor
 	elif new_floor == current_floor:
 		current_floor = current_floor - 1
-	#print("current floor = ", current_floor)
+	print("current floor = ", current_floor)
 
 func get_floor() -> int:
 	return current_floor

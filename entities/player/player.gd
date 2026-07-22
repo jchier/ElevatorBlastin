@@ -182,8 +182,6 @@ func _on_on_stairs_state_entered() -> void:
 	var starting_point = current_stairs.get_starting_point()
 	var destination = current_stairs.get_destination()
 	z_index = z_index - 10
-	#set_orientation(signf(starting_point.direction_to(destination).x))
-	
 	var tween := create_tween()
 	tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	tween.tween_property(self, "global_position", current_stairs.get_starting_point(), 0.2)
