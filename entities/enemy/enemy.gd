@@ -19,6 +19,7 @@ const ELEVATOR_BUFFER: int = 40
 @onready var move_to: Marker2D = $MoveTo
 @onready var hurtbox_component: HurtboxComponent = $HurtboxComponent
 @onready var health_component: HealthComponent = $HealthComponent
+@onready var interactor_component: InteractorComponent = $InteractorComponent
 @onready var fire_rate_timer: Timer = $FireRateTimer
 @onready var despawn_timer: Timer = $DespawnTimer
 @onready var reaction_timer: Timer = $ReactionTimer
@@ -60,6 +61,7 @@ func _ready():
 	navigation_component.set_orientation.connect(set_orientation)
 	animation_component.can_shoot.connect(_can_shoot)
 	animation_component.stance_changed.connect(_stance_changed)
+	interactor_component.area_entered.connect(on_area_entered)
 	floor_detector_component.set_current_floor(starting_floor)
 	crouching_collision_shape.disabled = true
 	health_component.died.connect(_on_died)
@@ -381,13 +383,15 @@ func set_floor(new_floor: int):
 	floor_detector_component.set_starting_floor(new_floor)
 	
 func _on_on_stairs_state_entered() -> void:
-	animation_component.start("idle")
-	var old_z = z_index
-	z_index = z_index - 10
-	var tween := create_tween()
-	tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
-	tween.tween_property(self, "global_position", current_stairs.get_starting_point(), 0.2)
-	tween.tween_property(self, "global_position", current_stairs.get_destination(), 1.0)
-	await tween.finished
-	z_index = old_z
-	state_chart.send_event("to_stand_from_stairs")
+	pass
+
+
+func on_area_entered(interactive: InteractiveComponent):
+	if interactive.is_in_group("stairs_top"):
+		if _player_floor_relation() == BELOW:
+			interactor_component.try_interact(self)
+			
+	if interactive.is_in_group("stairs_bottom"):
+		if _player_floor_relation() == ABOVE:
+			interactor_component.try_interact(self)
+		

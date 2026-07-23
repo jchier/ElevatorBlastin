@@ -52,7 +52,7 @@ func _physics_process(delta: float) -> void:
 
 
 	if Input.is_action_just_pressed("up"):
-		interactor_component.interact(self)
+		interactor_component.try_interact(self)
 			#state_chart.send_event("stairs")
 
 	if _current_occupancy:	

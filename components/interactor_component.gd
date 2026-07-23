@@ -1,8 +1,10 @@
 class_name InteractorComponent
 extends Area2D
 
-signal activate(CharacterBody2D)
+func try_interact(body: CharacterBody2D):
+	for area in get_overlapping_areas():
+		if area is InteractiveComponent:
+			area.activate(body)
+			break
 
-func interact(body: CharacterBody2D):
-	activate.emit(body)
 	

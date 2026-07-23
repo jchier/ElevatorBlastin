@@ -27,7 +27,7 @@ position = Vector2(-38, -63)
 [node name="StairsBottomMarker" type="Marker2D" parent="." unique_id=731745155]
 position = Vector2(39, 62)
 
-[node name="StairsTopArea" type="Area2D" parent="." unique_id=1662146973]
+[node name="StairsTopArea" type="Area2D" parent="." unique_id=1662146973 groups=["stairs_top"]]
 collision_layer = 32768
 collision_mask = 16384
 script = ExtResource("3_fma7k")
@@ -36,7 +36,7 @@ script = ExtResource("3_fma7k")
 position = Vector2(-46, -63)
 shape = SubResource("RectangleShape2D_oark8")
 
-[node name="StairsBottomArea" type="Area2D" parent="." unique_id=1232210489]
+[node name="StairsBottomArea" type="Area2D" parent="." unique_id=1232210489 groups=["stairs_bottom"]]
 collision_layer = 32768
 collision_mask = 16384
 script = ExtResource("3_fma7k")

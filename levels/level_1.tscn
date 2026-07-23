@@ -17,17 +17,14 @@ size = Vector2(78, 1)
 z_as_relative = false
 
 [node name="FloorMarkerComponent3" parent="." unique_id=349425407 instance=ExtResource("1_l53as")]
-visible = false
 position = Vector2(92, 270)
 floor_number = 4
 
 [node name="FloorMarkerComponent2" parent="." unique_id=1359104942 instance=ExtResource("1_l53as")]
-visible = false
 position = Vector2(92, 390)
 floor_number = 3
 
 [node name="FloorMarkerComponent1" parent="." unique_id=21431043 instance=ExtResource("1_l53as")]
-visible = false
 position = Vector2(92, 512)
 floor_number = 2
 
@@ -88,3 +85,5 @@ starting_floor = 3
 
 [node name="Stairs2" parent="." unique_id=652959830 instance=ExtResource("9_08mmt")]
 position = Vector2(-101, 429)
+top_level_floor = 3
+bottom_level_floor = 2
