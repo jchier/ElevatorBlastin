@@ -6,38 +6,31 @@ extends Node2D
 @onready var stairs_top_area: Area2D = $StairsTopArea
 @onready var stairs_bottom_area: Area2D = $StairsBottomArea
 
-var _top_area_occupied: bool = false
-var _bottom_area_occupied: bool = false
-
-var rider = CharacterBody2D
-
-func get_starting_point() -> Vector2:
-	if _top_area_occupied:
-		return stairs_top_marker.global_position
-	return stairs_bottom_marker.global_position
-
-func get_destination() -> Vector2:
-	if _top_area_occupied:
-		return stairs_bottom_marker.global_position
-	return stairs_top_marker.global_position
 
 
-func _on_stairs_top_area_body_entered(body: Node2D) -> void:
-	_top_area_occupied = true
-	rider = body
-	rider.current_stairs = self
+func _ready():
+	stairs_top_area.act.connect(descend_body)
+	stairs_bottom_area.act.connect(ascend_body)
+	
+func descend_body(body: CharacterBody2D):
+	if !body:
+		return
+	move_body(stairs_top_marker.global_position, stairs_bottom_marker.global_position,\
+	 body)
 
-func _on_stairs_top_area_body_exited(_body: Node2D) -> void:
-	_top_area_occupied = false
-	rider.current_stairs = null
-	rider = null
+func ascend_body(body: CharacterBody2D):
+	if !body:
+		return
+	move_body(stairs_bottom_marker.global_position, stairs_top_marker.global_position,\
+	 body)
 
-func _on_stairs_bottom_area_body_entered(body: Node2D) -> void:
-	_bottom_area_occupied = true
-	rider = body
-	rider.current_stairs = self
-
-func _on_stairs_bottom_area_body_exited(_body: Node2D) -> void:
-	_bottom_area_occupied = false
-	rider.current_stairs = null
-	rider = null
+func move_body(starting_point: Vector2, destination: Vector2, body: CharacterBody2D):
+	var old_z = body.z_index
+	body.z_index = z_index - 10
+	var tween := create_tween()
+	tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+	tween.tween_property(body, "global_position", starting_point, 0.2)
+	tween.tween_property(body, "global_position", destination, 1.0)
+	await tween.finished
+	body.z_index = old_z
+	

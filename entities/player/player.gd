@@ -16,6 +16,7 @@ extends CharacterBody2D
 @onready var movement_component: MovementComponent = $MovementComponent
 @onready var floor_detector_component: FloorDetectorComponent = $FloorDetectorComponent
 @onready var sprite_2d_torso: Sprite2D = %Sprite2DTorso
+@onready var interactor_component: InteractorComponent = $InteractorComponent
 
 signal died
 var current_stairs: Stairs = null
@@ -49,9 +50,10 @@ func _physics_process(delta: float) -> void:
 
 	move_and_slide()
 
-	if current_stairs:
-		if Input.is_action_just_pressed("up"):
-			state_chart.send_event("stairs")
+
+	if Input.is_action_just_pressed("up"):
+		interactor_component.interact(self)
+			#state_chart.send_event("stairs")
 
 	if _current_occupancy:	
 		if Input.is_action_pressed("up"):
@@ -177,15 +179,16 @@ func set_floor(new_floor):
 
 
 func _on_on_stairs_state_entered() -> void:
-	animation_component.start("idle")
-	var old_z = z_index
-	var starting_point = current_stairs.get_starting_point()
-	var destination = current_stairs.get_destination()
-	z_index = z_index - 10
-	var tween := create_tween()
-	tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
-	tween.tween_property(self, "global_position", current_stairs.get_starting_point(), 0.2)
-	tween.tween_property(self, "global_position", current_stairs.get_destination(), 1.0)
-	await tween.finished
-	z_index = old_z
-	state_chart.send_event("to_stand_from_stairs")
+	pass
+#	animation_component.start("idle")
+#	var old_z = z_index
+#	var starting_point = current_stairs.get_starting_point()
+#	var destination = current_stairs.get_destination()
+#	z_index = z_index - 10
+#	var tween := create_tween()
+#	tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+#	tween.tween_property(self, "global_position", current_stairs.get_starting_point(), 0.2)
+#	tween.tween_property(self, "global_position", current_stairs.get_destination(), 1.0)
+#	await tween.finished
+#	z_index = old_z
+#	state_chart.send_event("to_stand_from_stairs")

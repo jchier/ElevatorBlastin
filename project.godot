@@ -81,8 +81,8 @@ jump={
 2d_physics/layer_12="floor_marker"
 2d_physics/layer_13="floor_detector"
 2d_physics/layer_14="elevator_roof"
-2d_physics/layer_15="stairs_top"
-2d_physics/layer_16="stairs_bottom"
+2d_physics/layer_15="interactor"
+2d_physics/layer_16="interactive"
 
 [physics]
 

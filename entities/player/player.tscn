@@ -17,6 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://cmh5yetqv4k2r" path="res://components/hurtbox_component.tscn" id="9_gx6sm"]
 [ext_resource type="Script" uid="uid://cf1nsco3w0mf6" path="res://addons/godot_state_charts/transition.gd" id="9_j3ovn"]
 [ext_resource type="PackedScene" uid="uid://bcwkugn6v3oy7" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="10_afbqv"]
+[ext_resource type="PackedScene" uid="uid://d3ybrc1g2dpl4" path="res://components/interactor_component.tscn" id="10_b2kln"]
 
 [sub_resource type="Animation" id="Animation_eyb6c"]
 length = 0.001
@@ -367,6 +368,9 @@ nodes/StateMachineLegs/node = ExtResource("4_j3ovn")
 nodes/StateMachineLegs/position = Vector2(-180, 320)
 node_connections = [&"output", 0, &"Add2", &"Add2", 0, &"StateMachineTorso", &"Add2", 1, &"StateMachineLegs"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oark8"]
+size = Vector2(22, 29)
+
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_oark8"]
 radius = 9.821428
 height = 44.642857
@@ -439,6 +443,12 @@ texture = ExtResource("7_j3ovn")
 offset = Vector2(0, -26)
 hframes = 4
 vframes = 4
+
+[node name="InteractorComponent" parent="." unique_id=18262948 instance=ExtResource("10_b2kln")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractorComponent" unique_id=132943613]
+position = Vector2(0, -23.5)
+shape = SubResource("RectangleShape2D_oark8")
 
 [node name="StandingCollisionShape" type="CollisionShape2D" parent="." unique_id=554777545]
 z_index = 3

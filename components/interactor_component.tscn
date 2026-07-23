@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://d3ybrc1g2dpl4"]
+
+[ext_resource type="Script" uid="uid://1blraxdbdyl1" path="res://components/interactor_component.gd" id="1_rtgka"]
+
+[node name="InteractorComponent" type="Area2D" unique_id=18262948]
+collision_layer = 16384
+collision_mask = 32768
+script = ExtResource("1_rtgka")
