@@ -29,7 +29,7 @@ size = Vector2(55, 8)
 size = Vector2(55, 5)
 
 [node name="Elevator" type="CharacterBody2D" unique_id=1398215485]
-collision_layer = 0
+collision_layer = 65536
 script = ExtResource("1_3c2c0")
 
 [node name="LeftHalf" type="Sprite2D" parent="." unique_id=1051948856]
@@ -46,6 +46,7 @@ texture = SubResource("AtlasTexture_v33mf")
 offset = Vector2(0, -20)
 
 [node name="FloorDetectorComponent" parent="." unique_id=1055282861 instance=ExtResource("3_4sa0j")]
+position = Vector2(0, 13)
 
 [node name="Occupant_Area" parent="." unique_id=313727146 instance=ExtResource("2_rtcbl")]
 visible = false

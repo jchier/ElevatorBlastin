@@ -18,7 +18,7 @@ func set_direction(direction):
 func set_last_direction(direction):
 	if direction == 0:
 		return
-	_last_direction == direction
+	_last_direction = direction
 
 func get_direction() -> float:
 	return _direction

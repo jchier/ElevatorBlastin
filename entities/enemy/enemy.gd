@@ -78,12 +78,14 @@ func _physics_process(delta: float) -> void:
 		var collided = vision_ray.get_collider()
 		if collided is Player:
 			navigation_component.set_destination(collided.global_position.x)
-		state_chart.send_event("aggro")
+			state_chart.send_event("aggro")
 		return
 				
 	if _current_occupancy:
 		state_chart.send_event("in_elevator")
-		
+	
+	if is_on_ceiling() and is_on_floor():
+		state_chart.send_event("dead")	
 
 func try_duck_fire():
 	if !fire_rate_timer.is_stopped() and can_shoot:
@@ -199,7 +201,8 @@ func _on_docile_state_physics_processing(_delta: float) -> void:
 
 
 func _on_patrol_timer_timeout() -> void:
-	movement_component.disabled = !movement_component.disabled
+	if vision_ray.get_collider() is not Elevator and _player_floor_relation() != EQUAL:
+		movement_component.disabled = !movement_component.disabled
 	if movement_component.disabled:
 		var random_value = randi_range(0,4)
 		if random_value <= 1:
@@ -284,8 +287,10 @@ func _on_in_elevator_state_entered() -> void:
 func make_elevator_choice():
 	if _player_floor_relation() == ABOVE:
 		chosen_elevator.go_up()
+		#chosen_elevator.request_up()
 	elif _player_floor_relation() == BELOW:
 		chosen_elevator.go_down()
+		#chosen_elevator.request_down()
 	else:
 		state_chart.send_event("docile")
 		

@@ -49,10 +49,12 @@ func _physics_process(_delta: float) -> void:
 	
 
 func go_up():
-	direction = Global.UP
+	if !is_on_ceiling():
+		direction = Global.UP
 	
 func go_down():
-	direction = Global.DOWN
+	if !is_on_floor():
+		direction = Global.DOWN
 
 func _set_direction(_direction: int):
 	wait_timer.stop()
