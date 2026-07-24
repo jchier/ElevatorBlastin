@@ -13,3 +13,9 @@ script = ExtResource("1_ty767")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1513883988]
 position = Vector2(0, -0.0625)
 shape = SubResource("RectangleShape2D_4ssn0")
+
+[node name="Label" type="Label" parent="." unique_id=346041666]
+offset_left = -16.0
+offset_top = -104.0
+offset_right = 24.0
+offset_bottom = -81.0

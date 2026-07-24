@@ -15,11 +15,16 @@ var _direction: float = 1.0
 func set_direction(direction):
 	_direction = direction
 
+func set_last_direction(direction):
+	if direction == 0:
+		return
+	_last_direction == direction
+
 func get_direction() -> float:
 	return _direction
 
 func set_destination(destination_x: float):
-	_last_direction = _direction
+	set_last_direction(_direction)
 	_destination = destination_x
 	if _navigator.global_position.x < destination_x:
 		set_direction(1)
@@ -80,7 +85,7 @@ func start():
 	set_direction(_last_direction)
 
 func stop():
-	_last_direction = _direction
+	set_last_direction(_direction)
 	set_direction(0)
 	
 func _on_waiting_for_elevator(chosen_elevator: CharacterBody2D):

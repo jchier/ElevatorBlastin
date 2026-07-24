@@ -20,14 +20,14 @@ func descend_body(body: CharacterBody2D):
 		return
 	move_body(stairs_top_marker.global_position, stairs_bottom_marker.global_position,\
 	 body)
-	body.floor_detector_component.set_current_floor(bottom_level_floor)
+	
 
 func ascend_body(body: CharacterBody2D):
 	if !body or _occupied == true:
 		return
 	move_body(stairs_bottom_marker.global_position, stairs_top_marker.global_position,\
 	 body)
-	body.floor_detector_component.set_current_floor(top_level_floor)
+	
 	
 func move_body(starting_point: Vector2, destination: Vector2, body: CharacterBody2D):
 	_occupied = true
