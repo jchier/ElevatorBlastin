@@ -489,7 +489,7 @@ position = Vector2(0, -4)
 texture = ExtResource("8_kh7fx")
 offset = Vector2(0, -26)
 hframes = 5
-vframes = 4
+vframes = 19
 
 [node name="Sprite2DLegs" type="Sprite2D" parent="Visuals" unique_id=1040317593]
 unique_name_in_owner = true

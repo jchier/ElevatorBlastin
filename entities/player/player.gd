@@ -177,18 +177,5 @@ func get_floor() -> int:
 func set_floor(new_floor):
 	floor_detector_component.set_starting_floor(new_floor)
 
-
-func _on_on_stairs_state_entered() -> void:
-	pass
-#	animation_component.start("idle")
-#	var old_z = z_index
-#	var starting_point = current_stairs.get_starting_point()
-#	var destination = current_stairs.get_destination()
-#	z_index = z_index - 10
-#	var tween := create_tween()
-#	tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
-#	tween.tween_property(self, "global_position", current_stairs.get_starting_point(), 0.2)
-#	tween.tween_property(self, "global_position", current_stairs.get_destination(), 1.0)
-#	await tween.finished
-#	z_index = old_z
-#	state_chart.send_event("to_stand_from_stairs")
+func start_animation(to_play: String):
+	animation_component.start(to_play)
