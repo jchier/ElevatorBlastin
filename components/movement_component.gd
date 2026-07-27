@@ -58,7 +58,7 @@ func generate_velocity(delta: float, x_input: float):
 		state_chart_event.emit("airborne")
 	
 	if !disabled:
-		if velocity.x != 0:
+		if !is_zero_approx(velocity.x):
 			var orientation = signf(velocity.x)
 			if orientation != last_orientation:
 				last_orientation = orientation

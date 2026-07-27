@@ -11,6 +11,7 @@ func _ready():
 
 func _act(body: CharacterBody2D):
 	body.movement_component.disabled = true
+	body.set_orientation(1)
 	var tween := create_tween()
 	tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	tween.tween_property(body, "global_position", body_marker.global_position, 0.2)
