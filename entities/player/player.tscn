@@ -292,6 +292,20 @@ tracks/0/keys = {
 "update": 1,
 "values": [22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33]
 }
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimationComponent")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"_interaction_complete"
+}]
+}
 
 [sub_resource type="Animation" id="Animation_3wlsy"]
 resource_name = "idle"
@@ -546,10 +560,10 @@ to = NodePath("../../../Airborne")
 event = &"airborne"
 delay_in_seconds = "0.0"
 
-[node name="ToStairs" type="Node" parent="StateChart/Root/Grounded/Stand" unique_id=777988848]
+[node name="ToInteracting" type="Node" parent="StateChart/Root/Grounded/Stand" unique_id=777988848]
 script = ExtResource("9_j3ovn")
-to = NodePath("../../OnStairs")
-event = &"stairs"
+to = NodePath("../../Interacting")
+event = &"interact"
 delay_in_seconds = "0.0"
 
 [node name="Duck" type="Node" parent="StateChart/Root/Grounded" unique_id=694636133]
@@ -573,13 +587,13 @@ to = NodePath("../../Dead")
 event = &"dead"
 delay_in_seconds = "0.0"
 
-[node name="OnStairs" type="Node" parent="StateChart/Root/Grounded" unique_id=1870361140]
+[node name="Interacting" type="Node" parent="StateChart/Root/Grounded" unique_id=1870361140]
 script = ExtResource("8_a1qjk")
 
-[node name="ToStand" type="Node" parent="StateChart/Root/Grounded/OnStairs" unique_id=639169820]
+[node name="ToStand" type="Node" parent="StateChart/Root/Grounded/Interacting" unique_id=639169820]
 script = ExtResource("9_j3ovn")
 to = NodePath("../../Stand")
-event = &"to_stand_from_stairs"
+event = &"to_stand_from_interact"
 delay_in_seconds = "0.0"
 
 [node name="Airborne" type="Node" parent="StateChart/Root" unique_id=414048615]
@@ -615,9 +629,9 @@ initial_node_to_watch = NodePath("../StateChart")
 [connection signal="state_entered" from="StateChart/Root/Grounded/Duck" to="." method="_on_duck_state_entered"]
 [connection signal="state_exited" from="StateChart/Root/Grounded/Duck" to="." method="_on_duck_state_exited"]
 [connection signal="state_input" from="StateChart/Root/Grounded/Duck" to="." method="_on_duck_state_input"]
-[connection signal="state_entered" from="StateChart/Root/Grounded/OnStairs" to="." method="_on_on_stairs_state_entered"]
-[connection signal="state_exited" from="StateChart/Root/Grounded/OnStairs" to="." method="_on_on_stairs_state_exited"]
-[connection signal="state_physics_processing" from="StateChart/Root/Grounded/OnStairs" to="." method="_on_on_stairs_state_physics_processing"]
+[connection signal="state_entered" from="StateChart/Root/Grounded/Interacting" to="." method="_on_on_stairs_state_entered"]
+[connection signal="state_exited" from="StateChart/Root/Grounded/Interacting" to="." method="_on_on_stairs_state_exited"]
+[connection signal="state_physics_processing" from="StateChart/Root/Grounded/Interacting" to="." method="_on_on_stairs_state_physics_processing"]
 [connection signal="state_entered" from="StateChart/Root/Airborne" to="." method="_on_airborne_state_entered"]
 [connection signal="state_exited" from="StateChart/Root/Airborne" to="." method="_on_airborne_state_exited"]
 [connection signal="state_input" from="StateChart/Root/Airborne" to="." method="_on_airborne_state_input"]

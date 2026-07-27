@@ -3,6 +3,8 @@ extends Node
 
 signal can_shoot
 signal stance_changed
+signal interaction_complete
+
 
 @export var animation_torso: AnimationPlayer
 @export var animation_legs: AnimationPlayer
@@ -49,6 +51,9 @@ func _can_shoot():
 	
 func _stance_changed():
 	stance_changed.emit()
+
+func _interaction_complete():
+	interaction_complete.emit()
 
 func dead():
 	state_machine_torso.start("dead")

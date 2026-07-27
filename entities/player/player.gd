@@ -36,7 +36,9 @@ func _ready():
 	movement_component.state_chart_event.connect(_state_chart_event)
 	movement_component.set_orientation.connect(set_orientation)
 	animation_component.can_shoot.connect(_can_shoot)
+	animation_component.interaction_complete.connect(_interaction_complete)
 	health_component.died.connect(_on_died)
+	interactor_component.interaction_valid.connect(_valid_interaction)
 	crouching_collision_shape.disabled = true
 
 	
@@ -51,9 +53,6 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 
-	if Input.is_action_just_pressed("up"):
-		interactor_component.try_interact(self)
-			#state_chart.send_event("stairs")
 
 	if _current_occupancy:	
 		if Input.is_action_pressed("up"):
@@ -140,7 +139,10 @@ func _on_stand_state_physics_processing(_delta: float) -> void:
 			animation_component.play("move")
 		
 	animation_component.move(signf(velocity.y))	
-
+	
+	if Input.is_action_just_pressed("up"):
+		interactor_component.try_interact(self)
+			#state_chart.send_event("stairs")
 
 func _on_duck_state_input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("shoot"):
@@ -177,5 +179,13 @@ func get_floor() -> int:
 func set_floor(new_floor):
 	floor_detector_component.set_starting_floor(new_floor)
 
-func start_animation(to_play: String):
+func start_interaction_animation(to_play: String):
 	animation_component.start(to_play)
+	await animation_component.interaction_complete
+	state_chart.send_event("to_stand_from_interact")
+	
+func _interaction_complete():
+	pass
+
+func _valid_interaction():
+	state_chart.send_event("interact")

@@ -15,7 +15,7 @@ func _act(body: CharacterBody2D):
 	tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	tween.tween_property(body, "global_position", body_marker.global_position, 0.2)
 	await tween.finished
-	body.start_animation("enter")
+	body.start_interaction_animation("enter")
 	animation_player.play("open")
 	await animation_player.animation_finished
 	body.movement_component.disabled = false
