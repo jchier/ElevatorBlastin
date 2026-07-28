@@ -183,6 +183,9 @@ func get_floor() -> int:
 func set_floor(new_floor):
 	floor_detector_component.set_starting_floor(new_floor)
 
+func start_animation(to_play: String):
+	animation_component.start(to_play)
+
 func start_interaction_animation(to_play: String):
 	animation_component.start(to_play)
 	await animation_component.interaction_complete

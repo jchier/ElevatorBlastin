@@ -61,7 +61,9 @@ func _ready():
 	navigation_component.set_orientation.connect(set_orientation)
 	animation_component.can_shoot.connect(_can_shoot)
 	animation_component.stance_changed.connect(_stance_changed)
+	animation_component.interaction_complete.connect(_interaction_complete)
 	interactor_component.area_entered.connect(on_area_entered)
+	interactor_component.interaction_valid.connect(_valid_interaction)
 	floor_detector_component.set_current_floor(starting_floor)
 	crouching_collision_shape.disabled = true
 	health_component.died.connect(_on_died)
@@ -113,6 +115,10 @@ func set_orientation(sign_f: float):
 	edge_detection.position.x = sign_f
 	elevator_floor_detector.scale.x = sign_f
 	elevator_floor_detector.position.x = sign_f
+
+func get_orientation() -> float:
+	return movement_component.orientation
+
 		
 func _set_current_occupancy(occupancy: Occupant_Component):
 		_current_occupancy = occupancy
@@ -307,6 +313,21 @@ func _on_get_off_elevator_state_physics_processing(_delta: float) -> void:
 	if !elevator_floor_detector.is_colliding():
 		state_chart.send_event("docile")
 
+#====================================== INTERACT STATE =================================================================
+func _on_interact_state_entered() -> void:
+	pass # Replace with function body.
+	
+func _interaction_complete():
+	state_chart.send_event("to_stand_from_interact")
+	
+func start_interaction_animation(to_play: String):
+	animation_component.start(to_play)
+	await animation_component.interaction_complete
+	state_chart.send_event("to_stand_from_interact")	
+
+func _valid_interaction():
+	state_chart.send_event("interact")
+
 #====================================== DEAD STATE =================================================================
 	
 func _on_died():
@@ -387,8 +408,6 @@ func get_floor() -> int:
 func set_floor(new_floor: int):
 	floor_detector_component.set_starting_floor(new_floor)
 	
-func _on_on_stairs_state_entered() -> void:
-	pass
 
 
 func on_area_entered(interactive: InteractiveComponent):
