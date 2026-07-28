@@ -11,7 +11,8 @@ func _ready():
 
 func _act(body: CharacterBody2D):
 	body.movement_component.disabled = true
-	body.set_orientation(1)
+	var last_orientation: float = body.get_orientation() 
+	body.set_orientation(1.0)
 	var tween := create_tween()
 	tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	tween.tween_property(body, "global_position", body_marker.global_position, 0.2)
@@ -19,4 +20,5 @@ func _act(body: CharacterBody2D):
 	body.start_interaction_animation("enter")
 	animation_player.play("open")
 	await animation_player.animation_finished
+	body.set_orientation(last_orientation)
 	body.movement_component.disabled = false

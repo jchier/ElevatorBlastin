@@ -41,4 +41,5 @@ func move_body(starting_point: Vector2, destination: Vector2, body: CharacterBod
 	await tween.finished
 	body.z_index = old_z
 	_occupied = false
+	body.start_interaction_animation("interaction_complete")
 	body.movement_component.disabled = false

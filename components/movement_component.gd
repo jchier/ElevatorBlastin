@@ -20,6 +20,7 @@ var was_idle:bool = false
 var current_speed: float
 var velocity: Vector2 = Vector2.ZERO
 var disabled: bool = false
+var orientation: float
 var last_orientation = 1
 var _jump: bool = false
 
@@ -59,7 +60,7 @@ func generate_velocity(delta: float, x_input: float):
 	
 	if !disabled:
 		if !is_zero_approx(velocity.x):
-			var orientation = signf(velocity.x)
+			orientation = signf(velocity.x)
 			if orientation != last_orientation:
 				last_orientation = orientation
 				set_orientation.emit(orientation)

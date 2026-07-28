@@ -33,7 +33,7 @@ var physics_disabled: bool:
 func _ready():
 	rider_component.set_current_occupancy.connect(_set_current_occupancy)
 	rider_component.clear_current_occupancy.connect(_clear_current_occupancy)
-	movement_component.state_chart_event.connect(_state_chart_event)
+	movement_component.state_chart_event.connect(state_chart_event)
 	movement_component.set_orientation.connect(set_orientation)
 	animation_component.can_shoot.connect(_can_shoot)
 	animation_component.interaction_complete.connect(_interaction_complete)
@@ -86,9 +86,13 @@ func fire():
 	fire_rate_timer.start()
 
 func set_orientation(sign_f: float):
+	movement_component.orientation = sign_f
 	bullet_component.flip_horizontal(sign_f)
 	visuals.scale.x = sign_f
 		
+func get_orientation() -> float:
+	return movement_component.orientation
+
 func _set_current_occupancy(occupancy: Occupant_Component):
 		_current_occupancy = occupancy
 		
@@ -170,7 +174,7 @@ func _on_dead_state_entered() -> void:
 	movement_component.disabled = true
 	died.emit()
 	
-func _state_chart_event(event: String):
+func state_chart_event(event: String):
 	state_chart.send_event(event)
 	
 func get_floor() -> int:
