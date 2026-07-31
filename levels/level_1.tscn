@@ -90,4 +90,4 @@ top_level_floor = 3
 bottom_level_floor = 2
 
 [node name="DoorHall" parent="." unique_id=653102736 instance=ExtResource("10_08mmt")]
-position = Vector2(-29, 383)
+position = Vector2(-39, 263)

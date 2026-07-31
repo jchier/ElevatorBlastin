@@ -69,7 +69,11 @@ func _ready():
 	move_to.global_position = Vector2(0,0)
 	reaction_timer.paused = true
 	
-func _physics_process(delta: float) -> void:		
+func _physics_process(_delta: float) -> void:		
+	pass
+
+
+func _on_alive_state_processing(delta: float) -> void:
 	movement_component.generate_velocity(delta, navigation_component.get_direction())
 	move_and_slide()
 
@@ -126,11 +130,15 @@ func _clear_current_occupancy():
 	
 
 func _on_stand_state_entered() -> void:
+	callable_shoot = try_stand_fire
+	print("callable shoot = stand fire")
 	animation_component.play("idle")
 
 
 
 func _on_duck_state_entered() -> void:
+	callable_shoot = try_duck_fire
+	print("callable shoot = duck fire")
 	bullet_component.toggle_stance()
 	hurtbox_component.toggle_stance()
 	standing_collision_shape.set_deferred("disabled", true)
@@ -242,7 +250,8 @@ func _on_reaction_timer_timeout() -> void:
 			#print("stance changed to stand")
 			movement_component.disabled = false
 			last_stance = "stand"
-		callable_shoot = try_stand_fire
+#		callable_shoot = try_stand_fire
+#		print("callable shoot = stand fire")
 	else:
 		if last_stance != "duck":
 			movement_component.disabled = true
@@ -251,7 +260,8 @@ func _on_reaction_timer_timeout() -> void:
 			await animation_component.stance_changed
 			#print("stance changed to duck")
 			last_stance = "duck"
-		callable_shoot = try_duck_fire
+#		callable_shoot = try_duck_fire
+#		print("callable shoot = duck fire")
 	if vision_ray.is_colliding():
 		callable_shoot.call()	
 	reaction_timer.start(randf_range(0.5, 1.0))
@@ -311,15 +321,14 @@ func _on_interact_state_entered() -> void:
 	movement_component.disabled = true
 	
 func _interaction_complete():
-	state_chart.send_event("to_stand_from_interact")
+	state_chart.send_event("to_alive_from_interact")
 	
 func start_interaction_animation(to_play: String):
 	animation_component.start(to_play)
 	await animation_component.interaction_complete
-	state_chart.send_event("to_stand_from_interact")	
+	state_chart.send_event("to_alive_from_interact")	
 
 func _valid_interaction():
-	movement_component.disabled = false
 	state_chart.send_event("interact")
 
 #====================================== DEAD STATE =================================================================

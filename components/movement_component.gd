@@ -19,7 +19,10 @@ var was_on_floor: bool = false
 var was_idle:bool = false
 var current_speed: float
 var velocity: Vector2 = Vector2.ZERO
-var disabled: bool = false
+var disabled: bool:
+	set(value):
+		disabled = value
+		
 var orientation: float
 var last_orientation = 1
 var _jump: bool = false
