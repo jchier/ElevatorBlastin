@@ -237,24 +237,28 @@ func _on_aggro_state_processing(_delta: float) -> void:
 		navigation_component.stop()
 
 
-	if !vision_ray.is_colliding() and _player_floor_relation() != EQUAL:
+	if _player_floor_relation() != EQUAL:
 			state_chart.send_event("docile")
-
+	print("reaction timer time:")
+	print(reaction_timer.time_left)
+#	if reaction_timer.is_stopped():
+#		reaction_timer.start()
 	
 func _on_reaction_timer_timeout() -> void:	
+	reaction_timer.start(randf_range(0.5, 1.0))
 	if randi_range(0, 4) > 1:
 		if last_stance != "stand":
 			#print("stand")
 			state_chart.send_event("stand")
 			await animation_component.stance_changed
 			#print("stance changed to stand")
-			movement_component.disabled = false
+			#movement_component.disabled = false
 			last_stance = "stand"
 #		callable_shoot = try_stand_fire
 #		print("callable shoot = stand fire")
 	else:
 		if last_stance != "duck":
-			movement_component.disabled = true
+			#movement_component.disabled = true
 			#print("duck")
 			state_chart.send_event("duck")
 			await animation_component.stance_changed
@@ -264,7 +268,6 @@ func _on_reaction_timer_timeout() -> void:
 #		print("callable shoot = duck fire")
 	if vision_ray.is_colliding():
 		callable_shoot.call()	
-	reaction_timer.start(randf_range(0.5, 1.0))
 	
 func _on_aggro_state_exited() -> void:
 	state_chart.send_event("stand")
