@@ -30,13 +30,10 @@ const ELEVATOR_BUFFER: int = 40
 @onready var elevator_floor_detector: RayCast2D = $ElevatorFloorDetector
 
 var chosen_elevator: Elevator
-var current_stairs: Stairs
 @export var starting_floor: int
 
 
 enum {BELOW, EQUAL, ABOVE}
-
-enum {UNDER_ELEVATOR, FAR_FROM_ELEVATOR}
 
 var direction: int = 1
 var last_direction: int = 1
@@ -200,10 +197,6 @@ func _on_docile_state_physics_processing(_delta: float) -> void:
 			chosen_elevator = elevator
 		state_chart.send_event("go_in_elevator")
 
-	if current_stairs:
-		var player_floor_relation = _player_floor_relation()
-		if player_floor_relation == ABOVE or player_floor_relation == BELOW:
-			state_chart.send_event("stairs")
 
 
 func _on_patrol_timer_timeout() -> void:
@@ -315,7 +308,7 @@ func _on_get_off_elevator_state_physics_processing(_delta: float) -> void:
 
 #====================================== INTERACT STATE =================================================================
 func _on_interact_state_entered() -> void:
-	pass # Replace with function body.
+	movement_component.disabled = true
 	
 func _interaction_complete():
 	state_chart.send_event("to_stand_from_interact")
@@ -326,6 +319,7 @@ func start_interaction_animation(to_play: String):
 	state_chart.send_event("to_stand_from_interact")	
 
 func _valid_interaction():
+	movement_component.disabled = false
 	state_chart.send_event("interact")
 
 #====================================== DEAD STATE =================================================================
@@ -408,7 +402,8 @@ func get_floor() -> int:
 func set_floor(new_floor: int):
 	floor_detector_component.set_starting_floor(new_floor)
 	
-
+func start_animation(to_play: String):
+	animation_component.start(to_play)
 
 func on_area_entered(interactive: InteractiveComponent):
 	if interactive.is_in_group("stairs_top"):
@@ -418,4 +413,7 @@ func on_area_entered(interactive: InteractiveComponent):
 	if interactive.is_in_group("stairs_bottom"):
 		if _player_floor_relation() == ABOVE:
 			interactor_component.try_interact(self)
+			
+	if interactive.is_in_group("door_hall") and _player_floor_relation() != EQUAL:
+		interactor_component.try_interact(self)
 		
