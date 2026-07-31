@@ -82,7 +82,7 @@ func _on_alive_state_processing(delta: float) -> void:
 		if collided is Player:
 			navigation_component.set_destination(collided.global_position.x)
 			state_chart.send_event("aggro")
-		return
+			return
 				
 	if _current_occupancy:
 		state_chart.send_event("in_elevator")
@@ -131,14 +131,12 @@ func _clear_current_occupancy():
 
 func _on_stand_state_entered() -> void:
 	callable_shoot = try_stand_fire
-	print("callable shoot = stand fire")
 	animation_component.play("idle")
 
 
 
 func _on_duck_state_entered() -> void:
 	callable_shoot = try_duck_fire
-	print("callable shoot = duck fire")
 	bullet_component.toggle_stance()
 	hurtbox_component.toggle_stance()
 	standing_collision_shape.set_deferred("disabled", true)
@@ -239,11 +237,7 @@ func _on_aggro_state_processing(_delta: float) -> void:
 
 	if _player_floor_relation() != EQUAL:
 			state_chart.send_event("docile")
-	print("reaction timer time:")
-	print(reaction_timer.time_left)
-#	if reaction_timer.is_stopped():
-#		reaction_timer.start()
-	
+
 func _on_reaction_timer_timeout() -> void:	
 	reaction_timer.start(randf_range(0.5, 1.0))
 	if randi_range(0, 4) > 1:

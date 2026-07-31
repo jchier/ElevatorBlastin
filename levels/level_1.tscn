@@ -80,7 +80,7 @@ script = ExtResource("9_3sk1a")
 starting_floor = 3
 
 [node name="EnemyMarker" type="Marker2D" parent="." unique_id=1151110767]
-position = Vector2(184, 224)
+position = Vector2(24, 232)
 script = ExtResource("8_l53as")
 starting_floor = 3
 

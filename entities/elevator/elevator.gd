@@ -13,7 +13,9 @@ signal stopped
 var points: PackedVector2Array
 var poly_set: bool = false
 var requested_direction: int
-var direction: int
+var direction: int:
+	set(value):
+		direction = value
 var elevator_speed: float = 30.0
 var is_occupied
 
@@ -39,12 +41,13 @@ func _physics_process(_delta: float) -> void:
 		
 
 	#when the elevator touches the ground or ceiling?
-	if is_on_floor() and wait_timer.is_stopped() or is_on_ceiling() and wait_timer.is_stopped():
+	if is_on_floor() and wait_timer.is_stopped() \
+	 or is_on_ceiling() and wait_timer.is_stopped():
 		stopped.emit()
 		wait_timer.start()
-		_flip_direction()
+		if !is_occupied:
+			_flip_direction()
 		
-	#when the elevator reaches intermediate stop
 
 	
 
