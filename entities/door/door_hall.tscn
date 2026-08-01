@@ -93,6 +93,5 @@ metadata/_custom_type_script = "uid://c3aa08qflyvax"
 position = Vector2(-0.5, -2.5)
 shape = SubResource("RectangleShape2D_oark8")
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=721874576]
-visible = false
-position = Vector2(0, -31)
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=844330122]
+position = Vector2(0, -10)
