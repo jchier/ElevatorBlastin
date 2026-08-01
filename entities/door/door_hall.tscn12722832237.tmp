@@ -1,0 +1,98 @@
+[gd_scene format=3 uid="uid://dmn4ui4jcf713"]
+
+[ext_resource type="Script" uid="uid://cbpchjd3bspaf" path="res://entities/door/door_hall.gd" id="1_stfqn"]
+[ext_resource type="Texture2D" uid="uid://dq2jf4topgwbx" path="res://entities/door/door_hall.png" id="1_vyek1"]
+[ext_resource type="Script" uid="uid://c3aa08qflyvax" path="res://components/interactive_component.gd" id="2_6ujgj"]
+
+[sub_resource type="Animation" id="Animation_6ujgj"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_stfqn"]
+resource_name = "closed"
+length = 0.035592914
+loop_mode = 2
+step = 0.083333336
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_vwc5n"]
+resource_name = "open"
+length = 1.0833334
+step = 0.083333336
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.33333334, 0.41666666, 0.49999997, 0.5833334, 0.66666675, 0.75, 0.8333334, 0.91666675, 1.0000001),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 4, 3, 2, 1, 0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_r7jra"]
+_data = {
+&"RESET": SubResource("Animation_6ujgj"),
+&"closed": SubResource("Animation_stfqn"),
+&"open": SubResource("Animation_vwc5n")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oark8"]
+size = Vector2(29, 21)
+
+[node name="DoorHall" type="Node2D" unique_id=653102736]
+script = ExtResource("1_stfqn")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=409023017]
+libraries/ = SubResource("AnimationLibrary_r7jra")
+autoplay = &"closed"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=431295558]
+texture_filter = 1
+position = Vector2(0, -33)
+texture = ExtResource("1_vyek1")
+hframes = 4
+vframes = 3
+
+[node name="BodyMarker" type="Marker2D" parent="." unique_id=1709365214]
+position = Vector2(0, 2)
+metadata/_edit_lock_ = true
+
+[node name="InteractiveComponent" type="Area2D" parent="." unique_id=1358554032 groups=["door_hall"]]
+position = Vector2(0, -8)
+collision_layer = 32768
+collision_mask = 16384
+script = ExtResource("2_6ujgj")
+metadata/_custom_type_script = "uid://c3aa08qflyvax"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractiveComponent" unique_id=1041460679]
+position = Vector2(-0.5, -2.5)
+shape = SubResource("RectangleShape2D_oark8")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=721874576]
+visible = false
+position = Vector2(0, -31)

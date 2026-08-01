@@ -1,7 +1,7 @@
 class_name Enemy
 extends CharacterBody2D
 
-signal died
+signal enemy_despawn
 
 const FLOOR_DISTANCE: int = 50
 const ELEVATOR_BUFFER: int = 40
@@ -338,15 +338,18 @@ func _on_dead_state_entered() -> void:
 	vision_ray.enabled = false
 	animation_component.start("dead")
 	navigation_component.stop()
-	movement_component.disabled = true
+	#movement_component.disabled = true
 	hurtbox_component.disabled = true
-	died.emit()
 	despawn_timer.start()
 
 
 func _on_despawn_timer_timeout() -> void:
+	despawn()
+
+func despawn():
+	enemy_despawn.emit()
 	queue_free()
-	
+
 #====================================== ============== =================================================================
 func _player_floor_relation() -> int:
 	if !player:

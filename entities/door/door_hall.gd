@@ -4,12 +4,28 @@ extends Node2D
 @onready var interactive_component: InteractiveComponent = $InteractiveComponent
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var body_marker: Marker2D = $BodyMarker
+@onready var sprite_2d: Sprite2D = $Sprite2D
+@export var player_door: bool = false
+var player_has_entered: bool = false
 
-func _ready():
+func _ready():	
 	interactive_component.act.connect(_act)
-
+	if player_door:
+		sprite_2d.modulate = Color.CRIMSON
+		
 
 func _act(body: CharacterBody2D):
+	if body is Player and player_door:
+		if player_has_entered:
+			body.start_interaction_animation("interaction_complete")
+			return
+		player_act(body)
+		player_has_entered = true
+	elif body is Enemy:
+		enemy_act(body)
+	
+
+func player_act(body: Player):
 	body.movement_component.disabled = true
 	var last_orientation: float = body.get_orientation() 
 	body.set_orientation(1.0)
@@ -25,3 +41,17 @@ func _act(body: CharacterBody2D):
 	await animation_player.animation_finished
 	body.set_orientation(last_orientation)
 	body.movement_component.disabled = false
+	
+func enemy_act(body: Enemy):
+	body.movement_component.disabled = true
+	var last_orientation: float = body.get_orientation() 
+	body.set_orientation(1.0)
+	var tween := create_tween()
+	tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+	tween.tween_property(body, "global_position", body_marker.global_position, 0.2)
+	await tween.finished
+	body.start_animation("enter")
+	animation_player.play("open")
+	await animation_player.animation_finished
+	body.despawn()
+	

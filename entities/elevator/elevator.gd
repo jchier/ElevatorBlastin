@@ -20,13 +20,6 @@ var elevator_speed: float = 30.0
 var is_occupied
 
 
-#func build_elevator_shaft():
-#	points.append(Vector2(elevator_shaft_top.x - 2, elevator_shaft_top.y))
-#	points.append(Vector2(elevator_shaft_top.x + 2, elevator_shaft_top.y))
-#	points.append(Vector2(elevator_shaft_bottom.x + 2, elevator_shaft_bottom.y))
-#	points.append(Vector2(elevator_shaft_bottom.x - 2, elevator_shaft_bottom.y))
-#	ev_poly.polygon = points
-
 func _ready():
 	floor_animatable_body.sync_to_physics = false
 	direction = Global.DOWN
