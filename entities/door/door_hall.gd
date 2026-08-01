@@ -44,7 +44,6 @@ func player_act(body: Player):
 	document_get.emit()
 func enemy_act(body: Enemy):
 	body.movement_component.disabled = true
-	var last_orientation: float = body.get_orientation() 
 	body.set_orientation(1.0)
 	var tween := create_tween()
 	tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)

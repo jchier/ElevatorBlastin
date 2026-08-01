@@ -14,7 +14,8 @@ const ELEVATOR_BUFFER: int = 40
 @onready var standing_collision_shape: CollisionShape2D = $StandingCollisionShape
 @onready var crouching_collision_shape: CollisionShape2D = $CrouchingCollisionShape
 @onready var animation_component: Node = $AnimationComponent
-@onready var vision_ray: RayCast2D = $VisionRay
+@onready var elevator_vision_ray: RayCast2D = $ElevatorVisionRay
+@onready var player_vision_ray: RayCast2D = $PlayerVisionRay
 @onready var edge_detection: RayCast2D = $EdgeDetection
 @onready var move_to: Marker2D = $MoveTo
 @onready var hurtbox_component: HurtboxComponent = $HurtboxComponent
@@ -77,8 +78,8 @@ func _on_alive_state_processing(delta: float) -> void:
 	movement_component.generate_velocity(delta, navigation_component.get_direction())
 	move_and_slide()
 
-	if vision_ray.is_colliding():
-		var collided = vision_ray.get_collider()
+	if player_vision_ray.is_colliding():
+		var collided = player_vision_ray.get_collider()
 		if collided is Player:
 			navigation_component.set_destination(collided.global_position.x)
 			state_chart.send_event("aggro")
@@ -111,7 +112,8 @@ func set_orientation(sign_f: float):
 	navigation_component.set_direction(sign_f)
 	bullet_component.flip_horizontal(sign_f)
 	visuals.scale.x = sign_f
-	vision_ray.scale.x = sign_f
+	elevator_vision_ray.scale.x = sign_f
+	player_vision_ray.scale.x = sign_f
 	edge_detection.scale.x = sign_f
 	edge_detection.position.x = sign_f
 	elevator_floor_detector.scale.x = sign_f
@@ -206,7 +208,7 @@ func _on_docile_state_physics_processing(_delta: float) -> void:
 
 
 func _on_patrol_timer_timeout() -> void:
-	if vision_ray.get_collider() is not Elevator and _player_floor_relation() != 0:
+	if elevator_vision_ray.get_collider() is not Elevator and _player_floor_relation() != 0:
 		movement_component.disabled = !movement_component.disabled
 	if movement_component.disabled:
 		var random_value = randi_range(0,4)
@@ -260,7 +262,7 @@ func _on_reaction_timer_timeout() -> void:
 			last_stance = "duck"
 #		callable_shoot = try_duck_fire
 #		print("callable shoot = duck fire")
-	if vision_ray.is_colliding():
+	if player_vision_ray.is_colliding():
 		callable_shoot.call()	
 	
 func _on_aggro_state_exited() -> void:
@@ -333,7 +335,8 @@ func _on_died():
 
 func _on_dead_state_entered() -> void:
 	hurtbox_component.disabled = true
-	vision_ray.enabled = false
+	elevator_vision_ray.enabled = false
+	player_vision_ray.enabled = false
 	animation_component.start("dead")
 	navigation_component.stop()
 	#movement_component.disabled = true
