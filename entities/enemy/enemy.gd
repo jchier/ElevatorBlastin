@@ -339,7 +339,6 @@ func _on_dead_state_entered() -> void:
 	player_vision_ray.enabled = false
 	animation_component.start("dead")
 	navigation_component.stop()
-	#movement_component.disabled = true
 	hurtbox_component.disabled = true
 	despawn_timer.start()
 

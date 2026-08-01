@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://cptp4opi28g3m" path="res://entities/elevator/elevator.tscn" id="6_btoec"]
 [ext_resource type="Script" uid="uid://bpv6re8vjeo51" path="res://entities/enemy/enemy_marker.gd" id="8_l53as"]
 [ext_resource type="Script" uid="uid://bgpd75t0gfyl7" path="res://entities/player/player_marker.gd" id="9_3sk1a"]
+[ext_resource type="Script" uid="uid://b6a2fog0fbkdh" path="res://entities/door/door_hall_marker.gd" id="9_5ot28"]
 [ext_resource type="PackedScene" uid="uid://cw4f70u4bxktk" path="res://entities/stairs/stairs.tscn" id="9_08mmt"]
 [ext_resource type="PackedScene" uid="uid://dmn4ui4jcf713" path="res://entities/door/door_hall.tscn" id="10_08mmt"]
 
@@ -84,11 +85,20 @@ position = Vector2(24, 232)
 script = ExtResource("8_l53as")
 starting_floor = 3
 
+[node name="DoorHallMarker" type="Marker2D" parent="." unique_id=1914852396]
+position = Vector2(176, 263)
+script = ExtResource("9_5ot28")
+player_door = true
+
+[node name="DoorHallMarker2" type="Marker2D" parent="." unique_id=1024379824]
+position = Vector2(240, 263)
+script = ExtResource("9_5ot28")
+
 [node name="Stairs2" parent="." unique_id=652959830 instance=ExtResource("9_08mmt")]
 position = Vector2(-49, 429)
 top_level_floor = 3
 bottom_level_floor = 2
 
 [node name="DoorHall" parent="." unique_id=653102736 instance=ExtResource("10_08mmt")]
-position = Vector2(-39, 263)
+position = Vector2(-48, 263)
 player_door = true

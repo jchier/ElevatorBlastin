@@ -8,6 +8,10 @@ signal document_get
 @export var player_door: bool = false
 var player_has_entered: bool = false
 
+func set_player_door(is_player_door_: bool) -> DoorHall:
+	player_door = is_player_door_
+	return self
+
 func _ready():	
 	interactive_component.act.connect(_act)
 	if player_door:

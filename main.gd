@@ -2,7 +2,7 @@ extends Node
 
 const PLAYER_SCENE: PackedScene = preload("uid://c2rgnnuoe4mpu")
 const ENEMY_SCENE: PackedScene = preload("uid://bftk50lxpoojr")
-
+const DOOR_HALL_SCENE: PackedScene = preload("uid://dmn4ui4jcf713")
 var level_one = preload("uid://cflxxyn4pet7d")
 var level: Node
 
@@ -11,6 +11,7 @@ func _ready():
 	add_child(level)
 	spawn_player()
 	spawn_enemy()
+	spawn_door_hall()
 		
 func spawn_player():
 	for player_marker in level.get_children():
@@ -29,3 +30,11 @@ func spawn_enemy():
 			add_child(enemy_scene)
 			enemy_scene.global_position = enemy_marker.global_position
 			enemy_scene.set_floor(enemy_marker.starting_floor)
+			
+func spawn_door_hall():
+	for door_hall_marker in level.get_children():
+		if door_hall_marker is DoorHallMarker:
+			var door_hall_scene: DoorHall = DOOR_HALL_SCENE.instantiate().set_player_door(door_hall_marker.player_door)
+			add_child(door_hall_scene)
+			door_hall_scene.global_position = door_hall_marker.global_position
+			#door_hall_scene.set_floor(door_hall_marker.starting_floor)
