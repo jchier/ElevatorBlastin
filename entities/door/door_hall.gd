@@ -1,6 +1,6 @@
 class_name DoorHall
 extends Node2D
-
+signal document_get
 @onready var interactive_component: InteractiveComponent = $InteractiveComponent
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var body_marker: Marker2D = $BodyMarker
@@ -41,7 +41,7 @@ func player_act(body: Player):
 	await animation_player.animation_finished
 	body.set_orientation(last_orientation)
 	body.movement_component.disabled = false
-	
+	document_get.emit()
 func enemy_act(body: Enemy):
 	body.movement_component.disabled = true
 	var last_orientation: float = body.get_orientation() 

@@ -196,7 +196,7 @@ func _on_docile_state_physics_processing(_delta: float) -> void:
 		navigation_component.reverse_direction()
 		
 	if elevator_floor_detector.is_colliding() and randi_range(1,2) == 2 and !chosen_elevator\
-	and _player_floor_relation() != EQUAL:
+	and _player_floor_relation() != 0:
 		var collider = elevator_floor_detector.get_collider()
 		var elevator = collider.get_parent() as Elevator
 		if elevator:
@@ -206,7 +206,7 @@ func _on_docile_state_physics_processing(_delta: float) -> void:
 
 
 func _on_patrol_timer_timeout() -> void:
-	if vision_ray.get_collider() is not Elevator and _player_floor_relation() != EQUAL:
+	if vision_ray.get_collider() is not Elevator and _player_floor_relation() != 0:
 		movement_component.disabled = !movement_component.disabled
 	if movement_component.disabled:
 		var random_value = randi_range(0,4)
@@ -235,7 +235,7 @@ func _on_aggro_state_processing(_delta: float) -> void:
 		navigation_component.stop()
 
 
-	if _player_floor_relation() != EQUAL:
+	if _player_floor_relation() != 0:
 			state_chart.send_event("docile")
 
 func _on_reaction_timer_timeout() -> void:	
@@ -291,12 +291,10 @@ func _on_in_elevator_state_entered() -> void:
 	make_elevator_choice()
 	
 func make_elevator_choice():
-	if _player_floor_relation() == ABOVE:
+	if _player_floor_relation() > 0:
 		chosen_elevator.go_up()
-		#chosen_elevator.request_up()
-	elif _player_floor_relation() == BELOW:
+	elif _player_floor_relation() < 0:
 		chosen_elevator.go_down()
-		#chosen_elevator.request_down()
 	else:
 		state_chart.send_event("docile")
 		
@@ -352,14 +350,16 @@ func despawn():
 
 #====================================== ============== =================================================================
 func _player_floor_relation() -> int:
-	if !player:
-		return -1
-	if player.get_floor() > get_floor():
-		return ABOVE
-	if player.get_floor() < get_floor():
-		return BELOW
-	else:
-		return EQUAL
+	#if !player:
+	#	return -1
+	return player.get_floor() - get_floor()
+	
+	#if player.get_floor() > get_floor():
+	#	return ABOVE
+	#if player.get_floor() < get_floor():
+	#	return BELOW
+	#else:
+	#	return EQUAL
 
 func _chosen_elevator_floor_relation() -> int:
 	if !chosen_elevator:
@@ -416,13 +416,13 @@ func start_animation(to_play: String):
 
 func on_area_entered(interactive: InteractiveComponent):
 	if interactive.is_in_group("stairs_top"):
-		if _player_floor_relation() == BELOW:
+		if _player_floor_relation() < 0:
 			interactor_component.try_interact(self)
 			
 	if interactive.is_in_group("stairs_bottom"):
-		if _player_floor_relation() == ABOVE:
+		if _player_floor_relation() > 0:
 			interactor_component.try_interact(self)
 			
-	if interactive.is_in_group("door_hall") and _player_floor_relation() != EQUAL:
+	if interactive.is_in_group("door_hall") and absi(_player_floor_relation()) >= 2:
 		interactor_component.try_interact(self)
 		
