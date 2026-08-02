@@ -3,6 +3,8 @@ extends Node2D
 
 signal document_get
 
+const ENEMY_SCENE: PackedScene = preload("uid://bftk50lxpoojr")
+
 @onready var interactive_component: InteractiveComponent = $InteractiveComponent
 @onready var visible_on_screen_notifier_2d: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
@@ -72,3 +74,13 @@ func _screen_entered():
 	
 func _screen_exiting():
 	door_on_screen = false
+
+func spawn_enemy():
+	var enemy_scene: Enemy = ENEMY_SCENE.instantiate()
+	#note: may need to get_parent().add_child
+	add_sibling(enemy_scene)
+	enemy_scene.start_interaction_animation("exit")
+	animation_player.play("open")
+	await animation_player.animation_finished
+	enemy_scene.movement_component.disabled = false
+	
