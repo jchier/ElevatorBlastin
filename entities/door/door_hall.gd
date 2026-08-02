@@ -1,6 +1,8 @@
 class_name DoorHall
 extends Node2D
+
 signal document_get
+
 @onready var interactive_component: InteractiveComponent = $InteractiveComponent
 @onready var visible_on_screen_notifier_2d: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
@@ -17,10 +19,11 @@ func set_player_door(is_player_door_: bool) -> DoorHall:
 
 func _ready():	
 	interactive_component.act.connect(_act)
-	visible_on_screen_notifier_2d.screen_entered.connect(screen_entered)
-	visible_on_screen_notifier_2d.child_exiting_tree.connect(child_exiting_tree)
+	visible_on_screen_notifier_2d.screen_entered.connect(_screen_entered)
+	visible_on_screen_notifier_2d.screen_exited.connect(_screen_exiting)
 	if player_door:
 		sprite_2d.modulate = Color.CRIMSON
+
 		
 
 func _act(body: CharacterBody2D):
@@ -64,8 +67,8 @@ func enemy_act(body: Enemy):
 	await animation_player.animation_finished
 	body.despawn()
 	
-func screen_entered():
+func _screen_entered():
 	door_on_screen = true
 	
-func child_exiting_tree():
+func _screen_exiting():
 	door_on_screen = false
