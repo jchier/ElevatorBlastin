@@ -2,6 +2,8 @@ class_name DoorHall
 extends Node2D
 
 signal document_get
+signal door_on_screen(DoorHall)
+signal door_off_screen(DoorHall)
 
 const ENEMY_SCENE: PackedScene = preload("uid://bftk50lxpoojr")
 
@@ -12,7 +14,7 @@ const ENEMY_SCENE: PackedScene = preload("uid://bftk50lxpoojr")
 @onready var sprite_2d: Sprite2D = $Sprite2D
 
 @export var player_door: bool = false
-var door_on_screen: bool = false
+var on_screen: bool = false
 var player_has_entered: bool = false
 
 func set_player_door(is_player_door_: bool) -> DoorHall:
@@ -25,7 +27,6 @@ func _ready():
 	visible_on_screen_notifier_2d.screen_exited.connect(_screen_exiting)
 	if player_door:
 		sprite_2d.modulate = Color.CRIMSON
-
 		
 
 func _act(body: CharacterBody2D):
@@ -70,15 +71,19 @@ func enemy_act(body: Enemy):
 	body.despawn()
 	
 func _screen_entered():
-	door_on_screen = true
+	on_screen = true
+	door_on_screen.emit(self)
 	
 func _screen_exiting():
-	door_on_screen = false
-
+	on_screen = false
+	door_off_screen.emit(self)
+	
 func spawn_enemy():
 	var enemy_scene: Enemy = ENEMY_SCENE.instantiate()
+	enemy_scene.global_position = global_position
 	#note: may need to get_parent().add_child
 	add_sibling(enemy_scene)
+	enemy_scene.movement_component.disabled = true
 	enemy_scene.start_interaction_animation("exit")
 	animation_player.play("open")
 	await animation_player.animation_finished
