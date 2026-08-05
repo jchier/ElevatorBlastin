@@ -36,12 +36,14 @@ func _act(body: CharacterBody2D):
 			return
 		player_act(body)
 		player_has_entered = true
+	elif body is Player and !player_door:
+		body.start_interaction_animation("interaction_complete")
 	elif body is Enemy:
 		enemy_act(body)
 	
 
 func player_act(body: Player):
-	body.movement_component.disabled = true
+	body.disabled = true
 	var last_orientation: float = body.get_orientation() 
 	body.set_orientation(1.0)
 	var tween := create_tween()
@@ -55,11 +57,11 @@ func player_act(body: Player):
 	animation_player.play("open")
 	await animation_player.animation_finished
 	body.set_orientation(last_orientation)
-	body.movement_component.disabled = false
+	body.disabled = false
 	document_get.emit()
 	
 func enemy_act(body: Enemy):
-	body.movement_component.disabled = true
+	body.disabled = true
 	body.set_orientation(1.0)
 	var tween := create_tween()
 	tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
@@ -83,9 +85,9 @@ func spawn_enemy():
 	enemy_scene.global_position = global_position
 	#note: may need to get_parent().add_child
 	add_sibling(enemy_scene)
-	enemy_scene.movement_component.disabled = true
+	enemy_scene.disabled = true
 	enemy_scene.start_interaction_animation("exit")
 	animation_player.play("open")
 	await animation_player.animation_finished
-	enemy_scene.movement_component.disabled = false
+	enemy_scene.disabled = false
 	

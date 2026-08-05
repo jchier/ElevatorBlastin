@@ -35,7 +35,12 @@ var chosen_elevator: Elevator
 
 
 enum {BELOW, EQUAL, ABOVE}
-
+var disabled: bool:
+	set(value):
+		player_vision_ray.enabled = !value
+		elevator_vision_ray.enabled = !value
+		movement_component.disabled = value
+		
 var direction: int = 1
 var last_direction: int = 1
 var can_move: bool = true

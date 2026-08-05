@@ -19,6 +19,9 @@ extends CharacterBody2D
 @onready var interactor_component: InteractorComponent = $InteractorComponent
 
 signal died
+var disabled: bool:
+	set(value):
+		movement_component.disabled = value
 var current_stairs: Stairs = null
 var stairs_destination: Vector2
 var t: float = 0.0
