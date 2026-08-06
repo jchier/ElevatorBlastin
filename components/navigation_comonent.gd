@@ -53,10 +53,6 @@ func track_target(target_x: float):
 		return 0
 	return 0
 	
-#func arrived_at_destination() -> bool:
-#	if global_position.distance_to(_destination) <= 1:
-#		return true
-#	return false
 	
 func navigate() -> float:
 	if _navigator.global_position.x > _destination + 1:

@@ -319,10 +319,10 @@ func _on_in_elevator_state_exited() -> void:
 func _on_get_off_elevator_state_entered() -> void:
 	navigation_component.start()
 
-
 func _on_get_off_elevator_state_physics_processing(_delta: float) -> void:
 	elevator_floor_detector.force_raycast_update()
 	if !elevator_floor_detector.is_colliding():
+		movement_component.jump()
 		state_chart.send_event("docile")
 
 #====================================== INTERACT STATE =================================================================
@@ -364,31 +364,9 @@ func despawn():
 
 #====================================== ============== =================================================================
 func _player_floor_relation() -> int:
-	#if !player:
-	#	return -1
 	return player.get_floor() - get_floor()
 
-func _chosen_elevator_floor_relation() -> int:
-	if !chosen_elevator:
-		return -1
-	#if chosen_elevator.global_position.y < global_position.y - 3:
-	if chosen_elevator.get_floor() < get_floor():
-		return BELOW
-	#if chosen_elevator.global_position.y > global_position.y + 3:
-	if chosen_elevator.get_floor() > get_floor():
-		return ABOVE
-	else:
-		return EQUAL
 
-func elevator_stopped():
-	print("elevator stopped")
-	if _chosen_elevator_floor_relation() == ABOVE:
-		chosen_elevator.request_up()
-	elif _chosen_elevator_floor_relation() == BELOW:
-		chosen_elevator.request_down()
-	elif !_current_occupancy:
-		navigation_component.set_destination(chosen_elevator.global_position.x)
-	
 
 func navigation_complete():
 	set_orientation(signf(global_position.direction_to(chosen_elevator.global_position).x))

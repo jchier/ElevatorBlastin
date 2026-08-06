@@ -90,34 +90,42 @@ metadata/_edit_lock_ = true
 [node name="Elevator" parent="." unique_id=1398215485 instance=ExtResource("6_btoec")]
 z_index = -1
 position = Vector2(92, 251)
+top_floor = 10
 
 [node name="Elevator2" parent="." unique_id=1945842654 instance=ExtResource("6_btoec")]
 z_index = -1
 position = Vector2(152, 493)
+top_floor = 8
 
 [node name="Elevator3" parent="." unique_id=1079490115 instance=ExtResource("6_btoec")]
 z_index = -1
 position = Vector2(-28, 620)
+top_floor = 7
 
 [node name="Elevator4" parent="." unique_id=1749120901 instance=ExtResource("6_btoec")]
 z_index = -1
 position = Vector2(212, 722)
+top_floor = 6
 
 [node name="Elevator5" parent="." unique_id=447233416 instance=ExtResource("6_btoec")]
 z_index = -1
 position = Vector2(92, 848)
+top_floor = 5
 
 [node name="Elevator6" parent="." unique_id=377359181 instance=ExtResource("6_btoec")]
 z_index = -1
 position = Vector2(-268, 1002)
+top_floor = 4
 
 [node name="Elevator7" parent="." unique_id=1354299862 instance=ExtResource("6_btoec")]
 z_index = -1
 position = Vector2(453, 1090)
+top_floor = 3
 
 [node name="Elevator8" parent="." unique_id=1250592470 instance=ExtResource("6_btoec")]
 z_index = -1
 position = Vector2(152, 1200)
+top_floor = 2
 
 [node name="PlayerMarker" type="Marker2D" parent="." unique_id=1946072525]
 position = Vector2(201, 601)

@@ -11,15 +11,13 @@ signal stopped
 @onready var floor_detector_component: FloorDetectorComponent = $FloorDetectorComponent
 
 
-var points: PackedVector2Array
-var poly_set: bool = false
 var requested_direction: int
 var direction: int:
 	set(value):
 		direction = value
 var elevator_speed: float = 30.0
 var is_occupied: bool
-
+var highest_floor: int
 
 func _ready():
 	floor_animatable_body.sync_to_physics = false
@@ -43,7 +41,7 @@ func _physics_process(_delta: float) -> void:
 			_flip_direction()
 		
 func can_go_up() -> bool:
-	if !is_on_ceiling():
+	if !is_on_ceiling() and get_floor() != highest_floor:
 		return true
 	return false
 	
@@ -95,6 +93,8 @@ func _on_wait_timer_timeout() -> void:
 
 
 func _on_floor_area_area_entered(_area: Area2D) -> void:
+	if get_floor() > highest_floor:
+		highest_floor = get_floor()
 	activate_requested_dir()
 	stopped.emit()
 	wait_timer.start()
