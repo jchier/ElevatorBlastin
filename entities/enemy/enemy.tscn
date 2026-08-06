@@ -149,6 +149,7 @@ tracks/0/keys = {
 [sub_resource type="Animation" id="Animation_fktuf"]
 resource_name = "interaction_complete"
 length = 0.033333335
+step = 0.083333336
 tracks/0/type = "method"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -844,13 +845,11 @@ delay_in_seconds = "0.0"
 script = ExtResource("12_xshm4")
 
 [node name="StateChartDebugger" parent="." unique_id=839851318 instance=ExtResource("14_v7t4h")]
-visible = false
 offset_left = -51.0
 offset_top = -156.0
 offset_right = 172.0
 offset_bottom = 62.0
 scale = Vector2(0.4800009, 0.45948353)
-enabled = false
 initial_node_to_watch = NodePath("../StateChart")
 
 [node name="MoveTo" type="Marker2D" parent="." unique_id=715631499]

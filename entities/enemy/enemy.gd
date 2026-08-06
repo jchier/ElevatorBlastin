@@ -327,7 +327,10 @@ func _interaction_complete():
 	
 func start_interaction_animation(to_play: String):
 	animation_component.start(to_play)
-	await animation_component.interaction_complete
+	#await animation_component.interaction_complete
+	#state_chart.send_event("to_alive_from_interact")	
+
+func finish_interaction():
 	state_chart.send_event("to_alive_from_interact")	
 
 func _valid_interaction():

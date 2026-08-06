@@ -16,14 +16,16 @@ func _ready():
 	stairs_bottom_area.act.connect(ascend_body)
 	
 func descend_body(body: CharacterBody2D):
-	if !body or _occupied == true:
+	if _occupied == true:
+		body.finish_interaction()
 		return
 	move_body(stairs_top_marker.global_position, stairs_bottom_marker.global_position,\
 	 body)
 	
 
 func ascend_body(body: CharacterBody2D):
-	if !body or _occupied == true:
+	if _occupied == true:
+		body.finish_interaction()
 		return
 	move_body(stairs_bottom_marker.global_position, stairs_top_marker.global_position,\
 	 body)
@@ -42,6 +44,7 @@ func move_body(starting_point: Vector2, destination: Vector2, body: CharacterBod
 	await tween.finished
 	body.z_index = old_z
 	_occupied = false
-	body.start_interaction_animation("interaction_complete")
+	#body.start_interaction_animation("interaction_complete")
 	body.movement_component.disabled = false
 	body.hurtbox_component.disabled = false
+	body.finish_interaction()

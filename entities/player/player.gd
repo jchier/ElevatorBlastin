@@ -199,6 +199,10 @@ func start_interaction_animation(to_play: String):
 func _interaction_complete():
 	pass
 
+func finish_interaction():
+	state_chart.send_event("to_stand_from_interact")	
+
+
 func _valid_interaction():
 	state_chart.send_event("interact")
 
