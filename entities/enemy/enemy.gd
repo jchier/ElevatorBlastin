@@ -403,6 +403,8 @@ func on_area_entered(interactive: InteractiveComponent):
 			interactor_component.try_interact(self)
 			
 	if interactive.is_in_group("door_hall") and _player_floor_relation() <= -2:
+		
+		print(player.get_floor(), get_floor(), _player_floor_relation())
 		interactor_component.try_interact(self)
 		
 func die():

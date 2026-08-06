@@ -120,16 +120,11 @@ z_index = -1
 position = Vector2(152, 1200)
 
 [node name="PlayerMarker" type="Marker2D" parent="." unique_id=1946072525]
-position = Vector2(-149, 215)
+position = Vector2(-150, 246)
 script = ExtResource("9_3sk1a")
 
 [node name="EnemyMarker" type="Marker2D" parent="." unique_id=1151110767]
 position = Vector2(247, 348)
-script = ExtResource("8_l53as")
-starting_floor = 3
-
-[node name="EnemyMarker2" type="Marker2D" parent="." unique_id=1306971819]
-position = Vector2(-113, 479)
 script = ExtResource("8_l53as")
 starting_floor = 3
 
@@ -139,17 +134,17 @@ script = ExtResource("8_l53as")
 starting_floor = 3
 
 [node name="EnemyMarker4" type="Marker2D" parent="." unique_id=1658930816]
-position = Vector2(45, 593)
+position = Vector2(30, 594)
 script = ExtResource("8_l53as")
 starting_floor = 3
 
 [node name="EnemyMarker5" type="Marker2D" parent="." unique_id=1510803185]
-position = Vector2(-144, 711)
+position = Vector2(-151, 589)
 script = ExtResource("8_l53as")
 starting_floor = 3
 
 [node name="EnemyMarker6" type="Marker2D" parent="." unique_id=453008681]
-position = Vector2(65, 707)
+position = Vector2(-37, 708)
 script = ExtResource("8_l53as")
 starting_floor = 3
 
@@ -164,7 +159,7 @@ script = ExtResource("8_l53as")
 starting_floor = 3
 
 [node name="EnemyMarker9" type="Marker2D" parent="." unique_id=1193597766]
-position = Vector2(-86, 953)
+position = Vector2(-86, 957)
 script = ExtResource("8_l53as")
 starting_floor = 3
 

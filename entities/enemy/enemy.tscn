@@ -883,8 +883,6 @@ one_shot = true
 wait_time = 15.0
 one_shot = true
 
-[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=313561861]
-
 [connection signal="body_entered" from="PlayerBufferZone" to="." method="_on_player_buffer_zone_body_entered"]
 [connection signal="body_exited" from="PlayerBufferZone" to="." method="_on_player_buffer_zone_body_exited"]
 [connection signal="state_entered" from="StateChart/Root/Interact" to="." method="_on_interact_state_entered"]

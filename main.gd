@@ -5,6 +5,7 @@ const ENEMY_SCENE: PackedScene = preload("uid://bftk50lxpoojr")
 const DOOR_HALL_SCENE: PackedScene = preload("uid://dmn4ui4jcf713")
 const MAX_ENEMY_COUNT: int = 10
 var level_one = preload("uid://cflxxyn4pet7d")
+@onready var retry_timer: Timer = $RetryTimer
 @onready var enemy_spawn_timer: Timer = $EnemySpawnTimer
 var level: Node
 var document_count: int = 0
@@ -32,7 +33,7 @@ func spawn_player():
 			add_child(player_scene)
 			player_scene.global_position = player_marker.global_position
 #			player_scene.set_floor(player_marker.starting_floor)
-
+			player_scene.died.connect(_player_died)
 			GameEvent.player_spawned.emit(player_scene)
 			
 func spawn_enemy():
@@ -96,3 +97,10 @@ func _enemy_despawned():
 func _on_enemy_spawn_timer_timeout():
 	spawn_enemy_from_door()
 	enemy_spawn_timer.start()
+
+func _player_died():
+	retry_timer.start()
+	
+
+func _on_retry_timer_timeout() -> void:
+	get_tree().reload_current_scene()

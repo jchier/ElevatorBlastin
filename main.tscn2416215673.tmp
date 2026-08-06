@@ -11,5 +11,6 @@ autostart = true
 
 [node name="RetryTimer" type="Timer" parent="." unique_id=1486573155]
 wait_time = 3.0
+autostart = true
 
 [connection signal="timeout" from="RetryTimer" to="." method="_on_retry_timer_timeout"]
