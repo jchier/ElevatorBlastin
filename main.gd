@@ -3,7 +3,7 @@ extends Node
 const PLAYER_SCENE: PackedScene = preload("uid://c2rgnnuoe4mpu")
 const ENEMY_SCENE: PackedScene = preload("uid://bftk50lxpoojr")
 const DOOR_HALL_SCENE: PackedScene = preload("uid://dmn4ui4jcf713")
-const MAX_ENEMY_COUNT: int = 4
+const MAX_ENEMY_COUNT: int = 1
 var level_one = preload("uid://cflxxyn4pet7d")
 @onready var enemy_spawn_timer: Timer = $EnemySpawnTimer
 var level: Node

@@ -205,13 +205,14 @@ func _on_docile_state_physics_processing(_delta: float) -> void:
 	or is_on_wall():
 		navigation_component.reverse_direction()
 		
-	if elevator_floor_detector.is_colliding() and randi_range(1,2) == 2 and !chosen_elevator\
+	if elevator_floor_detector.is_colliding() and !chosen_elevator\
 	and _player_floor_relation() != 0:
 		var collider = elevator_floor_detector.get_collider()
 		var elevator = collider.get_parent() as Elevator
 		if elevator:
 			chosen_elevator = elevator
-		state_chart.send_event("go_in_elevator")
+			movement_component.jump()
+			state_chart.send_event("go_in_elevator")
 
 
 
