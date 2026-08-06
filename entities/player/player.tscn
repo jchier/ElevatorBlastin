@@ -16,7 +16,6 @@
 [ext_resource type="PackedScene" uid="uid://b7k4uoekj8gqj" path="res://components/bullet_component.tscn" id="8_afbqv"]
 [ext_resource type="PackedScene" uid="uid://cmh5yetqv4k2r" path="res://components/hurtbox_component.tscn" id="9_gx6sm"]
 [ext_resource type="Script" uid="uid://cf1nsco3w0mf6" path="res://addons/godot_state_charts/transition.gd" id="9_j3ovn"]
-[ext_resource type="PackedScene" uid="uid://bcwkugn6v3oy7" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="10_afbqv"]
 [ext_resource type="PackedScene" uid="uid://d3ybrc1g2dpl4" path="res://components/interactor_component.tscn" id="10_b2kln"]
 
 [sub_resource type="Animation" id="Animation_eyb6c"]
@@ -536,7 +535,6 @@ _character_body = NodePath("..")
 
 [node name="HealthComponent" type="Node" parent="." unique_id=1233727716]
 script = ExtResource("2_fkugw")
-max_health = 99
 metadata/_custom_type_script = "uid://sphex7yy6a2e"
 
 [node name="AnimationComponent" parent="." unique_id=1019330946 node_paths=PackedStringArray("animation_torso", "animation_legs", "animation_tree") instance=ExtResource("3_7thud")]
@@ -705,14 +703,6 @@ delay_in_seconds = "0.0"
 
 [node name="Dead" type="Node" parent="StateChart/Root" unique_id=281422517]
 script = ExtResource("8_a1qjk")
-
-[node name="StateChartDebugger" parent="." unique_id=839851318 instance=ExtResource("10_afbqv")]
-offset_left = 102.0
-offset_top = -156.0
-offset_right = 325.0
-offset_bottom = 62.0
-enabled = false
-initial_node_to_watch = NodePath("../StateChart")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=162436934]
 

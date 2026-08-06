@@ -280,10 +280,6 @@ script = ExtResource("9_5ot28")
 position = Vector2(-162, 1103)
 script = ExtResource("9_5ot28")
 
-[node name="DoorHallMarker34" type="Marker2D" parent="." unique_id=1167468114]
-position = Vector2(-283, 1103)
-script = ExtResource("9_5ot28")
-
 [node name="DoorHallMarker35" type="Marker2D" parent="." unique_id=177799851]
 position = Vector2(-24, 1103)
 script = ExtResource("9_5ot28")

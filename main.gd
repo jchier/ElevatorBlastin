@@ -51,7 +51,10 @@ func spawn_enemy_from_door():
 		selected_door.spawn_enemy()
 		last_floor_spawned = selected_door.get_floor()
 		return
-		
+	if 	GameState.player.get_floor() == 1:
+			selected_door = valid_spawn_door.get(randi_range(0, valid_spawn_door.size() - 1))
+			return
+			
 	while selected_door.get_floor() ==	last_floor_spawned:
 		#randomly select a door from among the doors on screen, ask it to spawn enemy
 		selected_door = valid_spawn_door.get(randi_range(0, valid_spawn_door.size() - 1))

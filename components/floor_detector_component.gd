@@ -16,12 +16,6 @@ func set_starting_floor(_starting_floor):
 	label.text = str(current_floor)
 
 func set_current_floor(new_floor: int):
-	#if current_floor == 0 or current_floor ==\
-	##	new_floor:
-	#	current_floor = new_floor - 1
-	#else:
-	#	current_floor = new_floor
-	#print("current floor = ", current_floor)
 	if new_floor != current_floor:
 		call_deferred("emit_signal", "changed_floor")
 	current_floor = new_floor

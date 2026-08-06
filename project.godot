@@ -21,6 +21,10 @@ Global="*uid://v346aeg7drgb"
 GameEvent="*uid://0xqn2s0j7scd"
 GameState="*uid://cujuuy7fcd5f8"
 
+[debug]
+
+file_logging/enable_file_logging=true
+
 [display]
 
 window/size/viewport_width=640
