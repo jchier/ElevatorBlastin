@@ -29,6 +29,7 @@ const ELEVATOR_BUFFER: int = 40
 @onready var cool_down_timer: Timer = $CoolDownTimer
 @onready var floor_detector_component: FloorDetectorComponent = $FloorDetectorComponent
 @onready var elevator_floor_detector: RayCast2D = $ElevatorFloorDetector
+@onready var visible_on_screen_notifier_2d: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
 
 var chosen_elevator: Elevator
 @export var starting_floor: int
@@ -68,12 +69,14 @@ func _ready():
 	interactor_component.area_entered.connect(on_area_entered)
 	interactor_component.interaction_valid.connect(_valid_interaction)
 	floor_detector_component.set_current_floor(starting_floor)
+	visible_on_screen_notifier_2d.screen_exited.connect(_screen_exiting)
 	crouching_collision_shape.disabled = true
 	health_component.died.connect(_on_died)
 	state_chart.send_event("docile")
 	direction = 1
 	move_to.global_position = Vector2(0,0)
 	reaction_timer.paused = true
+	
 	
 func _physics_process(_delta: float) -> void:		
 	pass
@@ -360,13 +363,6 @@ func _player_floor_relation() -> int:
 	#if !player:
 	#	return -1
 	return player.get_floor() - get_floor()
-	
-	#if player.get_floor() > get_floor():
-	#	return ABOVE
-	#if player.get_floor() < get_floor():
-	#	return BELOW
-	#else:
-	#	return EQUAL
 
 func _chosen_elevator_floor_relation() -> int:
 	if !chosen_elevator:
@@ -433,3 +429,5 @@ func on_area_entered(interactive: InteractiveComponent):
 	if interactive.is_in_group("door_hall") and absi(_player_floor_relation()) >= 2:
 		interactor_component.try_interact(self)
 		
+func _screen_exiting():
+	pass

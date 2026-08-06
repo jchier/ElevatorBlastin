@@ -8,7 +8,7 @@ var level_one = preload("uid://cflxxyn4pet7d")
 var level: Node
 var document_count: int = 0
 var doors: Array
-var doors_on_screen: Array
+var valid_spawn_door: Array
 
 func _ready():
 	enemy_spawn_timer.timeout.connect(_on_enemy_spawn_timer_timeout)
@@ -17,6 +17,7 @@ func _ready():
 	spawn_player()
 #	spawn_enemy()
 	spawn_door_hall()
+	GameEvent.player_changed_floor.connect(_player_changed_floor)
 	
 func spawn_player():
 	for player_marker in level.get_children():
@@ -24,10 +25,10 @@ func spawn_player():
 			var player_scene: Player = PLAYER_SCENE.instantiate()
 			add_child(player_scene)
 			player_scene.global_position = player_marker.global_position
-			player_scene.set_floor(player_marker.starting_floor)
+#			player_scene.set_floor(player_marker.starting_floor)
 
 			GameEvent.player_spawned.emit(player_scene)
-
+			
 
 
 func spawn_enemy():
@@ -41,7 +42,7 @@ func spawn_enemy():
 			
 	#randomly select a door from among the doors on screen, ask it to spawn enemy
 	var selected_door: DoorHall =\
-	doors_on_screen.get(randi_range(0, doors_on_screen.size() - 1))
+	valid_spawn_door.get(randi_range(0, valid_spawn_door.size() - 1))
 	selected_door.spawn_enemy()
 			
 func spawn_door_hall():
@@ -54,8 +55,9 @@ func spawn_door_hall():
 			add_child(door_hall_scene)
 			doors.append(door_hall_scene)
 			door_hall_scene.global_position = door_hall_marker.global_position
-			door_hall_scene.door_on_screen.connect(_door_on_screen)
-			door_hall_scene.door_off_screen.connect(_door_off_screen)
+			
+#			if door_hall_scene.can_spawn_enemy():
+#				valid_spawn_door.append(door_hall_scene)
 			
 			#door_hall_scene.set_floor(door_hall_marker.starting_floor)
 
@@ -63,12 +65,13 @@ func got_document():
 	document_count = document_count - 1
 
 
-func _door_on_screen(door: DoorHall):
-	doors_on_screen.append(door)
-	
-func _door_off_screen(door: DoorHall):
-	doors_on_screen.erase(door)
-	
+func _player_changed_floor():
+	for door in doors:
+		if door.can_spawn_enemy():
+			valid_spawn_door.append(door)
+		else:
+			valid_spawn_door.erase(door)
+			
 func _on_enemy_spawn_timer_timeout():
 	spawn_enemy()
 	enemy_spawn_timer.start()

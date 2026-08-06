@@ -4,6 +4,7 @@ extends Area2D
 
 @export var starting_floor: int
 
+signal changed_floor
 var current_floor: int
 
 func _ready():
@@ -21,9 +22,11 @@ func set_current_floor(new_floor: int):
 	#else:
 	#	current_floor = new_floor
 	#print("current floor = ", current_floor)
+	if new_floor != current_floor:
+		call_deferred("emit_signal", "changed_floor")
 	current_floor = new_floor
 	label.text = str(current_floor)
-
+	
 func get_floor() -> int:
 	return current_floor
 	

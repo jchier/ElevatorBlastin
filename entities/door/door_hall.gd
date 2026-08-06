@@ -2,16 +2,13 @@ class_name DoorHall
 extends Node2D
 
 signal document_get
-signal door_on_screen(DoorHall)
-signal door_off_screen(DoorHall)
-
 const ENEMY_SCENE: PackedScene = preload("uid://bftk50lxpoojr")
 
 @onready var interactive_component: InteractiveComponent = $InteractiveComponent
-@onready var visible_on_screen_notifier_2d: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var body_marker: Marker2D = $BodyMarker
 @onready var sprite_2d: Sprite2D = $Sprite2D
+@onready var floor_detector_component: FloorDetectorComponent = $FloorDetectorComponent
 
 @export var player_door: bool = false
 var on_screen: bool = false
@@ -23,8 +20,6 @@ func set_player_door(is_player_door_: bool) -> DoorHall:
 
 func _ready():	
 	interactive_component.act.connect(_act)
-	visible_on_screen_notifier_2d.screen_entered.connect(_screen_entered)
-	visible_on_screen_notifier_2d.screen_exited.connect(_screen_exiting)
 	if player_door:
 		sprite_2d.modulate = Color.CRIMSON
 		
@@ -72,13 +67,6 @@ func enemy_act(body: Enemy):
 	await animation_player.animation_finished
 	body.despawn()
 	
-func _screen_entered():
-	on_screen = true
-	door_on_screen.emit(self)
-	
-func _screen_exiting():
-	on_screen = false
-	door_off_screen.emit(self)
 	
 func spawn_enemy():
 	var enemy_scene: Enemy = ENEMY_SCENE.instantiate()
@@ -91,3 +79,13 @@ func spawn_enemy():
 	await animation_player.animation_finished
 	enemy_scene.disabled = false
 	
+func get_floor() -> int:
+	return floor_detector_component.get_floor()
+
+func can_spawn_enemy() -> bool:
+	var player_floor = GameState.player.get_floor()
+	var current_floor = get_floor()
+	var value = abs(player_floor - current_floor)
+	if value <= 1:
+		return true
+	return false

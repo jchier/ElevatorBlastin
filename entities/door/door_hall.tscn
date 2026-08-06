@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://cbpchjd3bspaf" path="res://entities/door/door_hall.gd" id="1_stfqn"]
 [ext_resource type="Texture2D" uid="uid://dq2jf4topgwbx" path="res://entities/door/door_hall.png" id="1_vyek1"]
 [ext_resource type="Script" uid="uid://c3aa08qflyvax" path="res://components/interactive_component.gd" id="2_6ujgj"]
+[ext_resource type="PackedScene" uid="uid://du6fvxgccikwp" path="res://components/floor_detector_component.tscn" id="4_vwc5n"]
 
 [sub_resource type="Animation" id="Animation_6ujgj"]
 length = 0.001
@@ -95,3 +96,8 @@ shape = SubResource("RectangleShape2D_oark8")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=844330122]
 position = Vector2(0, -10)
+
+[node name="FloorDetectorComponent" parent="." unique_id=1055282861 instance=ExtResource("4_vwc5n")]
+position = Vector2(0, 4)
+collision_priority = 0.5
+priority = 3

@@ -19,6 +19,7 @@ extends CharacterBody2D
 @onready var interactor_component: InteractorComponent = $InteractorComponent
 
 signal died
+
 var disabled: bool:
 	set(value):
 		movement_component.disabled = value
@@ -43,6 +44,7 @@ func _ready():
 	health_component.died.connect(_on_died)
 	interactor_component.interaction_valid.connect(_valid_interaction)
 	crouching_collision_shape.disabled = true
+	floor_detector_component.changed_floor.connect(_changed_floor)
 
 	
 func _physics_process(delta: float) -> void:
@@ -183,8 +185,6 @@ func state_chart_event(event: String):
 func get_floor() -> int:
 	return floor_detector_component.get_floor()
 	
-func set_floor(new_floor):
-	floor_detector_component.set_starting_floor(new_floor)
 
 func start_animation(to_play: String):
 	animation_component.start(to_play)
@@ -199,3 +199,7 @@ func _interaction_complete():
 
 func _valid_interaction():
 	state_chart.send_event("interact")
+
+
+func _changed_floor():
+	GameEvent.player_changed_floor.emit()
