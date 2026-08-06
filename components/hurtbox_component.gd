@@ -11,10 +11,10 @@ signal hit_by_hitbox
 var last_grounded_collision_shape: CollisionShape2D
 var disabled: bool:
 	set(value):
-		crouching_collision_shape.set_deferred("disabled", value)
-		standing_collision_shape.set_deferred("disabled", value)
-		airborne_collision_shape.set_deferred("disabled", value)
+		last_grounded_collision_shape.set_deferred("disabled", value)
+			
 		disabled = value
+		
 
 func _ready() -> void:
 	last_grounded_collision_shape = standing_collision_shape
@@ -45,9 +45,9 @@ func toggle_stance():
 
 func toggle_airborne():
 	if airborne_collision_shape.disabled == true:
-		airborne_collision_shape.disabled = false
-		last_grounded_collision_shape.disabled = true
+		airborne_collision_shape.set_deferred("disabled", false)
+		last_grounded_collision_shape.set_deferred("disabled", true)
 		
 	else:
-		airborne_collision_shape.disabled = true
-		last_grounded_collision_shape.disabled = false
+		airborne_collision_shape.set_deferred("disabled", true)
+		last_grounded_collision_shape.set_deferred("disabled", false)

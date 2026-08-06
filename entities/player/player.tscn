@@ -536,6 +536,7 @@ _character_body = NodePath("..")
 
 [node name="HealthComponent" type="Node" parent="." unique_id=1233727716]
 script = ExtResource("2_fkugw")
+max_health = 99
 metadata/_custom_type_script = "uid://sphex7yy6a2e"
 
 [node name="AnimationComponent" parent="." unique_id=1019330946 node_paths=PackedStringArray("animation_torso", "animation_legs", "animation_tree") instance=ExtResource("3_7thud")]
@@ -589,12 +590,14 @@ position = Vector2(0, -23.5)
 shape = SubResource("RectangleShape2D_oark8")
 
 [node name="StandingCollisionShape" type="CollisionShape2D" parent="." unique_id=554777545]
+visible = false
 z_index = 3
 position = Vector2(0, -25)
 scale = Vector2(1.12, 1.1277103)
 shape = SubResource("CapsuleShape2D_oark8")
 
 [node name="CrouchingCollisionShape" type="CollisionShape2D" parent="." unique_id=435291202]
+visible = false
 z_index = 1
 z_as_relative = false
 position = Vector2(0, -16)
@@ -604,7 +607,6 @@ shape = SubResource("CapsuleShape2D_b6dgu")
 [node name="BulletComponent" parent="." unique_id=815253983 instance=ExtResource("8_afbqv")]
 
 [node name="HurtboxComponent" parent="." unique_id=1378213332 node_paths=PackedStringArray("health_component") instance=ExtResource("9_gx6sm")]
-visible = false
 health_component = NodePath("../HealthComponent")
 
 [node name="RiderComponent" parent="." unique_id=145831594 instance=ExtResource("3_sglur")]

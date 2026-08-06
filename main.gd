@@ -3,7 +3,7 @@ extends Node
 const PLAYER_SCENE: PackedScene = preload("uid://c2rgnnuoe4mpu")
 const ENEMY_SCENE: PackedScene = preload("uid://bftk50lxpoojr")
 const DOOR_HALL_SCENE: PackedScene = preload("uid://dmn4ui4jcf713")
-const MAX_ENEMY_COUNT: int = 10
+const MAX_ENEMY_COUNT: int = 2
 var level_one = preload("uid://cflxxyn4pet7d")
 @onready var retry_timer: Timer = $RetryTimer
 @onready var enemy_spawn_timer: Timer = $EnemySpawnTimer
@@ -42,7 +42,6 @@ func spawn_enemy():
 			var enemy_scene: Enemy = ENEMY_SCENE.instantiate()
 			add_child(enemy_scene)
 			enemy_scene.global_position = enemy_marker.global_position
-			enemy_scene.set_floor(enemy_marker.starting_floor)
 
 
 func spawn_enemy_from_door():
@@ -82,11 +81,10 @@ func got_document():
 
 
 func _player_changed_floor():
+	valid_spawn_door.clear()
 	for door in doors:
 		if door.can_spawn_enemy():
 			valid_spawn_door.append(door)
-		else:
-			valid_spawn_door.erase(door)
 			
 func _enemy_spawned():
 	enemy_count = enemy_count + 1

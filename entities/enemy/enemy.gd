@@ -67,13 +67,14 @@ func _ready():
 	animation_component.interaction_complete.connect(_interaction_complete)
 	interactor_component.area_entered.connect(on_area_entered)
 	interactor_component.interaction_valid.connect(_valid_interaction)
-	floor_detector_component.set_current_floor(starting_floor)
+	floor_detector_component.changed_floor.connect(_changed_floor)
 	crouching_collision_shape.disabled = true
 	health_component.died.connect(_on_died)
 	state_chart.send_event("docile")
 	direction = 1
 	move_to.global_position = Vector2(0,0)
 	reaction_timer.paused = true
+	player_vision_ray.enabled = false
 	
 	
 
@@ -232,6 +233,7 @@ func _on_aggro_state_entered() -> void:
 	reaction_timer.start(randf_range(0.0, 0.5))
 	movement_component.disabled = false
 	cool_down_timer.start()
+	elevator_floor_detector.enabled = false
 	#try_stand_fire()
 	
 func _on_aggro_state_processing(_delta: float) -> void:
@@ -268,6 +270,7 @@ func _on_reaction_timer_timeout() -> void:
 func _on_aggro_state_exited() -> void:
 	state_chart.send_event("stand")
 	reaction_timer.paused = true
+	elevator_floor_detector.enabled = true
 
 #====================================== SEEKING STATE ==============================================================
 
@@ -318,8 +321,6 @@ func _on_get_off_elevator_state_physics_processing(_delta: float) -> void:
 		state_chart.send_event("docile")
 
 #====================================== INTERACT STATE =================================================================
-func _on_interact_state_entered() -> void:
-	movement_component.disabled = true
 	
 func _interaction_complete():
 	state_chart.send_event("to_alive_from_interact")
@@ -387,8 +388,6 @@ func _on_cool_down_timer_timeout() -> void:
 func get_floor() -> int:
 	return floor_detector_component.get_floor()
 
-func set_floor(new_floor: int):
-	floor_detector_component.set_starting_floor(new_floor)
 	
 func start_animation(to_play: String):
 	animation_component.start(to_play)
@@ -409,3 +408,9 @@ func on_area_entered(interactive: InteractiveComponent):
 		
 func die():
 	state_chart.send_event("dead")
+
+func _changed_floor():
+	if abs(_player_floor_relation()) <= 1:
+		player_vision_ray.enabled = false
+	else:
+		player_vision_ray.enabled = true

@@ -550,7 +550,6 @@ collision_mask = 81
 script = ExtResource("1_ogeq8")
 
 [node name="FloorDetectorComponent" parent="." unique_id=1055282861 instance=ExtResource("19_5s4bh")]
-visible = false
 position = Vector2(0, 4)
 collision_priority = 0.5
 priority = 3
@@ -845,6 +844,7 @@ delay_in_seconds = "0.0"
 script = ExtResource("12_xshm4")
 
 [node name="StateChartDebugger" parent="." unique_id=839851318 instance=ExtResource("14_v7t4h")]
+visible = false
 offset_left = -51.0
 offset_top = -156.0
 offset_right = 172.0
@@ -882,6 +882,8 @@ one_shot = true
 [node name="CoolDownTimer" type="Timer" parent="." unique_id=1961956213]
 wait_time = 15.0
 one_shot = true
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=1395079868]
 
 [connection signal="body_entered" from="PlayerBufferZone" to="." method="_on_player_buffer_zone_body_entered"]
 [connection signal="body_exited" from="PlayerBufferZone" to="." method="_on_player_buffer_zone_body_exited"]
