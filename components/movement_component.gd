@@ -72,5 +72,5 @@ func generate_velocity(delta: float, x_input: float):
 	_character_body.velocity = Vector2(0, velocity.y)
 	
 func jump():
-	if _character_body.is_on_floor():
+	if _character_body.is_on_floor() and disabled == false:
 		_jump = true
