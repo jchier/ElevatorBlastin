@@ -904,6 +904,7 @@ one_shot = true
 [connection signal="state_input" from="StateChart/Root/Alive/Locomotion/Airborne" to="." method="_on_airborne_state_input"]
 [connection signal="taken" from="StateChart/Root/Alive/Locomotion/Airborne/ToGrounded" to="." method="_on_to_grounded_taken"]
 [connection signal="state_entered" from="StateChart/Root/Dead" to="." method="_on_dead_state_entered"]
+[connection signal="state_processing" from="StateChart/Root/Dead" to="." method="_on_dead_state_processing"]
 [connection signal="timeout" from="PatrolTimer" to="." method="_on_patrol_timer_timeout"]
 [connection signal="timeout" from="DespawnTimer" to="." method="_on_despawn_timer_timeout"]
 [connection signal="timeout" from="ReactionTimer" to="." method="_on_reaction_timer_timeout"]
