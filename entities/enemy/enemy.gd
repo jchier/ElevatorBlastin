@@ -301,9 +301,9 @@ func _on_in_elevator_state_entered() -> void:
 	make_elevator_choice()
 	
 func make_elevator_choice():
-	if _player_floor_relation() > 0:
+	if _player_floor_relation() > 0 and chosen_elevator.can_go_up():
 		chosen_elevator.go_up()
-	elif _player_floor_relation() < 0:
+	elif _player_floor_relation() < 0 and chosen_elevator.can_go_down():
 		chosen_elevator.go_down()
 	else:
 		state_chart.send_event("get_off")

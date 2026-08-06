@@ -42,7 +42,15 @@ func _physics_process(_delta: float) -> void:
 		if !is_occupied:
 			_flip_direction()
 		
-
+func can_go_up() -> bool:
+	if !is_on_ceiling():
+		return true
+	return false
+	
+func can_go_down() -> bool:
+	if !is_on_floor():
+		return true
+	return false
 	
 
 func go_up():

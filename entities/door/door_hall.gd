@@ -2,7 +2,6 @@ class_name DoorHall
 extends Node2D
 
 signal document_get
-signal spawned_enemy
 const ENEMY_SCENE: PackedScene = preload("uid://bftk50lxpoojr")
 
 @onready var interactive_component: InteractiveComponent = $InteractiveComponent
