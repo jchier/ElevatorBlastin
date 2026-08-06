@@ -3,6 +3,7 @@ extends CharacterBody2D
 
 signal stopped
 
+
 @onready var occupant_area: Occupant_Component = $Occupant_Area
 @onready var wait_timer: Timer = $WaitTimer
 @onready var floor_area: Area2D = $Floor_Area

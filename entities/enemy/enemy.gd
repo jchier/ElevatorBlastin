@@ -96,8 +96,8 @@ func _on_alive_state_processing(delta: float) -> void:
 	if _current_occupancy:
 		state_chart.send_event("in_elevator")
 	
-	if is_on_ceiling() and is_on_floor():
-		state_chart.send_event("dead")	
+	#if is_on_ceiling() and is_on_floor():
+	#	state_chart.send_event("dead")	
 
 func try_duck_fire():
 	if !fire_rate_timer.is_stopped() and can_shoot:
@@ -306,8 +306,12 @@ func make_elevator_choice():
 	elif _player_floor_relation() < 0:
 		chosen_elevator.go_down()
 	else:
-		state_chart.send_event("docile")
+		state_chart.send_event("get_off")
 		
+func _on_in_elevator_state_physics_processing(delta: float) -> void:
+	if chosen_elevator.is_on_floor() or chosen_elevator.is_on_ceiling():
+		state_chart.send_event("get_off")
+
 
 func _on_in_elevator_state_exited() -> void:
 	chosen_elevator.stopped.disconnect(make_elevator_choice)
