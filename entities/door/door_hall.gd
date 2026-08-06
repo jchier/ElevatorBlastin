@@ -87,6 +87,7 @@ func can_spawn_enemy() -> bool:
 	var value = GameState.player.get_floor() - get_floor()
 	#if the player is on floor 5, 5 and 4 are valid
 	#5-5 = 0, 5-4 = 1
+	#if value == 0:
 	if value == 1 or value == 0:
 		return true
 	return false

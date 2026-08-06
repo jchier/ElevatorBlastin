@@ -76,8 +76,6 @@ func _ready():
 	reaction_timer.paused = true
 	
 	
-func _physics_process(_delta: float) -> void:		
-	pass
 
 
 func _on_alive_state_processing(delta: float) -> void:
@@ -251,24 +249,18 @@ func _on_reaction_timer_timeout() -> void:
 	reaction_timer.start(randf_range(0.5, 1.0))
 	if randi_range(0, 4) > 1:
 		if last_stance != "stand":
-			#print("stand")
 			state_chart.send_event("stand")
 			await animation_component.stance_changed
-			#print("stance changed to stand")
-			#movement_component.disabled = false
 			last_stance = "stand"
-#		callable_shoot = try_stand_fire
-		print("callable shoot = stand fire")
+
+		#print("callable shoot = stand fire")
 	else:
 		if last_stance != "duck":
-			#movement_component.disabled = true
-			#print("duck")
 			state_chart.send_event("duck")
 			await animation_component.stance_changed
-			#print("stance changed to duck")
 			last_stance = "duck"
 #		callable_shoot = try_duck_fire
-		print("callable shoot = duck fire")
+		#print("callable shoot = duck fire")
 	if player_vision_ray.is_colliding():
 		callable_shoot.call()	
 	

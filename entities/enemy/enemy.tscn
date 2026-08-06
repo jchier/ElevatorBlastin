@@ -590,12 +590,12 @@ parameters/StateMachineTorso/move/blend_position = 0.0
 parameters/StateMachineLegs/move/blend_position = 0.0
 
 [node name="ElevatorVisionRay" type="RayCast2D" parent="." unique_id=428937188]
-position = Vector2(0, -26)
+position = Vector2(11, -26)
 target_position = Vector2(296, 0)
 collision_mask = 65553
 
 [node name="PlayerVisionRay" type="RayCast2D" parent="." unique_id=818286598]
-position = Vector2(0, -26)
+position = Vector2(11, -26)
 target_position = Vector2(434, 0)
 collision_mask = 5
 

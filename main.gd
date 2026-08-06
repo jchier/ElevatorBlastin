@@ -3,15 +3,16 @@ extends Node
 const PLAYER_SCENE: PackedScene = preload("uid://c2rgnnuoe4mpu")
 const ENEMY_SCENE: PackedScene = preload("uid://bftk50lxpoojr")
 const DOOR_HALL_SCENE: PackedScene = preload("uid://dmn4ui4jcf713")
-const MAX_ENEMY_COUNT: int = 50
+const MAX_ENEMY_COUNT: int = 10
 var level_one = preload("uid://cflxxyn4pet7d")
 @onready var enemy_spawn_timer: Timer = $EnemySpawnTimer
 var level: Node
 var document_count: int = 0
 var doors: Array
 var valid_spawn_door: Array
+var selected_door: DoorHall
 var enemy_count: int
-
+var last_floor_spawned: int
 
 func _ready():
 	enemy_spawn_timer.timeout.connect(_on_enemy_spawn_timer_timeout)
@@ -44,11 +45,18 @@ func spawn_enemy():
 #			enemy_scene.global_position = enemy_marker.global_position
 #			enemy_scene.set_floor(enemy_marker.starting_floor)
 
-			
-	#randomly select a door from among the doors on screen, ask it to spawn enemy
-	var selected_door: DoorHall =\
-	valid_spawn_door.get(randi_range(0, valid_spawn_door.size() - 1))
+	if !selected_door:
+		selected_door = valid_spawn_door[0]
+		selected_door.spawn_enemy()
+		last_floor_spawned = selected_door.get_floor()
+		return
+		
+	while selected_door.get_floor() ==	last_floor_spawned:
+		#randomly select a door from among the doors on screen, ask it to spawn enemy
+		selected_door = valid_spawn_door.get(randi_range(0, valid_spawn_door.size() - 1))
+	
 	if enemy_count <= MAX_ENEMY_COUNT:
+		last_floor_spawned = selected_door.get_floor()
 		selected_door.spawn_enemy()
 			
 func spawn_door_hall():
