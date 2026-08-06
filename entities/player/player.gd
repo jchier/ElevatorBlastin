@@ -203,3 +203,6 @@ func _valid_interaction():
 
 func _changed_floor():
 	GameEvent.player_changed_floor.emit()
+	
+func die():
+	state_chart.send_event("dead")

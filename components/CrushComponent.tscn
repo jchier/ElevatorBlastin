@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://ddj26eine24hx"]
+
+[ext_resource type="Script" uid="uid://bw6yydr2q5fp4" path="res://components/crush_component.gd" id="1_no021"]
+
+[node name="CrushComponent" type="Area2D" unique_id=1617257575]
+collision_layer = 131072
+collision_mask = 12
+script = ExtResource("1_no021")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -69,7 +69,6 @@ func _ready():
 	interactor_component.area_entered.connect(on_area_entered)
 	interactor_component.interaction_valid.connect(_valid_interaction)
 	floor_detector_component.set_current_floor(starting_floor)
-	visible_on_screen_notifier_2d.screen_exited.connect(_screen_exiting)
 	crouching_collision_shape.disabled = true
 	health_component.died.connect(_on_died)
 	state_chart.send_event("docile")
@@ -412,5 +411,5 @@ func on_area_entered(interactive: InteractiveComponent):
 	if interactive.is_in_group("door_hall") and absi(_player_floor_relation()) >= 2:
 		interactor_component.try_interact(self)
 		
-func _screen_exiting():
-	pass
+func die():
+	state_chart.send_event("dead")

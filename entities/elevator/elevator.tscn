@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://dmyv7axs33q5h" path="res://entities/elevator/elevator.png" id="2_4sa0j"]
 [ext_resource type="PackedScene" uid="uid://byct6l41li67v" path="res://components/occupant_component.tscn" id="2_rtcbl"]
 [ext_resource type="PackedScene" uid="uid://du6fvxgccikwp" path="res://components/floor_detector_component.tscn" id="3_4sa0j"]
+[ext_resource type="PackedScene" uid="uid://ddj26eine24hx" path="res://components/CrushComponent.tscn" id="5_5dxo1"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_l53as"]
 atlas = ExtResource("2_4sa0j")
@@ -27,6 +28,9 @@ size = Vector2(55, 8)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ksmh2"]
 size = Vector2(55, 5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_huxcw"]
+size = Vector2(51, 1)
 
 [node name="Elevator" type="CharacterBody2D" unique_id=1398215485]
 collision_layer = 65536
@@ -90,6 +94,12 @@ sync_to_physics = false
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RoofAnimatableBody" unique_id=956839247]
 position = Vector2(-0.5, -52.5)
 shape = SubResource("RectangleShape2D_ksmh2")
+
+[node name="CrushComponent" parent="." unique_id=1617257575 instance=ExtResource("5_5dxo1")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CrushComponent" unique_id=137671809]
+position = Vector2(-2.5, 13.5)
+shape = SubResource("RectangleShape2D_huxcw")
 
 [connection signal="body_entered" from="Occupant_Area" to="." method="_on_occupant_area_body_entered"]
 [connection signal="body_exited" from="Occupant_Area" to="." method="_on_occupant_area_body_exited"]
