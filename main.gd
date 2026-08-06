@@ -3,7 +3,7 @@ extends Node
 const PLAYER_SCENE: PackedScene = preload("uid://c2rgnnuoe4mpu")
 const ENEMY_SCENE: PackedScene = preload("uid://bftk50lxpoojr")
 const DOOR_HALL_SCENE: PackedScene = preload("uid://dmn4ui4jcf713")
-const MAX_ENEMY_COUNT: int = 1
+const MAX_ENEMY_COUNT: int = 50
 var level_one = preload("uid://cflxxyn4pet7d")
 @onready var enemy_spawn_timer: Timer = $EnemySpawnTimer
 var level: Node
@@ -11,6 +11,8 @@ var document_count: int = 0
 var doors: Array
 var valid_spawn_door: Array
 var enemy_count: int
+
+
 func _ready():
 	enemy_spawn_timer.timeout.connect(_on_enemy_spawn_timer_timeout)
 	level = level_one.instantiate()

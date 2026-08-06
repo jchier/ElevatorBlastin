@@ -29,7 +29,6 @@ const ELEVATOR_BUFFER: int = 40
 @onready var cool_down_timer: Timer = $CoolDownTimer
 @onready var floor_detector_component: FloorDetectorComponent = $FloorDetectorComponent
 @onready var elevator_floor_detector: RayCast2D = $ElevatorFloorDetector
-@onready var visible_on_screen_notifier_2d: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
 
 var chosen_elevator: Elevator
 @export var starting_floor: int
@@ -232,7 +231,7 @@ func _on_patrol_timer_timeout() -> void:
 
 func _on_aggro_state_entered() -> void:
 	reaction_timer.paused = false
-	reaction_timer.start(randf_range(0.5, 1.0))
+	reaction_timer.start(randf_range(0.0, 0.5))
 	movement_component.disabled = false
 	cool_down_timer.start()
 
@@ -259,7 +258,7 @@ func _on_reaction_timer_timeout() -> void:
 			#movement_component.disabled = false
 			last_stance = "stand"
 #		callable_shoot = try_stand_fire
-#		print("callable shoot = stand fire")
+		print("callable shoot = stand fire")
 	else:
 		if last_stance != "duck":
 			#movement_component.disabled = true
@@ -269,7 +268,7 @@ func _on_reaction_timer_timeout() -> void:
 			#print("stance changed to duck")
 			last_stance = "duck"
 #		callable_shoot = try_duck_fire
-#		print("callable shoot = duck fire")
+		print("callable shoot = duck fire")
 	if player_vision_ray.is_colliding():
 		callable_shoot.call()	
 	
@@ -308,7 +307,7 @@ func make_elevator_choice():
 	else:
 		state_chart.send_event("get_off")
 		
-func _on_in_elevator_state_physics_processing(delta: float) -> void:
+func _on_in_elevator_state_physics_processing(_delta: float) -> void:
 	if chosen_elevator.is_on_floor() or chosen_elevator.is_on_ceiling():
 		state_chart.send_event("get_off")
 

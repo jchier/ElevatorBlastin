@@ -550,6 +550,7 @@ collision_mask = 81
 script = ExtResource("1_ogeq8")
 
 [node name="FloorDetectorComponent" parent="." unique_id=1055282861 instance=ExtResource("19_5s4bh")]
+visible = false
 position = Vector2(0, 4)
 collision_priority = 0.5
 priority = 3
@@ -595,11 +596,10 @@ collision_mask = 65553
 
 [node name="PlayerVisionRay" type="RayCast2D" parent="." unique_id=818286598]
 position = Vector2(0, -26)
-target_position = Vector2(296, 0)
+target_position = Vector2(434, 0)
 collision_mask = 5
 
 [node name="EdgeDetection" type="RayCast2D" parent="." unique_id=1498018219]
-visible = false
 position = Vector2(1, -19)
 target_position = Vector2(23, 24)
 collision_mask = 65
@@ -636,8 +636,10 @@ visible = false
 health_component = NodePath("../HealthComponent")
 
 [node name="InteractorComponent" parent="." unique_id=18262948 instance=ExtResource("12_vr86x")]
+visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractorComponent" unique_id=1909781633]
+visible = false
 position = Vector2(0, -23.5)
 shape = SubResource("RectangleShape2D_fktuf")
 
@@ -658,6 +660,7 @@ shape = SubResource("CapsuleShape2D_b6dgu")
 [node name="BulletComponent" parent="." unique_id=815253983 instance=ExtResource("8_jfjhj")]
 
 [node name="PlayerBufferZone" type="Area2D" parent="." unique_id=288663337]
+visible = false
 collision_layer = 8
 collision_mask = 4
 
@@ -847,6 +850,7 @@ offset_top = -156.0
 offset_right = 172.0
 offset_bottom = 62.0
 scale = Vector2(0.4800009, 0.45948353)
+enabled = false
 initial_node_to_watch = NodePath("../StateChart")
 
 [node name="MoveTo" type="Marker2D" parent="." unique_id=715631499]
@@ -865,6 +869,7 @@ wait_time = 5.0
 one_shot = true
 
 [node name="ReactionTimer" type="Timer" parent="." unique_id=97982871]
+wait_time = 0.75
 one_shot = true
 
 [node name="StanceTimer" type="Timer" parent="." unique_id=238678177]

@@ -177,6 +177,8 @@ func _on_died():
 func _on_dead_state_entered() -> void:
 	animation_component.start("dead")
 	movement_component.disabled = true
+	hurtbox_component.disabled = true
+	#despawn_timer.start()
 	died.emit()
 	
 func state_chart_event(event: String):
