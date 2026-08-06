@@ -19,7 +19,7 @@ func _ready():
 	level = level_one.instantiate()
 	add_child(level)
 	spawn_player()
-#	spawn_enemy()
+	spawn_enemy()
 	spawn_door_hall()
 	GameEvent.player_changed_floor.connect(_player_changed_floor)
 	GameEvent.enemy_spawned.connect(_enemy_spawned)
@@ -35,15 +35,16 @@ func spawn_player():
 
 			GameEvent.player_spawned.emit(player_scene)
 			
-
-
 func spawn_enemy():
-#	for enemy_marker in level.get_children():
-#		if enemy_marker is EnemyMarker:
-#			var enemy_scene: Enemy = ENEMY_SCENE.instantiate()
-#			add_child(enemy_scene)
-#			enemy_scene.global_position = enemy_marker.global_position
-#			enemy_scene.set_floor(enemy_marker.starting_floor)
+	for enemy_marker in level.get_children():
+		if enemy_marker is EnemyMarker:
+			var enemy_scene: Enemy = ENEMY_SCENE.instantiate()
+			add_child(enemy_scene)
+			enemy_scene.global_position = enemy_marker.global_position
+			enemy_scene.set_floor(enemy_marker.starting_floor)
+
+
+func spawn_enemy_from_door():
 
 	if !selected_door:
 		selected_door = valid_spawn_door[0]
@@ -93,5 +94,5 @@ func _enemy_despawned():
 	enemy_count = enemy_count - 1
 	
 func _on_enemy_spawn_timer_timeout():
-	spawn_enemy()
+	spawn_enemy_from_door()
 	enemy_spawn_timer.start()

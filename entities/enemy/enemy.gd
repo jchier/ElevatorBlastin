@@ -232,7 +232,8 @@ func _on_aggro_state_entered() -> void:
 	reaction_timer.start(randf_range(0.0, 0.5))
 	movement_component.disabled = false
 	cool_down_timer.start()
-
+	#try_stand_fire()
+	
 func _on_aggro_state_processing(_delta: float) -> void:
 	edge_detection.force_raycast_update()
 	if !player_close:
@@ -355,6 +356,8 @@ func despawn():
 
 #====================================== ============== =================================================================
 func _player_floor_relation() -> int:
+	#if player is on floor 5, and enemy is on floor 7,
+	#return -2
 	return player.get_floor() - get_floor()
 
 
@@ -399,7 +402,7 @@ func on_area_entered(interactive: InteractiveComponent):
 		if _player_floor_relation() > 0:
 			interactor_component.try_interact(self)
 			
-	if interactive.is_in_group("door_hall") and absi(_player_floor_relation()) >= 2:
+	if interactive.is_in_group("door_hall") and _player_floor_relation() <= -2:
 		interactor_component.try_interact(self)
 		
 func die():

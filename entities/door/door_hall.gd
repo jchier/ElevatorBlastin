@@ -78,6 +78,7 @@ func spawn_enemy():
 	animation_player.play("open")
 	await animation_player.animation_finished
 	enemy_scene.disabled = false
+	enemy_scene.set_orientation(signf(global_position.direction_to(GameState.player.global_position).x))
 	GameEvent.enemy_spawned.emit()
 	
 func get_floor() -> int:
@@ -85,9 +86,6 @@ func get_floor() -> int:
 
 func can_spawn_enemy() -> bool:
 	var value = GameState.player.get_floor() - get_floor()
-	#if the player is on floor 5, 5 and 4 are valid
-	#5-5 = 0, 5-4 = 1
-	#if value == 0:
 	if value == 1 or value == 0:
 		return true
 	return false

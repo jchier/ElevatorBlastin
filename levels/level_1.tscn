@@ -124,7 +124,102 @@ position = Vector2(-149, 215)
 script = ExtResource("9_3sk1a")
 
 [node name="EnemyMarker" type="Marker2D" parent="." unique_id=1151110767]
-position = Vector2(247, 338)
+position = Vector2(247, 348)
+script = ExtResource("8_l53as")
+starting_floor = 3
+
+[node name="EnemyMarker2" type="Marker2D" parent="." unique_id=1306971819]
+position = Vector2(-113, 479)
+script = ExtResource("8_l53as")
+starting_floor = 3
+
+[node name="EnemyMarker3" type="Marker2D" parent="." unique_id=1155921260]
+position = Vector2(179, 595)
+script = ExtResource("8_l53as")
+starting_floor = 3
+
+[node name="EnemyMarker4" type="Marker2D" parent="." unique_id=1658930816]
+position = Vector2(45, 593)
+script = ExtResource("8_l53as")
+starting_floor = 3
+
+[node name="EnemyMarker5" type="Marker2D" parent="." unique_id=1510803185]
+position = Vector2(-144, 711)
+script = ExtResource("8_l53as")
+starting_floor = 3
+
+[node name="EnemyMarker6" type="Marker2D" parent="." unique_id=453008681]
+position = Vector2(65, 707)
+script = ExtResource("8_l53as")
+starting_floor = 3
+
+[node name="EnemyMarker7" type="Marker2D" parent="." unique_id=877471678]
+position = Vector2(-39, 830)
+script = ExtResource("8_l53as")
+starting_floor = 3
+
+[node name="EnemyMarker8" type="Marker2D" parent="." unique_id=580392842]
+position = Vector2(201, 824)
+script = ExtResource("8_l53as")
+starting_floor = 3
+
+[node name="EnemyMarker9" type="Marker2D" parent="." unique_id=1193597766]
+position = Vector2(-86, 953)
+script = ExtResource("8_l53as")
+starting_floor = 3
+
+[node name="EnemyMarker10" type="Marker2D" parent="." unique_id=1625029617]
+position = Vector2(109, 944)
+script = ExtResource("8_l53as")
+starting_floor = 3
+
+[node name="EnemyMarker11" type="Marker2D" parent="." unique_id=1937875876]
+position = Vector2(259, 943)
+script = ExtResource("8_l53as")
+starting_floor = 3
+
+[node name="EnemyMarker12" type="Marker2D" parent="." unique_id=475265676]
+position = Vector2(-112, 1068)
+script = ExtResource("8_l53as")
+starting_floor = 3
+
+[node name="EnemyMarker13" type="Marker2D" parent="." unique_id=1647814009]
+position = Vector2(33, 1064)
+script = ExtResource("8_l53as")
+starting_floor = 3
+
+[node name="EnemyMarker14" type="Marker2D" parent="." unique_id=781592441]
+position = Vector2(222, 1063)
+script = ExtResource("8_l53as")
+starting_floor = 3
+
+[node name="EnemyMarker15" type="Marker2D" parent="." unique_id=670323741]
+position = Vector2(21, 1181)
+script = ExtResource("8_l53as")
+starting_floor = 3
+
+[node name="EnemyMarker16" type="Marker2D" parent="." unique_id=1296696460]
+position = Vector2(-95, 1287)
+script = ExtResource("8_l53as")
+starting_floor = 3
+
+[node name="EnemyMarker17" type="Marker2D" parent="." unique_id=263884875]
+position = Vector2(214, 1293)
+script = ExtResource("8_l53as")
+starting_floor = 3
+
+[node name="EnemyMarker18" type="Marker2D" parent="." unique_id=2025122259]
+position = Vector2(354, 1177)
+script = ExtResource("8_l53as")
+starting_floor = 3
+
+[node name="EnemyMarker19" type="Marker2D" parent="." unique_id=1486935687]
+position = Vector2(-240, 1177)
+script = ExtResource("8_l53as")
+starting_floor = 3
+
+[node name="EnemyMarker20" type="Marker2D" parent="." unique_id=390754888]
+position = Vector2(-227, 1293)
 script = ExtResource("8_l53as")
 starting_floor = 3
 

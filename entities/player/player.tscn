@@ -536,7 +536,6 @@ _character_body = NodePath("..")
 
 [node name="HealthComponent" type="Node" parent="." unique_id=1233727716]
 script = ExtResource("2_fkugw")
-max_health = 99
 metadata/_custom_type_script = "uid://sphex7yy6a2e"
 
 [node name="AnimationComponent" parent="." unique_id=1019330946 node_paths=PackedStringArray("animation_torso", "animation_legs", "animation_tree") instance=ExtResource("3_7thud")]
