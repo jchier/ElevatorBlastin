@@ -2,6 +2,7 @@ class_name DoorHall
 extends Node2D
 
 signal document_get
+signal spawned_enemy
 const ENEMY_SCENE: PackedScene = preload("uid://bftk50lxpoojr")
 
 @onready var interactive_component: InteractiveComponent = $InteractiveComponent
@@ -78,6 +79,7 @@ func spawn_enemy():
 	animation_player.play("open")
 	await animation_player.animation_finished
 	enemy_scene.disabled = false
+	GameEvent.enemy_spawned.emit()
 	
 func get_floor() -> int:
 	return floor_detector_component.get_floor()

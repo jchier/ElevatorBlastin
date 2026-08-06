@@ -18,7 +18,7 @@ var direction: int:
 	set(value):
 		direction = value
 var elevator_speed: float = 30.0
-var is_occupied
+var is_occupied: bool
 
 
 func _ready():

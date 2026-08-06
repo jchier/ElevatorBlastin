@@ -359,7 +359,7 @@ func _on_despawn_timer_timeout() -> void:
 	despawn()
 
 func despawn():
-	enemy_despawn.emit()
+	GameEvent.enemy_despawned.emit()
 	queue_free()
 
 #====================================== ============== =================================================================

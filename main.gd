@@ -3,13 +3,14 @@ extends Node
 const PLAYER_SCENE: PackedScene = preload("uid://c2rgnnuoe4mpu")
 const ENEMY_SCENE: PackedScene = preload("uid://bftk50lxpoojr")
 const DOOR_HALL_SCENE: PackedScene = preload("uid://dmn4ui4jcf713")
+const MAX_ENEMY_COUNT: int = 4
 var level_one = preload("uid://cflxxyn4pet7d")
 @onready var enemy_spawn_timer: Timer = $EnemySpawnTimer
 var level: Node
 var document_count: int = 0
 var doors: Array
 var valid_spawn_door: Array
-
+var enemy_count: int
 func _ready():
 	enemy_spawn_timer.timeout.connect(_on_enemy_spawn_timer_timeout)
 	level = level_one.instantiate()
@@ -18,6 +19,8 @@ func _ready():
 #	spawn_enemy()
 	spawn_door_hall()
 	GameEvent.player_changed_floor.connect(_player_changed_floor)
+	GameEvent.enemy_spawned.connect(_enemy_spawned)
+	GameEvent.enemy_despawned.connect(_enemy_despawned)
 	
 func spawn_player():
 	for player_marker in level.get_children():
@@ -43,7 +46,8 @@ func spawn_enemy():
 	#randomly select a door from among the doors on screen, ask it to spawn enemy
 	var selected_door: DoorHall =\
 	valid_spawn_door.get(randi_range(0, valid_spawn_door.size() - 1))
-	selected_door.spawn_enemy()
+	if enemy_count <= MAX_ENEMY_COUNT:
+		selected_door.spawn_enemy()
 			
 func spawn_door_hall():
 	for door_hall_marker in level.get_children():
@@ -72,6 +76,12 @@ func _player_changed_floor():
 		else:
 			valid_spawn_door.erase(door)
 			
+func _enemy_spawned():
+	enemy_count = enemy_count + 1
+
+func _enemy_despawned():
+	enemy_count = enemy_count - 1
+	
 func _on_enemy_spawn_timer_timeout():
 	spawn_enemy()
 	enemy_spawn_timer.start()
