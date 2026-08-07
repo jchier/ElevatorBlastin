@@ -13,7 +13,7 @@ const FALL_GRAVITY = 1124
 const JUMP_VELOCITY: float = -250.0
 const FRICTION: float = 10.0
 const ACCELERATION: float = 8.0
-
+const MAX_FALL_SPEED: float = 600.0
 var forward: bool = true
 var was_on_floor: bool = false
 var was_idle:bool = false
@@ -22,7 +22,7 @@ var velocity: Vector2 = Vector2.ZERO
 var disabled: bool:
 	set(value):
 		disabled = value
-		
+var die_on_land: bool = false		
 var orientation: float
 var last_orientation = 1
 var _jump: bool = false
@@ -38,11 +38,16 @@ func toggle_movement():
 
 func generate_velocity(delta: float, x_input: float):
 	
+	if velocity.y > MAX_FALL_SPEED and !disabled:
+		die_on_land = true
+	
 	if _character_body.is_on_floor():
 		velocity.y = 0
 		velocity.y += FALL_GRAVITY * delta
 		velocity.y = clamp(velocity.y, 0, 300)
 		if not was_on_floor:
+			if die_on_land:
+				state_chart_event.emit("dead")
 			was_on_floor = true
 			state_chart_event.emit("grounded")
 	else:
@@ -70,7 +75,7 @@ func generate_velocity(delta: float, x_input: float):
 		_character_body.velocity = velocity
 		return
 	_character_body.velocity = Vector2(0, velocity.y)
-	
+
 func jump():
 	if _character_body.is_on_floor() and disabled == false:
 		_jump = true

@@ -40,7 +40,7 @@ func move_body(starting_point: Vector2, destination: Vector2, body: CharacterBod
 	var tween := create_tween()
 	tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	tween.tween_property(body, "global_position", starting_point, 0.2)
-	tween.tween_property(body, "global_position", destination, 1.0)
+	tween.tween_property(body, "global_position", destination, 0.9)
 	await tween.finished
 	body.z_index = old_z
 	_occupied = false
