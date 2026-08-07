@@ -14,7 +14,6 @@ const COLLISION_LAYER_VALUE: int = 19
 @export var player_door: bool = false
 var on_screen: bool = false
 var player_has_entered: bool = false
-var enemy_scene
 var bullet_proof_disabled: bool:
 	set(value):
 		bulletproof.set_collision_layer_value(COLLISION_LAYER_VALUE, value)
