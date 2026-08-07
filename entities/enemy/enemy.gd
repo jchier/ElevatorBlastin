@@ -351,10 +351,11 @@ func _on_dead_state_entered() -> void:
 	navigation_component.stop()
 	hurtbox_component.disabled = true
 	despawn_timer.start()
-
+	
 func _on_dead_state_processing(delta: float) -> void:
 	movement_component.generate_velocity(delta, 0)
-	move_and_slide()
+	if !crush_component.was_crushed:
+		move_and_slide()
 
 func _on_despawn_timer_timeout() -> void:
 	despawn()

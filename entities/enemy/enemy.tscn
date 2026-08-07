@@ -864,10 +864,6 @@ script = ExtResource("12_xshm4")
 
 [node name="MoveTo" type="Marker2D" parent="." unique_id=715631499]
 
-[node name="Timer" type="Timer" parent="." unique_id=639281135]
-wait_time = 3.0
-one_shot = true
-
 [node name="PatrolTimer" type="Timer" parent="." unique_id=1771987258]
 wait_time = 2.0
 one_shot = true
