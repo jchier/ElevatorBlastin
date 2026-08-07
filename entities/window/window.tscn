@@ -19,6 +19,7 @@ hframes = 2
 vframes = 2
 
 [node name="Area2D" type="Area2D" parent="." unique_id=481254626]
+visible = false
 collision_layer = 524289
 collision_mask = 512
 
@@ -27,6 +28,7 @@ position = Vector2(0, 1.5)
 shape = SubResource("RectangleShape2D_oark8")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1184586828]
+visible = false
 collision_mask = 12
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=762336650]

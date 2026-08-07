@@ -58,7 +58,7 @@ func _physics_process(delta: float) -> void:
 	movement_component.generate_velocity(delta, x_input)
 
 	move_and_slide()
-	print(velocity.y)
+	
 	if _current_occupancy:	
 		if Input.is_action_pressed("up"):
 			_current_occupancy.set_direction(Global.UP)

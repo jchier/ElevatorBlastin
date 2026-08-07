@@ -1,0 +1,54 @@
+[gd_scene format=3 uid="uid://hdtr8ria6v7g"]
+
+[ext_resource type="Script" uid="uid://e5tk4ha7fx3o" path="res://entities/stairs/stairs.gd" id="1_0oj7g"]
+[ext_resource type="Texture2D" uid="uid://bkll08a0oxbwr" path="res://entities/stairs/stairs.png" id="2_7rhag"]
+[ext_resource type="Script" uid="uid://c3aa08qflyvax" path="res://components/interactive_component.gd" id="3_trdq3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oark8"]
+size = Vector2(26, 26)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jr1kj"]
+size = Vector2(26, 26)
+
+[node name="StairsM" type="Node2D" unique_id=652959830]
+z_index = -1
+z_as_relative = false
+script = ExtResource("1_0oj7g")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=3946887]
+z_index = -2
+z_as_relative = false
+texture_filter = 1
+scale = Vector2(-1, 1)
+texture = ExtResource("2_7rhag")
+
+[node name="StairsTopMarker" type="Marker2D" parent="." unique_id=622073981]
+position = Vector2(47, -64)
+
+[node name="StairsBottomMarker" type="Marker2D" parent="." unique_id=731745155]
+position = Vector2(-47, 61)
+
+[node name="StairsTopArea" type="Area2D" parent="." unique_id=1662146973 groups=["stairs_top"]]
+position = Vector2(89, -1)
+collision_layer = 32768
+collision_mask = 16384
+script = ExtResource("3_trdq3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StairsTopArea" unique_id=1919324098]
+position = Vector2(-46, -63)
+shape = SubResource("RectangleShape2D_oark8")
+
+[node name="StairsBottomArea" type="Area2D" parent="." unique_id=1232210489 groups=["stairs_bottom"]]
+position = Vector2(-86, -1)
+collision_layer = 32768
+collision_mask = 16384
+script = ExtResource("3_trdq3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StairsBottomArea" unique_id=1745094581]
+position = Vector2(43, 63)
+shape = SubResource("RectangleShape2D_jr1kj")
+
+[connection signal="body_entered" from="StairsTopArea" to="." method="_on_stairs_top_area_body_entered"]
+[connection signal="body_exited" from="StairsTopArea" to="." method="_on_stairs_top_area_body_exited"]
+[connection signal="body_entered" from="StairsBottomArea" to="." method="_on_stairs_bottom_area_body_entered"]
+[connection signal="body_exited" from="StairsBottomArea" to="." method="_on_stairs_bottom_area_body_exited"]
