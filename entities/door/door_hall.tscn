@@ -54,6 +54,23 @@ tracks/0/keys = {
 "update": 1,
 "values": [0, 1, 2, 3, 4, 4, 3, 2, 1, 0]
 }
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.33333334, 0.9166667),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"toggle_bullet_proof"
+}, {
+"args": [],
+"method": &"toggle_bullet_proof"
+}]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_r7jra"]
 _data = {
@@ -64,6 +81,9 @@ _data = {
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oark8"]
 size = Vector2(29, 21)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jr1kj"]
+size = Vector2(7, 60)
 
 [node name="DoorHall" type="Node2D" unique_id=653102736]
 script = ExtResource("1_stfqn")
@@ -102,3 +122,11 @@ position = Vector2(0, -10)
 position = Vector2(0, 4)
 collision_priority = 0.5
 priority = 3
+
+[node name="Bulletproof" type="Area2D" parent="." unique_id=1705536833]
+collision_layer = 0
+collision_mask = 512
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bulletproof" unique_id=1259300690]
+position = Vector2(-11.5, -30)
+shape = SubResource("RectangleShape2D_jr1kj")

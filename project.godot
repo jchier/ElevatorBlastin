@@ -89,6 +89,7 @@ jump={
 2d_physics/layer_16="interactive"
 2d_physics/layer_17="elevator"
 2d_physics/layer_18="crusher"
+2d_physics/layer_19="bullet_proof"
 
 [physics]
 

@@ -3,16 +3,23 @@ extends Node2D
 
 signal document_get
 const ENEMY_SCENE: PackedScene = preload("uid://bftk50lxpoojr")
-
+const COLLISION_LAYER_VALUE: int = 19
 @onready var interactive_component: InteractiveComponent = $InteractiveComponent
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var body_marker: Marker2D = $BodyMarker
 @onready var sprite_2d: Sprite2D = $Sprite2D
 @onready var floor_detector_component: FloorDetectorComponent = $FloorDetectorComponent
+@onready var bulletproof: Area2D = $Bulletproof
 
 @export var player_door: bool = false
 var on_screen: bool = false
 var player_has_entered: bool = false
+var enemy_scene
+var bullet_proof_disabled: bool:
+	set(value):
+		bulletproof.set_collision_layer_value(COLLISION_LAYER_VALUE, value)
+	get():
+		return bulletproof.get_collision_layer_value(COLLISION_LAYER_VALUE)
 
 func set_player_door(is_player_door_: bool) -> DoorHall:
 	player_door = is_player_door_
@@ -20,6 +27,7 @@ func set_player_door(is_player_door_: bool) -> DoorHall:
 
 func _ready():	
 	interactive_component.act.connect(_act)
+	
 	if player_door:
 		sprite_2d.modulate = Color.CRIMSON
 		
@@ -89,3 +97,9 @@ func can_spawn_enemy() -> bool:
 	if value == 1 or value == 0:
 		return true
 	return false
+
+
+	
+
+func toggle_bullet_proof():
+	bullet_proof_disabled = !bullet_proof_disabled

@@ -16,6 +16,9 @@ var disabled: bool:
 		disabled = value
 		
 
+func toggle_disabled():
+	disabled = !disabled
+
 func _ready() -> void:
 	last_grounded_collision_shape = standing_collision_shape
 	crouching_collision_shape.disabled = true
