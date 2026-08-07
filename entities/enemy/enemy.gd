@@ -30,6 +30,7 @@ const ELEVATOR_BUFFER: int = 40
 @onready var floor_detector_component: FloorDetectorComponent = $FloorDetectorComponent
 @onready var elevator_floor_detector: RayCast2D = $ElevatorFloorDetector
 @onready var crush_component: Node2D = $CrushComponent
+@onready var floor_detector_collision_shape_2d: CollisionShape2D = $FloorDetectorComponent/CollisionShape2D
 
 var chosen_elevator: Elevator
 @export var starting_floor: int
@@ -41,6 +42,7 @@ var disabled: bool:
 		player_vision_ray.enabled = !value
 		elevator_vision_ray.enabled = !value
 		movement_component.disabled = value
+		floor_detector_collision_shape_2d.set_deferred("disabled", value)
 		
 var direction: int = 1
 var last_direction: int = 1
@@ -69,6 +71,7 @@ func _ready():
 	interactor_component.area_entered.connect(on_area_entered)
 	interactor_component.interaction_valid.connect(_valid_interaction)
 	floor_detector_component.changed_floor.connect(_changed_floor)
+	GameEvent.player_changed_floor.connect(_changed_floor)
 	crush_component.crushed.connect(die)
 	crouching_collision_shape.disabled = true
 	health_component.died.connect(_on_died)
@@ -329,7 +332,7 @@ func _interaction_complete():
 	
 func start_interaction_animation(to_play: String):
 	animation_component.start(to_play)
-	#await animation_component.interaction_complete
+	await animation_component.interaction_complete
 	#state_chart.send_event("to_alive_from_interact")	
 
 func finish_interaction():
@@ -419,7 +422,8 @@ func die():
 	state_chart.send_event("dead")
 
 func _changed_floor():
-	if abs(_player_floor_relation()) <= 1:
-		player_vision_ray.enabled = false
-	else:
+	var player_floor_relation = _player_floor_relation()	
+	if player_floor_relation >= -1 and player_floor_relation <= 1:
 		player_vision_ray.enabled = true
+	else:
+		player_vision_ray.enabled = false

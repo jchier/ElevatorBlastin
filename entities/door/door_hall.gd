@@ -77,10 +77,10 @@ func enemy_act(body: Enemy):
 	
 func spawn_enemy():
 	var enemy_scene: Enemy = ENEMY_SCENE.instantiate()
-	enemy_scene.global_position = global_position
-	#note: may need to get_parent().add_child
 	add_sibling(enemy_scene)
 	enemy_scene.disabled = true
+	enemy_scene.global_position = global_position
+	#note: may need to get_parent().add_child
 	enemy_scene.start_interaction_animation("exit")
 	animation_player.play("open")
 	await animation_player.animation_finished

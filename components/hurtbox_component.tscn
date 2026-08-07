@@ -3,15 +3,15 @@
 [ext_resource type="Script" uid="uid://bwtjw0jfeig8r" path="res://components/hurtbox_component.gd" id="1_prfln"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_prfln"]
-radius = 8.0
+radius = 4.464286
 height = 44.642857
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8jj4i"]
-radius = 8.035714
+radius = 4.464286
 height = 25.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_871ky"]
-radius = 8.035714
+radius = 4.464286
 height = 28.57143
 
 [node name="HurtboxComponent" type="Area2D" unique_id=1378213332]
