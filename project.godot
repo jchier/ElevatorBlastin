@@ -91,6 +91,8 @@ jump={
 2d_physics/layer_18="crusher"
 2d_physics/layer_19="bullet_proof"
 2d_physics/layer_20="window"
+2d_physics/layer_21="player_hurtbox"
+2d_physics/layer_22="enemy_hurtbox"
 
 [physics]
 

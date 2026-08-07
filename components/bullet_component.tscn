@@ -7,10 +7,10 @@ script = ExtResource("1_qqmil")
 
 [node name="BulletMarker2DStand" type="Marker2D" parent="." unique_id=1235233455]
 unique_name_in_owner = true
-position = Vector2(25, -41)
+position = Vector2(13, -41)
 rotation = 1.5707964
 
 [node name="BulletMarker2DCrouch" type="Marker2D" parent="." unique_id=145612635]
 unique_name_in_owner = true
-position = Vector2(25, -23)
+position = Vector2(13, -23)
 rotation = 1.5707964
