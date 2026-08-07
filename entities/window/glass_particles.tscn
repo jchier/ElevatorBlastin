@@ -1,0 +1,96 @@
+[gd_scene format=3 uid="uid://brgnjm0t1n0ag"]
+
+[ext_resource type="Texture2D" uid="uid://cd0edqjli4wp1" path="res://entities/window/shard_sprite.png" id="1_7m6ft"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_j5ip0"]
+particles_animation = true
+particles_anim_h_frames = 3
+particles_anim_v_frames = 3
+particles_anim_loop = false
+
+[sub_resource type="Curve" id="Curve_857ik"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.113490365, 0), 0.0, 0.0, 0, 0, Vector2(0.16059956, 0.99476445), 0.0, 0.0, 0, 0, Vector2(0.745182, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 5
+
+[sub_resource type="CurveTexture" id="CurveTexture_jr1kj"]
+curve = SubResource("Curve_857ik")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_oark8"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(0.96, 70, 1)
+angle_min = -720.0
+angle_max = 720.0
+direction = Vector3(0, -1, 0)
+spread = 70.0
+angular_velocity_min = -720.0
+angular_velocity_max = 719.99994
+gravity = Vector3(0, 98, 0)
+scale_curve = SubResource("CurveTexture_jr1kj")
+anim_offset_max = 1.0
+
+[sub_resource type="Animation" id="Animation_ywfgc"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("GPUParticles2D:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_6r65y"]
+resource_name = "default"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("GPUParticles2D:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1.1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7fqvb"]
+_data = {
+&"RESET": SubResource("Animation_ywfgc"),
+&"default": SubResource("Animation_6r65y")
+}
+
+[node name="GlassParticles" type="Node2D" unique_id=2067467608]
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=2054634139]
+texture_filter = 1
+material = SubResource("CanvasItemMaterial_j5ip0")
+emitting = false
+texture = ExtResource("1_7m6ft")
+one_shot = true
+explosiveness = 0.9
+interpolate = false
+process_material = SubResource("ParticleProcessMaterial_oark8")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1090550569]
+libraries/ = SubResource("AnimationLibrary_7fqvb")
+autoplay = &"default"

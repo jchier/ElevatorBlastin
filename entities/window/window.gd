@@ -2,7 +2,6 @@ extends Node2D
 
 const WINDOW_COLLISION_LAYER: int = 20
 const BREAK_FRAME: int = 3
-@onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var collision_shape_2d: CollisionShape2D = $Area2D/CollisionShape2D
 @onready var area_2d: Area2D = $Area2D
 @onready var sprite_2d: Sprite2D = $Sprite2D
