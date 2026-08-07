@@ -8,17 +8,10 @@ particles_anim_h_frames = 3
 particles_anim_v_frames = 3
 particles_anim_loop = false
 
-[sub_resource type="Curve" id="Curve_857ik"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.113490365, 0), 0.0, 0.0, 0, 0, Vector2(0.16059956, 0.99476445), 0.0, 0.0, 0, 0, Vector2(0.745182, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
-point_count = 5
-
-[sub_resource type="CurveTexture" id="CurveTexture_jr1kj"]
-curve = SubResource("Curve_857ik")
-
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_oark8"]
 particle_flag_disable_z = true
 emission_shape = 3
-emission_box_extents = Vector3(0.96, 70, 1)
+emission_box_extents = Vector3(2, 40, 1)
 angle_min = -720.0
 angle_max = 720.0
 direction = Vector3(0, -1, 0)
@@ -26,7 +19,6 @@ spread = 70.0
 angular_velocity_min = -720.0
 angular_velocity_max = 719.99994
 gravity = Vector3(0, 98, 0)
-scale_curve = SubResource("CurveTexture_jr1kj")
 anim_offset_max = 1.0
 
 [sub_resource type="Animation" id="Animation_ywfgc"]
@@ -85,9 +77,13 @@ _data = {
 texture_filter = 1
 material = SubResource("CanvasItemMaterial_j5ip0")
 emitting = false
+amount = 15
 texture = ExtResource("1_7m6ft")
+lifetime = 3.0
 one_shot = true
-explosiveness = 0.9
+speed_scale = 2.0
+explosiveness = 1.0
+randomness = 0.16
 interpolate = false
 process_material = SubResource("ParticleProcessMaterial_oark8")
 
