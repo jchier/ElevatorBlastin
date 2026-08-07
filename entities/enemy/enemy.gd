@@ -29,6 +29,7 @@ const ELEVATOR_BUFFER: int = 40
 @onready var cool_down_timer: Timer = $CoolDownTimer
 @onready var floor_detector_component: FloorDetectorComponent = $FloorDetectorComponent
 @onready var elevator_floor_detector: RayCast2D = $ElevatorFloorDetector
+@onready var crush_component: Node2D = $CrushComponent
 
 var chosen_elevator: Elevator
 @export var starting_floor: int
@@ -68,6 +69,7 @@ func _ready():
 	interactor_component.area_entered.connect(on_area_entered)
 	interactor_component.interaction_valid.connect(_valid_interaction)
 	floor_detector_component.changed_floor.connect(_changed_floor)
+	crush_component.crushed.connect(die)
 	crouching_collision_shape.disabled = true
 	health_component.died.connect(_on_died)
 	state_chart.send_event("docile")

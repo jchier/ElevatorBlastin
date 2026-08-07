@@ -17,6 +17,7 @@ extends CharacterBody2D
 @onready var floor_detector_component: FloorDetectorComponent = $FloorDetectorComponent
 @onready var sprite_2d_torso: Sprite2D = %Sprite2DTorso
 @onready var interactor_component: InteractorComponent = $InteractorComponent
+@onready var crush_component: Node2D = $CrushComponent
 
 signal died
 
@@ -45,6 +46,7 @@ func _ready():
 	interactor_component.interaction_valid.connect(_valid_interaction)
 	crouching_collision_shape.disabled = true
 	floor_detector_component.changed_floor.connect(_changed_floor)
+	crush_component.crushed.connect(die)
 
 	
 func _physics_process(delta: float) -> void:

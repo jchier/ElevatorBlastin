@@ -17,6 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://cmh5yetqv4k2r" path="res://components/hurtbox_component.tscn" id="9_gx6sm"]
 [ext_resource type="Script" uid="uid://cf1nsco3w0mf6" path="res://addons/godot_state_charts/transition.gd" id="9_j3ovn"]
 [ext_resource type="PackedScene" uid="uid://d3ybrc1g2dpl4" path="res://components/interactor_component.tscn" id="10_b2kln"]
+[ext_resource type="PackedScene" uid="uid://ddj26eine24hx" path="res://components/CrushComponent.tscn" id="11_we0b7"]
 [ext_resource type="PackedScene" uid="uid://bcwkugn6v3oy7" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="18_b2kln"]
 
 [sub_resource type="Animation" id="Animation_eyb6c"]
@@ -599,7 +600,6 @@ texture = ExtResource("6_j3ovn")
 offset = Vector2(0, -26)
 hframes = 5
 vframes = 19
-frame = 22
 
 [node name="Sprite2DLegs" type="Sprite2D" parent="Visuals" unique_id=1040317593]
 unique_name_in_owner = true
@@ -631,6 +631,8 @@ z_as_relative = false
 position = Vector2(0, -16)
 scale = Vector2(1.12, 1.12)
 shape = SubResource("CapsuleShape2D_b6dgu")
+
+[node name="CrushComponent" parent="." unique_id=1059272388 instance=ExtResource("11_we0b7")]
 
 [node name="BulletComponent" parent="." unique_id=815253983 instance=ExtResource("8_afbqv")]
 

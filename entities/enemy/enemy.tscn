@@ -18,6 +18,7 @@
 [ext_resource type="PackedScene" uid="uid://d3ybrc1g2dpl4" path="res://components/interactor_component.tscn" id="12_vr86x"]
 [ext_resource type="Script" uid="uid://cytafq8i1y8qm" path="res://addons/godot_state_charts/atomic_state.gd" id="12_xshm4"]
 [ext_resource type="Script" uid="uid://cf1nsco3w0mf6" path="res://addons/godot_state_charts/transition.gd" id="13_402ev"]
+[ext_resource type="PackedScene" uid="uid://ddj26eine24hx" path="res://components/CrushComponent.tscn" id="13_vr86x"]
 [ext_resource type="PackedScene" uid="uid://du6fvxgccikwp" path="res://components/floor_detector_component.tscn" id="19_5s4bh"]
 
 [sub_resource type="Animation" id="Animation_eyb6c"]
@@ -671,6 +672,8 @@ z_index = 3
 position = Vector2(0, -14)
 scale = Vector2(1.12, 1.12)
 shape = SubResource("CapsuleShape2D_b6dgu")
+
+[node name="CrushComponent" parent="." unique_id=1059272388 instance=ExtResource("13_vr86x")]
 
 [node name="BulletComponent" parent="." unique_id=815253983 instance=ExtResource("8_jfjhj")]
 

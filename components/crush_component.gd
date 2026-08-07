@@ -1,5 +1,8 @@
-extends Area2D
+extends Node2D
+@onready var ray_up: RayCast2D = $RayUp
+@onready var ray_down: RayCast2D = $RayDown
+signal crushed
 
-func _on_body_entered(body: Node2D) -> void:
-	if get_parent().velocity.y > 0 and body.is_on_floor():
-		body.die()
+func _process(_delta):
+	if ray_up.is_colliding() and ray_down.is_colliding():
+		crushed.emit()

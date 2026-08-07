@@ -2,10 +2,15 @@
 
 [ext_resource type="Script" uid="uid://bw6yydr2q5fp4" path="res://components/crush_component.gd" id="1_no021"]
 
-[node name="CrushComponent" type="Area2D" unique_id=1617257575]
-collision_layer = 131072
-collision_mask = 12
+[node name="CrushComponent" type="Node2D" unique_id=1059272388]
 script = ExtResource("1_no021")
 
-[connection signal="area_entered" from="." to="." method="_on_area_entered"]
-[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[node name="RayDown" type="RayCast2D" parent="." unique_id=591508109]
+position = Vector2(0, -5)
+target_position = Vector2(0, 9)
+collision_mask = 8193
+
+[node name="RayUp" type="RayCast2D" parent="." unique_id=1596328383]
+position = Vector2(0, -53)
+target_position = Vector2(0, -5)
+collision_mask = 65
