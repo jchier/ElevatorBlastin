@@ -18,7 +18,6 @@
 [ext_resource type="Script" uid="uid://cf1nsco3w0mf6" path="res://addons/godot_state_charts/transition.gd" id="9_j3ovn"]
 [ext_resource type="PackedScene" uid="uid://d3ybrc1g2dpl4" path="res://components/interactor_component.tscn" id="10_b2kln"]
 [ext_resource type="PackedScene" uid="uid://ddj26eine24hx" path="res://components/CrushComponent.tscn" id="11_we0b7"]
-[ext_resource type="PackedScene" uid="uid://bcwkugn6v3oy7" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="18_b2kln"]
 
 [sub_resource type="Animation" id="Animation_eyb6c"]
 length = 0.001
@@ -737,13 +736,9 @@ delay_in_seconds = "0.0"
 script = ExtResource("8_a1qjk")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=162436934]
-
-[node name="StateChartDebugger" parent="." unique_id=161430855 instance=ExtResource("18_b2kln")]
-offset_left = -138.0
-offset_top = -249.0
-offset_right = 156.0
-offset_bottom = -63.0
-initial_node_to_watch = NodePath("../StateChart")
+process_callback = 0
+position_smoothing_enabled = true
+drag_vertical_enabled = true
 
 [connection signal="state_entered" from="StateChart/Root/Grounded/Stand" to="." method="_on_stand_state_entered"]
 [connection signal="state_input" from="StateChart/Root/Grounded/Stand" to="." method="_on_stand_state_input"]
