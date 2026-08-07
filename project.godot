@@ -90,6 +90,7 @@ jump={
 2d_physics/layer_17="elevator"
 2d_physics/layer_18="crusher"
 2d_physics/layer_19="bullet_proof"
+2d_physics/layer_20="window"
 
 [physics]
 

@@ -634,6 +634,7 @@ shape = SubResource("CapsuleShape2D_b6dgu")
 [node name="CrushComponent" parent="." unique_id=1059272388 instance=ExtResource("11_we0b7")]
 
 [node name="BulletComponent" parent="." unique_id=815253983 instance=ExtResource("8_afbqv")]
+visible = false
 
 [node name="HurtboxComponent" parent="." unique_id=1378213332 node_paths=PackedStringArray("health_component") instance=ExtResource("9_gx6sm")]
 health_component = NodePath("../HealthComponent")

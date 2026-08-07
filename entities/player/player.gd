@@ -77,13 +77,13 @@ func _physics_process(delta: float) -> void:
 
 		
 func try_duck_fire():
-	if !fire_rate_timer.is_stopped() and can_shoot:
+	if !fire_rate_timer.is_stopped() and can_shoot and !is_on_wall():
 		return
 	animation_component.duck_shoot()
 	fire()
 	
 func try_stand_fire():
-	if !fire_rate_timer.is_stopped() and can_shoot:
+	if !fire_rate_timer.is_stopped() and can_shoot and !is_on_wall():
 		return
 	animation_component.stand_shoot()
 	fire()
