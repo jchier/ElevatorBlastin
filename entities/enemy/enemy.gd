@@ -70,7 +70,6 @@ func _ready():
 	animation_component.interaction_complete.connect(_interaction_complete)
 	interactor_component.area_entered.connect(on_area_entered)
 	interactor_component.interaction_valid.connect(_valid_interaction)
-	floor_detector_component.changed_floor.connect(_changed_floor)
 	GameEvent.player_changed_floor.connect(_changed_floor)
 	crush_component.crushed.connect(die)
 	crouching_collision_shape.disabled = true
@@ -79,7 +78,6 @@ func _ready():
 	direction = 1
 	move_to.global_position = Vector2(0,0)
 	reaction_timer.paused = true
-	player_vision_ray.enabled = false
 	
 	
 

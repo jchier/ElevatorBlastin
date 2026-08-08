@@ -347,6 +347,9 @@ position = Vector2(230, 430)
 [node name="StairsM2" parent="." unique_id=713305711 instance=ExtResource("10_aerfg")]
 position = Vector2(536, 670)
 
+[node name="StairsM3" parent="." unique_id=1157841068 instance=ExtResource("10_aerfg")]
+position = Vector2(71, 1031)
+
 [node name="Stairs2" parent="." unique_id=2042705959 instance=ExtResource("9_08mmt")]
 position = Vector2(-49, 429)
 top_level_floor = 3

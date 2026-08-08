@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://duees6xrwud5f"]
+
+[ext_resource type="Script" uid="uid://6nbha2pxvaqa" path="res://hud/hud.gd" id="1_6ca3a"]
+
+[node name="Hud" type="Control" unique_id=1273838119]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_6ca3a")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=472079848]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1513199526]
+layout_mode = 2
+
+[node name="DocumentsLabel" type="Label" parent="MarginContainer/VBoxContainer" unique_id=881915029]
+layout_mode = 2
