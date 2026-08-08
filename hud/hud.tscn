@@ -2,17 +2,10 @@
 
 [ext_resource type="Script" uid="uid://6nbha2pxvaqa" path="res://hud/hud.gd" id="1_6ca3a"]
 
-[node name="Hud" type="Control" unique_id=1273838119]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="Hud" type="CanvasLayer" unique_id=36781001]
 script = ExtResource("1_6ca3a")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=472079848]
-layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

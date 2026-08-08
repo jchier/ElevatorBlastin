@@ -60,7 +60,7 @@ func player_act(body: Player):
 	await animation_player.animation_finished
 	body.set_orientation(last_orientation)
 	body.disabled = false
-	document_get.emit()
+	GameEvent.got_document.emit()
 	
 func enemy_act(body: Enemy):
 	body.disabled = true

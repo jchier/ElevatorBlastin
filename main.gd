@@ -7,6 +7,7 @@ const MAX_ENEMY_COUNT: int = 8
 var level_one = preload("uid://cflxxyn4pet7d")
 @onready var retry_timer: Timer = $RetryTimer
 @onready var enemy_spawn_timer: Timer = $EnemySpawnTimer
+@onready var hud: CanvasLayer = $Hud
 var level: Node
 var document_count: int = 0
 var doors: Array
@@ -15,6 +16,7 @@ var selected_door: DoorHall
 var enemy_count: int
 var last_floor_spawned: int
 
+
 func _ready():
 	enemy_spawn_timer.timeout.connect(_on_enemy_spawn_timer_timeout)
 	level = level_one.instantiate()
@@ -22,9 +24,11 @@ func _ready():
 	spawn_player()
 	spawn_enemy()
 	spawn_door_hall()
+	hud.update_document_count(document_count)
 	GameEvent.player_changed_floor.connect(_player_changed_floor)
 	GameEvent.enemy_spawned.connect(_enemy_spawned)
 	GameEvent.enemy_despawned.connect(_enemy_despawned)
+	GameEvent.got_document.connect(_got_document)
 	
 func spawn_player():
 	for player_marker in level.get_children():
@@ -74,19 +78,15 @@ func spawn_door_hall():
 			var door_hall_scene: DoorHall = DOOR_HALL_SCENE.instantiate().set_player_door(door_hall_marker.player_door)
 			if door_hall_scene.player_door:
 				document_count = document_count + 1
-				door_hall_scene.document_get.connect(got_document)
 			add_child(door_hall_scene)
 			doors.append(door_hall_scene)
 			door_hall_scene.global_position = door_hall_marker.global_position
 			
-#			if door_hall_scene.can_spawn_enemy():
-#				valid_spawn_door.append(door_hall_scene)
-			
-			#door_hall_scene.set_floor(door_hall_marker.starting_floor)
 
-func got_document():
+
+func _got_document():
 	document_count = document_count - 1
-
+	hud.update_document_count(document_count)
 
 func _player_changed_floor():
 	valid_spawn_door.clear()
