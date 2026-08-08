@@ -6,6 +6,7 @@
 [ext_resource type="TileSet" uid="uid://b87e14execfyn" path="res://level_assets/tileY1.tres" id="5_l53as"]
 [ext_resource type="TileSet" uid="uid://dasiua747450b" path="res://level_assets/tileY2.tres" id="6_3sk1a"]
 [ext_resource type="PackedScene" uid="uid://cptp4opi28g3m" path="res://entities/elevator/elevator.tscn" id="6_btoec"]
+[ext_resource type="Script" uid="uid://bpv6re8vjeo51" path="res://entities/enemy/enemy_marker.gd" id="8_aerfg"]
 [ext_resource type="Script" uid="uid://bgpd75t0gfyl7" path="res://entities/player/player_marker.gd" id="9_3sk1a"]
 [ext_resource type="Script" uid="uid://b6a2fog0fbkdh" path="res://entities/door/door_hall_marker.gd" id="9_5ot28"]
 [ext_resource type="PackedScene" uid="uid://cw4f70u4bxktk" path="res://entities/stairs/stairs.tscn" id="9_08mmt"]
@@ -113,7 +114,7 @@ position = Vector2(84, 594)
 
 [node name="Elevator4" parent="." unique_id=1749120901 instance=ExtResource("6_btoec")]
 z_index = -1
-position = Vector2(212, 722)
+position = Vector2(212, 751)
 
 [node name="Elevator5" parent="." unique_id=447233416 instance=ExtResource("6_btoec")]
 z_index = -1
@@ -132,8 +133,12 @@ z_index = -1
 position = Vector2(152, 1200)
 
 [node name="PlayerMarker" type="Marker2D" parent="." unique_id=1946072525]
-position = Vector2(-344, 1046)
+position = Vector2(-146, 217)
 script = ExtResource("9_3sk1a")
+
+[node name="EnemyMarker" type="Marker2D" parent="." unique_id=641922445]
+position = Vector2(-17, 212)
+script = ExtResource("8_aerfg")
 
 [node name="DoorHallMarker" type="Marker2D" parent="." unique_id=1914852396]
 position = Vector2(211, 383)
@@ -223,10 +228,6 @@ script = ExtResource("9_5ot28")
 
 [node name="DoorHallMarker19" type="Marker2D" parent="." unique_id=109881035]
 position = Vector2(16, 863)
-script = ExtResource("9_5ot28")
-
-[node name="DoorHallMarker20" type="Marker2D" parent="." unique_id=1403293422]
-position = Vector2(-102, 863)
 script = ExtResource("9_5ot28")
 
 [node name="DoorHallMarker22" type="Marker2D" parent="." unique_id=215915513]

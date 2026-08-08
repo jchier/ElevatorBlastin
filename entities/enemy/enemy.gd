@@ -3,8 +3,8 @@ extends CharacterBody2D
 
 signal enemy_despawn
 
-const FLOOR_DISTANCE: int = 50
-const ELEVATOR_BUFFER: int = 40
+const ENEMY_SCENE: PackedScene = preload("uid://bftk50lxpoojr")
+
 @onready var movement_component: MovementComponent = $MovementComponent
 @onready var navigation_component: NavigationComponent = $NavigationComponent
 @onready var rider_component: Area2D = $RiderComponent
@@ -52,7 +52,8 @@ var _current_occupancy: Occupant_Component = null
 var was_idle:bool = false
 var can_shoot: bool = false
 var patrol: bool = false
-var t = 0
+var spawned_from_door: bool = true
+var spawn_animation: String
 var last_stance: String = "stand"
 var callable_shoot
 var player: Player
@@ -78,9 +79,15 @@ func _ready():
 	direction = 1
 	move_to.global_position = Vector2(0,0)
 	reaction_timer.paused = true
+	if spawned_from_door:
+		spawn_animation = "exit"
+	else:
+		spawn_animation = "interaction_complete"
 	
-	
-
+static func new_enemy(spawn_type: bool) -> Enemy:
+	var new_enemy: Enemy = ENEMY_SCENE.instantiate()
+	new_enemy.spawned_from_door = spawn_type
+	return new_enemy
 
 
 func _on_alive_state_processing(delta: float) -> void:
@@ -435,7 +442,7 @@ func _changed_floor():
 
 func _on_spawn_state_entered() -> void:
 	animation_component.interaction_complete.connect(_spawn_complete)
-	start_animation("exit")
+	start_animation(spawn_animation)
 
 func _spawn_complete():
 	state_chart.send_event("to_alive")

@@ -39,7 +39,7 @@ func spawn_player():
 func spawn_enemy():
 	for enemy_marker in level.get_children():
 		if enemy_marker is EnemyMarker:
-			var enemy_scene: Enemy = ENEMY_SCENE.instantiate()
+			var enemy_scene: Enemy = Enemy.new_enemy(false)
 			add_child(enemy_scene)
 			enemy_scene.global_position = enemy_marker.global_position
 
