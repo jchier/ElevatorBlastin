@@ -727,10 +727,16 @@ initial_state = NodePath("Spawn")
 [node name="Spawn" type="Node" parent="StateChart/Root" unique_id=672423280]
 script = ExtResource("12_xshm4")
 
-[node name="Transition" type="Node" parent="StateChart/Root/Spawn" unique_id=1068180499]
+[node name="Alive" type="Node" parent="StateChart/Root/Spawn" unique_id=1068180499]
 script = ExtResource("13_402ev")
 to = NodePath("../../Alive")
 event = &"to_alive"
+delay_in_seconds = "0.0"
+
+[node name="Dead" type="Node" parent="StateChart/Root/Spawn" unique_id=353871012]
+script = ExtResource("13_402ev")
+to = NodePath("../../Dead")
+event = &"dead"
 delay_in_seconds = "0.0"
 
 [node name="Interact" type="Node" parent="StateChart/Root" unique_id=2110329221]
@@ -929,8 +935,10 @@ initial_node_to_watch = NodePath("../StateChart")
 [connection signal="body_entered" from="PlayerBufferZone" to="." method="_on_player_buffer_zone_body_entered"]
 [connection signal="body_exited" from="PlayerBufferZone" to="." method="_on_player_buffer_zone_body_exited"]
 [connection signal="state_entered" from="StateChart/Root/Spawn" to="." method="_on_spawn_state_entered"]
+[connection signal="state_exited" from="StateChart/Root/Spawn" to="." method="_on_spawn_state_exited"]
 [connection signal="state_entered" from="StateChart/Root/Interact" to="." method="_on_interact_state_entered"]
 [connection signal="state_exited" from="StateChart/Root/Interact" to="." method="_on_interact_state_exited"]
+[connection signal="state_entered" from="StateChart/Root/Alive" to="." method="_on_alive_state_entered"]
 [connection signal="state_processing" from="StateChart/Root/Alive" to="." method="_on_alive_state_processing"]
 [connection signal="state_entered" from="StateChart/Root/Alive/Behavior/Docile" to="." method="_on_docile_state_entered"]
 [connection signal="state_exited" from="StateChart/Root/Alive/Behavior/Docile" to="." method="_on_docile_state_exited"]

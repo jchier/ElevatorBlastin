@@ -43,6 +43,7 @@ var disabled: bool = true:
 		elevator_vision_ray.enabled = !value
 		movement_component.disabled = value
 		floor_detector_collision_shape_2d.set_deferred("disabled", value)
+		#hurtbox_component.disabled = value
 		
 var direction: int = 1
 var last_direction: int = 1
@@ -67,7 +68,6 @@ func _ready():
 	navigation_component.set_orientation.connect(set_orientation)
 	animation_component.can_shoot.connect(_can_shoot)
 	animation_component.stance_changed.connect(_stance_changed)
-	animation_component.interaction_complete.connect(_interaction_complete)
 	interactor_component.area_entered.connect(on_area_entered)
 	interactor_component.interaction_valid.connect(valid_interaction)
 	GameEvent.player_changed_floor.connect(_changed_floor)
@@ -81,6 +81,8 @@ func _ready():
 	
 	
 
+func _on_alive_state_entered() -> void:
+	animation_component.interaction_complete.connect(_interaction_complete)
 
 func _on_alive_state_processing(delta: float) -> void:
 	movement_component.generate_velocity(delta, navigation_component.get_direction())
@@ -433,6 +435,13 @@ func _changed_floor():
 
 
 func _on_spawn_state_entered() -> void:
+	animation_component.interaction_complete.connect(_spawn_complete)
 	start_animation("exit")
-	await animation_component.interaction_complete
+
+func _spawn_complete():
 	state_chart.send_event("to_alive")
+	
+
+func _on_spawn_state_exited() -> void:
+	disabled = false
+	animation_component.interaction_complete.disconnect(_spawn_complete)

@@ -56,13 +56,11 @@ position = Vector2(105, 1112)
 floor_number = 3
 
 [node name="FloorMarkerComponent9" parent="." unique_id=158783393 instance=ExtResource("1_l53as")]
-visible = false
 position = Vector2(105, 1232)
 floor_number = 2
 
 [node name="FloorMarkerComponent10" parent="." unique_id=1034043607 instance=ExtResource("1_l53as")]
-visible = false
-position = Vector2(105, 1352)
+position = Vector2(106, 1409)
 floor_number = 1
 
 [node name="Door" parent="." unique_id=162893821 instance=ExtResource("1_n46q3")]
@@ -134,7 +132,7 @@ z_index = -1
 position = Vector2(152, 1200)
 
 [node name="PlayerMarker" type="Marker2D" parent="." unique_id=1946072525]
-position = Vector2(-157, 941)
+position = Vector2(-309, 1191)
 script = ExtResource("9_3sk1a")
 
 [node name="DoorHallMarker" type="Marker2D" parent="." unique_id=1914852396]
@@ -278,14 +276,6 @@ script = ExtResource("9_5ot28")
 
 [node name="DoorHallMarker41" type="Marker2D" parent="." unique_id=1031692950]
 position = Vector2(-24, 1223)
-script = ExtResource("9_5ot28")
-
-[node name="DoorHallMarker43" type="Marker2D" parent="." unique_id=2103386545]
-position = Vector2(301, 1223)
-script = ExtResource("9_5ot28")
-
-[node name="DoorHallMarker44" type="Marker2D" parent="." unique_id=66988127]
-position = Vector2(423, 1223)
 script = ExtResource("9_5ot28")
 
 [node name="StairsM" parent="." unique_id=652959830 instance=ExtResource("10_aerfg")]
