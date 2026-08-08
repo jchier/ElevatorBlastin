@@ -135,7 +135,7 @@ z_index = -1
 position = Vector2(152, 1200)
 
 [node name="PlayerMarker" type="Marker2D" parent="." unique_id=1946072525]
-position = Vector2(-168, 933)
+position = Vector2(-125, 910)
 script = ExtResource("9_3sk1a")
 
 [node name="EnemyMarker5" type="Marker2D" parent="." unique_id=1510803185]

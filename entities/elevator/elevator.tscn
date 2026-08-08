@@ -7,17 +7,17 @@
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_l53as"]
 atlas = ExtResource("2_4sa0j")
-region = Rect2(14, 0, 49, 120)
+region = Rect2(14, 82, 49, 11)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_v33mf"]
 atlas = ExtResource("2_4sa0j")
-region = Rect2(63, 0, 57, 120)
+region = Rect2(63, 82, 57, 11)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_j5ip0"]
 size = Vector2(18, 17.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jr1kj"]
-size = Vector2(30, 57)
+size = Vector2(30, 75)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_83u65"]
 size = Vector2(53, 1)
@@ -35,13 +35,26 @@ script = ExtResource("1_3c2c0")
 [node name="LeftHalf" type="Sprite2D" parent="." unique_id=1051948856]
 z_index = 1
 texture_filter = 1
-position = Vector2(-24, 0)
+position = Vector2(-23.5, 27.5)
 texture = SubResource("AtlasTexture_l53as")
 offset = Vector2(0, -20)
 
 [node name="RightHalf" type="Sprite2D" parent="." unique_id=873061401]
 texture_filter = 1
-position = Vector2(29, 0)
+position = Vector2(29.5, 27.5)
+texture = SubResource("AtlasTexture_v33mf")
+offset = Vector2(0, -20)
+
+[node name="LeftHalf2" type="Sprite2D" parent="." unique_id=1584934238]
+z_index = 1
+texture_filter = 1
+position = Vector2(-23.5, -47.5)
+texture = SubResource("AtlasTexture_l53as")
+offset = Vector2(0, -20)
+
+[node name="RightHalf2" type="Sprite2D" parent="." unique_id=241883771]
+texture_filter = 1
+position = Vector2(29.5, -47.5)
 texture = SubResource("AtlasTexture_v33mf")
 offset = Vector2(0, -20)
 
@@ -58,7 +71,7 @@ position = Vector2(47, 16.75)
 shape = SubResource("RectangleShape2D_j5ip0")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=471479015]
-position = Vector2(0, -19.5)
+position = Vector2(0, -28.5)
 shape = SubResource("RectangleShape2D_jr1kj")
 
 [node name="WaitTimer" type="Timer" parent="." unique_id=590063343]
@@ -83,12 +96,13 @@ position = Vector2(-0.5, 9)
 shape = SubResource("RectangleShape2D_oark8")
 
 [node name="RoofAnimatableBody" type="AnimatableBody2D" parent="." unique_id=154619614]
+position = Vector2(0, -13)
 collision_layer = 8192
 collision_mask = 4
 sync_to_physics = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RoofAnimatableBody" unique_id=956839247]
-position = Vector2(-0.5, -52.5)
+position = Vector2(-1, -52)
 shape = SubResource("RectangleShape2D_ksmh2")
 
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=1535609923]

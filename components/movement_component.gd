@@ -38,41 +38,41 @@ func toggle_movement():
 
 func generate_velocity(delta: float, x_input: float):
 	
-	if velocity.y > MAX_FALL_SPEED and !disabled:
+	if _character_body.velocity.y > MAX_FALL_SPEED and !disabled:
 		die_on_land = true
 	
 	if _character_body.is_on_floor():
-		velocity.y = 0
-		velocity.y += FALL_GRAVITY * delta
-		velocity.y = clamp(velocity.y, 0, 300)
+		_character_body.velocity.y = 0
+		_character_body.velocity.y += FALL_GRAVITY * delta
+		_character_body.velocity.y = clamp(_character_body.velocity.y, 0, 300)
 		if not was_on_floor:
 			if die_on_land:
 				state_chart_event.emit("dead")
 			was_on_floor = true
 			state_chart_event.emit("grounded")
 	else:
-		velocity += GRAVITY * delta
+		_character_body.velocity += GRAVITY * delta
 		if was_on_floor:
 			was_on_floor = false
 			state_chart_event.emit("airborne")
 			
 	if _jump:
-		velocity.y = JUMP_VELOCITY
+		_character_body.velocity.y = JUMP_VELOCITY
 		_jump = false
 		
 	var velocity_weight : float = delta * (ACCELERATION if x_input else FRICTION)
-	velocity.x = lerp(velocity.x, x_input * current_speed, velocity_weight)
+	_character_body.velocity.x = lerp(_character_body.velocity.x, x_input * current_speed, velocity_weight)
 
-	if was_on_floor and not  _character_body.is_on_floor() and velocity.y > 0:
+	if was_on_floor and not  _character_body.is_on_floor() and _character_body.velocity.y > 0:
 		state_chart_event.emit("airborne")
 	
 	if !disabled:
-		if !is_zero_approx(velocity.x):
-			orientation = signf(velocity.x)
+		if !is_zero_approx(_character_body.velocity.x):
+			orientation = signf(_character_body.velocity.x)
 			if orientation != last_orientation:
 				last_orientation = orientation
 				set_orientation.emit(orientation)
-		_character_body.velocity = velocity
+		#_character_body.velocity = velocity
 		return
 	_character_body.velocity = Vector2(0, velocity.y)
 
