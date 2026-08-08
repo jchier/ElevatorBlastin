@@ -37,7 +37,7 @@ var chosen_elevator: Elevator
 
 
 enum {BELOW, EQUAL, ABOVE}
-var disabled: bool:
+var disabled: bool = true:
 	set(value):
 		player_vision_ray.enabled = !value
 		elevator_vision_ray.enabled = !value
@@ -69,7 +69,7 @@ func _ready():
 	animation_component.stance_changed.connect(_stance_changed)
 	animation_component.interaction_complete.connect(_interaction_complete)
 	interactor_component.area_entered.connect(on_area_entered)
-	interactor_component.interaction_valid.connect(_valid_interaction)
+	interactor_component.interaction_valid.connect(valid_interaction)
 	GameEvent.player_changed_floor.connect(_changed_floor)
 	crush_component.crushed.connect(die)
 	crouching_collision_shape.disabled = true
@@ -327,7 +327,6 @@ func _on_get_off_elevator_state_physics_processing(_delta: float) -> void:
 	
 func _on_interact_state_entered() -> void:
 	disabled = true
-	pass # Replace with function body.
 
 
 func _interaction_complete():
@@ -335,18 +334,16 @@ func _interaction_complete():
 	
 func start_interaction_animation(to_play: String):
 	animation_component.start(to_play)
-	#await animation_component.interaction_complete
-	#state_chart.send_event("to_alive_from_interact")	
+	state_chart.send_event("to_alive_from_interact")	
 
 func finish_interaction():
 	state_chart.send_event("to_alive_from_interact")	
 
-func _valid_interaction():
+func valid_interaction():
 	state_chart.send_event("interact")
 
 func _on_interact_state_exited() -> void:
 	disabled = false
-	pass # Replace with function body.
 #====================================== DEAD STATE =================================================================
 	
 func _on_died():
@@ -433,3 +430,9 @@ func _changed_floor():
 		player_vision_ray.enabled = true
 	else:
 		player_vision_ray.enabled = false
+
+
+func _on_spawn_state_entered() -> void:
+	start_animation("exit")
+	await animation_component.interaction_complete
+	state_chart.send_event("to_alive")

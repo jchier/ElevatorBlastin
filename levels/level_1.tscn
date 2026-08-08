@@ -6,7 +6,6 @@
 [ext_resource type="TileSet" uid="uid://b87e14execfyn" path="res://level_assets/tileY1.tres" id="5_l53as"]
 [ext_resource type="TileSet" uid="uid://dasiua747450b" path="res://level_assets/tileY2.tres" id="6_3sk1a"]
 [ext_resource type="PackedScene" uid="uid://cptp4opi28g3m" path="res://entities/elevator/elevator.tscn" id="6_btoec"]
-[ext_resource type="Script" uid="uid://bpv6re8vjeo51" path="res://entities/enemy/enemy_marker.gd" id="8_l53as"]
 [ext_resource type="Script" uid="uid://bgpd75t0gfyl7" path="res://entities/player/player_marker.gd" id="9_3sk1a"]
 [ext_resource type="Script" uid="uid://b6a2fog0fbkdh" path="res://entities/door/door_hall_marker.gd" id="9_5ot28"]
 [ext_resource type="PackedScene" uid="uid://cw4f70u4bxktk" path="res://entities/stairs/stairs.tscn" id="9_08mmt"]
@@ -135,36 +134,8 @@ z_index = -1
 position = Vector2(152, 1200)
 
 [node name="PlayerMarker" type="Marker2D" parent="." unique_id=1946072525]
-position = Vector2(-125, 910)
+position = Vector2(-157, 941)
 script = ExtResource("9_3sk1a")
-
-[node name="EnemyMarker5" type="Marker2D" parent="." unique_id=1510803185]
-position = Vector2(-151, 589)
-script = ExtResource("8_l53as")
-
-[node name="EnemyMarker6" type="Marker2D" parent="." unique_id=453008681]
-position = Vector2(-37, 708)
-script = ExtResource("8_l53as")
-
-[node name="EnemyMarker8" type="Marker2D" parent="." unique_id=580392842]
-position = Vector2(201, 824)
-script = ExtResource("8_l53as")
-
-[node name="EnemyMarker9" type="Marker2D" parent="." unique_id=1193597766]
-position = Vector2(-86, 957)
-script = ExtResource("8_l53as")
-
-[node name="EnemyMarker11" type="Marker2D" parent="." unique_id=1937875876]
-position = Vector2(259, 943)
-script = ExtResource("8_l53as")
-
-[node name="EnemyMarker13" type="Marker2D" parent="." unique_id=1647814009]
-position = Vector2(33, 1064)
-script = ExtResource("8_l53as")
-
-[node name="EnemyMarker15" type="Marker2D" parent="." unique_id=670323741]
-position = Vector2(21, 1181)
-script = ExtResource("8_l53as")
 
 [node name="DoorHallMarker" type="Marker2D" parent="." unique_id=1914852396]
 position = Vector2(211, 383)
@@ -260,10 +231,6 @@ script = ExtResource("9_5ot28")
 position = Vector2(-102, 863)
 script = ExtResource("9_5ot28")
 
-[node name="DoorHallMarker21" type="Marker2D" parent="." unique_id=1563359722]
-position = Vector2(-163, 983)
-script = ExtResource("9_5ot28")
-
 [node name="DoorHallMarker22" type="Marker2D" parent="." unique_id=215915513]
 position = Vector2(-372, 983)
 script = ExtResource("9_5ot28")
@@ -277,26 +244,6 @@ position = Vector2(161, 983)
 script = ExtResource("9_5ot28")
 
 [node name="DoorHallMarker25" type="Marker2D" parent="." unique_id=1852928447]
-position = Vector2(300, 983)
-script = ExtResource("9_5ot28")
-
-[node name="DoorHallMarker27" type="Marker2D" parent="." unique_id=353781260]
-position = Vector2(-163, 983)
-script = ExtResource("9_5ot28")
-
-[node name="DoorHallMarker28" type="Marker2D" parent="." unique_id=1839849506]
-position = Vector2(-372, 983)
-script = ExtResource("9_5ot28")
-
-[node name="DoorHallMarker29" type="Marker2D" parent="." unique_id=1597523694]
-position = Vector2(-25, 983)
-script = ExtResource("9_5ot28")
-
-[node name="DoorHallMarker30" type="Marker2D" parent="." unique_id=1762134416]
-position = Vector2(161, 983)
-script = ExtResource("9_5ot28")
-
-[node name="DoorHallMarker31" type="Marker2D" parent="." unique_id=1277399468]
 position = Vector2(300, 983)
 script = ExtResource("9_5ot28")
 

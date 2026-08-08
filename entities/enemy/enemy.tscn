@@ -20,6 +20,7 @@
 [ext_resource type="Script" uid="uid://cytafq8i1y8qm" path="res://addons/godot_state_charts/atomic_state.gd" id="12_xshm4"]
 [ext_resource type="Script" uid="uid://cf1nsco3w0mf6" path="res://addons/godot_state_charts/transition.gd" id="13_402ev"]
 [ext_resource type="PackedScene" uid="uid://ddj26eine24hx" path="res://components/CrushComponent.tscn" id="13_vr86x"]
+[ext_resource type="PackedScene" uid="uid://bcwkugn6v3oy7" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="21_fktuf"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4ssn0"]
 size = Vector2(8, 14)
@@ -716,11 +717,21 @@ shape = SubResource("CapsuleShape2D_jr1kj")
 
 [node name="StateChart" type="Node" parent="." unique_id=248309767]
 script = ExtResource("10_5f25h")
+track_in_editor = true
 metadata/_custom_type_script = "uid://couw105c3bde4"
 
 [node name="Root" type="Node" parent="StateChart" unique_id=1477589050]
 script = ExtResource("11_qmbk7")
-initial_state = NodePath("Alive")
+initial_state = NodePath("Spawn")
+
+[node name="Spawn" type="Node" parent="StateChart/Root" unique_id=672423280]
+script = ExtResource("12_xshm4")
+
+[node name="Transition" type="Node" parent="StateChart/Root/Spawn" unique_id=1068180499]
+script = ExtResource("13_402ev")
+to = NodePath("../../Alive")
+event = &"to_alive"
+delay_in_seconds = "0.0"
 
 [node name="Interact" type="Node" parent="StateChart/Root" unique_id=2110329221]
 script = ExtResource("12_xshm4")
@@ -907,8 +918,17 @@ one_shot = true
 
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=1395079868]
 
+[node name="StateChartDebugger" parent="." unique_id=747944174 instance=ExtResource("21_fktuf")]
+offset_left = -87.0
+offset_top = -232.0
+offset_right = 242.0
+offset_bottom = 82.0
+scale = Vector2(0.56046784, 0.5512531)
+initial_node_to_watch = NodePath("../StateChart")
+
 [connection signal="body_entered" from="PlayerBufferZone" to="." method="_on_player_buffer_zone_body_entered"]
 [connection signal="body_exited" from="PlayerBufferZone" to="." method="_on_player_buffer_zone_body_exited"]
+[connection signal="state_entered" from="StateChart/Root/Spawn" to="." method="_on_spawn_state_entered"]
 [connection signal="state_entered" from="StateChart/Root/Interact" to="." method="_on_interact_state_entered"]
 [connection signal="state_exited" from="StateChart/Root/Interact" to="." method="_on_interact_state_exited"]
 [connection signal="state_processing" from="StateChart/Root/Alive" to="." method="_on_alive_state_processing"]
