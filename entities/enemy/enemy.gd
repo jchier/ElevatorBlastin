@@ -325,14 +325,17 @@ func _on_get_off_elevator_state_physics_processing(_delta: float) -> void:
 
 #====================================== INTERACT STATE =================================================================
 	
+func _on_interact_state_entered() -> void:
+	disabled = true
+	pass # Replace with function body.
+
+
 func _interaction_complete():
 	state_chart.send_event("to_alive_from_interact")
 	
 func start_interaction_animation(to_play: String):
-	disabled = true
 	animation_component.start(to_play)
-	await animation_component.interaction_complete
-	disabled = false
+	#await animation_component.interaction_complete
 	#state_chart.send_event("to_alive_from_interact")	
 
 func finish_interaction():
@@ -341,6 +344,9 @@ func finish_interaction():
 func _valid_interaction():
 	state_chart.send_event("interact")
 
+func _on_interact_state_exited() -> void:
+	disabled = false
+	pass # Replace with function body.
 #====================================== DEAD STATE =================================================================
 	
 func _on_died():

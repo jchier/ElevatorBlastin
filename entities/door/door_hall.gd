@@ -84,6 +84,7 @@ func spawn_enemy():
 	enemy_scene.start_interaction_animation("exit")
 	animation_player.play("open")
 	await animation_player.animation_finished
+	enemy_scene.finish_interaction()
 	#enemy_scene.disabled = false
 	enemy_scene.set_orientation(signf(global_position.direction_to(GameState.player.global_position).x))
 	GameEvent.enemy_spawned.emit()
