@@ -81,8 +81,7 @@ func _ready():
 	
 	
 
-func _on_alive_state_entered() -> void:
-	animation_component.interaction_complete.connect(_interaction_complete)
+
 
 func _on_alive_state_processing(delta: float) -> void:
 	movement_component.generate_velocity(delta, navigation_component.get_direction())
@@ -445,3 +444,4 @@ func _spawn_complete():
 func _on_spawn_state_exited() -> void:
 	disabled = false
 	animation_component.interaction_complete.disconnect(_spawn_complete)
+	animation_component.interaction_complete.connect(_interaction_complete)

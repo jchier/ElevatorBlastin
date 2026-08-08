@@ -925,11 +925,13 @@ one_shot = true
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=1395079868]
 
 [node name="StateChartDebugger" parent="." unique_id=747944174 instance=ExtResource("21_fktuf")]
+visible = false
 offset_left = -87.0
 offset_top = -232.0
 offset_right = 242.0
 offset_bottom = 82.0
 scale = Vector2(0.56046784, 0.5512531)
+enabled = false
 initial_node_to_watch = NodePath("../StateChart")
 
 [connection signal="body_entered" from="PlayerBufferZone" to="." method="_on_player_buffer_zone_body_entered"]
@@ -938,7 +940,6 @@ initial_node_to_watch = NodePath("../StateChart")
 [connection signal="state_exited" from="StateChart/Root/Spawn" to="." method="_on_spawn_state_exited"]
 [connection signal="state_entered" from="StateChart/Root/Interact" to="." method="_on_interact_state_entered"]
 [connection signal="state_exited" from="StateChart/Root/Interact" to="." method="_on_interact_state_exited"]
-[connection signal="state_entered" from="StateChart/Root/Alive" to="." method="_on_alive_state_entered"]
 [connection signal="state_processing" from="StateChart/Root/Alive" to="." method="_on_alive_state_processing"]
 [connection signal="state_entered" from="StateChart/Root/Alive/Behavior/Docile" to="." method="_on_docile_state_entered"]
 [connection signal="state_exited" from="StateChart/Root/Alive/Behavior/Docile" to="." method="_on_docile_state_exited"]
