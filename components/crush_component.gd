@@ -22,7 +22,6 @@ func _process(_delta: float) -> void:
 		if up_col is AnimatableBody2D and up_col.get_parent().velocity.y > 1\
 		or down_col is AnimatableBody2D and down_col.get_parent().velocity.y < -1:
 			crush_amount = crush_amount + 1
-			print(crush_amount)
 	else:
 		crush_amount = 0
 		
