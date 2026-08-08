@@ -3,14 +3,14 @@ extends Node
 const PLAYER_SCENE: PackedScene = preload("uid://c2rgnnuoe4mpu")
 const ENEMY_SCENE: PackedScene = preload("uid://bftk50lxpoojr")
 const DOOR_HALL_SCENE: PackedScene = preload("uid://dmn4ui4jcf713")
-const MAX_ENEMY_COUNT: int = 2
+const MAX_ENEMY_COUNT: int = 4
 var level_one = preload("uid://cflxxyn4pet7d")
 @onready var retry_timer: Timer = $RetryTimer
 @onready var enemy_spawn_timer: Timer = $EnemySpawnTimer
 var level: Node
 var document_count: int = 0
 var doors: Array
-var valid_spawn_door: Array
+var valid_spawn_door: Dictionary[DoorHall, int]
 var selected_door: DoorHall
 var enemy_count: int
 var last_floor_spawned: int
@@ -45,19 +45,24 @@ func spawn_enemy():
 
 
 func spawn_enemy_from_door():
-
 	if !selected_door:
-		selected_door = valid_spawn_door[0]
+		selected_door = valid_spawn_door.keys()[0]
 		selected_door.spawn_enemy()
 		last_floor_spawned = selected_door.get_floor()
 		return
-	if 	GameState.player.get_floor() == 1:
-			selected_door = valid_spawn_door.get(randi_range(0, valid_spawn_door.size() - 1))
-			return
-			
-	while selected_door.get_floor() ==	last_floor_spawned:
+	
+	var selected_door_floor = selected_door.get_floor()
+	if !valid_spawn_door.find_key(selected_door_floor -1):
+		selected_door = valid_spawn_door.keys().get(randi_range(0, valid_spawn_door.size() - 1))
+		
+	else:	
+		var selected_door_iterations = 0	
+		var valid_door_array = valid_spawn_door.keys()
+		while selected_door.get_floor() ==	last_floor_spawned:
 		#randomly select a door from among the doors on screen, ask it to spawn enemy
-		selected_door = valid_spawn_door.get(randi_range(0, valid_spawn_door.size() - 1))
+			selected_door_iterations = selected_door_iterations + 1
+			assert(selected_door_iterations < 30, "selecting door algorithm has iterated too many times")
+			selected_door = valid_door_array.get(randi_range(0, valid_spawn_door.size() - 1))
 	
 	if enemy_count <= MAX_ENEMY_COUNT:
 		last_floor_spawned = selected_door.get_floor()
@@ -87,7 +92,7 @@ func _player_changed_floor():
 	valid_spawn_door.clear()
 	for door in doors:
 		if door.can_spawn_enemy():
-			valid_spawn_door.append(door)
+			valid_spawn_door[door] = door.get_floor()
 			
 func _enemy_spawned():
 	enemy_count = enemy_count + 1

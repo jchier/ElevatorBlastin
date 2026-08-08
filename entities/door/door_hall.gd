@@ -78,13 +78,13 @@ func enemy_act(body: Enemy):
 func spawn_enemy():
 	var enemy_scene: Enemy = ENEMY_SCENE.instantiate()
 	add_sibling(enemy_scene)
-	enemy_scene.disabled = true
+	#enemy_scene.disabled = true
+	enemy_scene._state_chart_event("interact")
 	enemy_scene.global_position = global_position
-	#note: may need to get_parent().add_child
 	enemy_scene.start_interaction_animation("exit")
 	animation_player.play("open")
 	await animation_player.animation_finished
-	enemy_scene.disabled = false
+	#enemy_scene.disabled = false
 	enemy_scene.set_orientation(signf(global_position.direction_to(GameState.player.global_position).x))
 	GameEvent.enemy_spawned.emit()
 	
