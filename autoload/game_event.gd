@@ -5,4 +5,4 @@ signal player_changed_floor
 signal enemy_spawned
 signal enemy_despawned
 signal got_document
-signal broken_lamp(floor_number: int)
+signal broken_lamp(lamp: Lamp)

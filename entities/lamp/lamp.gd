@@ -1,6 +1,7 @@
+class_name Lamp
 extends Node2D
 
-
+const DARK_ROOM_MASK_VALUE = 22
 @onready var sprite_2d: Sprite2D = $Sprite2D
 @onready var detect_floor_ray: RayCast2D = $DetectFloorRay
 @onready var hurtbox: Area2D = $Hurtbox
@@ -33,9 +34,10 @@ func _on_hit_hurtbox(_hurtbox_component: HurtboxComponent):
 	_register_collision()
 
 func _register_collision():
+	hurtbox.set_collision_mask_value(DARK_ROOM_MASK_VALUE, true)
+	#note, this might break detection
 	set_physics_process(false)
 	animation_player.play("break")
-	GameEvent.broken_lamp.emit(floor_number)
 
 
 

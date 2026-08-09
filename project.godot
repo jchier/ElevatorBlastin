@@ -36,6 +36,10 @@ window/stretch/aspect="expand"
 
 enabled=PackedStringArray("res://addons/godot_state_charts/plugin.cfg")
 
+[global_group]
+
+lamp=""
+
 [input]
 
 left={
@@ -92,6 +96,7 @@ jump={
 2d_physics/layer_19="bullet_proof"
 2d_physics/layer_20="window"
 2d_physics/layer_21="lamp"
+2d_physics/layer_22="dark_room"
 
 [physics]
 

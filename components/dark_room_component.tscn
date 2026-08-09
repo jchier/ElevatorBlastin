@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://1imrx0kxu7c5"]
+
+[ext_resource type="Script" uid="uid://biocpa7ouigsq" path="res://components/dark_room_component.gd" id="1_coipq"]
+[ext_resource type="Script" uid="uid://b04ch36r8o5ej" path="res://components/rect.gd" id="2_tl83k"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oark8"]
+size = Vector2(29, 27)
+
+[node name="DarkRoomComponent" type="Area2D" unique_id=1450923526]
+collision_layer = 2097152
+collision_mask = 1024
+script = ExtResource("1_coipq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1098292480]
+shape = SubResource("RectangleShape2D_oark8")
+
+[node name="Rect" type="Node2D" parent="." unique_id=441121799 node_paths=PackedStringArray("collision_shape")]
+visible = false
+script = ExtResource("2_tl83k")
+collision_shape = NodePath("../CollisionShape2D")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
