@@ -5,6 +5,7 @@ extends Node2D
 @onready var detect_floor_ray: RayCast2D = $DetectFloorRay
 @onready var hurtbox: Area2D = $Hurtbox
 @onready var hitbox_component: HitboxComponent = $HitboxComponent
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 const SPEED: int = 300
 var floor_number: int = -1
@@ -13,6 +14,7 @@ var direction: float = 1
 
 func _ready():
 	hitbox_component.hit_hurtbox.connect(_on_hit_hurtbox)
+	
 	set_physics_process(false)
 
 
@@ -29,20 +31,26 @@ func _acquire_floor_number():
 	
 func _on_hit_hurtbox(_hurtbox_component: HurtboxComponent):
 	_register_collision()
-	GameEvent.broken_lamp.emit(floor_number)
 
 func _register_collision():
-	queue_free()
+	set_physics_process(false)
+	animation_player.play("break")
+	GameEvent.broken_lamp.emit(floor_number)
+
 
 
 func _on_hurtbox_area_entered(_area: Area2D) -> void:
 	set_physics_process(true)
+	hurtbox.set_collision_mask_value(1, true)
+
 
 
 func _on_hitbox_component_area_entered(_area: Area2D) -> void:
 	_register_collision()
 
 
-func _on_hitbox_component_body_entered(body: Node2D) -> void:
+
+
+func _on_hurtbox_body_entered(body: Node2D) -> void:
 	if body is TileMapLayer:
 		_register_collision()
