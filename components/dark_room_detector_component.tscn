@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://bh4cbhws5t33d"]
+
+[ext_resource type="Script" uid="uid://bwh1vp0e0vd31" path="res://components/dark_room_detector_component.gd" id="1_cai3j"]
+
+[node name="DarkRoomDetectorComponent" type="Area2D" unique_id=72902192]
+collision_layer = 2097152
+collision_mask = 2097152
+script = ExtResource("1_cai3j")

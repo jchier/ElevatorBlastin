@@ -8,7 +8,7 @@ size = Vector2(29, 27)
 
 [node name="DarkRoomComponent" type="Area2D" unique_id=1450923526]
 collision_layer = 2097152
-collision_mask = 1024
+collision_mask = 2097152
 script = ExtResource("1_coipq")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1098292480]
@@ -18,5 +18,3 @@ shape = SubResource("RectangleShape2D_oark8")
 visible = false
 script = ExtResource("2_tl83k")
 collision_shape = NodePath("../CollisionShape2D")
-
-[connection signal="area_entered" from="." to="." method="_on_area_entered"]

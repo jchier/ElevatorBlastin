@@ -7,8 +7,9 @@ const DARK_ROOM_MASK_VALUE = 22
 @onready var hurtbox: Area2D = $Hurtbox
 @onready var hitbox_component: HitboxComponent = $HitboxComponent
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var dark_room_detector_component: Area2D = $DarkRoomDetectorComponent
 
-const SPEED: int = 300
+var speed: int = 300
 var floor_number: int = -1
 var hit: bool
 var direction: float = 1
@@ -21,7 +22,7 @@ func _ready():
 
 	
 func _physics_process(delta: float) -> void:
-	global_position.y += direction * SPEED * delta
+	global_position.y += direction * speed * delta
 
 
 func _acquire_floor_number():
@@ -34,9 +35,8 @@ func _on_hit_hurtbox(_hurtbox_component: HurtboxComponent):
 	_register_collision()
 
 func _register_collision():
-	hurtbox.set_collision_mask_value(DARK_ROOM_MASK_VALUE, true)
-	#note, this might break detection
-	set_physics_process(false)
+	GameEvent.broken_lamp.emit(self)
+	speed = 0
 	animation_player.play("break")
 
 
