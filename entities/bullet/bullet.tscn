@@ -19,7 +19,7 @@ wait_time = 10.0
 
 [node name="HitboxComponent" parent="." unique_id=331922973 instance=ExtResource("3_b4ffb")]
 collision_layer = 512
-collision_mask = 787713
+collision_mask = 1836289
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent" unique_id=1200185108]
 shape = SubResource("CircleShape2D_oark8")
