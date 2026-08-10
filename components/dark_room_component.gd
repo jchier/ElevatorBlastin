@@ -20,4 +20,4 @@ func _on_lamp_broken(lamp: Lamp):
 func _on_timer_timeout() -> void:
 	rect.hide()
 	for area in get_overlapping_areas():		
-		area.darken.emit()
+		area.lighten.emit()

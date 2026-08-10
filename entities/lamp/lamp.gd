@@ -35,6 +35,7 @@ func _on_hit_hurtbox(_hurtbox_component: HurtboxComponent):
 	_register_collision()
 
 func _register_collision():
+	hitbox_component.queue_free()
 	GameEvent.broken_lamp.emit(self)
 	speed = 0
 	animation_player.play("break")

@@ -28,6 +28,7 @@ func set_player_door(is_player_door_: bool) -> DoorHall:
 func _ready():	
 	interactive_component.act.connect(_act)
 	dark_room_detector_component.darken.connect(_darken)
+	dark_room_detector_component.lighten.connect(_lighten)
 	if player_door:
 		sprite_2d.modulate = Color.CRIMSON
 		
@@ -97,7 +98,10 @@ func can_spawn_enemy() -> bool:
 
 
 func _darken():
-	sprite_2d.visible = !sprite_2d.visible
+	sprite_2d.visible = false
+	
+func _lighten():
+	sprite_2d.visible = true
 
 func toggle_bullet_proof():
 	bullet_proof_disabled = !bullet_proof_disabled
