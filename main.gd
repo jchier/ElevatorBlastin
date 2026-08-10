@@ -7,6 +7,7 @@ const MAX_ENEMY_COUNT: int = 8
 var level_one = preload("uid://cflxxyn4pet7d")
 @onready var retry_timer: Timer = $RetryTimer
 @onready var enemy_spawn_timer: Timer = $EnemySpawnTimer
+@onready var enemy_manager: EnemyManager = $EnemyManager
 @onready var hud: CanvasLayer = $Hud
 var level: Node
 var document_count: int = 0
@@ -22,7 +23,7 @@ func _ready():
 	level = level_one.instantiate()
 	add_child(level)
 	spawn_player()
-	spawn_enemy()
+	initialize_enemy_manager()
 	spawn_door_hall()
 	hud.update_document_count(document_count)
 	GameEvent.player_changed_floor.connect(_player_changed_floor)
@@ -40,15 +41,17 @@ func spawn_player():
 			player_scene.died.connect(_player_died)
 			GameEvent.player_spawned.emit(player_scene)
 			
-func spawn_enemy():
+func initialize_enemy_manager():
 	for enemy_marker in level.get_children():
 		if enemy_marker is EnemyMarker:
-			var enemy_scene: Enemy = Enemy.new_enemy(false)
-			add_child(enemy_scene)
-			enemy_scene.global_position = enemy_marker.global_position
-
+			enemy_manager.add_enemy_marker(enemy_marker)
+			
+	
 
 func spawn_enemy_from_door():
+	if !valid_spawn_door:
+		return
+		
 	if !selected_door:
 		selected_door = valid_spawn_door.keys()[0]
 		selected_door.spawn_enemy()

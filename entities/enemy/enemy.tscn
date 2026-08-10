@@ -923,8 +923,6 @@ one_shot = true
 wait_time = 15.0
 one_shot = true
 
-[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=1395079868]
-
 [node name="StateChartDebugger" parent="." unique_id=747944174 instance=ExtResource("21_fktuf")]
 visible = false
 offset_left = -87.0

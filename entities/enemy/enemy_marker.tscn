@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://dwre020rveprg"]
+
+[ext_resource type="Script" uid="uid://bpv6re8vjeo51" path="res://entities/enemy/enemy_marker.gd" id="1_lfjdg"]
+
+[node name="EnemyMarker" type="Marker2D" unique_id=1020035098]
+script = ExtResource("1_lfjdg")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1202264460]

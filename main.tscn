@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cvm8bm4tvwvh7" path="res://main.gd" id="1_ig7tw"]
 [ext_resource type="PackedScene" uid="uid://duees6xrwud5f" path="res://hud/hud.tscn" id="2_0xm2m"]
+[ext_resource type="PackedScene" uid="uid://c7wauk7l0nngx" path="res://entities/enemy/enemy_manager.tscn" id="3_h2yge"]
 
 [node name="Main" type="Node" unique_id=1280934045]
 script = ExtResource("1_ig7tw")
@@ -14,5 +15,7 @@ autostart = true
 wait_time = 3.0
 
 [node name="Hud" parent="." unique_id=1273838119 instance=ExtResource("2_0xm2m")]
+
+[node name="EnemyManager" parent="." unique_id=98685768 instance=ExtResource("3_h2yge")]
 
 [connection signal="timeout" from="RetryTimer" to="." method="_on_retry_timer_timeout"]

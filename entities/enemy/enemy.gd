@@ -416,17 +416,18 @@ func start_animation(to_play: String):
 	animation_component.start(to_play)
 
 func on_area_entered(interactive: InteractiveComponent):
+	var player_floor_relation = _player_floor_relation()
+	
 	if interactive.is_in_group("stairs_top"):
-		if _player_floor_relation() < 0:
+		if player_floor_relation < 0:
 			interactor_component.try_interact(self)
 			
 	if interactive.is_in_group("stairs_bottom"):
-		if _player_floor_relation() > 0:
+		if player_floor_relation > 0:
 			interactor_component.try_interact(self)
 			
-	if interactive.is_in_group("door_hall") and _player_floor_relation() <= -2:
-		
-		print(player.get_floor(), get_floor(), _player_floor_relation())
+	if interactive.is_in_group("door_hall") and absi(player_floor_relation) >= 2:
+		print("enemy ", player_floor_relation, " floors away from player exited")
 		interactor_component.try_interact(self)
 		
 func die():
