@@ -15,6 +15,10 @@ script = ExtResource("1_coipq")
 shape = SubResource("RectangleShape2D_oark8")
 
 [node name="Rect" type="Node2D" parent="." unique_id=441121799 node_paths=PackedStringArray("collision_shape")]
-visible = false
 script = ExtResource("2_tl83k")
 collision_shape = NodePath("../CollisionShape2D")
+
+[node name="Timer" type="Timer" parent="." unique_id=1258931838]
+wait_time = 5.0
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

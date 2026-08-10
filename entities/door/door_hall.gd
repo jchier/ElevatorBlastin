@@ -10,6 +10,7 @@ const COLLISION_LAYER_VALUE: int = 19
 @onready var sprite_2d: Sprite2D = $Sprite2D
 @onready var floor_detector_component: FloorDetectorComponent = $FloorDetectorComponent
 @onready var bulletproof: Area2D = $Bulletproof
+@onready var dark_room_detector_component: Area2D = $DarkRoomDetectorComponent
 
 @export var player_door: bool = false
 var on_screen: bool = false
@@ -26,7 +27,7 @@ func set_player_door(is_player_door_: bool) -> DoorHall:
 
 func _ready():	
 	interactive_component.act.connect(_act)
-	
+	dark_room_detector_component.darken.connect(_darken)
 	if player_door:
 		sprite_2d.modulate = Color.CRIMSON
 		
@@ -95,7 +96,8 @@ func can_spawn_enemy() -> bool:
 	return false
 
 
-	
+func _darken():
+	sprite_2d.visible = !sprite_2d.visible
 
 func toggle_bullet_proof():
 	bullet_proof_disabled = !bullet_proof_disabled
