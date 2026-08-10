@@ -1,6 +1,6 @@
 extends Node2D
 
-@export var collision_shape: CollisionShape2D
+var collision_shape: CollisionShape2D
 var color := Color(0, 0, 0, 0.7)
 
 func _draw():

@@ -13,8 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://hdtr8ria6v7g" path="res://entities/stairs/stairs_m.tscn" id="10_aerfg"]
 [ext_resource type="PackedScene" uid="uid://c4ly4ulyls4xr" path="res://entities/window/window.tscn" id="11_5ot28"]
 [ext_resource type="PackedScene" uid="uid://ceqkbl514i83g" path="res://entities/lamp/lamp.tscn" id="13_nmsli"]
-[ext_resource type="Script" uid="uid://biocpa7ouigsq" path="res://components/dark_room_component.gd" id="14_betor"]
-[ext_resource type="Script" uid="uid://b04ch36r8o5ej" path="res://components/rect.gd" id="15_vjtdm"]
+[ext_resource type="PackedScene" uid="uid://1imrx0kxu7c5" path="res://components/dark_room_component.tscn" id="14_betor"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_betor"]
 size = Vector2(482.5, 723)
@@ -385,20 +384,10 @@ position = Vector2(179, 164)
 [node name="Lamp3" parent="." unique_id=1200744973 instance=ExtResource("13_nmsli")]
 position = Vector2(202, 164)
 
-[node name="DarkRoomComponent" type="Area2D" parent="." unique_id=1450923526]
-position = Vector2(61, 514)
-collision_layer = 2097152
-collision_mask = 2097152
-script = ExtResource("14_betor")
+[node name="DarkRoomComponent" parent="." unique_id=1450923526 node_paths=PackedStringArray("collision_shape") instance=ExtResource("14_betor")]
+position = Vector2(62, 511)
+collision_shape = NodePath("CollisionShape2D2")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DarkRoomComponent" unique_id=1098292480]
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="DarkRoomComponent" unique_id=1098292480]
 shape = SubResource("RectangleShape2D_betor")
 metadata/_edit_lock_ = true
-
-[node name="Rect" type="Node2D" parent="DarkRoomComponent" unique_id=441121799 node_paths=PackedStringArray("collision_shape")]
-visible = false
-script = ExtResource("15_vjtdm")
-collision_shape = NodePath("../CollisionShape2D")
-metadata/_edit_lock_ = true
-
-[connection signal="area_entered" from="DarkRoomComponent" to="DarkRoomComponent" method="_on_area_entered"]

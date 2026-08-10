@@ -2,10 +2,11 @@ extends Area2D
 
 @onready var rect: Node2D = $Rect
 @onready var timer: Timer = $Timer
+@export var collision_shape: CollisionShape2D
 
 func _ready():
 	GameEvent.broken_lamp.connect(_on_lamp_broken)
-
+	rect.collision_shape = collision_shape
 
 func _on_lamp_broken(lamp: Lamp):
 	for area in get_overlapping_areas():
