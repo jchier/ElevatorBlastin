@@ -31,6 +31,7 @@ const ENEMY_SCENE: PackedScene = preload("uid://bftk50lxpoojr")
 @onready var elevator_floor_detector: RayCast2D = $ElevatorFloorDetector
 @onready var crush_component: Node2D = $CrushComponent
 @onready var floor_detector_collision_shape_2d: CollisionShape2D = $FloorDetectorComponent/CollisionShape2D
+@onready var on_screen_notifier: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
 
 var chosen_elevator: Elevator
 @export var starting_floor: int
@@ -79,6 +80,7 @@ func _ready():
 	direction = 1
 	move_to.global_position = Vector2(0,0)
 	reaction_timer.paused = true
+	on_screen_notifier.screen_exited.connect(_screen_exited)
 	if spawned_from_door:
 		spawn_animation = "exit"
 	else:
@@ -426,7 +428,7 @@ func on_area_entered(interactive: InteractiveComponent):
 		if player_floor_relation > 0:
 			interactor_component.try_interact(self)
 			
-	if interactive.is_in_group("door_hall") and absi(player_floor_relation) >= 2:
+	if interactive.is_in_group("door_hall") and absi(player_floor_relation) >= 2 and spawned_from_door:
 		print("enemy ", player_floor_relation, " floors away from player exited")
 		interactor_component.try_interact(self)
 		
@@ -453,3 +455,7 @@ func _on_spawn_state_exited() -> void:
 	disabled = false
 	animation_component.interaction_complete.disconnect(_spawn_complete)
 	animation_component.interaction_complete.connect(_interaction_complete)
+	
+func _screen_exited() -> void:
+	if spawned_from_door:
+		despawn()

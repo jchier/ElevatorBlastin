@@ -716,6 +716,8 @@ z_index = 2
 position = Vector2(0, -15)
 shape = SubResource("CapsuleShape2D_jr1kj")
 
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=518255633]
+
 [node name="StateChart" type="Node" parent="." unique_id=248309767]
 script = ExtResource("10_5f25h")
 track_in_editor = true
