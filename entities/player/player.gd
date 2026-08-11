@@ -113,7 +113,7 @@ func _on_stand_state_entered() -> void:
 
 func _on_duck_state_entered() -> void:
 	bullet_component.toggle_stance()
-	hurtbox_component.toggle_stance()
+	hurtbox_component.duck()
 	standing_collision_shape.set_deferred("disabled", true)
 	crouching_collision_shape.set_deferred("disabled", false)
 	animation_component.play("duck")
@@ -122,7 +122,7 @@ func _on_duck_state_entered() -> void:
 
 func _on_duck_state_exited() -> void:
 	bullet_component.toggle_stance()
-	hurtbox_component.toggle_stance()
+	hurtbox_component.stand()
 	standing_collision_shape.set_deferred("disabled", false)
 	crouching_collision_shape.set_deferred("disabled", true)
 	movement_component.toggle_movement()
