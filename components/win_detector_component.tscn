@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://bhx8g287s5moa"]
+
+[ext_resource type="Script" uid="uid://dfr55nhruouba" path="res://components/win_detector_component.gd" id="1_gyvvy"]
+
+[node name="WinDetectorComponent" type="Area2D" unique_id=1011814729]
+collision_layer = 4194304
+collision_mask = 4
+script = ExtResource("1_gyvvy")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

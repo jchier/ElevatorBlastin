@@ -1,5 +1,6 @@
 [gd_scene format=4 uid="uid://cflxxyn4pet7d"]
 
+[ext_resource type="Script" uid="uid://bmq02hv4ahfhi" path="res://levels/level.gd" id="1_bgw3c"]
 [ext_resource type="PackedScene" uid="uid://fb5pvrms6cc" path="res://components/floor_marker_component.tscn" id="1_l53as"]
 [ext_resource type="PackedScene" uid="uid://ddo3hnjqf5y25" path="res://entities/door/door.tscn" id="1_n46q3"]
 [ext_resource type="TileSet" uid="uid://dcpicyh2ebhcf" path="res://level_assets/tile.tres" id="4_gwceb"]
@@ -14,12 +15,17 @@
 [ext_resource type="PackedScene" uid="uid://c4ly4ulyls4xr" path="res://entities/window/window.tscn" id="11_5ot28"]
 [ext_resource type="PackedScene" uid="uid://ceqkbl514i83g" path="res://entities/lamp/lamp.tscn" id="13_nmsli"]
 [ext_resource type="PackedScene" uid="uid://1imrx0kxu7c5" path="res://components/dark_room_component.tscn" id="14_betor"]
+[ext_resource type="PackedScene" uid="uid://bhx8g287s5moa" path="res://components/win_detector_component.tscn" id="16_lrvbd"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_betor"]
 size = Vector2(482.5, 723)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oark8"]
+size = Vector2(1078, 68)
+
 [node name="Level1" type="Node2D" unique_id=1570879048]
 z_as_relative = false
+script = ExtResource("1_bgw3c")
 
 [node name="FloorMarkerComponent3" parent="." unique_id=349425407 instance=ExtResource("1_l53as")]
 visible = false
@@ -147,7 +153,15 @@ position = Vector2(-9, 597)
 script = ExtResource("8_aerfg")
 
 [node name="EnemyMarker2" type="Marker2D" parent="." unique_id=654291317]
-position = Vector2(-186, 940)
+position = Vector2(319, 1074)
+script = ExtResource("8_aerfg")
+
+[node name="EnemyMarker3" type="Marker2D" parent="." unique_id=870701810]
+position = Vector2(-138, 1205)
+script = ExtResource("8_aerfg")
+
+[node name="EnemyMarker4" type="Marker2D" parent="." unique_id=24219440]
+position = Vector2(341, 832)
 script = ExtResource("8_aerfg")
 
 [node name="DoorHallMarker" type="Marker2D" parent="." unique_id=1914852396]
@@ -181,15 +195,11 @@ position = Vector2(495, 623)
 script = ExtResource("9_5ot28")
 
 [node name="DoorHallMarker2" type="Marker2D" parent="." unique_id=1024379824]
-position = Vector2(-66, 263)
+position = Vector2(237, 263)
 script = ExtResource("9_5ot28")
 
 [node name="DoorHallMarker3" type="Marker2D" parent="." unique_id=1321508098]
 position = Vector2(159, 383)
-script = ExtResource("9_5ot28")
-
-[node name="DoorHallMarker4" type="Marker2D" parent="." unique_id=1824737960]
-position = Vector2(25, 383)
 script = ExtResource("9_5ot28")
 
 [node name="DoorHallMarker5" type="Marker2D" parent="." unique_id=561146942]
@@ -220,20 +230,12 @@ script = ExtResource("9_5ot28")
 position = Vector2(34, 743)
 script = ExtResource("9_5ot28")
 
-[node name="DoorHallMarker15" type="Marker2D" parent="." unique_id=110766411]
-position = Vector2(114, 743)
-script = ExtResource("9_5ot28")
-
 [node name="DoorHallMarker16" type="Marker2D" parent="." unique_id=1531315987]
 position = Vector2(270, 743)
 script = ExtResource("9_5ot28")
 
 [node name="DoorHallMarker17" type="Marker2D" parent="." unique_id=684120594]
-position = Vector2(255, 862)
-script = ExtResource("9_5ot28")
-
-[node name="DoorHallMarker18" type="Marker2D" parent="." unique_id=809863821]
-position = Vector2(172, 863)
+position = Vector2(117, 863)
 script = ExtResource("9_5ot28")
 
 [node name="DoorHallMarker19" type="Marker2D" parent="." unique_id=109881035]
@@ -277,8 +279,12 @@ position = Vector2(242, 1102)
 script = ExtResource("9_5ot28")
 player_door = true
 
+[node name="DoorHallMarker42" type="Marker2D" parent="." unique_id=1811642829]
+position = Vector2(94, 1223)
+script = ExtResource("9_5ot28")
+
 [node name="DoorHallMarker39" type="Marker2D" parent="." unique_id=1068049082]
-position = Vector2(-162, 1223)
+position = Vector2(430, 1223)
 script = ExtResource("9_5ot28")
 
 [node name="DoorHallMarker40" type="Marker2D" parent="." unique_id=224373066]
@@ -288,6 +294,7 @@ script = ExtResource("9_5ot28")
 [node name="DoorHallMarker41" type="Marker2D" parent="." unique_id=1031692950]
 position = Vector2(-24, 1223)
 script = ExtResource("9_5ot28")
+player_door = true
 
 [node name="StairsM" parent="." unique_id=652959830 instance=ExtResource("10_aerfg")]
 position = Vector2(230, 430)
@@ -305,6 +312,11 @@ bottom_level_floor = 2
 
 [node name="Stairs9" parent="." unique_id=75931350 instance=ExtResource("9_08mmt")]
 position = Vector2(370, 790)
+top_level_floor = 3
+bottom_level_floor = 2
+
+[node name="Stairs10" parent="." unique_id=2035471979 instance=ExtResource("9_08mmt")]
+position = Vector2(-18, 307)
 top_level_floor = 3
 bottom_level_floor = 2
 
@@ -395,3 +407,9 @@ collision_shape = NodePath("CollisionShape2D2")
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="DarkRoomComponent" unique_id=1098292480]
 shape = SubResource("RectangleShape2D_betor")
 metadata/_edit_lock_ = true
+
+[node name="WinDetectorComponent" parent="." unique_id=1011814729 instance=ExtResource("16_lrvbd")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WinDetectorComponent" unique_id=1650312855]
+position = Vector2(60, 1377)
+shape = SubResource("RectangleShape2D_oark8")

@@ -14,6 +14,7 @@ var _direction: float = 1.0
 
 func set_direction(direction):
 	_direction = direction
+	set_last_direction(direction)
 
 func set_last_direction(direction):
 	if direction == 0:

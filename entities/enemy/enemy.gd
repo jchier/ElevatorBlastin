@@ -80,7 +80,7 @@ func _ready():
 	direction = 1
 	move_to.global_position = Vector2(0,0)
 	reaction_timer.paused = true
-	on_screen_notifier.screen_exited.connect(_screen_exited)
+	
 	if spawned_from_door:
 		spawn_animation = "exit"
 	else:
@@ -91,6 +91,8 @@ static func new_enemy(spawn_type: bool) -> Enemy:
 	new_enemy_spawn.spawned_from_door = spawn_type
 	return new_enemy_spawn
 
+func _on_alive_state_entered() -> void:
+	on_screen_notifier.screen_exited.connect(_screen_exited)
 
 func _on_alive_state_processing(delta: float) -> void:
 	movement_component.generate_velocity(delta, navigation_component.get_direction())
@@ -108,6 +110,9 @@ func _on_alive_state_processing(delta: float) -> void:
 	
 	#if is_on_ceiling() and is_on_floor():
 	#	state_chart.send_event("dead")	
+
+func _on_alive_state_exited() -> void:
+	on_screen_notifier.screen_exited.disconnect(_screen_exited)
 
 func try_duck_fire():
 	if !fire_rate_timer.is_stopped() and can_shoot:
@@ -448,6 +453,11 @@ func _on_spawn_state_entered() -> void:
 	start_animation(spawn_animation)
 
 func _spawn_complete():
+	#set_orientation(signf(global_position.direction_to(GameState.player.global_position).x))
+	var player_dir_from_self = signf(global_position.direction_to(GameState.player.global_position).x)
+	
+	navigation_component.set_direction(player_dir_from_self)
+	GameEvent.enemy_spawned.emit()
 	state_chart.send_event("to_alive")
 	
 

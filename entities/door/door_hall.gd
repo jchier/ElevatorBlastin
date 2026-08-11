@@ -62,7 +62,7 @@ func player_act(body: Player):
 	await animation_player.animation_finished
 	body.set_orientation(last_orientation)
 	body.disabled = false
-	GameEvent.got_document.emit()
+	GameEvent.got_document.emit(self)
 	
 func enemy_act(body: Enemy):
 	body.disabled = true
@@ -83,9 +83,6 @@ func spawn_enemy():
 	enemy_scene.global_position = global_position
 	animation_player.play("open")
 	await animation_player.animation_finished
-	#enemy_scene.disabled = false
-	enemy_scene.set_orientation(signf(global_position.direction_to(GameState.player.global_position).x))
-	GameEvent.enemy_spawned.emit()
 	
 func get_floor() -> int:
 	return floor_detector_component.get_floor()

@@ -97,6 +97,7 @@ jump={
 2d_physics/layer_20="window"
 2d_physics/layer_21="lamp"
 2d_physics/layer_22="dark_room"
+2d_physics/layer_23="win_detector"
 
 [physics]
 
