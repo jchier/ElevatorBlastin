@@ -69,7 +69,7 @@ func spawn_enemy_from_door():
 		#randomly select a door from among the doors on screen, ask it to spawn enemy
 			selected_door_iterations = selected_door_iterations + 1
 			assert(selected_door_iterations < 30, "selecting door algorithm has iterated too many times")
-			selected_door = valid_door_array.get(randi_range(0, valid_spawn_door.size() - 1))
+			selected_door = valid_door_array.pick_random()
 	
 	if enemy_count <= MAX_ENEMY_COUNT:
 		last_floor_spawned = selected_door.get_floor()

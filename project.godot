@@ -23,6 +23,7 @@ GameState="*uid://cujuuy7fcd5f8"
 
 [debug]
 
+settings/stdout/print_fps=true
 file_logging/enable_file_logging=true
 
 [display]
