@@ -125,7 +125,7 @@ func _on_retry_timer_timeout() -> void:
 	
 func _check_win():
 	if player_doors.size() > 0:
-		GameEvent.did_not_win.emit(player_doors.size())
+#		GameEvent.did_not_win.emit(player_doors.size())
 		GameState.player.global_position = player_doors[0].global_position
 		reset_physics_interpolation()
 	else:
