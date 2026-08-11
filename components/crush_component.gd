@@ -11,21 +11,27 @@ var was_crushed: bool = false
 var crush_amount: int = 0
 
 func _process(_delta: float) -> void:
-	if crush_amount >= MAX_CRUSH:
-		was_crushed = true
-		crushed.emit()
-		return
+#	if crush_amount >= MAX_CRUSH:
+#		was_crushed = true
+	#	crushed.emit()
+	#	return
 		
-	if ray_down.is_colliding() and ray_up.is_colliding():
+	if ray_down.is_colliding() and ray_up.is_colliding() and was_crushed == false:
 		var up_col = ray_up.get_collider()
 		var down_col = ray_down.get_collider()
-		if up_col is AnimatableBody2D and up_col.get_parent().velocity.y > 1\
-		or down_col is AnimatableBody2D and down_col.get_parent().velocity.y < -1:
-			crush_amount = crush_amount + 1
+		if up_col is AnimatableBody2D and up_col.get_parent().velocity.y > 1 and timer.is_stopped()\
+		or down_col is AnimatableBody2D and down_col.get_parent().velocity.y < -1 and timer.is_stopped():
+			timer.start()
 	else:
-		crush_amount = 0
+		timer.stop()
+	
+	if !timer.is_stopped():
+		print(timer.time_left)
 		
+
 		
 
 
-		
+func _on_timer_timeout() -> void:
+	was_crushed = true
+	crushed.emit()

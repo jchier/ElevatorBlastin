@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://ddj26eine24hx"]
 
 [ext_resource type="Script" uid="uid://bw6yydr2q5fp4" path="res://components/crush_component.gd" id="1_no021"]
+[ext_resource type="Script" uid="uid://ckbf0aerjidft" path="res://entities/bullet/bullet.gd" id="2_8eobb"]
 
 [node name="CrushComponent" type="Node2D" unique_id=1059272388]
 script = ExtResource("1_no021")
@@ -15,7 +16,8 @@ position = Vector2(0, -32)
 target_position = Vector2(0, -27)
 collision_mask = 65
 
-[node name="Timer" type="Timer" parent="." unique_id=1839371152]
-wait_time = 0.5
+[node name="Timer" type="Timer" parent="." unique_id=63066121]
+one_shot = true
+script = ExtResource("2_8eobb")
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

@@ -143,7 +143,7 @@ position = Vector2(-147, 233)
 script = ExtResource("9_3sk1a")
 
 [node name="EnemyMarker" type="Marker2D" parent="." unique_id=641922445]
-position = Vector2(-150, 941)
+position = Vector2(-9, 597)
 script = ExtResource("8_aerfg")
 
 [node name="EnemyMarker2" type="Marker2D" parent="." unique_id=654291317]

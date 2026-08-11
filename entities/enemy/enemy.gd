@@ -85,9 +85,9 @@ func _ready():
 		spawn_animation = "interaction_complete"
 	
 static func new_enemy(spawn_type: bool) -> Enemy:
-	var new_enemy: Enemy = ENEMY_SCENE.instantiate()
-	new_enemy.spawned_from_door = spawn_type
-	return new_enemy
+	var new_enemy_spawn: Enemy = ENEMY_SCENE.instantiate()
+	new_enemy_spawn.spawned_from_door = spawn_type
+	return new_enemy_spawn
 
 
 func _on_alive_state_processing(delta: float) -> void:
