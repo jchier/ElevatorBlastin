@@ -27,12 +27,12 @@ func _ready():
 	initialize_enemy_manager()
 	spawn_door_hall()
 	initialize_win_component()
-	#hud.update_document_count(document_count)
 	GameEvent.player_changed_floor.connect(_player_changed_floor)
 	GameEvent.enemy_spawned.connect(_enemy_spawned)
 	GameEvent.enemy_despawned.connect(_enemy_despawned)
 	GameEvent.got_document.connect(_got_document)
 	win_detector_component.check_win.connect(_check_win)
+	hud.update_document_count(player_doors.size())
 	
 func spawn_player():
 	for player_marker in level.get_children():
@@ -40,7 +40,6 @@ func spawn_player():
 			var player_scene: Player = PLAYER_SCENE.instantiate()
 			add_child(player_scene)
 			player_scene.global_position = player_marker.global_position
-#			player_scene.set_floor(player_marker.starting_floor)
 			player_scene.died.connect(_player_died)
 			GameEvent.player_spawned.emit(player_scene)
 			
@@ -85,7 +84,7 @@ func spawn_door_hall():
 			if door_hall_scene.player_door:
 				#document_count = document_count + 1
 				player_doors.append(door_hall_scene)
-				hud.update_document_count(player_doors.size())
+				#hud.update_document_count(player_doors.size())
 			add_child(door_hall_scene)
 			doors.append(door_hall_scene)
 			door_hall_scene.global_position = door_hall_marker.global_position
@@ -125,7 +124,7 @@ func _on_retry_timer_timeout() -> void:
 	
 func _check_win():
 	if player_doors.size() > 0:
-#		GameEvent.did_not_win.emit(player_doors.size())
+		hud.display_warning("There are still documents to find!\nGo in the red doors.")
 		GameState.player.global_position = player_doors[0].global_position
 		reset_physics_interpolation()
 	else:
