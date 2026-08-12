@@ -4,6 +4,7 @@ extends Node
 
 signal state_chart_event(event: String)
 signal set_orientation(signf: float)
+signal jump_good
 
 @export var _character_body: CharacterBody2D
 
@@ -78,4 +79,5 @@ func generate_velocity(delta: float, x_input: float):
 
 func jump():
 	if _character_body.is_on_floor() and disabled == false:
+		jump_good.emit()
 		_jump = true

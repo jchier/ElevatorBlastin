@@ -33,7 +33,7 @@ func _ready():
 	GameEvent.got_document.connect(_got_document)
 	win_detector_component.check_win.connect(_check_win)
 	hud.update_document_count(player_doors.size())
-	
+	hud.display_warning("Find all the documents in the red door,\nthen make your way to the bottom floor!")
 func spawn_player():
 	for player_marker in level.get_children():
 		if player_marker is PlayerMarker:
@@ -98,7 +98,8 @@ func initialize_win_component():
 func _got_document(door: DoorHall):
 	player_doors.erase(door)
 	hud.update_document_count(player_doors.size())
-
+	if player_doors.size() == 0:
+		hud.display_warning("You got all the documents. \nMake your way to the exit!")
 func _player_changed_floor():
 	valid_spawn_door.clear()
 	for door in doors:

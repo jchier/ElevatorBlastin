@@ -22,6 +22,7 @@ func _ready() -> void:
 
 func damage(amount: int):
 	if dead:
+		died.emit()
 		return
 	current_health = clamp(current_health - amount, 0, max_health)
 	damaged.emit()

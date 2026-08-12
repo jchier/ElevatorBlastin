@@ -2,6 +2,8 @@
 
 [ext_resource type="Script" uid="uid://cjw48tluigaxu" path="res://entities/window/window.gd" id="1_m5bs3"]
 [ext_resource type="Texture2D" uid="uid://feic73v6ph7e" path="res://entities/window/window_sprite.png" id="2_h7br1"]
+[ext_resource type="AudioStream" uid="uid://x5e8055linwy" path="res://sound/glass_hit.wav" id="3_yci3q"]
+[ext_resource type="AudioStream" uid="uid://dxmmjw6ichg27" path="res://sound/lamp_break.wav" id="4_gqcop"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oark8"]
 size = Vector2(24, 71)
@@ -34,5 +36,11 @@ collision_mask = 12
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=762336650]
 position = Vector2(1, 1.5)
 shape = SubResource("RectangleShape2D_m5bs3")
+
+[node name="GlassHit" type="AudioStreamPlayer2D" parent="." unique_id=959859731]
+stream = ExtResource("3_yci3q")
+
+[node name="GlassBreak" type="AudioStreamPlayer2D" parent="." unique_id=1417304221]
+stream = ExtResource("4_gqcop")
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]

@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://sphex7yy6a2e" path="res://components/health_component.gd" id="2_lqjfw"]
 [ext_resource type="PackedScene" uid="uid://b1imkaubtmk14" path="res://components/animation_component.tscn" id="3_cql4q"]
 [ext_resource type="PackedScene" uid="uid://dcvp37of238fb" path="res://components/navigation_component.tscn" id="3_kh7fx"]
+[ext_resource type="PackedScene" uid="uid://l2ytcu22oqju" path="res://components/character_sound_component.tscn" id="3_v82o1"]
 [ext_resource type="AnimationNodeStateMachine" uid="uid://cb7raff26gw6f" path="res://state_machine_legs.tres" id="4_wbwud"]
 [ext_resource type="AnimationNodeStateMachine" uid="uid://vqwerxuxtc6o" path="res://state_machine_torso.tres" id="5_2t1u4"]
 [ext_resource type="PackedScene" uid="uid://b7k4uoekj8gqj" path="res://components/bullet_component.tscn" id="8_jfjhj"]
@@ -589,6 +590,8 @@ offset_top = -104.0
 offset_right = 24.0
 offset_bottom = -81.0
 
+[node name="CharacterSoundComponent" parent="." unique_id=1996960843 instance=ExtResource("3_v82o1")]
+
 [node name="MovementComponent" parent="." unique_id=743977151 node_paths=PackedStringArray("_character_body") instance=ExtResource("2_0mv3s")]
 _character_body = NodePath("..")
 max_speed = 60.0
@@ -926,7 +929,6 @@ wait_time = 15.0
 one_shot = true
 
 [node name="StateChartDebugger" parent="." unique_id=747944174 instance=ExtResource("21_fktuf")]
-visible = false
 offset_left = -87.0
 offset_top = -232.0
 offset_right = 242.0

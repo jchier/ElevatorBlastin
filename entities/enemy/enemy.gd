@@ -7,6 +7,7 @@ const ENEMY_SCENE: PackedScene = preload("uid://bftk50lxpoojr")
 
 @onready var movement_component: MovementComponent = $MovementComponent
 @onready var navigation_component: NavigationComponent = $NavigationComponent
+@onready var sound_component: Node = $CharacterSoundComponent
 @onready var rider_component: Area2D = $RiderComponent
 @onready var visuals: Node = $Visuals
 @onready var bullet_component: Node2D = $BulletComponent
@@ -93,7 +94,8 @@ static func new_enemy(spawn_type: bool) -> Enemy:
 
 func _on_alive_state_entered() -> void:
 	on_screen_notifier.screen_exited.connect(_screen_exited)
-
+	disabled = false
+	
 func _on_alive_state_processing(delta: float) -> void:
 	movement_component.generate_velocity(delta, navigation_component.get_direction())
 	move_and_slide()
@@ -107,9 +109,6 @@ func _on_alive_state_processing(delta: float) -> void:
 				
 	if _current_occupancy:
 		state_chart.send_event("in_elevator")
-	
-	#if is_on_ceiling() and is_on_floor():
-	#	state_chart.send_event("dead")	
 
 func _on_alive_state_exited() -> void:
 	on_screen_notifier.screen_exited.disconnect(_screen_exited)
@@ -202,7 +201,10 @@ func _stance_changed() -> bool:
 	
 func _state_chart_event(event: String):
 	state_chart.send_event(event)
-	
+
+func jump():
+	sound_component.jump()
+	movement_component.jump()	
 #====================================== BEHAVIOR STATES ===========================================================	
 #====================================== DOCILE STATE ==============================================================
 func _on_docile_state_entered() -> void:
@@ -226,7 +228,7 @@ func _on_docile_state_physics_processing(_delta: float) -> void:
 		var elevator = collider.get_parent() as Elevator
 		if elevator:
 			chosen_elevator = elevator
-			movement_component.jump()
+			jump()
 			state_chart.send_event("go_in_elevator")
 
 
@@ -252,7 +254,6 @@ func _on_aggro_state_entered() -> void:
 	movement_component.disabled = false
 	cool_down_timer.start()
 	elevator_floor_detector.enabled = false
-	#try_stand_fire()
 	
 func _on_aggro_state_processing(_delta: float) -> void:
 	edge_detection.force_raycast_update()
@@ -283,6 +284,7 @@ func _on_reaction_timer_timeout() -> void:
 #		callable_shoot = try_duck_fire
 		#print("callable shoot = duck fire")
 	if player_vision_ray.is_colliding():
+		sound_component.shoot()
 		callable_shoot.call()	
 	
 func _on_aggro_state_exited() -> void:
@@ -335,7 +337,7 @@ func _on_get_off_elevator_state_entered() -> void:
 func _on_get_off_elevator_state_physics_processing(_delta: float) -> void:
 	elevator_floor_detector.force_raycast_update()
 	if !elevator_floor_detector.is_colliding():
-		movement_component.jump()
+		jump()
 		state_chart.send_event("docile")
 
 #====================================== INTERACT STATE =================================================================
@@ -365,6 +367,7 @@ func _on_died():
 	state_chart.send_event("dead")
 
 func _on_dead_state_entered() -> void:
+	sound_component.hit()
 	hurtbox_component.disabled = true
 	elevator_vision_ray.enabled = false
 	player_vision_ray.enabled = false

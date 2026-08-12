@@ -5,7 +5,7 @@ extends Node2D
 @onready var stairs_bottom_marker: Marker2D = $StairsBottomMarker
 @onready var stairs_top_area: Area2D = $StairsTopArea
 @onready var stairs_bottom_area: Area2D = $StairsBottomArea
-
+@onready var stair_sound: AudioStreamPlayer2D = $StairSound
 @export var top_level_floor: int
 @export var bottom_level_floor: int
 
@@ -32,9 +32,9 @@ func ascend_body(body: CharacterBody2D):
 	
 	
 func move_body(starting_point: Vector2, destination: Vector2, body: CharacterBody2D):
+	stair_sound.play()
 	_occupied = true
-	body.movement_component.disabled = true
-	body.hurtbox_component.disabled = true
+
 	var old_z = body.z_index
 	body.z_index = z_index - 10
 	var tween := create_tween()
@@ -44,7 +44,7 @@ func move_body(starting_point: Vector2, destination: Vector2, body: CharacterBod
 	await tween.finished
 	body.z_index = old_z
 	_occupied = false
-	#body.start_interaction_animation("interaction_complete")
-	body.movement_component.disabled = false
-	body.hurtbox_component.disabled = false
+
+
 	body.finish_interaction()
+	stair_sound.stop()

@@ -18,6 +18,7 @@ extends CharacterBody2D
 @onready var sprite_2d_torso: Sprite2D = %Sprite2DTorso
 @onready var interactor_component: InteractorComponent = $InteractorComponent
 @onready var crush_component: Node2D = $CrushComponent
+@onready var sound_component: Node = $CharacterSoundComponent
 
 signal died
 
@@ -40,18 +41,20 @@ func _ready():
 	rider_component.clear_current_occupancy.connect(_clear_current_occupancy)
 	movement_component.state_chart_event.connect(state_chart_event)
 	movement_component.set_orientation.connect(set_orientation)
+	movement_component.jump_good.connect(_jumped)
 	animation_component.can_shoot.connect(_can_shoot)
 	animation_component.interaction_complete.connect(_interaction_complete)
 	health_component.died.connect(_on_died)
 	interactor_component.interaction_valid.connect(_valid_interaction)
-	crouching_collision_shape.disabled = true
 	floor_detector_component.changed_floor.connect(_changed_floor)
 	crush_component.crushed.connect(die)
+	crouching_collision_shape.disabled = true
 
 	
 func _physics_process(delta: float) -> void:
 	
 	if Input.is_action_just_pressed("jump"):
+
 		movement_component.jump()	
 		
 	var x_input: float = Input.get_action_strength("right") - Input.get_action_strength("left")
@@ -72,7 +75,8 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_released("down"):
 		state_chart.send_event("stand")
 
-
+func _jumped():
+	sound_component.jump()
 		
 func try_duck_fire():
 	if !fire_rate_timer.is_stopped() and can_shoot and !is_on_wall():
@@ -87,6 +91,7 @@ func try_stand_fire():
 	fire()
 	
 func fire():
+	sound_component.shoot()
 	bullet_component.fire()
 	fire_rate_timer.start()
 
@@ -171,6 +176,7 @@ func _can_shoot():
 	
 	
 func _on_died():
+	sound_component.hit()
 	state_chart.send_event("dead")
 
 
@@ -212,3 +218,11 @@ func _changed_floor():
 	
 func die():
 	state_chart.send_event("dead")
+
+
+func _on_interacting_state_entered() -> void:
+	disabled = true
+
+
+func _on_interacting_state_exited() -> void:
+	disabled = false

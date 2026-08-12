@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://l2ytcu22oqju"]
+
+[ext_resource type="Script" uid="uid://b0bhm0lxxidwv" path="res://components/character_sound_component.gd" id="1_hq8ao"]
+[ext_resource type="AudioStream" uid="uid://djmnjoocc31bf" path="res://sound/shoot.wav" id="2_n8w8k"]
+[ext_resource type="AudioStream" uid="uid://bimc3lhixoekv" path="res://sound/hit.wav" id="3_rhgib"]
+[ext_resource type="AudioStream" uid="uid://dq6paj0ihyerj" path="res://sound/jump.wav" id="4_o623p"]
+
+[node name="CharacterSoundComponent" type="Node2D" unique_id=81484604]
+script = ExtResource("1_hq8ao")
+
+[node name="shoot" type="AudioStreamPlayer2D" parent="." unique_id=112745617]
+stream = ExtResource("2_n8w8k")
+bus = &"sfx"
+area_mask = 1
+
+[node name="hit" type="AudioStreamPlayer2D" parent="." unique_id=1720231119]
+stream = ExtResource("3_rhgib")
+bus = &"sfx"
+area_mask = 1
+
+[node name="jump" type="AudioStreamPlayer2D" parent="." unique_id=1158629107]
+stream = ExtResource("4_o623p")
+bus = &"sfx"
+area_mask = 1
