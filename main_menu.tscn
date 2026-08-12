@@ -1,0 +1,124 @@
+[gd_scene format=3 uid="uid://c3qu1tjmxrl3n"]
+
+[ext_resource type="Texture2D" uid="uid://cwkdonlthjlj6" path="res://hud/bg1.png" id="1_06t4h"]
+[ext_resource type="Script" uid="uid://d3rqwig4blk6i" path="res://main_menu.gd" id="1_7vrkn"]
+
+[sub_resource type="Theme" id="Theme_jr1kj"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_oark8"]
+font_size = 32
+outline_size = 12
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Animation" id="Animation_fu7sn"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("fade:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_jix8l"]
+resource_name = "fade_out"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("fade:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"load_main"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_glbon"]
+_data = {
+&"RESET": SubResource("Animation_fu7sn"),
+&"fade_out": SubResource("Animation_jix8l")
+}
+
+[node name="MainMenu" type="MarginContainer" unique_id=295596609]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -320.0
+offset_top = -260.0
+offset_right = 320.0
+offset_bottom = 260.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_jr1kj")
+script = ExtResource("1_7vrkn")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=277555896]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("1_06t4h")
+stretch_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1328874862]
+custom_minimum_size = Vector2(320, 123)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+color = Color(0, 0, 0, 0.5058824)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect" unique_id=497266611]
+custom_minimum_size = Vector2(320, 80)
+layout_mode = 0
+offset_top = 22.0
+offset_right = 320.0
+offset_bottom = 102.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="title_label" type="Label" parent="ColorRect/VBoxContainer" unique_id=1619777130]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "ELEVATOR BLASTIN'"
+label_settings = SubResource("LabelSettings_oark8")
+
+[node name="start_button" type="Button" parent="ColorRect/VBoxContainer" unique_id=1529591807]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Start the dang ol game"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=252398040]
+libraries/ = SubResource("AnimationLibrary_glbon")
+
+[node name="fade" type="ColorRect" parent="." unique_id=1726916542]
+layout_mode = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0)
+
+[connection signal="pressed" from="ColorRect/VBoxContainer/start_button" to="." method="_on_start_button_pressed"]

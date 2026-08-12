@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="ElevatorBlastin"
-run/main_scene="uid://055g2w3ljnb1"
+run/main_scene="uid://c3qu1tjmxrl3n"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
 
