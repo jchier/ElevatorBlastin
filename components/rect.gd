@@ -1,7 +1,8 @@
 extends Node2D
 
+
 var collision_shape: CollisionShape2D
-var color := Color(0, 0, 0, 0.7)
+var color := Color(0.0, 0.0, 0.0, 0.7)
 
 func _draw():
 	if !collision_shape:

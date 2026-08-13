@@ -4,12 +4,21 @@
 [ext_resource type="Script" uid="uid://b04ch36r8o5ej" path="res://components/rect.gd" id="2_tl83k"]
 
 [node name="DarkRoomComponent" type="Area2D" unique_id=1450923526]
+z_as_relative = false
 collision_layer = 2097152
 collision_mask = 2097152
 script = ExtResource("1_coipq")
 
-[node name="Rect" type="Node2D" parent="." unique_id=441121799]
+[node name="RectFG" type="Node2D" parent="." unique_id=441121799]
 visible = false
+z_index = 5
+z_as_relative = false
+script = ExtResource("2_tl83k")
+
+[node name="RectBG" type="Node2D" parent="." unique_id=1603576366]
+visible = false
+z_index = -19
+z_as_relative = false
 script = ExtResource("2_tl83k")
 
 [node name="Timer" type="Timer" parent="." unique_id=1258931838]
