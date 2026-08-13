@@ -89,6 +89,7 @@ size = Vector2(7, 60)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_j5ip0"]
 
 [node name="DoorHall" type="Node2D" unique_id=653102736]
+z_index = 1
 script = ExtResource("1_stfqn")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=409023017]
@@ -96,7 +97,6 @@ libraries/ = SubResource("AnimationLibrary_r7jra")
 autoplay = &"closed"
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=431295558]
-z_index = -3
 texture_filter = 1
 position = Vector2(0, -33)
 texture = ExtResource("1_vyek1")

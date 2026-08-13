@@ -14,9 +14,9 @@ Press [q] to stop, [?] for help
 [image2 @ 000001b1c3c243c0] Thread message queue blocking; consider raising the thread_queue_size option (current value: 8)
 Output #0, gif, to 'C:/Users/johnp/Documents/Godot/elevator-blastin/ElevatorBlastin/entities/player/player_animation.gif':
   Metadata:
-    encoder         : Lavf59.38.100
+	encoder         : Lavf59.38.100
   Stream #0:0: Video: gif, pal8(pc, gbr/unknown/unknown, progressive), 60x60 [SAR 1:1 DAR 1:1], q=2-31, 200 kb/s, 12 fps, 100 tbn
-    Metadata:
-      encoder         : Lavc59.63.100 gif
-frame=    0 fps=0.0 q=-0.0 size=       0kB time=00:00:00.00 bitrate=N/A speed=   0x    frame=   35 fps=0.0 q=-0.0 Lsize=      12kB time=00:00:02.83 bitrate=  34.2kbits/s speed=53.9x    
+	Metadata:
+	  encoder         : Lavc59.63.100 gif
+frame=    0 fps=0.0 q=-0.0 size=       0kB time=00:00:00.00 bitrate=N/A speed=   0x    frame=   35 fps=0.0 q=-0.0 Lsize=      12kB time=00:00:02.83 bitrate=  34.2kbits/s speed=53.9x    
 video:12kB audio:0kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: 0.165769%
