@@ -24,7 +24,12 @@ var disabled: bool:
 	set(value):
 		disabled = value
 var die_on_land: bool = false		
-var orientation: float
+var orientation: float:
+	set(value):
+		orientation = value
+		if value != last_orientation:
+			last_orientation = value
+			set_orientation.emit(value)
 var last_orientation = 1
 var _jump: bool = false
 
@@ -41,6 +46,8 @@ func generate_velocity(delta: float, x_input: float):
 	
 	if _character_body.velocity.y > MAX_FALL_SPEED and !disabled:
 		die_on_land = true
+	
+
 	
 	if _character_body.is_on_floor():
 		_character_body.velocity.y = 0
@@ -70,9 +77,9 @@ func generate_velocity(delta: float, x_input: float):
 	if !disabled:
 		if !is_zero_approx(_character_body.velocity.x):
 			orientation = signf(_character_body.velocity.x)
-			if orientation != last_orientation:
-				last_orientation = orientation
-				set_orientation.emit(orientation)
+#			if orientation != last_orientation:
+#				last_orientation = orientation
+#				set_orientation.emit(orientation)
 		#_character_body.velocity = velocity
 		return
 	_character_body.velocity = Vector2(0, velocity.y)

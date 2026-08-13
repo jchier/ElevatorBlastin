@@ -147,7 +147,7 @@ func _on_airborne_state_input(_event: InputEvent) -> void:
 		try_stand_fire()
 
 func _on_stand_state_physics_processing(_delta: float) -> void:
-	if velocity.length_squared() <= 0.555:
+	if velocity.length_squared() <= 500:
 			animation_component.play("idle")
 	else:
 			animation_component.play("move")
@@ -225,4 +225,5 @@ func _on_interacting_state_entered() -> void:
 
 
 func _on_interacting_state_exited() -> void:
+	set_orientation(1)
 	disabled = false
