@@ -674,10 +674,8 @@ collision_mask = 1049088
 health_component = NodePath("../HealthComponent")
 
 [node name="InteractorComponent" parent="." unique_id=18262948 instance=ExtResource("12_vr86x")]
-visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractorComponent" unique_id=1909781633]
-visible = false
 position = Vector2(0, -23.5)
 shape = SubResource("RectangleShape2D_fktuf")
 
@@ -929,6 +927,7 @@ wait_time = 15.0
 one_shot = true
 
 [node name="StateChartDebugger" parent="." unique_id=747944174 instance=ExtResource("21_fktuf")]
+visible = false
 offset_left = -87.0
 offset_top = -232.0
 offset_right = 242.0
@@ -968,6 +967,7 @@ initial_node_to_watch = NodePath("../StateChart")
 [connection signal="state_exited" from="StateChart/Root/Alive/Locomotion/Grounded/Duck" to="." method="_on_duck_state_exited"]
 [connection signal="state_input" from="StateChart/Root/Alive/Locomotion/Grounded/Duck" to="." method="_on_duck_state_input"]
 [connection signal="state_entered" from="StateChart/Root/Alive/Locomotion/Airborne" to="." method="_on_airborne_state_entered"]
+[connection signal="state_exited" from="StateChart/Root/Alive/Locomotion/Airborne" to="." method="_on_airborne_state_exited"]
 [connection signal="state_input" from="StateChart/Root/Alive/Locomotion/Airborne" to="." method="_on_airborne_state_input"]
 [connection signal="taken" from="StateChart/Root/Alive/Locomotion/Airborne/ToGrounded" to="." method="_on_to_grounded_taken"]
 [connection signal="state_entered" from="StateChart/Root/Dead" to="." method="_on_dead_state_entered"]

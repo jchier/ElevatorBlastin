@@ -11,7 +11,6 @@ const COLLISION_LAYER_VALUE: int = 19
 @onready var floor_detector_component: FloorDetectorComponent = $FloorDetectorComponent
 @onready var bulletproof: Area2D = $Bulletproof
 @onready var dark_room_detector_component: Area2D = $DarkRoomDetectorComponent
-@onready var spawn_prevention_timer: Timer = $SpawnPreventionTimer
 
 @export var player_door: bool = false
 var on_screen: bool = false
@@ -45,7 +44,6 @@ func _act(body: CharacterBody2D):
 		body.start_interaction_animation("interaction_complete")
 	elif body is Enemy:
 		enemy_act(body)
-	spawn_prevention_timer.start()
 
 func player_act(body: Player):
 	body.disabled = true
@@ -89,9 +87,9 @@ func get_floor() -> int:
 	return floor_detector_component.get_floor()
 
 func can_spawn_enemy() -> bool:
+
 	var value = GameState.player.get_floor() - get_floor()
 	if value == 1 or value == 0:
-		if spawn_prevention_timer.is_stopped():
 			return true
 	return false
 

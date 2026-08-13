@@ -401,6 +401,7 @@ position = Vector2(179, 164)
 position = Vector2(202, 164)
 
 [node name="DarkRoomComponent" parent="." unique_id=1450923526 node_paths=PackedStringArray("collision_shape") instance=ExtResource("14_betor")]
+visible = false
 position = Vector2(62, 511)
 collision_shape = NodePath("CollisionShape2D2")
 

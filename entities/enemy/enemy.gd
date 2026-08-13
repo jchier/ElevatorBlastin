@@ -112,6 +112,7 @@ func _on_alive_state_processing(delta: float) -> void:
 
 func _on_alive_state_exited() -> void:
 	on_screen_notifier.screen_exited.disconnect(_screen_exited)
+	patrol_timer.stop()
 
 func try_duck_fire():
 	if !fire_rate_timer.is_stopped() and can_shoot:
@@ -209,11 +210,11 @@ func jump():
 #====================================== DOCILE STATE ==============================================================
 func _on_docile_state_entered() -> void:
 	chosen_elevator = null
-	patrol_timer.paused = false
+	patrol_timer.start()
 	navigation_component.on_docile_state_entered()
 
 func _on_docile_state_exited() -> void:
-	patrol_timer.paused = true
+	patrol_timer.stop()
 	
 func _on_docile_state_physics_processing(_delta: float) -> void:
 	edge_detection.force_raycast_update()
