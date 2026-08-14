@@ -28,7 +28,10 @@ func _on_use_area_body_entered(body: Node2D) -> void:
 
 
 
-func _on_use_area_body_exited(body: Node2D) -> void:
-	if open and body is Enemy:
+func _on_use_area_body_exited(enemy: Node2D) -> void:
+	if open and enemy is Enemy:
+		for body in use_area.get_overlapping_bodies():
+			if body is Player:
+				return
 		animation_player.play_backwards(dir_opened)
 		open = false
