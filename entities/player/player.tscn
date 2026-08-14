@@ -19,6 +19,7 @@
 [ext_resource type="Script" uid="uid://cf1nsco3w0mf6" path="res://addons/godot_state_charts/transition.gd" id="9_j3ovn"]
 [ext_resource type="PackedScene" uid="uid://d3ybrc1g2dpl4" path="res://components/interactor_component.tscn" id="10_b2kln"]
 [ext_resource type="PackedScene" uid="uid://ddj26eine24hx" path="res://components/CrushComponent.tscn" id="11_we0b7"]
+[ext_resource type="PackedScene" uid="uid://bcwkugn6v3oy7" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="20_mtric"]
 
 [sub_resource type="Animation" id="Animation_eyb6c"]
 length = 0.001
@@ -578,6 +579,7 @@ _data = {
 [sub_resource type="AnimationNodeAdd2" id="AnimationNodeAdd2_a1qjk"]
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_afbqv"]
+graph_offset = Vector2(-357.03384, -9.525772)
 nodes/output/position = Vector2(360, 140)
 nodes/Add2/node = SubResource("AnimationNodeAdd2_a1qjk")
 nodes/Add2/position = Vector2(180, 120)
@@ -619,7 +621,7 @@ _character_body = NodePath("..")
 
 [node name="HealthComponent" type="Node" parent="." unique_id=1233727716]
 script = ExtResource("2_fkugw")
-max_health = 99
+max_health = 3
 metadata/_custom_type_script = "uid://sphex7yy6a2e"
 
 [node name="AnimationComponent" parent="." unique_id=1019330946 node_paths=PackedStringArray("animation_torso", "animation_legs", "animation_tree") instance=ExtResource("3_7thud")]
@@ -655,6 +657,7 @@ texture = ExtResource("6_j3ovn")
 offset = Vector2(0, -26)
 hframes = 5
 vframes = 19
+frame = 18
 
 [node name="Sprite2DLegs" type="Sprite2D" parent="Visuals" unique_id=1040317593]
 unique_name_in_owner = true
@@ -708,6 +711,10 @@ shape = SubResource("CapsuleShape2D_jr1kj")
 
 [node name="FireRateTimer" type="Timer" parent="." unique_id=1793356038]
 wait_time = 0.3
+one_shot = true
+
+[node name="HurtTimer" type="Timer" parent="." unique_id=353733940]
+wait_time = 0.5
 one_shot = true
 
 [node name="StateChart" type="Node" parent="." unique_id=248309767]
@@ -800,10 +807,17 @@ script = ExtResource("8_a1qjk")
 [node name="Hurt" type="Node" parent="StateChart/Root" unique_id=1768991383]
 script = ExtResource("8_a1qjk")
 
-[node name="Hurt" type="Node" parent="StateChart/Root/Hurt" unique_id=606886853]
+[node name="ToStand" type="Node" parent="StateChart/Root/Hurt" unique_id=606886853]
 script = ExtResource("9_j3ovn")
 to = NodePath("../../Grounded/Stand")
 event = &"to_stand"
+delay_in_seconds = "0.0
+"
+
+[node name="ToDie" type="Node" parent="StateChart/Root/Hurt" unique_id=491181191]
+script = ExtResource("9_j3ovn")
+to = NodePath("../../Dead")
+event = &"dead"
 delay_in_seconds = "0.0"
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=162436934]
@@ -811,10 +825,15 @@ process_callback = 0
 position_smoothing_enabled = true
 drag_vertical_enabled = true
 
-[node name="HurtTimer" type="Timer" parent="." unique_id=353733940]
-wait_time = 0.5
-one_shot = true
+[node name="StateChartDebugger" parent="." unique_id=1808151595 instance=ExtResource("20_mtric")]
+offset_left = -99.000046
+offset_top = -242.00002
+offset_right = 343.99994
+offset_bottom = 141.99998
+scale = Vector2(0.46620274, 0.4639959)
+initial_node_to_watch = NodePath("../StateChart")
 
+[connection signal="timeout" from="HurtTimer" to="." method="_on_hurt_timer_timeout"]
 [connection signal="state_entered" from="StateChart/Root/Grounded/Stand" to="." method="_on_stand_state_entered"]
 [connection signal="state_input" from="StateChart/Root/Grounded/Stand" to="." method="_on_stand_state_input"]
 [connection signal="state_physics_processing" from="StateChart/Root/Grounded/Stand" to="." method="_on_stand_state_physics_processing"]
@@ -829,4 +848,3 @@ one_shot = true
 [connection signal="taken" from="StateChart/Root/Airborne/ToGrounded" to="." method="_on_to_grounded_taken"]
 [connection signal="state_entered" from="StateChart/Root/Dead" to="." method="_on_dead_state_entered"]
 [connection signal="state_exited" from="StateChart/Root/Hurt" to="." method="_on_hurt_state_exited"]
-[connection signal="timeout" from="HurtTimer" to="." method="_on_hurt_timer_timeout"]

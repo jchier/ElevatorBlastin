@@ -32,6 +32,7 @@ var stairs_destination: Vector2
 
 var _current_occupancy: Occupant_Component = null
 var can_shoot: bool = false
+var dead: bool = false
 func disable_player(value: bool):
 		#print("disabled set to ",value)
 		movement_component.disabled = value
@@ -179,6 +180,8 @@ func _can_shoot():
 	can_shoot = !can_shoot
 	
 func _knockback(dir: int):
+	if dead:
+		return
 	set_orientation(dir * -1)
 	movement_component.orientation_lock = true
 	hurt_timer.start()
@@ -189,11 +192,13 @@ func _knockback(dir: int):
 	state_chart.send_event("to_hurt")
 
 func _on_died():
+	dead = true
 	sound_component.hit()
 	state_chart.send_event("dead")
 
 
 func _on_dead_state_entered() -> void:
+	hurt_timer.paused = true
 	animation_component.start("dead")
 	disable_player(true)
 	movement_component.disabled = true
