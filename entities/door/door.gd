@@ -1,31 +1,41 @@
+class_name Door
 extends Node2D
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
-@onready var use_l: Area2D = $Use_L
-@onready var use_r: Area2D = $Use_R
 @onready var static_body_2d: StaticBody2D = $StaticBody2D
-@onready var collision_shape_2d: CollisionShape2D = $Area2D/CollisionShape2D
 @onready var static_collision_shape_2d: CollisionShape2D = $StaticBody2D/CollisionShape2D
-@onready var use_l_collision_shape_2d: CollisionShape2D = $Use_L/CollisionShape2D
-@onready var use_r_collision_shape_2d: CollisionShape2D = $Use_R/CollisionShape2D
+@onready var use_area: Area2D = $UseArea
+@onready var collision_shape_2d: CollisionShape2D = $UseArea/CollisionShape2D
 
 @export var locked: bool = false
 var open: bool = false
+var dir_opened: String
+@export var disabled: bool = false:
+	set(value):
+		static_collision_shape_2d.set_deferred("disabled", value)
+		static_body_2d.set_collision_layer_value(9, !value)
 
-func disable_collision():
-	collision_shape_2d.set_deferred("disabled", true)
-	use_l_collision_shape_2d.set_deferred("disabled", true)
-	use_r_collision_shape_2d.set_deferred("disabled", true)
-	static_collision_shape_2d.set_deferred("disabled", true)
+func _on_use_area_body_entered(body: Node2D) -> void:
+	if !open and body is Player:
+		if body.global_position.direction_to(global_position).x > 0:
 
-func _on_use_l_body_entered(_body: Node2D) -> void:
-	if !open:
-		animation_player.play("open_l")
-		disable_collision()
+			animation_player.play("open_l")
+			dir_opened = "open_l"
+		else:
+			animation_player.play("open_r")
+			dir_opened = "open_r"
+		print(body.global_position.direction_to(global_position).x)
 		open = true
 
 
-func _on_use_r_body_entered(_body: Node2D) -> void:
-	if !open:
-		animation_player.play("open_r")
-		disable_collision()
-		open = true
+
+func _on_use_area_body_exited(body: Node2D) -> void:
+	if open and body is Enemy:
+		animation_player.play_backwards(dir_opened)
+		open = false
+
+
+
+
+
+func _on_use_area_area_entered(area: Area2D) -> void:
+	pass # Replace with function body.

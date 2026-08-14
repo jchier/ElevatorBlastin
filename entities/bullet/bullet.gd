@@ -37,5 +37,5 @@ func _on_hitbox_component_area_entered(_area: Area2D) -> void:
 
 
 func _on_hitbox_component_body_entered(body: Node2D) -> void:
-	if body is TileMapLayer:
+	if body is TileMapLayer or body is StaticBody2D:
 		_register_collision()

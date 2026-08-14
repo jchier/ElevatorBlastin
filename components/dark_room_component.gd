@@ -16,8 +16,7 @@ func _on_lamp_broken(lamp: Lamp):
 			rect_fg.show()
 			rect_bg.show()
 			timer.start()
-			
-		area.darken.emit()
+			area.darken.emit()
 
 
 func _on_timer_timeout() -> void:

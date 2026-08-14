@@ -25,8 +25,6 @@ func _process(_delta: float) -> void:
 	else:
 		timer.stop()
 	
-	if !timer.is_stopped():
-		print(timer.time_left)
 		
 
 		

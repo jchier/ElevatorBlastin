@@ -17,6 +17,18 @@ tracks/0/keys = {
 "update": 1,
 "values": [0]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_uq1c4"]
 resource_name = "open_l"
@@ -33,6 +45,18 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.16666667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
 }
 
 [sub_resource type="Animation" id="Animation_r5xgf"]
@@ -51,6 +75,18 @@ tracks/0/keys = {
 "update": 1,
 "values": [4, 5, 6, 7]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.16666667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_kgyc3"]
 _data = {
@@ -59,11 +95,8 @@ _data = {
 &"open_r": SubResource("Animation_r5xgf")
 }
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_oark8"]
-size = Vector2(10, 20)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jr1kj"]
-size = Vector2(8, 62)
+size = Vector2(18, 62)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bfv6c"]
 size = Vector2(8, 59)
@@ -80,45 +113,22 @@ vframes = 3
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=9377620]
 libraries/ = SubResource("AnimationLibrary_kgyc3")
 
-[node name="Use_L" type="Area2D" parent="." unique_id=739042443]
-visible = false
-collision_layer = 256
-collision_mask = 4
+[node name="UseArea" type="Area2D" parent="." unique_id=1064145519]
+collision_layer = 32768
+collision_mask = 12
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Use_L" unique_id=59678635]
-visible = false
-position = Vector2(-5, 0)
-shape = SubResource("RectangleShape2D_oark8")
-
-[node name="Use_R" type="Area2D" parent="." unique_id=1915881217]
-visible = false
-collision_layer = 256
-collision_mask = 4
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Use_R" unique_id=1575507772]
-visible = false
-position = Vector2(13, 0)
-shape = SubResource("RectangleShape2D_oark8")
-
-[node name="Area2D" type="Area2D" parent="." unique_id=1064145519]
-visible = false
-collision_layer = 256
-collision_mask = 524
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=312116807]
-visible = false
-position = Vector2(2, -2)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="UseArea" unique_id=312116807]
+position = Vector2(3, -2)
 shape = SubResource("RectangleShape2D_jr1kj")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=356181536]
-visible = false
-collision_mask = 12
+collision_layer = 256
+collision_mask = 524
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=94315975]
-visible = false
 position = Vector2(1, -0.5)
 shape = SubResource("RectangleShape2D_bfv6c")
 
-[connection signal="body_entered" from="Use_L" to="." method="_on_use_l_body_entered"]
-[connection signal="body_entered" from="Use_R" to="." method="_on_use_r_body_entered"]
-[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="area_entered" from="UseArea" to="." method="_on_use_area_area_entered"]
+[connection signal="body_entered" from="UseArea" to="." method="_on_use_area_body_entered"]
+[connection signal="body_exited" from="UseArea" to="." method="_on_use_area_body_exited"]

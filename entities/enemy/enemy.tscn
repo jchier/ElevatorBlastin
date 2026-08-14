@@ -634,7 +634,7 @@ collision_mask = 65553
 [node name="PlayerVisionRay" type="RayCast2D" parent="." unique_id=818286598]
 position = Vector2(0, -26)
 target_position = Vector2(434, 0)
-collision_mask = 5
+collision_mask = 261
 
 [node name="EdgeDetection" type="RayCast2D" parent="." unique_id=1498018219]
 position = Vector2(1, -19)
