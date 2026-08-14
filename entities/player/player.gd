@@ -1,7 +1,7 @@
 class_name Player
 extends CharacterBody2D
 
-const KNOCKBACK_POWER: int = 500
+const KNOCKBACK_POWER: int = 200
 
 @export var max_speed: float = 80.0
 @export var jump_velocity: float = -200.0
@@ -13,6 +13,7 @@ const KNOCKBACK_POWER: int = 500
 @onready var crouching_collision_shape: CollisionShape2D = $CrouchingCollisionShape
 @onready var animation_component: Node = $AnimationComponent
 @onready var fire_rate_timer: Timer = $FireRateTimer
+@onready var hurt_timer: Timer = $HurtTimer
 @onready var hurtbox_component: HurtboxComponent = $HurtboxComponent
 @onready var health_component: HealthComponent = $HealthComponent
 @onready var movement_component: MovementComponent = $MovementComponent
@@ -25,19 +26,19 @@ const KNOCKBACK_POWER: int = 500
 signal died
 
 		
+	
 var current_stairs: Stairs = null
 var stairs_destination: Vector2
-var t: float = 0.0
+
 var _current_occupancy: Occupant_Component = null
 var can_shoot: bool = false
-
 func disable_player(value: bool):
 		#print("disabled set to ",value)
 		movement_component.disabled = value
 		hurtbox_component.disabled = value
 		crouching_collision_shape.set_deferred("disabled", value)
 		standing_collision_shape.set_deferred("disabled", value)
-	
+		can_shoot = value
 func _ready():
 
 	rider_component.set_current_occupancy.connect(_set_current_occupancy)
@@ -56,10 +57,8 @@ func _ready():
 
 	
 func _physics_process(delta: float) -> void:
-	if !velocity.is_zero_approx():
-		print(velocity.y)
-	if Input.is_action_just_pressed("jump"):
 
+	if Input.is_action_just_pressed("jump"):
 		movement_component.jump()	
 		
 	var x_input: float = Input.get_action_strength("right") - Input.get_action_strength("left")
@@ -117,6 +116,7 @@ func _clear_current_occupancy():
 
 
 func _on_stand_state_entered() -> void:
+	movement_component.orientation_lock = false
 	animation_component.start("stand")
 
 
@@ -153,16 +153,14 @@ func _on_airborne_state_input(_event: InputEvent) -> void:
 
 func _on_stand_state_physics_processing(_delta: float) -> void:
 	#print(velocity.length_squared())
-	if velocity.length_squared() <= 800:
-			animation_component.play("idle")
-	else:
-			animation_component.play("move")
-		
-	animation_component.move(signf(velocity.y))	
+		if velocity.length_squared() <= 800:
+				animation_component.play("idle")
+		else:
+				animation_component.play("move")
+		animation_component.move(signf(velocity.y))	
 	
-	if Input.is_action_just_pressed("up"):
-		interactor_component.try_interact(self)
-			#state_chart.send_event("stairs")
+		if Input.is_action_just_pressed("up"):
+			interactor_component.try_interact(self)
 
 func _on_duck_state_input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("shoot"):
@@ -181,10 +179,14 @@ func _can_shoot():
 	can_shoot = !can_shoot
 	
 func _knockback(dir: int):
+	set_orientation(dir * -1)
+	movement_component.orientation_lock = true
+	hurt_timer.start()
 	animation_component.start("hit")
 	var knockback_direction: float = dir * KNOCKBACK_POWER
 	velocity.x = knockback_direction
 	move_and_slide()
+	state_chart.send_event("to_hurt")
 
 func _on_died():
 	sound_component.hit()
@@ -237,6 +239,14 @@ func _on_interacting_state_entered() -> void:
 
 
 func _on_interacting_state_exited() -> void:
-	set_orientation(1)
+	#set_orientation(last_orientation)
 	disable_player(false)
 	velocity = Vector2.ZERO
+
+
+func _on_hurt_timer_timeout() -> void:
+	state_chart.send_event("to_stand")
+
+
+func _on_hurt_state_exited() -> void:
+	velocity.x = 0

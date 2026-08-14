@@ -32,6 +32,7 @@ var orientation: float:
 			set_orientation.emit(value)
 var last_orientation = 1
 var _jump: bool = false
+var orientation_lock: bool = false
 
 func _ready():
 	current_speed = max_speed
@@ -45,7 +46,7 @@ func toggle_movement():
 func generate_velocity(delta: float, x_input: float):
 	
 	if _character_body.velocity.y > MAX_FALL_SPEED and !disabled:
-		print(_character_body.velocity.y)
+		#print(_character_body.velocity.y)
 		die_on_land = true
 	
 
@@ -76,7 +77,7 @@ func generate_velocity(delta: float, x_input: float):
 		state_chart_event.emit("airborne")
 	
 	if !disabled:
-		if !is_zero_approx(_character_body.velocity.x):
+		if !is_zero_approx(_character_body.velocity.x) and !orientation_lock:
 			orientation = signf(_character_body.velocity.x)
 		return
 	_character_body.velocity = Vector2(0, velocity.y)
