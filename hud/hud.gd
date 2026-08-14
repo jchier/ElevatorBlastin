@@ -2,7 +2,8 @@ extends Node
 @onready var documents_label: Label = %DocumentsLabel
 @onready var warning_label: Label = %WarningLabel
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
-@onready var heart_container: GridContainer = %HeartContainer
+@onready var heart_container: PanelContainer = %HeartContainer
+@onready var heart_grid: GridContainer = %HeartGrid
 const HEART = preload("uid://du4mn338cfknh")
 
 var document_count: int = 0
@@ -20,11 +21,11 @@ func display_warning(warning_text):
 	animation_player.play("blink")
 
 func update_hearts(health: int):
-	for child in heart_container.get_children():
+	for child in heart_grid.get_children():
 		child.queue_free()
 	
 	while health > 0:
 		var texture_rect: TextureRect = TextureRect.new()
 		texture_rect.texture = HEART
-		heart_container.add_child(texture_rect)
+		heart_grid.add_child(texture_rect)
 		health = health - 1
