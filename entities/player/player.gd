@@ -3,6 +3,7 @@ extends CharacterBody2D
 
 const KNOCKBACK_POWER: int = 200
 
+
 @export var max_speed: float = 80.0
 @export var jump_velocity: float = -200.0
 @onready var rider_component: Area2D = $RiderComponent
@@ -25,7 +26,6 @@ const KNOCKBACK_POWER: int = 200
 
 signal died
 
-		
 	
 var current_stairs: Stairs = null
 var stairs_destination: Vector2
@@ -33,6 +33,12 @@ var stairs_destination: Vector2
 var _current_occupancy: Occupant_Component = null
 var can_shoot: bool = false
 var dead: bool = false
+
+var life_counter: int:
+	set(value):
+		lives = value
+		GameEvent.player_lives_changed.emit(life_counter)
+
 func disable_player(value: bool):
 		#print("disabled set to ",value)
 		movement_component.disabled = value
@@ -57,6 +63,7 @@ func _ready():
 	crush_component.crushed.connect(die)
 	crouching_collision_shape.disabled = true
 	_update_player_health(health_component.current_health)
+	_update_player_lives(lives)
 	
 func _physics_process(delta: float) -> void:
 
@@ -259,6 +266,9 @@ func _on_hurt_state_exited() -> void:
 	
 func _update_player_health(health: int):
 	GameEvent.player_health_changed.emit(health)
+
+func _update_player_lives(lives: int):
+	GameEvent.player_lives_changed.emit(lives)
 
 func health_up():
 	health_component.current_health += 1

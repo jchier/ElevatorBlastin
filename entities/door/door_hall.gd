@@ -4,6 +4,7 @@ extends Node2D
 signal document_get
 const ENEMY_SCENE: PackedScene = preload("uid://bftk50lxpoojr")
 const COLLISION_LAYER_VALUE: int = 19
+
 @onready var interactive_component: InteractiveComponent = $InteractiveComponent
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var body_marker: Marker2D = $BodyMarker
@@ -11,8 +12,8 @@ const COLLISION_LAYER_VALUE: int = 19
 @onready var floor_detector_component: FloorDetectorComponent = $FloorDetectorComponent
 @onready var bulletproof: Area2D = $Bulletproof
 @onready var dark_room_detector_component: Area2D = $DarkRoomDetectorComponent
-
 @export var player_door: bool = false
+
 var on_screen: bool = false
 var player_has_entered: bool = false
 var bullet_proof_disabled: bool:
@@ -20,6 +21,8 @@ var bullet_proof_disabled: bool:
 		bulletproof.set_collision_layer_value(COLLISION_LAYER_VALUE, value)
 	get():
 		return bulletproof.get_collision_layer_value(COLLISION_LAYER_VALUE)
+
+
 
 func set_player_door(is_player_door_: bool) -> DoorHall:
 	player_door = is_player_door_
@@ -46,7 +49,7 @@ func _act(body: CharacterBody2D):
 		enemy_act(body)
 
 func player_act(body: Player):
-	body.disabled = true
+	#body.disabled = true
 	var last_orientation: float = body.get_orientation() 
 	body.set_orientation(1.0)
 	var tween := create_tween()
@@ -60,7 +63,7 @@ func player_act(body: Player):
 	animation_player.play("open")
 	await animation_player.animation_finished
 	body.set_orientation(last_orientation)
-	body.disabled = false
+	#body.disabled = false
 	GameEvent.got_document.emit(self)
 	
 func enemy_act(body: Enemy):
