@@ -17,7 +17,7 @@ func _process(delta: float):
 
 func start(dir: float):
 	self.direction = dir
-
+	hitbox_component.dir = dir
 	
 func _on_life_timer_timeout():
 	queue_free()

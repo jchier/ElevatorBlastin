@@ -1,6 +1,8 @@
 class_name Player
 extends CharacterBody2D
 
+const KNOCKBACK_POWER: int = 500
+
 @export var max_speed: float = 80.0
 @export var jump_velocity: float = -200.0
 @onready var rider_component: Area2D = $RiderComponent
@@ -22,9 +24,10 @@ extends CharacterBody2D
 
 signal died
 
-var disabled: bool:
+@export var disabled: bool = false:
 	set(value):
 		movement_component.disabled = value
+		hurtbox_component.disabled = value
 var current_stairs: Stairs = null
 var stairs_destination: Vector2
 var t: float = 0.0
@@ -45,6 +48,7 @@ func _ready():
 	animation_component.can_shoot.connect(_can_shoot)
 	animation_component.interaction_complete.connect(_interaction_complete)
 	health_component.died.connect(_on_died)
+	hurtbox_component.hit.connect(_knockback)
 	interactor_component.interaction_valid.connect(_valid_interaction)
 	floor_detector_component.changed_floor.connect(_changed_floor)
 	crush_component.crushed.connect(die)
@@ -175,6 +179,10 @@ func _on_to_grounded_taken() -> void:
 func _can_shoot():
 	can_shoot = !can_shoot
 	
+func _knockback(dir: int):
+	var knockback_direction: float = dir * KNOCKBACK_POWER
+	velocity.x = knockback_direction
+	move_and_slide()
 	
 func _on_died():
 	sound_component.hit()
