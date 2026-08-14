@@ -2,7 +2,7 @@ class_name Player
 extends CharacterBody2D
 
 const KNOCKBACK_POWER: int = 200
-
+const STARTING_HEALTH: int = 3
 
 @export var max_speed: float = 80.0
 @export var jump_velocity: float = -200.0
@@ -217,6 +217,7 @@ func _on_dead_state_entered() -> void:
 	died.emit()
 
 func _on_dead_state_exited() -> void:
+	dead = false
 	hurt_timer.paused = false
 	disable_player(false)
 	movement_component.disabled = false
@@ -286,6 +287,7 @@ func respawn(spawn_location: Vector2) -> void:
 		GameEvent.gameover.emit()
 	else:
 		life_counter = life_counter - 1
+		health_component.current_health = STARTING_HEALTH
 		global_position = spawn_location
 		reset_physics_interpolation()
 		state_chart.send_event("to_stand")

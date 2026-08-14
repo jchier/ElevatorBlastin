@@ -15,7 +15,8 @@ var current_health: int:
 	set(value):
 		_current_health = value
 		health_changed.emit(_current_health)
-		
+		if dead and current_health > 0:
+			dead = false		
 
 func _ready() -> void:
 	current_health = max_health
