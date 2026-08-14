@@ -19,7 +19,6 @@
 [ext_resource type="Script" uid="uid://cf1nsco3w0mf6" path="res://addons/godot_state_charts/transition.gd" id="9_j3ovn"]
 [ext_resource type="PackedScene" uid="uid://d3ybrc1g2dpl4" path="res://components/interactor_component.tscn" id="10_b2kln"]
 [ext_resource type="PackedScene" uid="uid://ddj26eine24hx" path="res://components/CrushComponent.tscn" id="11_we0b7"]
-[ext_resource type="PackedScene" uid="uid://bcwkugn6v3oy7" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="20_mtric"]
 
 [sub_resource type="Animation" id="Animation_eyb6c"]
 length = 0.001
@@ -823,14 +822,6 @@ delay_in_seconds = "0.0"
 process_callback = 0
 position_smoothing_enabled = true
 drag_vertical_enabled = true
-
-[node name="StateChartDebugger" parent="." unique_id=1808151595 instance=ExtResource("20_mtric")]
-offset_left = -99.000046
-offset_top = -242.00002
-offset_right = 343.99994
-offset_bottom = 141.99998
-scale = Vector2(0.46620274, 0.4639959)
-initial_node_to_watch = NodePath("../StateChart")
 
 [connection signal="timeout" from="HurtTimer" to="." method="_on_hurt_timer_timeout"]
 [connection signal="state_entered" from="StateChart/Root/Grounded/Stand" to="." method="_on_stand_state_entered"]

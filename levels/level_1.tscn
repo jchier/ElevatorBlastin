@@ -19,6 +19,8 @@
 [ext_resource type="PackedScene" uid="uid://ceqkbl514i83g" path="res://entities/lamp/lamp.tscn" id="13_nmsli"]
 [ext_resource type="PackedScene" uid="uid://1imrx0kxu7c5" path="res://components/dark_room_component.tscn" id="14_betor"]
 [ext_resource type="PackedScene" uid="uid://bhx8g287s5moa" path="res://components/win_detector_component.tscn" id="16_lrvbd"]
+[ext_resource type="PackedScene" uid="uid://dc1ersna2wa3o" path="res://entities/item/ItemPickup.tscn" id="20_w75he"]
+[ext_resource type="Resource" uid="uid://ckhi3cq3w4vse" path="res://entities/item/heart.tres" id="21_udfhf"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lrvbd"]
 texture = ExtResource("7_lrvbd")
@@ -582,3 +584,7 @@ visible = false
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WinDetectorComponent" unique_id=1650312855]
 position = Vector2(60, 1377)
 shape = SubResource("RectangleShape2D_oark8")
+
+[node name="ItemPickup" parent="." unique_id=712698818 instance=ExtResource("20_w75he")]
+position = Vector2(18, 239)
+item = ExtResource("21_udfhf")

@@ -259,3 +259,6 @@ func _on_hurt_state_exited() -> void:
 	
 func _update_player_health(health: int):
 	GameEvent.player_health_changed.emit(health)
+
+func health_up():
+	health_component.current_health += 1
