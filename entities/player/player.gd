@@ -63,7 +63,7 @@ func _ready():
 	crush_component.crushed.connect(die)
 	crouching_collision_shape.disabled = true
 	_update_player_health(health_component.current_health)
-	life_counter = 3
+	life_counter = 1
 	#_update_player_lives(life_counter)
 	
 func _physics_process(delta: float) -> void:
@@ -282,7 +282,7 @@ func health_up():
 	health_component.current_health += 1
 
 func respawn(spawn_location: Vector2) -> void:
-	if life_counter < 0:
+	if life_counter <= 0:
 		GameEvent.gameover.emit()
 	else:
 		life_counter = life_counter - 1

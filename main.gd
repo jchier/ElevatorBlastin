@@ -1,6 +1,5 @@
 extends Node
 
-const MAIN_MENU_SCENE: PackedScene = preload("res://main_menu.tscn")
 const PLAYER_SCENE: PackedScene = preload("uid://c2rgnnuoe4mpu")
 const ENEMY_SCENE: PackedScene = preload("uid://bftk50lxpoojr")
 const DOOR_HALL_SCENE: PackedScene = preload("uid://dmn4ui4jcf713")
@@ -10,6 +9,7 @@ const MAX_ENEMY_COUNT: int = 8
 @onready var enemy_spawn_timer: Timer = $EnemySpawnTimer
 @onready var enemy_manager: EnemyManager = $EnemyManager
 @onready var hud: CanvasLayer = $Hud
+@onready var main_menu_scene: PackedScene = load("uid://c3qu1tjmxrl3n")
 
 var level: Node
 var document_count: int = 0
@@ -135,7 +135,7 @@ func player_respawn():
 	GameState.player.respawn(player_spawn.global_position)
 
 func _gameover():
-	get_tree().change_scene_to_packed(MAIN_MENU_SCENE)
+	get_tree().change_scene_to_packed(main_menu_scene)
 	
 func _check_win():
 	if player_doors.size() > 0:
