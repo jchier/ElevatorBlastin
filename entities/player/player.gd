@@ -282,7 +282,9 @@ func _update_player_lives(lives: int):
 
 func health_up():
 	health_component.current_health += 1
-
+func life_up():
+	life_counter += 1
+	
 func respawn(spawn_location: Vector2) -> void:
 	if life_counter <= 0:
 		GameEvent.gameover.emit()

@@ -23,7 +23,6 @@ func _on_use_area_body_entered(body: Node2D) -> void:
 		else:
 			animation_player.play("open_r")
 			dir_opened = "open_r"
-		#print(body.global_position.direction_to(global_position).x)
 		open = true
 
 

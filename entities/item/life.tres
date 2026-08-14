@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Item" format=3 uid="uid://dypntwreopv1p"]
+
+[ext_resource type="Script" uid="uid://cen1ayeepsio" path="res://entities/item/item.gd" id="1_2gbnl"]
+[ext_resource type="Texture2D" uid="uid://cafe7r6tc04yb" path="res://entities/item/life.png" id="2_2girw"]
+
+[resource]
+script = ExtResource("1_2gbnl")
+display_name = "Life"
+texture = ExtResource("2_2girw")
+effect = 1
+metadata/_custom_type_script = "uid://cen1ayeepsio"

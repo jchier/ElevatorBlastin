@@ -20,7 +20,9 @@
 [ext_resource type="PackedScene" uid="uid://1imrx0kxu7c5" path="res://components/dark_room_component.tscn" id="14_betor"]
 [ext_resource type="PackedScene" uid="uid://bhx8g287s5moa" path="res://components/win_detector_component.tscn" id="16_lrvbd"]
 [ext_resource type="PackedScene" uid="uid://dc1ersna2wa3o" path="res://entities/item/ItemPickup.tscn" id="20_w75he"]
-[ext_resource type="Resource" uid="uid://ckhi3cq3w4vse" path="res://entities/item/heart.tres" id="21_udfhf"]
+[ext_resource type="Script" uid="uid://cen1ayeepsio" path="res://entities/item/item.gd" id="21_i6od7"]
+[ext_resource type="Texture2D" uid="uid://du4mn338cfknh" path="res://entities/item/heart.png" id="22_ryfpa"]
+[ext_resource type="Resource" uid="uid://dypntwreopv1p" path="res://entities/item/life.tres" id="23_ntdhj"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lrvbd"]
 texture = ExtResource("7_lrvbd")
@@ -119,6 +121,12 @@ size = Vector2(1080, 357)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oark8"]
 size = Vector2(1078, 68)
+
+[sub_resource type="Resource" id="Resource_0fu15"]
+script = ExtResource("21_i6od7")
+display_name = "Heart"
+texture = ExtResource("22_ryfpa")
+metadata/_custom_type_script = "uid://cen1ayeepsio"
 
 [node name="Level1" type="Node2D" unique_id=1570879048]
 z_as_relative = false
@@ -587,4 +595,8 @@ shape = SubResource("RectangleShape2D_oark8")
 
 [node name="ItemPickup" parent="." unique_id=712698818 instance=ExtResource("20_w75he")]
 position = Vector2(18, 239)
-item = ExtResource("21_udfhf")
+item = SubResource("Resource_0fu15")
+
+[node name="ItemPickup2" parent="." unique_id=1017466997 instance=ExtResource("20_w75he")]
+position = Vector2(52, 239)
+item = ExtResource("23_ntdhj")
