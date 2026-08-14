@@ -9,6 +9,7 @@ extends Node2D
 		update_sprite()
 
 @onready var sprite: Sprite2D = $Sprite2D
+@onready var audio_stream_player_2d: AudioStreamPlayer2D = $AudioStreamPlayer2D
 
 func _ready():
 	# bust cache for equipped items
@@ -31,4 +32,7 @@ func use_item(player: Player):
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body is Player:
 		use_item(body)
+		sprite.queue_free()
+		audio_stream_player_2d.play()
+		await audio_stream_player_2d.finished
 		queue_free()
