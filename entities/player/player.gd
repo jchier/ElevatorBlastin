@@ -24,22 +24,22 @@ const KNOCKBACK_POWER: int = 500
 
 signal died
 
-@export var disabled: bool = false:
-	set(value):
-		movement_component.disabled = value
-		hurtbox_component.disabled = value
+		
 var current_stairs: Stairs = null
 var stairs_destination: Vector2
 var t: float = 0.0
 var _current_occupancy: Occupant_Component = null
 var can_shoot: bool = false
-var physics_disabled: bool:
-	set(value):
+
+func disable_player(value: bool):
+		#print("disabled set to ",value)
+		movement_component.disabled = value
+		hurtbox_component.disabled = value
 		crouching_collision_shape.set_deferred("disabled", value)
 		standing_collision_shape.set_deferred("disabled", value)
-
 	
 func _ready():
+
 	rider_component.set_current_occupancy.connect(_set_current_occupancy)
 	rider_component.clear_current_occupancy.connect(_clear_current_occupancy)
 	movement_component.state_chart_event.connect(state_chart_event)
@@ -56,7 +56,8 @@ func _ready():
 
 	
 func _physics_process(delta: float) -> void:
-	
+	if !velocity.is_zero_approx():
+		print(velocity.y)
 	if Input.is_action_just_pressed("jump"):
 
 		movement_component.jump()	
@@ -180,10 +181,11 @@ func _can_shoot():
 	can_shoot = !can_shoot
 	
 func _knockback(dir: int):
+	animation_component.start("hit")
 	var knockback_direction: float = dir * KNOCKBACK_POWER
 	velocity.x = knockback_direction
 	move_and_slide()
-	
+
 func _on_died():
 	sound_component.hit()
 	state_chart.send_event("dead")
@@ -191,6 +193,7 @@ func _on_died():
 
 func _on_dead_state_entered() -> void:
 	animation_component.start("dead")
+	disable_player(true)
 	movement_component.disabled = true
 	hurtbox_component.disabled = true
 	#despawn_timer.start()
@@ -230,9 +233,10 @@ func die():
 
 
 func _on_interacting_state_entered() -> void:
-	disabled = true
+	disable_player(true)
 
 
 func _on_interacting_state_exited() -> void:
 	set_orientation(1)
-	disabled = false
+	disable_player(false)
+	velocity = Vector2.ZERO

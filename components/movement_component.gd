@@ -45,6 +45,7 @@ func toggle_movement():
 func generate_velocity(delta: float, x_input: float):
 	
 	if _character_body.velocity.y > MAX_FALL_SPEED and !disabled:
+		print(_character_body.velocity.y)
 		die_on_land = true
 	
 
@@ -77,10 +78,6 @@ func generate_velocity(delta: float, x_input: float):
 	if !disabled:
 		if !is_zero_approx(_character_body.velocity.x):
 			orientation = signf(_character_body.velocity.x)
-#			if orientation != last_orientation:
-#				last_orientation = orientation
-#				set_orientation.emit(orientation)
-		#_character_body.velocity = velocity
 		return
 	_character_body.velocity = Vector2(0, velocity.y)
 
