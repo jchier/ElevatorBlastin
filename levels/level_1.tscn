@@ -197,7 +197,11 @@ position = Vector2(-120, 240)
 
 [node name="Door3" parent="." unique_id=61779124 instance=ExtResource("1_n46q3")]
 z_index = 1
-position = Vector2(37, 239)
+position = Vector2(147, 240)
+
+[node name="Door4" parent="." unique_id=1290542600 instance=ExtResource("1_n46q3")]
+z_index = 1
+position = Vector2(-46, 359)
 
 [node name="Door2" parent="." unique_id=688431297 instance=ExtResource("1_n46q3")]
 z_index = 1

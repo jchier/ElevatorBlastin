@@ -427,6 +427,9 @@ func start_animation(to_play: String):
 	animation_component.start(to_play)
 
 func on_area_entered(interactive: InteractiveComponent):
+	if interactive is not InteractiveComponent:
+		return
+	
 	var player_floor_relation = _player_floor_relation()
 	
 	if interactive.is_in_group("stairs_top"):

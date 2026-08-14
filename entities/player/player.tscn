@@ -554,7 +554,7 @@ height = 28.0
 z_index = 2
 z_as_relative = false
 collision_layer = 4
-collision_mask = 4202585
+collision_mask = 4202577
 script = ExtResource("1_abrql")
 
 [node name="FloorDetectorComponent" parent="." unique_id=1055282861 instance=ExtResource("2_3wlsy")]
