@@ -6,13 +6,13 @@
 script = ExtResource("1_no021")
 
 [node name="RayDown" type="RayCast2D" parent="." unique_id=591508109]
-position = Vector2(0, -15)
-target_position = Vector2(0, 14)
+position = Vector2(0, -30)
+target_position = Vector2(0, 30)
 collision_mask = 8193
 
 [node name="RayUp" type="RayCast2D" parent="." unique_id=1596328383]
-position = Vector2(0, -32)
-target_position = Vector2(0, -27)
+position = Vector2(0, -11)
+target_position = Vector2(0, -47)
 collision_mask = 65
 
 [node name="Timer" type="Timer" parent="." unique_id=1839371152]

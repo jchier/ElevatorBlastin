@@ -222,6 +222,7 @@ func _on_dead_state_exited() -> void:
 	disable_player(false)
 	movement_component.disabled = false
 	hurtbox_component.disabled = false
+	crush_component.was_crushed = false
 	
 func state_chart_event(event: String):
 	state_chart.send_event(event)
