@@ -32,10 +32,3 @@ func _on_use_area_body_exited(body: Node2D) -> void:
 	if open and body is Enemy:
 		animation_player.play_backwards(dir_opened)
 		open = false
-
-
-
-
-
-func _on_use_area_area_entered(area: Area2D) -> void:
-	pass # Replace with function body.

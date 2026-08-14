@@ -40,8 +40,8 @@ func disable_player(value: bool):
 		crouching_collision_shape.set_deferred("disabled", value)
 		standing_collision_shape.set_deferred("disabled", value)
 		can_shoot = value
+		
 func _ready():
-
 	rider_component.set_current_occupancy.connect(_set_current_occupancy)
 	rider_component.clear_current_occupancy.connect(_clear_current_occupancy)
 	movement_component.state_chart_event.connect(state_chart_event)
@@ -49,13 +49,14 @@ func _ready():
 	movement_component.jump_good.connect(_jumped)
 	animation_component.can_shoot.connect(_can_shoot)
 	animation_component.interaction_complete.connect(_interaction_complete)
+	health_component.health_changed.connect(_update_player_health)
 	health_component.died.connect(_on_died)
 	hurtbox_component.hit.connect(_knockback)
 	interactor_component.interaction_valid.connect(_valid_interaction)
 	floor_detector_component.changed_floor.connect(_changed_floor)
 	crush_component.crushed.connect(die)
 	crouching_collision_shape.disabled = true
-
+	_update_player_health(health_component.current_health)
 	
 func _physics_process(delta: float) -> void:
 
@@ -255,3 +256,6 @@ func _on_hurt_timer_timeout() -> void:
 
 func _on_hurt_state_exited() -> void:
 	velocity.x = 0
+	
+func _update_player_health(health: int):
+	GameEvent.player_health_changed.emit(health)

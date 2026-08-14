@@ -2,12 +2,14 @@ extends Node
 @onready var documents_label: Label = %DocumentsLabel
 @onready var warning_label: Label = %WarningLabel
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var heart_container: GridContainer = %HeartContainer
+const HEART = preload("uid://du4mn338cfknh")
 
 var document_count: int = 0
 		
 func _ready():
 	update_document_count(document_count)
-	
+	GameEvent.player_health_changed.connect(update_hearts)
 
 func update_document_count(new_document_count: int):
 	document_count = new_document_count
@@ -16,3 +18,13 @@ func update_document_count(new_document_count: int):
 func display_warning(warning_text):
 	warning_label.text = warning_text
 	animation_player.play("blink")
+
+func update_hearts(health: int):
+	for child in heart_container.get_children():
+		child.queue_free()
+	
+	while health > 0:
+		var texture_rect: TextureRect = TextureRect.new()
+		texture_rect.texture = HEART
+		heart_container.add_child(texture_rect)
+		health = health - 1

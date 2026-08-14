@@ -3,8 +3,8 @@ extends Node
 
 
 signal died
-signal damaged
-signal health_changed(current_health: int, max_health: int)
+signal damaged(health: int)
+signal health_changed(current_health: int)
 
 @export var max_health: int = 1
 var dead = false
@@ -14,7 +14,7 @@ var current_health: int:
 		return _current_health
 	set(value):
 		_current_health = value
-		health_changed.emit(_current_health, max_health)
+		health_changed.emit(_current_health)
 		
 
 func _ready() -> void:
@@ -25,7 +25,7 @@ func damage(amount: int):
 		died.emit()
 		return
 	current_health = clamp(current_health - amount, 0, max_health)
-	damaged.emit()
+	damaged.emit(current_health)
 	if current_health <= 0:
 		dead = true
 		died.emit()
