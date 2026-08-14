@@ -1,5 +1,6 @@
 extends Node
 
+const MAIN_MENU_SCENE: PackedScene = preload("res://main_menu.tscn")
 const PLAYER_SCENE: PackedScene = preload("uid://c2rgnnuoe4mpu")
 const ENEMY_SCENE: PackedScene = preload("uid://bftk50lxpoojr")
 const DOOR_HALL_SCENE: PackedScene = preload("uid://dmn4ui4jcf713")
@@ -9,6 +10,7 @@ const MAX_ENEMY_COUNT: int = 8
 @onready var enemy_spawn_timer: Timer = $EnemySpawnTimer
 @onready var enemy_manager: EnemyManager = $EnemyManager
 @onready var hud: CanvasLayer = $Hud
+
 var level: Node
 var document_count: int = 0
 var doors: Array
@@ -18,6 +20,7 @@ var selected_door: DoorHall
 var enemy_count: int
 var last_floor_spawned: int
 var win_detector_component: WinDetectorComponent
+var player_spawn: PlayerMarker
 
 func _ready():
 	enemy_spawn_timer.timeout.connect(_on_enemy_spawn_timer_timeout)
@@ -31,6 +34,7 @@ func _ready():
 	GameEvent.enemy_spawned.connect(_enemy_spawned)
 	GameEvent.enemy_despawned.connect(_enemy_despawned)
 	GameEvent.got_document.connect(_got_document)
+	GameEvent.gameover.connect(_gameover)
 	win_detector_component.check_win.connect(_check_win)
 	hud.update_document_count(player_doors.size())
 	hud.display_warning("Find all the documents in the red door,\nthen make your way to the bottom floor!")
@@ -42,6 +46,7 @@ func spawn_player():
 			player_scene.global_position = player_marker.global_position
 			player_scene.died.connect(_player_died)
 			GameEvent.player_spawned.emit(player_scene)
+			player_spawn = player_marker
 			
 func initialize_enemy_manager():
 	for enemy_marker in level.get_children():
@@ -100,6 +105,8 @@ func _got_document(door: DoorHall):
 	hud.update_document_count(player_doors.size())
 	if player_doors.size() == 0:
 		hud.display_warning("You got all the documents. \nMake your way to the exit!")
+	player_spawn.global_position = door.global_position
+	
 func _player_changed_floor():
 	valid_spawn_door.clear()
 	for door in doors:
@@ -121,7 +128,14 @@ func _player_died():
 	
 
 func _on_retry_timer_timeout() -> void:
-	get_tree().reload_current_scene()
+	#get_tree().reload_current_scene()
+	GameState.player.respawn(player_spawn.global_position)
+	
+func player_respawn():
+	GameState.player.respawn(player_spawn.global_position)
+
+func _gameover():
+	get_tree().change_scene_to_packed(MAIN_MENU_SCENE)
 	
 func _check_win():
 	if player_doors.size() > 0:

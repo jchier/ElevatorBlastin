@@ -802,6 +802,12 @@ delay_in_seconds = "0.0"
 [node name="Dead" type="Node" parent="StateChart/Root" unique_id=281422517]
 script = ExtResource("8_a1qjk")
 
+[node name="ToStand" type="Node" parent="StateChart/Root/Dead" unique_id=1794366959]
+script = ExtResource("9_j3ovn")
+to = NodePath("../../Grounded/Stand")
+event = &"to_stand"
+delay_in_seconds = "0.0"
+
 [node name="Hurt" type="Node" parent="StateChart/Root" unique_id=1768991383]
 script = ExtResource("8_a1qjk")
 
@@ -837,4 +843,5 @@ drag_vertical_enabled = true
 [connection signal="state_input" from="StateChart/Root/Airborne" to="." method="_on_airborne_state_input"]
 [connection signal="taken" from="StateChart/Root/Airborne/ToGrounded" to="." method="_on_to_grounded_taken"]
 [connection signal="state_entered" from="StateChart/Root/Dead" to="." method="_on_dead_state_entered"]
+[connection signal="state_exited" from="StateChart/Root/Dead" to="." method="_on_dead_state_exited"]
 [connection signal="state_exited" from="StateChart/Root/Hurt" to="." method="_on_hurt_state_exited"]

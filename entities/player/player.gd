@@ -36,7 +36,7 @@ var dead: bool = false
 
 var life_counter: int:
 	set(value):
-		lives = value
+		life_counter = value
 		GameEvent.player_lives_changed.emit(life_counter)
 
 func disable_player(value: bool):
@@ -63,7 +63,8 @@ func _ready():
 	crush_component.crushed.connect(die)
 	crouching_collision_shape.disabled = true
 	_update_player_health(health_component.current_health)
-	_update_player_lives(lives)
+	life_counter = 3
+	#_update_player_lives(life_counter)
 	
 func _physics_process(delta: float) -> void:
 
@@ -206,6 +207,7 @@ func _on_died():
 
 
 func _on_dead_state_entered() -> void:
+	hurt_timer.stop()
 	hurt_timer.paused = true
 	animation_component.start("dead")
 	disable_player(true)
@@ -213,6 +215,12 @@ func _on_dead_state_entered() -> void:
 	hurtbox_component.disabled = true
 	#despawn_timer.start()
 	died.emit()
+
+func _on_dead_state_exited() -> void:
+	hurt_timer.paused = false
+	disable_player(false)
+	movement_component.disabled = false
+	hurtbox_component.disabled = false
 	
 func state_chart_event(event: String):
 	state_chart.send_event(event)
@@ -272,3 +280,12 @@ func _update_player_lives(lives: int):
 
 func health_up():
 	health_component.current_health += 1
+
+func respawn(spawn_location: Vector2) -> void:
+	if life_counter < 0:
+		GameEvent.gameover.emit()
+	else:
+		life_counter = life_counter - 1
+		global_position = spawn_location
+		reset_physics_interpolation()
+		state_chart.send_event("to_stand")
