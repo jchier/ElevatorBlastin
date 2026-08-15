@@ -605,8 +605,8 @@ height = 30.357143
 radius = 7.0
 height = 28.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_oark8"]
-radius = 4.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_pd1ga"]
+radius = 7.0
 
 [node name="Player" type="CharacterBody2D" unique_id=834976139]
 z_index = 2
@@ -661,7 +661,6 @@ texture = ExtResource("6_j3ovn")
 offset = Vector2(0, -26)
 hframes = 5
 vframes = 19
-frame = 1
 
 [node name="Sprite2DLegs" type="Sprite2D" parent="Visuals" unique_id=1040317593]
 unique_name_in_owner = true
@@ -718,13 +717,13 @@ position = Vector2(0, -15)
 shape = SubResource("CapsuleShape2D_jr1kj")
 
 [node name="KickHitbox" type="Area2D" parent="." unique_id=484271038]
-position = Vector2(13, -14)
-collision_layer = 512
+position = Vector2(11, -14)
+collision_layer = 16777216
 collision_mask = 1024
 script = ExtResource("20_mtric")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="KickHitbox" unique_id=1350611732]
-shape = SubResource("CircleShape2D_oark8")
+shape = SubResource("CapsuleShape2D_pd1ga")
 
 [node name="FireRateTimer" type="Timer" parent="." unique_id=1793356038]
 wait_time = 0.3

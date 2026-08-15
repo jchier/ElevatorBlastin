@@ -670,8 +670,7 @@ vframes = 4
 frame = 12
 
 [node name="HurtboxComponent" parent="." unique_id=1378213332 node_paths=PackedStringArray("health_component") instance=ExtResource("8_t1g2p")]
-visible = false
-collision_mask = 1049088
+collision_mask = 17826304
 health_component = NodePath("../HealthComponent")
 
 [node name="InteractorComponent" parent="." unique_id=18262948 instance=ExtResource("12_vr86x")]

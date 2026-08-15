@@ -140,6 +140,7 @@ func set_orientation(sign_f: float):
 	movement_component.orientation = sign_f
 	bullet_component.flip_horizontal(sign_f)
 	visuals.scale.x = sign_f
+	kick_hitbox.position.x = abs(kick_hitbox.position.x) * sign_f
 		
 func get_orientation() -> float:
 	return movement_component.orientation
