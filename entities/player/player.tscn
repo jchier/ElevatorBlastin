@@ -19,6 +19,7 @@
 [ext_resource type="Script" uid="uid://cf1nsco3w0mf6" path="res://addons/godot_state_charts/transition.gd" id="9_j3ovn"]
 [ext_resource type="PackedScene" uid="uid://d3ybrc1g2dpl4" path="res://components/interactor_component.tscn" id="10_b2kln"]
 [ext_resource type="PackedScene" uid="uid://ddj26eine24hx" path="res://components/CrushComponent.tscn" id="11_we0b7"]
+[ext_resource type="PackedScene" uid="uid://bvvr0rbvrjxjs" path="res://entities/bullet/player_bullet.tscn" id="14_eyb6c"]
 [ext_resource type="Script" uid="uid://b4nkm5erhf1f1" path="res://components/hitbox_component.gd" id="20_mtric"]
 
 [sub_resource type="Animation" id="Animation_eyb6c"]
@@ -696,6 +697,7 @@ shape = SubResource("CapsuleShape2D_b6dgu")
 
 [node name="BulletComponent" parent="." unique_id=815253983 instance=ExtResource("8_afbqv")]
 visible = false
+bullet_scene = ExtResource("14_eyb6c")
 
 [node name="HurtboxComponent" parent="." unique_id=1378213332 node_paths=PackedStringArray("health_component") instance=ExtResource("9_gx6sm")]
 collision_mask = 1049088

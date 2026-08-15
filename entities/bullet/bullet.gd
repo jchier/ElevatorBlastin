@@ -6,6 +6,7 @@ var direction: float = 1.0
 
 @onready var life_timer: Timer = $LifeTimer
 @onready var hitbox_component: HitboxComponent = $HitboxComponent
+@export var points: int
 
 func _ready() -> void:
 	hitbox_component.hit_hurtbox.connect(_on_hit_hurtbox)
@@ -23,6 +24,7 @@ func _on_life_timer_timeout():
 	queue_free()
 
 func _on_hit_hurtbox(_hurtbox_component: HurtboxComponent):
+	GameEvent.add_score.emit(points)
 	_register_collision()
 
 

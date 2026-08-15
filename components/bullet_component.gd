@@ -1,6 +1,7 @@
 extends Node2D
 
-var bullet_scene: PackedScene = preload("uid://rnaqg1ycr0e1")
+#var bullet_scene: PackedScene = preload("uid://rnaqg1ycr0e1")
+@export var bullet_scene: PackedScene
 @onready var bullet_marker_2d_stand: Marker2D = %BulletMarker2DStand
 @onready var bullet_marker_2d_crouch: Marker2D = %BulletMarker2DCrouch
 var crouch_toggled: bool = false
