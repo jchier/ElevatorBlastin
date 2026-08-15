@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://dmyv7axs33q5h" path="res://entities/elevator/elevator.png" id="2_4sa0j"]
 [ext_resource type="PackedScene" uid="uid://byct6l41li67v" path="res://components/occupant_component.tscn" id="2_rtcbl"]
 [ext_resource type="PackedScene" uid="uid://du6fvxgccikwp" path="res://components/floor_detector_component.tscn" id="3_4sa0j"]
+[ext_resource type="Script" uid="uid://cffu0mo40w4gd" path="res://entities/elevator/crushing_object_component.gd" id="5_5dxo1"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_l53as"]
 atlas = ExtResource("2_4sa0j")
@@ -91,6 +92,7 @@ shape = SubResource("RectangleShape2D_83u65")
 collision_layer = 64
 collision_mask = 4
 sync_to_physics = false
+script = ExtResource("5_5dxo1")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Floor_Animatable_Body" unique_id=1347955668]
 position = Vector2(-0.5, 9)
@@ -101,6 +103,7 @@ position = Vector2(0, -13)
 collision_layer = 8192
 collision_mask = 4
 sync_to_physics = false
+script = ExtResource("5_5dxo1")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RoofAnimatableBody" unique_id=956839247]
 position = Vector2(-1, -52)

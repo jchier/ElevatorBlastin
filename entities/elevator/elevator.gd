@@ -9,6 +9,7 @@ signal stopped
 @onready var floor_area: Area2D = $Floor_Area
 @onready var floor_animatable_body: AnimatableBody2D = $Floor_Animatable_Body
 @onready var floor_detector_component: FloorDetectorComponent = $FloorDetectorComponent
+@onready var roof_animatable_body: CrushingObjectComponent = $RoofAnimatableBody
 
 
 var requested_direction: int
@@ -24,6 +25,8 @@ func _ready():
 	direction = Global.DOWN
 	requested_direction = direction
 	occupant_area._set_direction.connect(_set_direction)
+	floor_animatable_body.crushed.connect(_generate_crush_score)
+	roof_animatable_body.crushed.connect(_generate_crush_score)
 	
 func _physics_process(_delta: float) -> void:
 	
@@ -101,3 +104,7 @@ func _on_floor_area_area_entered(_area: Area2D) -> void:
 
 func get_floor() -> int:
 	return floor_detector_component.get_floor()
+	
+func _generate_crush_score():
+	if occupant_area.player_occupied:
+		GameEvent.add_score.emit(Global.SCORE_CRUSHED_ENEMY)

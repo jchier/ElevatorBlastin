@@ -1,0 +1,4 @@
+class_name CrushingObjectComponent
+extends AnimatableBody2D
+
+signal crushed

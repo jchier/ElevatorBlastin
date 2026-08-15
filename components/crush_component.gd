@@ -7,7 +7,7 @@ const MAX_CRUSH: int = 100
 
 signal crushed
 var was_crushed: bool = false
-
+var crushing_object: CrushingObjectComponent
 var crush_amount: int = 0
 
 func _process(_delta: float) -> void:
@@ -19,10 +19,14 @@ func _process(_delta: float) -> void:
 	if ray_down.is_colliding() and ray_up.is_colliding() and was_crushed == false:
 		var up_col = ray_up.get_collider()
 		var down_col = ray_down.get_collider()
-		if up_col is AnimatableBody2D and up_col.get_parent().velocity.y > 1 and timer.is_stopped()\
-		or down_col is AnimatableBody2D and down_col.get_parent().velocity.y < -1 and timer.is_stopped():
+		if up_col is AnimatableBody2D and up_col.get_parent().velocity.y > 1 and timer.is_stopped():
+			crushing_object = up_col
+			timer.start()
+		elif down_col is AnimatableBody2D and down_col.get_parent().velocity.y < -1 and timer.is_stopped():
+			crushing_object = down_col
 			timer.start()
 	else:
+		crushing_object = null
 		timer.stop()
 	
 		
@@ -31,5 +35,7 @@ func _process(_delta: float) -> void:
 
 
 func _on_timer_timeout() -> void:
+	if crushing_object:
+		crushing_object.crushed.emit()
 	was_crushed = true
 	crushed.emit()
