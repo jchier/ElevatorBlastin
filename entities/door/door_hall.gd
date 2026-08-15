@@ -65,6 +65,7 @@ func player_act(body: Player):
 	body.set_orientation(last_orientation)
 	#body.disabled = false
 	GameEvent.got_document.emit(self)
+	GameEvent.add_score.emit(Global.SCORE_GOT_DOCUMENT)
 	
 func enemy_act(body: Enemy):
 	body.disabled = true

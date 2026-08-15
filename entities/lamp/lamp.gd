@@ -45,6 +45,7 @@ func _register_collision():
 
 
 func _on_hurtbox_area_entered(_area: Area2D) -> void:
+	GameEvent.add_score.emit(Global.SCORE_LAMP_SHOT)
 	set_physics_process(true)
 	hurtbox.set_collision_mask_value(1, true)
 
