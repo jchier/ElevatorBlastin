@@ -324,9 +324,9 @@ func make_elevator_choice():
 	else:
 		state_chart.send_event("get_off")
 		
-func _on_in_elevator_state_physics_processing(_delta: float) -> void:
-	if chosen_elevator.is_on_floor() or chosen_elevator.is_on_ceiling():
-		state_chart.send_event("get_off")
+#func _on_in_elevator_state_physics_processing(_delta: float) -> void:
+#	if chosen_elevator.is_on_floor() or chosen_elevator.is_on_ceiling():
+#		state_chart.send_event("get_off")
 
 
 func _on_in_elevator_state_exited() -> void:
