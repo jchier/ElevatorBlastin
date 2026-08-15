@@ -25,3 +25,7 @@ func _on_timer_timeout() -> void:
 	rect_bg.hide()
 	for area in get_overlapping_areas():		
 		area.lighten.emit()
+
+
+func _on_area_exited(area: Area2D) -> void:
+	area.lighten.emit()
