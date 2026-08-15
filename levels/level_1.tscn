@@ -21,7 +21,7 @@
 [ext_resource type="PackedScene" uid="uid://bhx8g287s5moa" path="res://components/win_detector_component.tscn" id="16_lrvbd"]
 [ext_resource type="PackedScene" uid="uid://dc1ersna2wa3o" path="res://entities/item/ItemPickup.tscn" id="20_w75he"]
 [ext_resource type="Script" uid="uid://cen1ayeepsio" path="res://entities/item/item.gd" id="21_i6od7"]
-[ext_resource type="Resource" uid="uid://ckhi3cq3w4vse" path="res://entities/item/heart.tres" id="21_ryfpa"]
+[ext_resource type="Texture2D" uid="uid://du4mn338cfknh" path="res://entities/item/heart.png" id="22_ryfpa"]
 [ext_resource type="Texture2D" uid="uid://b5j7jpvmajmtl" path="res://entities/item/machine_gun.png" id="23_ntdhj"]
 [ext_resource type="Texture2D" uid="uid://cafe7r6tc04yb" path="res://entities/item/life.png" id="24_0fu15"]
 
@@ -123,7 +123,14 @@ size = Vector2(1080, 357)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oark8"]
 size = Vector2(1078, 68)
 
-[sub_resource type="Resource" id="Resource_4knja"]
+[sub_resource type="Resource" id="Resource_ryfpa"]
+script = ExtResource("21_i6od7")
+display_name = "Heart"
+texture = ExtResource("22_ryfpa")
+points = 200
+metadata/_custom_type_script = "uid://cen1ayeepsio"
+
+[sub_resource type="Resource" id="Resource_ntdhj"]
 script = ExtResource("21_i6od7")
 display_name = "Machine Gun"
 texture = ExtResource("23_ntdhj")
@@ -131,7 +138,7 @@ effect = 3
 points = 300
 metadata/_custom_type_script = "uid://cen1ayeepsio"
 
-[sub_resource type="Resource" id="Resource_voubc"]
+[sub_resource type="Resource" id="Resource_0fu15"]
 script = ExtResource("21_i6od7")
 display_name = "Life"
 texture = ExtResource("24_0fu15")
@@ -214,15 +221,7 @@ floor_number = 1
 
 [node name="Door" parent="." unique_id=162893821 instance=ExtResource("1_n46q3")]
 z_index = 1
-position = Vector2(-120, 240)
-
-[node name="Door3" parent="." unique_id=61779124 instance=ExtResource("1_n46q3")]
-z_index = 1
-position = Vector2(147, 240)
-
-[node name="Door4" parent="." unique_id=1290542600 instance=ExtResource("1_n46q3")]
-z_index = 1
-position = Vector2(-46, 359)
+position = Vector2(132, 237)
 
 [node name="Door2" parent="." unique_id=688431297 instance=ExtResource("1_n46q3")]
 z_index = 1
@@ -301,6 +300,10 @@ script = ExtResource("9_3sk1a")
 
 [node name="EnemyMarker" type="Marker2D" parent="." unique_id=641922445]
 position = Vector2(-9, 597)
+script = ExtResource("8_aerfg")
+
+[node name="EnemyMarker5" type="Marker2D" parent="." unique_id=1036903525]
+position = Vector2(181, 221)
 script = ExtResource("8_aerfg")
 
 [node name="EnemyMarker2" type="Marker2D" parent="." unique_id=654291317]
@@ -545,6 +548,12 @@ position = Vector2(602, 821)
 [node name="Lamp" parent="." unique_id=564443821 instance=ExtResource("13_nmsli")]
 position = Vector2(154, 165)
 
+[node name="Lamp14" parent="." unique_id=1767124028 instance=ExtResource("13_nmsli")]
+position = Vector2(172, 165)
+
+[node name="Lamp15" parent="." unique_id=59055716 instance=ExtResource("13_nmsli")]
+position = Vector2(190, 165)
+
 [node name="Lamp2" parent="." unique_id=1652072218 instance=ExtResource("13_nmsli")]
 position = Vector2(16, 406)
 
@@ -606,12 +615,12 @@ shape = SubResource("RectangleShape2D_oark8")
 
 [node name="ItemPickup" parent="." unique_id=712698818 instance=ExtResource("20_w75he")]
 position = Vector2(18, 239)
-item = ExtResource("21_ryfpa")
+item = SubResource("Resource_ryfpa")
 
 [node name="ItemPickup3" parent="." unique_id=1066783625 instance=ExtResource("20_w75he")]
 position = Vector2(-18, 240)
-item = SubResource("Resource_4knja")
+item = SubResource("Resource_ntdhj")
 
 [node name="ItemPickup2" parent="." unique_id=1017466997 instance=ExtResource("20_w75he")]
 position = Vector2(52, 239)
-item = SubResource("Resource_voubc")
+item = SubResource("Resource_0fu15")

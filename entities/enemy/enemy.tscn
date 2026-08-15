@@ -672,7 +672,7 @@ hframes = 4
 vframes = 4
 frame = 12
 
-[node name="HurtboxComponent" parent="." unique_id=1378213332 node_paths=PackedStringArray("health_component") instance=ExtResource("8_t1g2p")]
+[node name="HurtboxComponent" parent="." unique_id=1378213332 node_paths=PackedStringArray("health_component") groups=["enemy"] instance=ExtResource("8_t1g2p")]
 collision_mask = 17826304
 health_component = NodePath("../HealthComponent")
 

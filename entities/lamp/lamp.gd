@@ -31,7 +31,9 @@ func _acquire_floor_number():
 	floor_number = floor_marker.floor
 	assert(floor_number != -1, "lamp could not determine floor number")
 	
-func _on_hit_hurtbox(_hurtbox_component: HurtboxComponent):
+func _on_hit_hurtbox(hurtbox_component: HurtboxComponent):
+	if hurtbox_component.is_in_group("enemy"):
+		GameEvent.add_score.emit(Global.SCORE_LAMP_HIT_ENEMY)	
 	_register_collision()
 
 func _register_collision():
@@ -48,7 +50,7 @@ func _on_hurtbox_area_entered(_area: Area2D) -> void:
 
 
 
-func _on_hitbox_component_area_entered(_area: Area2D) -> void:
+func _on_hitbox_component_area_entered(area: Area2D) -> void:
 	_register_collision()
 
 
