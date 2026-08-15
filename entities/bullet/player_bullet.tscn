@@ -6,10 +6,9 @@
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_oark8"]
 
-[node name="PlayerBullet" type="Node2D" unique_id=1703273686]
+[node name="PlayerBullet" type="Node2D" unique_id=1703273686 groups=["player_bullet"]]
 scale = Vector2(0.5, 0.5)
 script = ExtResource("1_v7aoo")
-points = 100
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=286930186]
 texture_filter = 1
@@ -18,7 +17,7 @@ texture = ExtResource("2_boec4")
 [node name="LifeTimer" type="Timer" parent="." unique_id=1861537467]
 wait_time = 10.0
 
-[node name="HitboxComponent" parent="." unique_id=331922973 instance=ExtResource("3_x2def")]
+[node name="HitboxComponent" parent="." unique_id=331922973 groups=["player_bullet"] instance=ExtResource("3_x2def")]
 collision_layer = 512
 collision_mask = 1836289
 

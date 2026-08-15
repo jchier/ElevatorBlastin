@@ -15,8 +15,9 @@ func _on_lamp_broken(lamp: Lamp):
 		if lamp.dark_room_detector_component == area:
 			rect_fg.show()
 			rect_bg.show()
-			timer.start()
-			area.darken.emit()
+			timer.start(Global.DARKEN_LENGTH)
+		
+		area.darken.emit()
 
 
 func _on_timer_timeout() -> void:

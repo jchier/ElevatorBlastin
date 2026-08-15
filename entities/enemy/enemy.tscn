@@ -22,6 +22,7 @@
 [ext_resource type="Script" uid="uid://cf1nsco3w0mf6" path="res://addons/godot_state_charts/transition.gd" id="13_402ev"]
 [ext_resource type="PackedScene" uid="uid://ddj26eine24hx" path="res://components/CrushComponent.tscn" id="13_vr86x"]
 [ext_resource type="PackedScene" uid="uid://rnaqg1ycr0e1" path="res://entities/bullet/enemy_bullet.tscn" id="16_pd1ga"]
+[ext_resource type="PackedScene" uid="uid://bh4cbhws5t33d" path="res://components/dark_room_detector_component.tscn" id="18_1trp4"]
 [ext_resource type="PackedScene" uid="uid://bcwkugn6v3oy7" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="21_fktuf"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4ssn0"]
@@ -565,6 +566,8 @@ height = 112.0
 radius = 2.0
 height = 28.0
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oark8"]
+
 [node name="Enemy" type="CharacterBody2D" unique_id=834976139]
 z_index = 2
 z_as_relative = false
@@ -717,6 +720,12 @@ collision_mask = 16
 z_index = 2
 position = Vector2(0, -15)
 shape = SubResource("CapsuleShape2D_jr1kj")
+
+[node name="DarkRoomDetectorComponent" parent="." unique_id=72902192 instance=ExtResource("18_1trp4")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DarkRoomDetectorComponent" unique_id=589752701]
+position = Vector2(0, -22)
+shape = SubResource("RectangleShape2D_oark8")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=518255633]
 

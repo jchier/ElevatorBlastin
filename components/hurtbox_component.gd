@@ -2,6 +2,7 @@ class_name HurtboxComponent
 extends Area2D
 
 signal hit(dir)
+signal hit_by_player_bullet
 
 @export var health_component: HealthComponent
 @onready var standing_collision_shape: CollisionShape2D = $StandingCollisionShape
@@ -30,6 +31,8 @@ func _handle_hit(hitbox_component: Area2D):
 	health_component.damage(hitbox_component.damage)
 	
 	hit.emit(hitbox_component.dir)	
+	if hitbox_component.is_in_group("player_bullet"):
+		hit_by_player_bullet.emit()
 	
 func _on_area_entered(other_area: Area2D):
 	if other_area is not HitboxComponent:

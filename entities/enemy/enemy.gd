@@ -33,6 +33,7 @@ const ENEMY_SCENE: PackedScene = preload("uid://bftk50lxpoojr")
 @onready var crush_component: Node2D = $CrushComponent
 @onready var floor_detector_collision_shape_2d: CollisionShape2D = $FloorDetectorComponent/CollisionShape2D
 @onready var on_screen_notifier: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
+@onready var dark_room_detector_component: Area2D = $DarkRoomDetectorComponent
 
 var chosen_elevator: Elevator
 @export var starting_floor: int
@@ -61,6 +62,7 @@ var callable_shoot
 var player: Player
 var destination_met: bool = true
 var player_close = false
+var darkened: bool = false
 
 func _ready():
 	player = GameState.player
@@ -73,10 +75,13 @@ func _ready():
 	animation_component.stance_changed.connect(_stance_changed)
 	interactor_component.area_entered.connect(on_area_entered)
 	interactor_component.interaction_valid.connect(valid_interaction)
+	hurtbox_component.hit_by_player_bullet.connect(_on_hit_by_player_bullet)
 	GameEvent.player_changed_floor.connect(_changed_floor)
 	crush_component.crushed.connect(die)
-	crouching_collision_shape.disabled = true
 	health_component.died.connect(_on_died)
+	dark_room_detector_component.darken.connect(_on_darken)
+	dark_room_detector_component.lighten.connect(_on_lighten)
+	crouching_collision_shape.disabled = true
 	state_chart.send_event("docile")
 	direction = 1
 	move_to.global_position = Vector2(0,0)
@@ -476,3 +481,14 @@ func _on_spawn_state_exited() -> void:
 func _screen_exited() -> void:
 	if spawned_from_door:
 		despawn()
+
+func _on_hit_by_player_bullet():
+	if darkened:
+		GameEvent.add_score.emit(Global.SCORE_DARKEN_BONUS)
+	GameEvent.add_score.emit(Global.SCORE_ENEMY_HIT)
+	
+func _on_darken():
+	darkened = true
+	
+func _on_lighten():
+	darkened = false
