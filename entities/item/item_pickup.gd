@@ -10,6 +10,8 @@ extends Node2D
 
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var audio_stream_player_2d: AudioStreamPlayer2D = $AudioStreamPlayer2D
+var picked_up: bool = false
+
 
 func _ready():
 	# bust cache for equipped items
@@ -26,11 +28,15 @@ func use_item(player: Player):
 			player.health_up()
 		Global.Item_Effect.LIFE_UP:
 			player.life_up()
-		
+		Global.Item_Effect.GIVE_MG:
+			player.get_mg()
 
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
+	if picked_up:
+		return
 	if body is Player:
+		picked_up = true
 		use_item(body)
 		sprite.queue_free()
 		audio_stream_player_2d.play()

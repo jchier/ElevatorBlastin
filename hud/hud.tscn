@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://6nbha2pxvaqa" path="res://hud/hud.gd" id="1_6ca3a"]
 [ext_resource type="Texture2D" uid="uid://du4mn338cfknh" path="res://entities/item/heart.png" id="2_2gk58"]
 [ext_resource type="Texture2D" uid="uid://cafe7r6tc04yb" path="res://entities/item/life.png" id="3_318vg"]
+[ext_resource type="Texture2D" uid="uid://b5j7jpvmajmtl" path="res://entities/item/machine_gun.png" id="4_w8tcp"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2gk58"]
 content_margin_left = 0.0
@@ -73,7 +74,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("MarginContainer/HBoxContainer/VBoxContainer/HeartContainer:visible")
+tracks/3/path = NodePath("MarginContainer/HBoxContainer/CornerHudContainer/HeartContainer:visible")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -125,7 +126,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("MarginContainer/HBoxContainer/VBoxContainer/HeartContainer:visible")
+tracks/3/path = NodePath("MarginContainer/HBoxContainer/CornerHudContainer/HeartContainer:visible")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -159,42 +160,57 @@ theme_override_constants/margin_right = 20
 layout_mode = 2
 size_flags_vertical = 0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer" unique_id=1191177045]
+[node name="CornerHudContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer" unique_id=1191177045]
+unique_name_in_owner = true
 layout_mode = 2
 
-[node name="HeartContainer" type="PanelContainer" parent="MarginContainer/HBoxContainer/VBoxContainer" unique_id=1756171400]
+[node name="HeartContainer" type="PanelContainer" parent="MarginContainer/HBoxContainer/CornerHudContainer" unique_id=1756171400]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_2gk58")
 
-[node name="HeartGrid" type="GridContainer" parent="MarginContainer/HBoxContainer/VBoxContainer/HeartContainer" unique_id=1894750760]
+[node name="HeartGrid" type="GridContainer" parent="MarginContainer/HBoxContainer/CornerHudContainer/HeartContainer" unique_id=1894750760]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
 columns = 5
 
-[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer/VBoxContainer/HeartContainer/HeartGrid" unique_id=804493129]
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer/CornerHudContainer/HeartContainer/HeartGrid" unique_id=804493129]
 layout_mode = 2
 texture = ExtResource("2_2gk58")
 
-[node name="TextureRect3" type="TextureRect" parent="MarginContainer/HBoxContainer/VBoxContainer/HeartContainer/HeartGrid" unique_id=478917291]
+[node name="TextureRect3" type="TextureRect" parent="MarginContainer/HBoxContainer/CornerHudContainer/HeartContainer/HeartGrid" unique_id=478917291]
 layout_mode = 2
 texture = ExtResource("2_2gk58")
 
-[node name="TextureRect2" type="TextureRect" parent="MarginContainer/HBoxContainer/VBoxContainer/HeartContainer/HeartGrid" unique_id=1362767951]
+[node name="TextureRect2" type="TextureRect" parent="MarginContainer/HBoxContainer/CornerHudContainer/HeartContainer/HeartGrid" unique_id=1362767951]
 layout_mode = 2
 texture = ExtResource("2_2gk58")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/VBoxContainer" unique_id=648226098]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/CornerHudContainer" unique_id=648226098]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer" unique_id=174574521]
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer/CornerHudContainer/HBoxContainer" unique_id=174574521]
 texture_filter = 1
 layout_mode = 2
 texture = ExtResource("3_318vg")
 
-[node name="LivesCounterLabel" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer" unique_id=1427082600]
+[node name="LivesCounterLabel" type="Label" parent="MarginContainer/HBoxContainer/CornerHudContainer/HBoxContainer" unique_id=1427082600]
+unique_name_in_owner = true
+layout_mode = 2
+text = " x 3"
+
+[node name="MachineGunContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/CornerHudContainer" unique_id=2116154953]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer/CornerHudContainer/MachineGunContainer" unique_id=1272693161]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("4_w8tcp")
+
+[node name="AmmoCounterLabel" type="Label" parent="MarginContainer/HBoxContainer/CornerHudContainer/MachineGunContainer" unique_id=1772367488]
 unique_name_in_owner = true
 layout_mode = 2
 text = " x 3"

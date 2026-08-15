@@ -3,7 +3,9 @@ extends CharacterBody2D
 
 const KNOCKBACK_POWER: int = 200
 const STARTING_HEALTH: int = 3
-
+const MG_FIRE_RATE: float = 0.1
+const NORMAL_FIRE_RATE: float = 0.3
+const MAX_AMMO: int = 200
 @export var max_speed: float = 80.0
 @export var jump_velocity: float = -200.0
 @onready var rider_component: Area2D = $RiderComponent
@@ -33,6 +35,24 @@ var stairs_destination: Vector2
 var _current_occupancy: Occupant_Component = null
 var can_shoot: bool = false
 var dead: bool = false
+var current_fire_rate: float
+var shoot_input_type
+
+var ammo: int:
+	set(value):
+		ammo = value
+		GameEvent.player_ammo_changed.emit(ammo)
+		if ammo <= 0:
+			has_machine_gun = false
+	
+@onready var has_machine_gun: bool:
+	set(value):
+		has_machine_gun = value
+		if value:
+			current_fire_rate = MG_FIRE_RATE
+		else:
+			current_fire_rate = NORMAL_FIRE_RATE
+		GameEvent.player_gun_changed.emit(value)
 
 var life_counter: int:
 	set(value):
@@ -64,6 +84,7 @@ func _ready():
 	crouching_collision_shape.disabled = true
 	_update_player_health(health_component.current_health)
 	life_counter = 1
+	has_machine_gun = false
 	#_update_player_lives(life_counter)
 	
 func _physics_process(delta: float) -> void:
@@ -93,22 +114,22 @@ func _jumped():
 	sound_component.jump()
 		
 func try_duck_fire():
-	if !fire_rate_timer.is_stopped() and can_shoot and !is_on_wall():
-		return
-	animation_component.duck_shoot()
-	fire()
+#	if !fire_rate_timer.is_stopped() and can_shoot and !is_on_wall():
+#		return
+	if fire_rate_timer.is_stopped():
+		animation_component.duck_shoot()
+		fire()
 	
 func try_stand_fire():
-	if !fire_rate_timer.is_stopped() and can_shoot and !is_on_wall():
-		return
-	animation_component.stand_shoot()
-	fire()
+	if fire_rate_timer.is_stopped():
+		animation_component.stand_shoot()
+		fire()
 	
 func fire():
 	sound_component.shoot()
 	bullet_component.fire()
-	fire_rate_timer.start()
-
+	fire_rate_timer.start(current_fire_rate)
+	ammo = ammo - 1
 func set_orientation(sign_f: float):
 	movement_component.orientation = sign_f
 	bullet_component.flip_horizontal(sign_f)
@@ -139,6 +160,14 @@ func _on_duck_state_entered() -> void:
 	animation_component.play("duck")
 	movement_component.toggle_movement()
 
+func _on_duck_state_physics_processing(delta: float) -> void:
+	if !has_machine_gun:
+		if Input.is_action_just_pressed("shoot"):
+			try_duck_fire()
+	else:
+		if Input.is_action_pressed("shoot"):
+			try_duck_fire()
+
 
 func _on_duck_state_exited() -> void:
 	bullet_component.toggle_stance()
@@ -153,14 +182,26 @@ func _on_airborne_state_entered() -> void:
 	hurtbox_component.toggle_airborne()
 
 
+func _on_airborne_state_physics_processing(delta: float) -> void:
+	if !has_machine_gun:
+		if Input.is_action_just_pressed("shoot"):
+			try_stand_fire()
+	else:
+		if Input.is_action_pressed("shoot"):
+			try_stand_fire()
+
 func _on_airborne_state_exited() -> void:
 	hurtbox_component.toggle_airborne()
 
 
-func _on_airborne_state_input(_event: InputEvent) -> void:
-	if Input.is_action_just_pressed("shoot"):
-		try_stand_fire()
-
+#func _on_airborne_state_input(_event: InputEvent) -> void:
+#	if !has_machine_gun:
+#		if Input.is_action_just_pressed("shoot"):
+#			try_stand_fire()
+#	else:
+#		if Input.is_action_pressed("shoot"):
+#			try_stand_fire()
+			
 func _on_stand_state_physics_processing(_delta: float) -> void:
 	#print(velocity.length_squared())
 		if velocity.length_squared() <= 800:
@@ -171,15 +212,29 @@ func _on_stand_state_physics_processing(_delta: float) -> void:
 	
 		if Input.is_action_just_pressed("up"):
 			interactor_component.try_interact(self)
+		if !has_machine_gun:
+			if Input.is_action_just_pressed("shoot"):
+				try_stand_fire()
+		else:
+			if Input.is_action_pressed("shoot"):
+				try_stand_fire()
 
-func _on_duck_state_input(_event: InputEvent) -> void:
-	if Input.is_action_just_pressed("shoot"):
-		try_duck_fire()
+#func _on_duck_state_input(_event: InputEvent) -> void:
+#	if !has_machine_gun:
+#		if Input.is_action_just_pressed("shoot"):
+#			try_stand_fire()
+#	else:
+#		if Input.is_action_pressed("shoot"):
+#			try_duck_fire()
 
 
-func _on_stand_state_input(_event: InputEvent) -> void:
-	if Input.is_action_just_pressed("shoot"):
-		try_stand_fire()
+#func _on_stand_state_input(_event: InputEvent) -> void:
+#	if !has_machine_gun:
+#		if Input.is_action_just_pressed("shoot"):
+#			try_stand_fire()
+#	else:
+#		if Input.is_action_pressed("shoot"):
+#			try_stand_fire()
 
 
 func _on_to_grounded_taken() -> void:
@@ -284,6 +339,9 @@ func health_up():
 	health_component.current_health += 1
 func life_up():
 	life_counter += 1
+func get_mg():
+	has_machine_gun = true
+	ammo = MAX_AMMO
 	
 func respawn(spawn_location: Vector2) -> void:
 	if life_counter <= 0:

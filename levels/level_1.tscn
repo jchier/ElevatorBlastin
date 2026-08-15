@@ -23,6 +23,7 @@
 [ext_resource type="Script" uid="uid://cen1ayeepsio" path="res://entities/item/item.gd" id="21_i6od7"]
 [ext_resource type="Texture2D" uid="uid://du4mn338cfknh" path="res://entities/item/heart.png" id="22_ryfpa"]
 [ext_resource type="Resource" uid="uid://dypntwreopv1p" path="res://entities/item/life.tres" id="23_ntdhj"]
+[ext_resource type="Resource" uid="uid://unn83crdxoul" path="res://entities/item/machine_gun.tres" id="23_ryfpa"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lrvbd"]
 texture = ExtResource("7_lrvbd")
@@ -285,7 +286,7 @@ z_index = -1
 position = Vector2(152, 1200)
 
 [node name="PlayerMarker" type="Marker2D" parent="." unique_id=1946072525]
-position = Vector2(-48, 208)
+position = Vector2(-90, 209)
 script = ExtResource("9_3sk1a")
 
 [node name="EnemyMarker" type="Marker2D" parent="." unique_id=641922445]
@@ -596,6 +597,10 @@ shape = SubResource("RectangleShape2D_oark8")
 [node name="ItemPickup" parent="." unique_id=712698818 instance=ExtResource("20_w75he")]
 position = Vector2(18, 239)
 item = SubResource("Resource_0fu15")
+
+[node name="ItemPickup3" parent="." unique_id=1066783625 instance=ExtResource("20_w75he")]
+position = Vector2(-18, 240)
+item = ExtResource("23_ryfpa")
 
 [node name="ItemPickup2" parent="." unique_id=1017466997 instance=ExtResource("20_w75he")]
 position = Vector2(52, 239)

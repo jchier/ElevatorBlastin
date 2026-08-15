@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Item" format=3 uid="uid://unn83crdxoul"]
+
+[ext_resource type="Script" uid="uid://cen1ayeepsio" path="res://entities/item/item.gd" id="1_6yvll"]
+[ext_resource type="Texture2D" uid="uid://b5j7jpvmajmtl" path="res://entities/item/machine_gun.png" id="2_bgfs0"]
+
+[resource]
+script = ExtResource("1_6yvll")
+display_name = "Machine Gun"
+texture = ExtResource("2_bgfs0")
+effect = 3
+metadata/_custom_type_script = "uid://cen1ayeepsio"

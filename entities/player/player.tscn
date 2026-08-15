@@ -578,7 +578,6 @@ _data = {
 [sub_resource type="AnimationNodeAdd2" id="AnimationNodeAdd2_a1qjk"]
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_afbqv"]
-graph_offset = Vector2(-357.03384, -9.525772)
 nodes/output/position = Vector2(360, 140)
 nodes/Add2/node = SubResource("AnimationNodeAdd2_a1qjk")
 nodes/Add2/position = Vector2(180, 120)
@@ -656,6 +655,7 @@ texture = ExtResource("6_j3ovn")
 offset = Vector2(0, -26)
 hframes = 5
 vframes = 19
+frame = 3
 
 [node name="Sprite2DLegs" type="Sprite2D" parent="Visuals" unique_id=1040317593]
 unique_name_in_owner = true
@@ -839,11 +839,13 @@ drag_vertical_enabled = true
 [connection signal="state_entered" from="StateChart/Root/Grounded/Duck" to="." method="_on_duck_state_entered"]
 [connection signal="state_exited" from="StateChart/Root/Grounded/Duck" to="." method="_on_duck_state_exited"]
 [connection signal="state_input" from="StateChart/Root/Grounded/Duck" to="." method="_on_duck_state_input"]
+[connection signal="state_physics_processing" from="StateChart/Root/Grounded/Duck" to="." method="_on_duck_state_physics_processing"]
 [connection signal="state_entered" from="StateChart/Root/Grounded/Interacting" to="." method="_on_interacting_state_entered"]
 [connection signal="state_exited" from="StateChart/Root/Grounded/Interacting" to="." method="_on_interacting_state_exited"]
 [connection signal="state_entered" from="StateChart/Root/Airborne" to="." method="_on_airborne_state_entered"]
 [connection signal="state_exited" from="StateChart/Root/Airborne" to="." method="_on_airborne_state_exited"]
 [connection signal="state_input" from="StateChart/Root/Airborne" to="." method="_on_airborne_state_input"]
+[connection signal="state_physics_processing" from="StateChart/Root/Airborne" to="." method="_on_airborne_state_physics_processing"]
 [connection signal="taken" from="StateChart/Root/Airborne/ToGrounded" to="." method="_on_to_grounded_taken"]
 [connection signal="state_entered" from="StateChart/Root/Dead" to="." method="_on_dead_state_entered"]
 [connection signal="state_exited" from="StateChart/Root/Dead" to="." method="_on_dead_state_exited"]
