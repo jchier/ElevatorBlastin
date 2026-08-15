@@ -6,6 +6,8 @@ const STARTING_HEALTH: int = 3
 const MG_FIRE_RATE: float = 0.1
 const NORMAL_FIRE_RATE: float = 0.3
 const MAX_AMMO: int = 200
+const PLAYER_STARTING_LIVES: int = 2
+
 @export var max_speed: float = 80.0
 @export var jump_velocity: float = -200.0
 @onready var rider_component: Area2D = $RiderComponent
@@ -87,7 +89,7 @@ func _ready():
 	crush_component.crushed.connect(die)
 	crouching_collision_shape.disabled = true
 	_update_player_health(health_component.current_health)
-	life_counter = 1
+	life_counter = PLAYER_STARTING_LIVES
 	has_machine_gun = false
 	#_update_player_lives(life_counter)
 	
@@ -281,6 +283,7 @@ func _on_dead_state_exited() -> void:
 	hurt_timer.paused = false
 	disable_player(false)
 	movement_component.disabled = false
+	movement_component.die_on_land = false
 	hurtbox_component.disabled = false
 	crush_component.was_crushed = false
 	
