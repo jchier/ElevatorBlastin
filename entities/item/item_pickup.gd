@@ -30,7 +30,8 @@ func use_item(player: Player):
 			player.life_up()
 		Global.Item_Effect.GIVE_MG:
 			player.get_mg()
-
+			
+	GameEvent.add_score.emit(item.points)
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if picked_up:

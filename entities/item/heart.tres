@@ -7,4 +7,5 @@
 script = ExtResource("1_q713m")
 display_name = "Heart"
 texture = ExtResource("2_vdcug")
+points = 200
 metadata/_custom_type_script = "uid://cen1ayeepsio"

@@ -8,4 +8,5 @@ script = ExtResource("1_2gbnl")
 display_name = "Life"
 texture = ExtResource("2_2girw")
 effect = 1
+points = 500
 metadata/_custom_type_script = "uid://cen1ayeepsio"

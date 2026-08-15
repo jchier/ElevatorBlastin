@@ -8,4 +8,5 @@ script = ExtResource("1_6yvll")
 display_name = "Machine Gun"
 texture = ExtResource("2_bgfs0")
 effect = 3
+points = 300
 metadata/_custom_type_script = "uid://cen1ayeepsio"
