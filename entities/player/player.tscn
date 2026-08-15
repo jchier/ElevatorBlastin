@@ -642,7 +642,6 @@ callback_mode_process = 2
 libraries/ = SubResource("AnimationLibrary_bectd")
 
 [node name="AnimationTree" type="AnimationTree" parent="AnimationComponent" unique_id=690370865]
-active = false
 root_node = NodePath("../..")
 tree_root = SubResource("AnimationNodeBlendTree_afbqv")
 anim_player = NodePath("../AnimationPlayerTorso")
@@ -713,6 +712,15 @@ visible = false
 z_index = 2
 position = Vector2(0, -15)
 shape = SubResource("CapsuleShape2D_jr1kj")
+
+[node name="KickHitbox" type="Area2D" parent="." unique_id=484271038]
+position = Vector2(13, -14)
+collision_layer = 512
+collision_mask = 1024
+script = ExtResource("20_mtric")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KickHitbox" unique_id=1350611732]
+shape = SubResource("CircleShape2D_oark8")
 
 [node name="FireRateTimer" type="Timer" parent="." unique_id=1793356038]
 wait_time = 0.3
@@ -836,15 +844,7 @@ process_callback = 0
 position_smoothing_enabled = true
 drag_vertical_enabled = true
 
-[node name="KickHitbox" type="Area2D" parent="." unique_id=484271038]
-position = Vector2(13, -14)
-collision_layer = 512
-collision_mask = 1024
-script = ExtResource("20_mtric")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="KickHitbox" unique_id=1350611732]
-shape = SubResource("CircleShape2D_oark8")
-
+[connection signal="area_entered" from="KickHitbox" to="." method="_on_kick_hitbox_area_entered"]
 [connection signal="timeout" from="HurtTimer" to="." method="_on_hurt_timer_timeout"]
 [connection signal="state_entered" from="StateChart/Root/Grounded/Stand" to="." method="_on_stand_state_entered"]
 [connection signal="state_input" from="StateChart/Root/Grounded/Stand" to="." method="_on_stand_state_input"]
@@ -863,4 +863,3 @@ shape = SubResource("CircleShape2D_oark8")
 [connection signal="state_entered" from="StateChart/Root/Dead" to="." method="_on_dead_state_entered"]
 [connection signal="state_exited" from="StateChart/Root/Dead" to="." method="_on_dead_state_exited"]
 [connection signal="state_exited" from="StateChart/Root/Hurt" to="." method="_on_hurt_state_exited"]
-[connection signal="area_entered" from="KickHitbox" to="." method="_on_kick_hitbox_area_entered"]

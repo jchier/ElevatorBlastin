@@ -164,7 +164,7 @@ func _on_duck_state_entered() -> void:
 	animation_component.play("duck")
 	movement_component.toggle_movement()
 
-func _on_duck_state_physics_processing(delta: float) -> void:
+func _on_duck_state_physics_processing(_delta: float) -> void:
 	if !has_machine_gun:
 		if Input.is_action_just_pressed("shoot"):
 			try_duck_fire()
@@ -187,7 +187,7 @@ func _on_airborne_state_entered() -> void:
 	hurtbox_component.toggle_airborne()
 
 
-func _on_airborne_state_physics_processing(delta: float) -> void:
+func _on_airborne_state_physics_processing(_delta: float) -> void:
 	if !has_machine_gun:
 		if Input.is_action_just_pressed("shoot"):
 			try_stand_fire()
@@ -359,6 +359,5 @@ func respawn(spawn_location: Vector2) -> void:
 		state_chart.send_event("to_stand")
 
 
-func enemy_kicked():
-	pass
-	#GameEvent.give_points()
+func _enemy_kicked(_hurtbox_component: HurtboxComponent):
+	GameEvent.add_score.emit(Global.SCORE_ENEMY_KICKED)

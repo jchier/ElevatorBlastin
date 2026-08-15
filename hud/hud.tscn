@@ -5,6 +5,10 @@
 [ext_resource type="Texture2D" uid="uid://cafe7r6tc04yb" path="res://entities/item/life.png" id="3_318vg"]
 [ext_resource type="Texture2D" uid="uid://b5j7jpvmajmtl" path="res://entities/item/machine_gun.png" id="4_w8tcp"]
 
+[sub_resource type="LabelSettings" id="LabelSettings_j5ip0"]
+outline_size = 9
+outline_color = Color(0, 0, 0, 1)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2gk58"]
 content_margin_left = 0.0
 content_margin_top = 0.0
@@ -20,6 +24,15 @@ expand_margin_left = 3.0
 expand_margin_top = 3.0
 expand_margin_right = 3.0
 expand_margin_bottom = 3.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_ksmh2"]
+line_spacing = 9.0
+outline_size = 9
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_huxcw"]
+outline_size = 9
+outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_jr1kj"]
 line_spacing = 2.865
@@ -169,7 +182,8 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 2
 size_flags_vertical = 0
-text = "score = "
+text = "Score = 0"
+label_settings = SubResource("LabelSettings_j5ip0")
 
 [node name="HeartContainer" type="PanelContainer" parent="MarginContainer/HBoxContainer/CornerHudContainer" unique_id=1756171400]
 unique_name_in_owner = true
@@ -207,6 +221,7 @@ texture = ExtResource("3_318vg")
 unique_name_in_owner = true
 layout_mode = 2
 text = " x 3"
+label_settings = SubResource("LabelSettings_ksmh2")
 
 [node name="MachineGunContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/CornerHudContainer" unique_id=2116154953]
 unique_name_in_owner = true
@@ -221,6 +236,7 @@ texture = ExtResource("4_w8tcp")
 unique_name_in_owner = true
 layout_mode = 2
 text = " x 3"
+label_settings = SubResource("LabelSettings_huxcw")
 
 [node name="DocumentsLabel" type="Label" parent="MarginContainer/HBoxContainer" unique_id=881915029]
 unique_name_in_owner = true

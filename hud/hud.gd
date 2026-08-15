@@ -48,5 +48,5 @@ func gun_changed(has_mg: bool):
 func change_ammo(ammo: int):
 	ammo_counter_label.text = str("x ", ammo)
 	
-func _score_changed():
+func _score_changed(_points: int):
 	score_label.text = str("Score: ", GameState.score)
