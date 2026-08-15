@@ -11,3 +11,4 @@ signal enemy_despawned
 signal got_document(door: DoorHall)
 signal broken_lamp(lamp: Lamp)
 signal gameover
+signal add_score(points: int)

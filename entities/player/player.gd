@@ -25,6 +25,8 @@ const MAX_AMMO: int = 200
 @onready var interactor_component: InteractorComponent = $InteractorComponent
 @onready var crush_component: Node2D = $CrushComponent
 @onready var sound_component: Node = $CharacterSoundComponent
+@onready var kick_hitbox: HitboxComponent = $KickHitbox
+@onready var kick_hitbox_collision: CollisionShape2D = $KickHitbox/CollisionShape2D
 
 signal died
 
@@ -61,6 +63,7 @@ var life_counter: int:
 
 func disable_player(value: bool):
 		#print("disabled set to ",value)
+		kick_hitbox_collision.set_deferred("disabled", true)
 		movement_component.disabled = value
 		hurtbox_component.disabled = value
 		crouching_collision_shape.set_deferred("disabled", value)
@@ -78,6 +81,7 @@ func _ready():
 	health_component.health_changed.connect(_update_player_health)
 	health_component.died.connect(_on_died)
 	hurtbox_component.hit.connect(_knockback)
+	kick_hitbox.hit_hurtbox.connect(_enemy_kicked)
 	interactor_component.interaction_valid.connect(_valid_interaction)
 	floor_detector_component.changed_floor.connect(_changed_floor)
 	crush_component.crushed.connect(die)
@@ -178,6 +182,7 @@ func _on_duck_state_exited() -> void:
 
 
 func _on_airborne_state_entered() -> void:
+	kick_hitbox_collision.set_deferred("disabled", false)
 	animation_component.play("airborne")
 	hurtbox_component.toggle_airborne()
 
@@ -192,7 +197,7 @@ func _on_airborne_state_physics_processing(delta: float) -> void:
 
 func _on_airborne_state_exited() -> void:
 	hurtbox_component.toggle_airborne()
-
+	kick_hitbox_collision.set_deferred("disabled", true)
 
 #func _on_airborne_state_input(_event: InputEvent) -> void:
 #	if !has_machine_gun:
@@ -352,3 +357,8 @@ func respawn(spawn_location: Vector2) -> void:
 		global_position = spawn_location
 		reset_physics_interpolation()
 		state_chart.send_event("to_stand")
+
+
+func enemy_kicked():
+	pass
+	#GameEvent.give_points()

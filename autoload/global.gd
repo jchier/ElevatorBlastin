@@ -4,4 +4,11 @@ const DOWN: int = 1
 const RIGHT: int = 2
 const LEFT: int = 3
 
+const SCORE_ENEMY_HIT: int = 100
+const SCORE_ENEMY_KICKED: int = 150
+const SCORE_LAMP_SHOT: int = 50
+const SCORE_LAMP_HIT_ENEMY: int = 300
+const SCORE_GOT_DOCUMENT: int = 500
+const SCORE_CRUSHED_ENEMY: int = 150
+
 enum Item_Effect {HEALTH_UP, LIFE_UP, GIVE_KEY, GIVE_MG}

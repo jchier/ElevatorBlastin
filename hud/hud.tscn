@@ -164,6 +164,13 @@ size_flags_vertical = 0
 unique_name_in_owner = true
 layout_mode = 2
 
+[node name="ScoreLabel" type="Label" parent="MarginContainer/HBoxContainer/CornerHudContainer" unique_id=532102864]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 0
+text = "score = "
+
 [node name="HeartContainer" type="PanelContainer" parent="MarginContainer/HBoxContainer/CornerHudContainer" unique_id=1756171400]
 unique_name_in_owner = true
 layout_mode = 2

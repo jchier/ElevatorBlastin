@@ -19,6 +19,7 @@
 [ext_resource type="Script" uid="uid://cf1nsco3w0mf6" path="res://addons/godot_state_charts/transition.gd" id="9_j3ovn"]
 [ext_resource type="PackedScene" uid="uid://d3ybrc1g2dpl4" path="res://components/interactor_component.tscn" id="10_b2kln"]
 [ext_resource type="PackedScene" uid="uid://ddj26eine24hx" path="res://components/CrushComponent.tscn" id="11_we0b7"]
+[ext_resource type="Script" uid="uid://b4nkm5erhf1f1" path="res://components/hitbox_component.gd" id="20_mtric"]
 
 [sub_resource type="Animation" id="Animation_eyb6c"]
 length = 0.001
@@ -49,7 +50,7 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id="Animation_j3ovn"]
 resource_name = "airborne"
-length = 0.06666667
+length = 0.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -602,6 +603,9 @@ height = 30.357143
 radius = 7.0
 height = 28.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_oark8"]
+radius = 4.0
+
 [node name="Player" type="CharacterBody2D" unique_id=834976139]
 z_index = 2
 z_as_relative = false
@@ -638,6 +642,7 @@ callback_mode_process = 2
 libraries/ = SubResource("AnimationLibrary_bectd")
 
 [node name="AnimationTree" type="AnimationTree" parent="AnimationComponent" unique_id=690370865]
+active = false
 root_node = NodePath("../..")
 tree_root = SubResource("AnimationNodeBlendTree_afbqv")
 anim_player = NodePath("../AnimationPlayerTorso")
@@ -655,7 +660,6 @@ texture = ExtResource("6_j3ovn")
 offset = Vector2(0, -26)
 hframes = 5
 vframes = 19
-frame = 3
 
 [node name="Sprite2DLegs" type="Sprite2D" parent="Visuals" unique_id=1040317593]
 unique_name_in_owner = true
@@ -832,6 +836,15 @@ process_callback = 0
 position_smoothing_enabled = true
 drag_vertical_enabled = true
 
+[node name="KickHitbox" type="Area2D" parent="." unique_id=484271038]
+position = Vector2(13, -14)
+collision_layer = 512
+collision_mask = 1024
+script = ExtResource("20_mtric")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KickHitbox" unique_id=1350611732]
+shape = SubResource("CircleShape2D_oark8")
+
 [connection signal="timeout" from="HurtTimer" to="." method="_on_hurt_timer_timeout"]
 [connection signal="state_entered" from="StateChart/Root/Grounded/Stand" to="." method="_on_stand_state_entered"]
 [connection signal="state_input" from="StateChart/Root/Grounded/Stand" to="." method="_on_stand_state_input"]
@@ -850,3 +863,4 @@ drag_vertical_enabled = true
 [connection signal="state_entered" from="StateChart/Root/Dead" to="." method="_on_dead_state_entered"]
 [connection signal="state_exited" from="StateChart/Root/Dead" to="." method="_on_dead_state_exited"]
 [connection signal="state_exited" from="StateChart/Root/Hurt" to="." method="_on_hurt_state_exited"]
+[connection signal="area_entered" from="KickHitbox" to="." method="_on_kick_hitbox_area_entered"]

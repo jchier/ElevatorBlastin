@@ -7,6 +7,7 @@ extends Node
 @onready var lives_counter_label: Label = %LivesCounterLabel
 @onready var machine_gun_container: HBoxContainer = %MachineGunContainer
 @onready var ammo_counter_label: Label = %AmmoCounterLabel
+@onready var score_label: Label = %ScoreLabel
 
 const HEART = preload("uid://du4mn338cfknh")
 
@@ -18,6 +19,7 @@ func _ready():
 	GameEvent.player_lives_changed.connect(update_lives)
 	GameEvent.player_ammo_changed.connect(change_ammo)
 	GameEvent.player_gun_changed.connect(gun_changed)
+	GameEvent.add_score.connect(_score_changed)
 
 func update_document_count(new_document_count: int):
 	document_count = new_document_count
@@ -45,3 +47,6 @@ func gun_changed(has_mg: bool):
 	
 func change_ammo(ammo: int):
 	ammo_counter_label.text = str("x ", ammo)
+	
+func _score_changed():
+	score_label.text = str("Score: ", GameState.score)
