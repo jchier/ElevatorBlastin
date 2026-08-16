@@ -10,12 +10,15 @@ signal stopped
 @onready var floor_animatable_body: AnimatableBody2D = $Floor_Animatable_Body
 @onready var floor_detector_component: FloorDetectorComponent = $FloorDetectorComponent
 @onready var roof_animatable_body: CrushingObjectComponent = $RoofAnimatableBody
-
+@export var locked: bool = false
 
 var requested_direction: int
 var direction: int:
 	set(value):
 		direction = value
+		#print("elevator direction set to ", value)
+		if value == 1:
+			pass
 var elevator_speed: float = 30.0
 var is_occupied: bool
 var highest_floor: int
@@ -29,7 +32,9 @@ func _ready():
 	roof_animatable_body.crushed.connect(_generate_crush_score)
 	
 func _physics_process(_delta: float) -> void:
-	
+	if locked:
+		return
+		
 	if wait_timer.is_stopped():
 		velocity.y = direction * elevator_speed
 		move_and_slide()
@@ -86,7 +91,7 @@ func activate_requested_dir():
 
 func _on_occupant_area_body_entered(_body: Node2D) -> void:
 	is_occupied = true
-
+	locked = false
 
 func _on_occupant_area_body_exited(_body: Node2D) -> void:
 	is_occupied = false

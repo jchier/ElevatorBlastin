@@ -1,6 +1,8 @@
 class_name Lamp
 extends Node2D
 
+signal broken
+
 const DARK_ROOM_MASK_VALUE = 22
 @onready var sprite_2d: Sprite2D = $Sprite2D
 @onready var detect_floor_ray: RayCast2D = $DetectFloorRay
@@ -8,12 +10,15 @@ const DARK_ROOM_MASK_VALUE = 22
 @onready var hitbox_component: HitboxComponent = $HitboxComponent
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var dark_room_detector_component: Area2D = $DarkRoomDetectorComponent
+@onready var sound_fall: AudioStreamPlayer2D = $SoundFall
+@onready var sound_hit: AudioStreamPlayer2D = $SoundHit
+@onready var sound_crash: AudioStreamPlayer2D = $SoundCrash
 
 var speed: int = 300
 var floor_number: int = -1
 var hit: bool
 var direction: float = 1
-
+var crashed = false
 func _ready():
 	hitbox_component.hit_hurtbox.connect(_on_hit_hurtbox)
 	
@@ -37,21 +42,28 @@ func _on_hit_hurtbox(hurtbox_component: HurtboxComponent):
 	_register_collision()
 
 func _register_collision():
-	hitbox_component.queue_free()
-	GameEvent.broken_lamp.emit(self)
-	speed = 0
-	animation_player.play("break")
-
+	if !crashed:
+		crashed = true
+		hitbox_component.queue_free()
+		broken.emit()
+		speed = 0
+		animation_player.play("break")
+		sound_crash.play()
+		await sound_crash.finished
+		queue_free()
 
 
 func _on_hurtbox_area_entered(_area: Area2D) -> void:
-	GameEvent.add_score.emit(Global.SCORE_LAMP_SHOT)
-	set_physics_process(true)
-	hurtbox.set_collision_mask_value(1, true)
+	if !crashed:
+		sound_fall.play()
+		GameEvent.broken_lamp.emit()
+		GameEvent.add_score.emit(Global.SCORE_LAMP_SHOT)
+		set_physics_process(true)
+		hurtbox.set_collision_mask_value(1, true)
 
 
 
-func _on_hitbox_component_area_entered(area: Area2D) -> void:
+func _on_hitbox_component_area_entered(_area: Area2D) -> void:
 	_register_collision()
 
 

@@ -9,6 +9,6 @@ signal player_ammo_changed(ammo: int)
 signal enemy_spawned
 signal enemy_despawned
 signal got_document(door: DoorHall)
-signal broken_lamp(lamp: Lamp)
+signal broken_lamp
 signal gameover
 signal add_score(points: int)

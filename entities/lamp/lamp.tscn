@@ -1,10 +1,13 @@
 [gd_scene format=3 uid="uid://ceqkbl514i83g"]
 
 [ext_resource type="Script" uid="uid://ddhekg8g1awlo" path="res://entities/lamp/lamp.gd" id="1_mdl3d"]
-[ext_resource type="Texture2D" uid="uid://ge6rfclxkdnx" path="res://entities/lamp/lamp.png" id="2_0mkl7"]
 [ext_resource type="PackedScene" uid="uid://bpl8sfma1ln30" path="res://components/health_component.tscn" id="2_ipsl6"]
+[ext_resource type="Texture2D" uid="uid://3yup7maukpdd" path="res://entities/lamp/lamp_big.png" id="3_wbu4n"]
 [ext_resource type="Script" uid="uid://b4nkm5erhf1f1" path="res://components/hitbox_component.gd" id="4_iahii"]
 [ext_resource type="PackedScene" uid="uid://bh4cbhws5t33d" path="res://components/dark_room_detector_component.tscn" id="5_ipsl6"]
+[ext_resource type="AudioStream" uid="uid://x5e8055linwy" path="res://sound/glass_hit.wav" id="6_08te4"]
+[ext_resource type="AudioStream" uid="uid://bx1bfew6ufxgl" path="res://sound/lightbulb_fall.wav" id="6_wbu4n"]
+[ext_resource type="AudioStream" uid="uid://bimc3lhixoekv" path="res://sound/hit.wav" id="7_08te4"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_j5ip0"]
 radius = 7.071068
@@ -21,7 +24,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [1]
+"values": [0]
 }
 
 [sub_resource type="Animation" id="Animation_ipsl6"]
@@ -95,10 +98,9 @@ collision_mask = 2048
 texture_filter = 1
 position = Vector2(0, -0.25)
 scale = Vector2(1, 0.96153843)
-texture = ExtResource("2_0mkl7")
+texture = ExtResource("3_wbu4n")
 hframes = 3
 vframes = 2
-frame = 1
 
 [node name="Hurtbox" type="Area2D" parent="." unique_id=1102558885 groups=["lamp"]]
 collision_layer = 1024
@@ -123,6 +125,24 @@ autoplay = &"idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DarkRoomDetectorComponent" unique_id=1488858669]
 shape = SubResource("CircleShape2D_oark8")
+
+[node name="SoundCrash" type="AudioStreamPlayer2D" parent="." unique_id=550516639]
+position = Vector2(0, -0.25)
+scale = Vector2(1, 0.96153843)
+stream = ExtResource("6_08te4")
+bus = &"sfx"
+
+[node name="SoundHit" type="AudioStreamPlayer2D" parent="." unique_id=485619579]
+position = Vector2(0, -0.25)
+scale = Vector2(1, 0.96153843)
+stream = ExtResource("7_08te4")
+bus = &"sfx"
+
+[node name="SoundFall" type="AudioStreamPlayer2D" parent="." unique_id=744291218]
+position = Vector2(0, -0.25)
+scale = Vector2(1, 0.96153843)
+stream = ExtResource("6_wbu4n")
+bus = &"sfx"
 
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]
 [connection signal="body_entered" from="Hurtbox" to="." method="_on_hurtbox_body_entered"]

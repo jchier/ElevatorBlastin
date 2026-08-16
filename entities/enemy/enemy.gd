@@ -323,9 +323,12 @@ func _on_in_elevator_state_entered() -> void:
 	
 func make_elevator_choice():
 	if _player_floor_relation() > 0 and chosen_elevator.can_go_up():
-		chosen_elevator.go_up()
+#		chosen_elevator.go_up()
+		chosen_elevator.request_up()
+
 	elif _player_floor_relation() < 0 and chosen_elevator.can_go_down():
-		chosen_elevator.go_down()
+#		chosen_elevator.go_down()
+		chosen_elevator.request_down()
 	else:
 		state_chart.send_event("get_off")
 		
@@ -398,8 +401,8 @@ func despawn():
 func _player_floor_relation() -> int:
 	#if player is on floor 5, and enemy is on floor 7,
 	#return -2
+	#print("player floor - enemy floor = ", player.get_floor() - get_floor())
 	return player.get_floor() - get_floor()
-
 
 
 func navigation_complete():
