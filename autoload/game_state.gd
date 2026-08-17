@@ -24,7 +24,6 @@ func _got_document():
 	
 func _score_changed(points: int):
 	score += points
-	print(score_threshold.find_key("false"))
 	if score_threshold and score >= score_threshold.find_key("false"):
 		var passed_score_threshold = score_threshold.find_key("false")
 		score_threshold.erase(passed_score_threshold)
