@@ -50,6 +50,7 @@ func _physics_process(_delta: float) -> void:
 	 or is_on_ceiling() and wait_timer.is_stopped():
 		stopped.emit()
 		wait_timer.start()
+		digital_display.text = str(get_floor())
 		if !is_occupied:
 			_flip_direction()
 		

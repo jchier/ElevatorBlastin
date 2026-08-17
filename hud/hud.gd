@@ -64,4 +64,6 @@ func _input(event: InputEvent) -> void:
 			pause_menu.hide()
 			get_tree().paused = false
 		
-	
+
+func got_document():
+	display_warning(str("You got a document! ", document_count, " documents remaining."))

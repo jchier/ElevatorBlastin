@@ -9,31 +9,31 @@ extends Node2D
 @export var top_level_floor: int
 @export var bottom_level_floor: int
 
-var _occupied: bool = false
+#var _occupied: bool = false
 
 func _ready():
 	stairs_top_area.act.connect(descend_body)
 	stairs_bottom_area.act.connect(ascend_body)
 	
 func descend_body(body: CharacterBody2D):
-	if _occupied == true:
-		body.finish_interaction()
-		return
+#	if _occupied == true:
+#		body.finish_interaction()
+#		return
 	move_body(stairs_top_marker.global_position, stairs_bottom_marker.global_position,\
 	 body)
 	
 
 func ascend_body(body: CharacterBody2D):
-	if _occupied == true:
-		body.finish_interaction()
-		return
+	#if _occupied == true:
+	#body.finish_interaction()
+	#	return
 	move_body(stairs_bottom_marker.global_position, stairs_top_marker.global_position,\
 	 body)
 	
 	
 func move_body(starting_point: Vector2, destination: Vector2, body: CharacterBody2D):
 	stair_sound.play()
-	_occupied = true
+	#_occupied = true
 
 	var old_z = body.z_index
 	body.z_index = z_index - 10
@@ -43,7 +43,7 @@ func move_body(starting_point: Vector2, destination: Vector2, body: CharacterBod
 	tween.tween_property(body, "global_position", destination, 1.0)
 	await tween.finished
 	body.z_index = old_z
-	_occupied = false
+	#_occupied = false
 
 
 	body.finish_interaction()

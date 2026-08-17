@@ -70,13 +70,13 @@ theme_override_colors/font_color = Color(0.7058824, 1, 0.47058824, 1)
 theme_override_font_sizes/font_size = 25
 text = "Resume"
 
-[node name="RestartButton" type="Button" parent="MarginContainer/TabContainer/Pause/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer" unique_id=1172896694]
+[node name="QuitToMainButton" type="Button" parent="MarginContainer/TabContainer/Pause/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer" unique_id=1172896694]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.84313726, 0.3137255, 1)
 theme_override_font_sizes/font_size = 25
-text = "Restart"
+text = "Quit To Main"
 
 [node name="QuitButton" type="Button" parent="MarginContainer/TabContainer/Pause/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer" unique_id=363990517]
 unique_name_in_owner = true

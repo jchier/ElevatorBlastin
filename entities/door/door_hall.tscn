@@ -5,6 +5,8 @@
 [ext_resource type="Script" uid="uid://c3aa08qflyvax" path="res://components/interactive_component.gd" id="2_6ujgj"]
 [ext_resource type="PackedScene" uid="uid://du6fvxgccikwp" path="res://components/floor_detector_component.tscn" id="4_vwc5n"]
 [ext_resource type="PackedScene" uid="uid://bh4cbhws5t33d" path="res://components/dark_room_detector_component.tscn" id="5_r7jra"]
+[ext_resource type="AudioStream" uid="uid://dofbl3ivk3p8w" path="res://sound/door_open.wav" id="6_i7emn"]
+[ext_resource type="AudioStream" uid="uid://d02ik22buulad" path="res://sound/document_get.wav" id="7_31eox"]
 
 [sub_resource type="Animation" id="Animation_6ujgj"]
 length = 0.001
@@ -70,6 +72,20 @@ tracks/1/keys = {
 }, {
 "args": [],
 "method": &"toggle_bullet_proof"
+}]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SoundDoorOpen")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.41666666),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.0],
+"method": &"play"
 }]
 }
 
@@ -140,3 +156,12 @@ visible = false
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DarkRoomDetectorComponent" unique_id=809385442]
 position = Vector2(0, -27)
 shape = SubResource("RectangleShape2D_j5ip0")
+
+[node name="SoundDoorOpen" type="AudioStreamPlayer2D" parent="." unique_id=1118145469]
+stream = ExtResource("6_i7emn")
+bus = &"sfx"
+
+[node name="SoundDocumentGet" type="AudioStreamPlayer2D" parent="." unique_id=374664746]
+stream = ExtResource("7_31eox")
+volume_db = 2.0
+bus = &"sfx"

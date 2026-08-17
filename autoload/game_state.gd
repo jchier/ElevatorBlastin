@@ -4,6 +4,7 @@ var player: Player
 var docs_remaining: int
 var score: int
 var high_score: int
+var current_level: int = 0
 
 var score_threshold = {
 	10000: "false",
@@ -14,6 +15,7 @@ var score_threshold = {
 func _ready():
 	GameEvent.player_spawned.connect(_on_player_spawned)
 	GameEvent.add_score.connect(_score_changed)
+	GameEvent.advance_level.connect(_on_advanced_level)
 	score = 0
 	
 func _on_player_spawned(_player: Player):
@@ -28,3 +30,6 @@ func _score_changed(points: int):
 		var passed_score_threshold = score_threshold.find_key("false")
 		score_threshold.erase(passed_score_threshold)
 		player.life_up()
+
+func _on_advanced_level():
+	current_level = current_level + 1

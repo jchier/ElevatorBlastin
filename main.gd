@@ -10,6 +10,7 @@ const MAX_ENEMY_COUNT: int = 8
 @onready var enemy_manager: EnemyManager = $EnemyManager
 @onready var hud: CanvasLayer = $Hud
 @onready var main_menu_scene: PackedScene = load("uid://c3qu1tjmxrl3n")
+@export var levels: Array
 
 var level: Node
 var document_count: int = 0
@@ -24,7 +25,7 @@ var player_spawn: PlayerMarker
 
 func _ready():
 	enemy_spawn_timer.timeout.connect(_on_enemy_spawn_timer_timeout)
-	level = level_one.instantiate()
+	_load_level()
 	add_child(level)
 	spawn_player()
 	initialize_enemy_manager()
@@ -38,6 +39,10 @@ func _ready():
 	win_detector_component.check_win.connect(_check_win)
 	hud.update_document_count(player_doors.size())
 	hud.display_warning("Find all the documents in the red door,\nthen make your way to the bottom floor!")
+
+func _load_level():
+	level = load(levels[GameState.current_level]).instantiate()
+
 func spawn_player():
 	for player_marker in level.get_children():
 		if player_marker is PlayerMarker:
@@ -103,6 +108,7 @@ func initialize_win_component():
 func _got_document(door: DoorHall):
 	player_doors.erase(door)
 	hud.update_document_count(player_doors.size())
+	hud.got_document()
 	if player_doors.size() == 0:
 		hud.display_warning("You got all the documents. \nMake your way to the exit!")
 	player_spawn.global_position = door.global_position
@@ -128,7 +134,6 @@ func _player_died():
 	
 
 func _on_retry_timer_timeout() -> void:
-	#get_tree().reload_current_scene()
 	GameState.player.respawn(player_spawn.global_position)
 	
 func player_respawn():
@@ -141,6 +146,8 @@ func _check_win():
 	if player_doors.size() > 0:
 		hud.display_warning("There are still documents to find!\nGo in the red doors.")
 		GameState.player.global_position = player_doors[0].global_position
+		player_spawn.global_position = player_doors[0].global_position
 		reset_physics_interpolation()
 	else:
-		get_tree().quit()
+		GameEvent.advance_level.emit()
+		get_tree().reload_current_scene()

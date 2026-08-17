@@ -574,7 +574,6 @@ z_as_relative = false
 collision_layer = 8
 collision_mask = 337
 script = ExtResource("1_ogeq8")
-starting_floor = null
 
 [node name="FloorDetectorComponent" type="Area2D" parent="." unique_id=1055282861]
 position = Vector2(0, 4)
@@ -938,13 +937,11 @@ wait_time = 15.0
 one_shot = true
 
 [node name="StateChartDebugger" parent="." unique_id=747944174 instance=ExtResource("21_fktuf")]
-visible = false
 offset_left = -87.0
 offset_top = -232.0
 offset_right = 242.0
 offset_bottom = 82.0
 scale = Vector2(0.56046784, 0.5512531)
-enabled = false
 initial_node_to_watch = NodePath("../StateChart")
 
 [connection signal="body_entered" from="PlayerBufferZone" to="." method="_on_player_buffer_zone_body_entered"]

@@ -342,6 +342,7 @@ func _on_in_elevator_state_exited() -> void:
 	chosen_elevator.stopped.disconnect(make_elevator_choice)
 
 func _on_get_off_elevator_state_entered() -> void:
+	navigation_component.set_destination(player.global_position.x)
 	navigation_component.start()
 
 func _on_get_off_elevator_state_physics_processing(_delta: float) -> void:
@@ -465,8 +466,10 @@ func _changed_floor():
 
 
 func _on_spawn_state_entered() -> void:
+	player_vision_ray.enabled = true
 	animation_component.interaction_complete.connect(_spawn_complete)
 	start_animation(spawn_animation)
+	
 
 func _spawn_complete():
 	#set_orientation(signf(global_position.direction_to(GameState.player.global_position).x))
@@ -478,6 +481,7 @@ func _spawn_complete():
 	
 
 func _on_spawn_state_exited() -> void:
+	player_vision_ray.enabled = true
 	disabled = false
 	animation_component.interaction_complete.disconnect(_spawn_complete)
 	animation_component.interaction_complete.connect(_interaction_complete)

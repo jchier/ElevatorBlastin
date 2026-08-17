@@ -13,6 +13,8 @@ const COLLISION_LAYER_VALUE: int = 19
 @onready var bulletproof: Area2D = $Bulletproof
 @onready var dark_room_detector_component: Area2D = $DarkRoomDetectorComponent
 @export var player_door: bool = false
+@onready var sound_document_get: AudioStreamPlayer2D = $SoundDocumentGet
+@onready var sound_door_open: AudioStreamPlayer2D = $SoundDoorOpen
 
 var on_screen: bool = false
 var player_has_entered: bool = false
@@ -37,6 +39,9 @@ func _ready():
 		
 
 func _act(body: CharacterBody2D):
+	if animation_player.current_animation == "open":
+		body.start_interaction_animation("interaction_complete")
+		return
 	if body is Player and player_door:
 		if player_has_entered:
 			body.start_interaction_animation("interaction_complete")
@@ -50,6 +55,7 @@ func _act(body: CharacterBody2D):
 
 func player_act(body: Player):
 	#body.disabled = true
+	
 	var last_orientation: float = body.get_orientation() 
 	body.set_orientation(1.0)
 	var tween := create_tween()
@@ -64,10 +70,12 @@ func player_act(body: Player):
 	await animation_player.animation_finished
 	body.set_orientation(last_orientation)
 	#body.disabled = false
+	sound_document_get.play()
 	GameEvent.got_document.emit(self)
 	GameEvent.add_score.emit(Global.SCORE_GOT_DOCUMENT)
 	
 func enemy_act(body: Enemy):
+	
 	body.disabled = true
 	body.set_orientation(1.0)
 	var tween := create_tween()
@@ -86,6 +94,8 @@ func spawn_enemy():
 	enemy_scene.global_position = global_position
 	animation_player.play("open")
 	await animation_player.animation_finished
+
+	
 	
 func get_floor() -> int:
 	return floor_detector_component.get_floor()

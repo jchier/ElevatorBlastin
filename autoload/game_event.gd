@@ -13,3 +13,4 @@ signal got_document(door: DoorHall)
 signal broken_lamp
 signal gameover
 signal add_score(points: int)
+signal advance_level
