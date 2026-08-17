@@ -152,22 +152,15 @@ effect = 1
 points = 500
 metadata/_custom_type_script = "uid://cen1ayeepsio"
 
-[node name="Level1" type="Node2D" unique_id=1570879048]
+[node name="Level2" type="Node2D" unique_id=1570879048]
 z_as_relative = false
 position = Vector2(-340, 2624)
 script = ExtResource("1_itbe0")
 
-[node name="BgWindowLayer" type="Sprite2D" parent="." unique_id=1734578889]
-z_index = -50
-z_as_relative = false
-texture_filter = 1
-position = Vector2(72.99999, 439)
-scale = Vector2(-971.6345, 728.41876)
-texture = ExtResource("2_itbe0")
-
 [node name="Parallax2D" type="Parallax2D" parent="." unique_id=140230234]
+visible = false
 scroll_scale = Vector2(0.5, 0.5)
-metadata/_edit_lock_ = true
+scroll_offset = Vector2(359, -2578)
 
 [node name="BgImage2" type="Sprite2D" parent="Parallax2D" unique_id=1558964214]
 z_index = -30
@@ -175,7 +168,15 @@ texture_filter = 1
 position = Vector2(70, 311)
 scale = Vector2(3.34375, 3.3814285)
 texture = ExtResource("3_xrja0")
-metadata/_edit_lock_ = true
+
+[node name="BgWindowLayer" type="Sprite2D" parent="Parallax2D/BgImage2" unique_id=1734578889]
+z_index = -50
+z_as_relative = false
+texture_filter = 1
+position = Vector2(8.07476, 3.5488281)
+rotation = 3.1415927
+scale = Vector2(290.5823, -215.41747)
+texture = ExtResource("2_itbe0")
 
 [node name="FloorMarkerComponent1" parent="." unique_id=349425407 instance=ExtResource("4_jqt73")]
 position = Vector2(594, 1170)

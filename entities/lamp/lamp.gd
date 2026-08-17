@@ -6,13 +6,14 @@ signal broken
 const DARK_ROOM_MASK_VALUE = 22
 @onready var sprite_2d: Sprite2D = $Sprite2D
 @onready var detect_floor_ray: RayCast2D = $DetectFloorRay
-@onready var hurtbox: Area2D = $Hurtbox
+@onready var hurtbox_component: Area2D = $Hurtbox
 @onready var hitbox_component: HitboxComponent = $HitboxComponent
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var dark_room_detector_component: Area2D = $DarkRoomDetectorComponent
 @onready var sound_fall: AudioStreamPlayer2D = $SoundFall
 @onready var sound_hit: AudioStreamPlayer2D = $SoundHit
 @onready var sound_crash: AudioStreamPlayer2D = $SoundCrash
+@onready var hitbox_collision: CollisionShape2D = $HitboxComponent/CollisionShape2D
 
 var speed: int = 300
 var floor_number: int = -1
@@ -36,8 +37,8 @@ func _acquire_floor_number():
 	floor_number = floor_marker.floor
 	assert(floor_number != -1, "lamp could not determine floor number")
 	
-func _on_hit_hurtbox(hurtbox_component: HurtboxComponent):
-	if hurtbox_component.is_in_group("enemy"):
+func _on_hit_hurtbox(hurtbox: HurtboxComponent):
+	if hurtbox.is_in_group("enemy"):
 		GameEvent.add_score.emit(Global.SCORE_LAMP_HIT_ENEMY)	
 	_register_collision()
 
@@ -59,7 +60,8 @@ func _on_hurtbox_area_entered(_area: Area2D) -> void:
 		GameEvent.broken_lamp.emit()
 		GameEvent.add_score.emit(Global.SCORE_LAMP_SHOT)
 		set_physics_process(true)
-		hurtbox.set_collision_mask_value(1, true)
+		hurtbox_component.set_collision_mask_value(1, true)
+		hitbox_collision.set_deferred("disabled", false)
 
 
 
