@@ -112,6 +112,9 @@ texture_region_size = Vector2i(30, 30)
 tile_size = Vector2i(30, 30)
 sources/1 = SubResource("TileSetAtlasSource_lrvbd")
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_huxcw"]
+size = Vector2(420, 709)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_betor"]
 size = Vector2(410, 716)
 
@@ -1144,29 +1147,24 @@ position = Vector2(385, 348)
 position = Vector2(637, 348)
 
 [node name="DarkRoomComponent" parent="." unique_id=1450923526 node_paths=PackedStringArray("collision_shape") instance=ExtResource("18_s67ts")]
-position = Vector2(510, -2187)
-collision_shape = NodePath("CollisionShape2D2")
+position = Vector2(514, -2188)
+collision_shape = NodePath("CollisionShape2D")
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="DarkRoomComponent" unique_id=1098292480]
-visible = false
-shape = SubResource("RectangleShape2D_betor")
-metadata/_edit_lock_ = true
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DarkRoomComponent" unique_id=62727343]
+shape = SubResource("RectangleShape2D_huxcw")
 
 [node name="DarkRoomComponent3" parent="." unique_id=1011986775 node_paths=PackedStringArray("collision_shape") instance=ExtResource("18_s67ts")]
 position = Vector2(510, -1470)
 collision_shape = NodePath("CollisionShape2D2")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="DarkRoomComponent3" unique_id=51186699]
-visible = false
 shape = SubResource("RectangleShape2D_betor")
-metadata/_edit_lock_ = true
 
 [node name="DarkRoomComponent4" parent="." unique_id=1790687649 node_paths=PackedStringArray("collision_shape") instance=ExtResource("18_s67ts")]
 position = Vector2(513, -870)
 collision_shape = NodePath("CollisionShape2D2")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="DarkRoomComponent4" unique_id=566812477]
-visible = false
 shape = SubResource("RectangleShape2D_r7jra")
 
 [node name="DarkRoomComponent5" parent="." unique_id=508686985 node_paths=PackedStringArray("collision_shape") instance=ExtResource("18_s67ts")]
@@ -1174,7 +1172,6 @@ position = Vector2(513, -389)
 collision_shape = NodePath("CollisionShape2D2")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="DarkRoomComponent5" unique_id=1082445170]
-visible = false
 shape = SubResource("RectangleShape2D_r7jra")
 
 [node name="DarkRoomComponent6" parent="." unique_id=1706539396 node_paths=PackedStringArray("collision_shape") instance=ExtResource("18_s67ts")]
@@ -1182,7 +1179,6 @@ position = Vector2(513, 152)
 collision_shape = NodePath("CollisionShape2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DarkRoomComponent6" unique_id=2001071944]
-visible = false
 shape = SubResource("RectangleShape2D_jr1kj")
 
 [node name="DarkRoomComponent7" parent="." unique_id=1706587695 node_paths=PackedStringArray("collision_shape") instance=ExtResource("18_s67ts")]
@@ -1190,7 +1186,6 @@ position = Vector2(513, 808)
 collision_shape = NodePath("CollisionShape2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DarkRoomComponent7" unique_id=1894927077]
-visible = false
 position = Vector2(0, 5)
 shape = SubResource("RectangleShape2D_j5ip0")
 

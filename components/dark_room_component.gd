@@ -27,7 +27,7 @@ func _on_timer_timeout() -> void:
 
 func _initialize_lamps() -> void:
 	var areas: Array = get_overlapping_areas()
-	assert(areas.size() > 0, "dark room areas array has no elements")
+	assert(areas.size() > 0, "lamp initialization array has no elements")
 	for area in get_overlapping_areas():
 		if area.is_in_group("lamp"):
 			if !area.get_parent().broken.is_connected(_on_lamp_broken):
@@ -39,6 +39,8 @@ func _on_area_exited(area: Area2D) -> void:
 	area.lighten.emit()
 	
 func _on_lamp_broken():
+	var areas: Array = get_overlapping_areas()
+	assert(areas.size() > 0, "dark room areas array has no elements")
 	for area in get_overlapping_areas():
 		area.darken.emit()
 	rect_fg.show()

@@ -121,7 +121,7 @@ shape = SubResource("CircleShape2D_j5ip0")
 libraries/ = SubResource("AnimationLibrary_8cbgy")
 autoplay = &"idle"
 
-[node name="DarkRoomDetectorComponent" parent="." unique_id=72902192 instance=ExtResource("5_ipsl6")]
+[node name="DarkRoomDetectorComponent" parent="." unique_id=72902192 groups=["lamp"] instance=ExtResource("5_ipsl6")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DarkRoomDetectorComponent" unique_id=1488858669]
 shape = SubResource("CircleShape2D_oark8")
