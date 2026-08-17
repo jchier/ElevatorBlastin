@@ -8,6 +8,8 @@ extends Node
 @onready var machine_gun_container: HBoxContainer = %MachineGunContainer
 @onready var ammo_counter_label: Label = %AmmoCounterLabel
 @onready var score_label: Label = %ScoreLabel
+@onready var heads_up_dialog: MarginContainer = $HeadsUpDialog
+@onready var pause_menu: Control = %PauseMenu
 
 const HEART = preload("uid://du4mn338cfknh")
 
@@ -50,3 +52,10 @@ func change_ammo(ammo: int):
 	
 func _score_changed(_points: int):
 	score_label.text = str("Score: ", GameState.score)
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("pause"):
+		heads_up_dialog.visible = !heads_up_dialog.visible
+
+		
+	

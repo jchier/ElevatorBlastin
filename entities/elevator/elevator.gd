@@ -39,6 +39,8 @@ func _physics_process(_delta: float) -> void:
 		velocity.y = direction * elevator_speed
 		move_and_slide()
 		
+	if get_floor() == highest_floor:
+		request_down()
 
 	#when the elevator touches the ground or ceiling?
 	if is_on_floor() and wait_timer.is_stopped() \

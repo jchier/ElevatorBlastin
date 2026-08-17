@@ -1,0 +1,148 @@
+[gd_scene format=3 uid="uid://d2vo3wixgnjsb"]
+
+[ext_resource type="Script" uid="uid://cj823ffc6iawq" path="res://hud/pause_menu.gd" id="1_q5ypu"]
+
+[node name="PauseMenu" type="Control" unique_id=893653021]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_q5ypu")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=596970703]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 200
+theme_override_constants/margin_top = 200
+theme_override_constants/margin_right = 200
+theme_override_constants/margin_bottom = 200
+
+[node name="TabContainer" type="TabContainer" parent="MarginContainer" unique_id=2089681404]
+layout_mode = 2
+current_tab = 0
+
+[node name="Pause" type="PanelContainer" parent="MarginContainer/TabContainer" unique_id=618085461]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/TabContainer/Pause" unique_id=1717334935]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/TabContainer/Pause/MarginContainer" unique_id=1364119248]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/TabContainer/Pause/MarginContainer/VBoxContainer" unique_id=1854463375]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "Have you had enough?"
+horizontal_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/TabContainer/Pause/MarginContainer/VBoxContainer" unique_id=287825628]
+layout_mode = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 40
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/TabContainer/Pause/MarginContainer/VBoxContainer/MarginContainer" unique_id=1868285380]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 25
+
+[node name="ResumeButton" type="Button" parent="MarginContainer/TabContainer/Pause/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer" unique_id=714422784]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7058824, 1, 0.47058824, 1)
+theme_override_font_sizes/font_size = 25
+text = "Resume"
+
+[node name="RestartButton" type="Button" parent="MarginContainer/TabContainer/Pause/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer" unique_id=1172896694]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.84313726, 0.3137255, 1)
+theme_override_font_sizes/font_size = 25
+text = "Restart"
+
+[node name="QuitButton" type="Button" parent="MarginContainer/TabContainer/Pause/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer" unique_id=363990517]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.3529412, 0.3529412, 1)
+theme_override_font_sizes/font_size = 25
+text = "Quit"
+
+[node name="Audio" type="PanelContainer" parent="MarginContainer/TabContainer" unique_id=2077202466]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/TabContainer/Audio" unique_id=1593480826]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/TabContainer/Audio/MarginContainer" unique_id=1004856730]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/TabContainer/Audio/MarginContainer/VBoxContainer" unique_id=1753106040]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/TabContainer/Audio/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1651953162]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "Music Volume"
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/TabContainer/Audio/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1965680807]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 20
+
+[node name="MusicVolumeSlider" type="HSlider" parent="MarginContainer/TabContainer/Audio/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer" unique_id=1636148339]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.001
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/TabContainer/Audio/MarginContainer/VBoxContainer" unique_id=17864175]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/TabContainer/Audio/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=257418261]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "Effect Volume"
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/TabContainer/Audio/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=1639999648]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 20
+
+[node name="SfxVolumeSlider" type="HSlider" parent="MarginContainer/TabContainer/Audio/MarginContainer/VBoxContainer/HBoxContainer2/MarginContainer" unique_id=500210413]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.001
