@@ -74,6 +74,7 @@ _data = {
 [node name="GlassParticles" type="Node2D" unique_id=2067467608]
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=2054634139]
+z_index = 20
 texture_filter = 1
 material = SubResource("CanvasItemMaterial_j5ip0")
 emitting = false
@@ -85,6 +86,7 @@ speed_scale = 2.0
 explosiveness = 1.0
 randomness = 0.16
 interpolate = false
+local_coords = true
 process_material = SubResource("ParticleProcessMaterial_oark8")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1090550569]

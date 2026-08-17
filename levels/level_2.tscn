@@ -128,7 +128,7 @@ size = Vector2(658, 599)
 size = Vector2(658, 720)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oark8"]
-size = Vector2(1078, 68)
+size = Vector2(664, 68)
 
 [sub_resource type="Resource" id="Resource_ngvhw"]
 script = ExtResource("21_nomkf")
@@ -158,21 +158,18 @@ position = Vector2(-340, 2624)
 script = ExtResource("1_itbe0")
 
 [node name="BgWindowLayer" type="Sprite2D" parent="." unique_id=1734578889]
-visible = false
 z_index = -50
 z_as_relative = false
 texture_filter = 1
-position = Vector2(7.000001, 409)
+position = Vector2(72.99999, 439)
 scale = Vector2(-971.6345, 728.41876)
 texture = ExtResource("2_itbe0")
 
 [node name="Parallax2D" type="Parallax2D" parent="." unique_id=140230234]
-visible = false
 scroll_scale = Vector2(0.5, 0.5)
 metadata/_edit_lock_ = true
 
 [node name="BgImage2" type="Sprite2D" parent="Parallax2D" unique_id=1558964214]
-visible = false
 z_index = -30
 texture_filter = 1
 position = Vector2(70, 311)
@@ -181,7 +178,6 @@ texture = ExtResource("3_xrja0")
 metadata/_edit_lock_ = true
 
 [node name="FloorMarkerComponent1" parent="." unique_id=349425407 instance=ExtResource("4_jqt73")]
-visible = false
 position = Vector2(594, 1170)
 floor_number = 1
 metadata/_edit_lock_ = true
@@ -951,9 +947,6 @@ position = Vector2(260, -711)
 top_level_floor = 3
 bottom_level_floor = 2
 
-[node name="Window" parent="." unique_id=1344693668 instance=ExtResource("16_bf7t1")]
-position = Vector2(302, -2479)
-
 [node name="Window4" parent="." unique_id=99134205 instance=ExtResource("16_bf7t1")]
 position = Vector2(302, -2239)
 
@@ -964,7 +957,7 @@ position = Vector2(302, -2119)
 position = Vector2(302, -1999)
 
 [node name="Window7" parent="." unique_id=711932669 instance=ExtResource("16_bf7t1")]
-position = Vector2(722, -1999)
+position = Vector2(763, -2096)
 
 [node name="Window8" parent="." unique_id=1758609201 instance=ExtResource("16_bf7t1")]
 position = Vector2(722, -1879)
@@ -1004,9 +997,6 @@ position = Vector2(302, -1519)
 
 [node name="Window2" parent="." unique_id=390617669 instance=ExtResource("16_bf7t1")]
 position = Vector2(722, -2479)
-
-[node name="Window3" parent="." unique_id=303293483 instance=ExtResource("16_bf7t1")]
-position = Vector2(722, -2359)
 
 [node name="Lamp" parent="." unique_id=564443821 instance=ExtResource("17_ghfw4")]
 position = Vector2(386, -2532)
@@ -1058,6 +1048,9 @@ position = Vector2(638, -1692)
 
 [node name="Lamp17" parent="." unique_id=126222529 instance=ExtResource("17_ghfw4")]
 position = Vector2(386, -1572)
+
+[node name="Window3" parent="." unique_id=303293483 instance=ExtResource("16_bf7t1")]
+position = Vector2(722, -2359)
 
 [node name="Lamp18" parent="." unique_id=1649163129 instance=ExtResource("17_ghfw4")]
 position = Vector2(638, -1572)
@@ -1193,7 +1186,7 @@ shape = SubResource("RectangleShape2D_j5ip0")
 position = Vector2(510, 1219)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WinDetectorComponent" unique_id=1650312855]
-position = Vector2(1, 31)
+position = Vector2(2, 31)
 shape = SubResource("RectangleShape2D_oark8")
 
 [node name="ItemPickup" parent="." unique_id=712698818 instance=ExtResource("20_3582p")]
@@ -1207,3 +1200,6 @@ item = SubResource("Resource_itbe0")
 [node name="ItemPickup3" parent="." unique_id=1755926154 instance=ExtResource("20_3582p")]
 position = Vector2(451, 1142)
 item = SubResource("Resource_xrja0")
+
+[node name="Window" parent="." unique_id=1344693668 instance=ExtResource("16_bf7t1")]
+position = Vector2(302, -2479)

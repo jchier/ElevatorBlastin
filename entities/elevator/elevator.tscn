@@ -109,8 +109,6 @@ script = ExtResource("5_5dxo1")
 position = Vector2(-1, -52)
 shape = SubResource("RectangleShape2D_ksmh2")
 
-[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=1535609923]
-
 [connection signal="body_entered" from="Occupant_Area" to="." method="_on_occupant_area_body_entered"]
 [connection signal="body_exited" from="Occupant_Area" to="." method="_on_occupant_area_body_exited"]
 [connection signal="timeout" from="WaitTimer" to="." method="_on_wait_timer_timeout"]

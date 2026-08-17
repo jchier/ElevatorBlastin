@@ -29,5 +29,6 @@ func _on_area_2d_area_entered(_area: Area2D) -> void:\
 		
 func spawn_hit_particles():
 	var hit_particles: Node2D = impact_particles_scene.instantiate()
-	hit_particles.global_position = global_position
+	#print(global_position," ", hit_particles.global_position)
 	get_parent().add_child(hit_particles)
+	hit_particles.global_position = global_position

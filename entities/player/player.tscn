@@ -843,7 +843,6 @@ event = &"dead"
 delay_in_seconds = "0.0"
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=162436934]
-zoom = Vector2(0.1, 0.1)
 process_callback = 0
 position_smoothing_enabled = true
 drag_vertical_enabled = true
