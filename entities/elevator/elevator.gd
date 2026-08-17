@@ -11,6 +11,7 @@ signal stopped
 @onready var floor_detector_component: FloorDetectorComponent = $FloorDetectorComponent
 @onready var roof_animatable_body: CrushingObjectComponent = $RoofAnimatableBody
 @export var locked: bool = false
+@onready var digital_display: Label = $DigitalDisplay
 
 var requested_direction: int
 var direction: int:
@@ -30,6 +31,7 @@ func _ready():
 	occupant_area._set_direction.connect(_set_direction)
 	floor_animatable_body.crushed.connect(_generate_crush_score)
 	roof_animatable_body.crushed.connect(_generate_crush_score)
+	digital_display.text = str(get_floor())
 	
 func _physics_process(_delta: float) -> void:
 	if locked:
@@ -108,6 +110,7 @@ func _on_floor_area_area_entered(_area: Area2D) -> void:
 	activate_requested_dir()
 	stopped.emit()
 	wait_timer.start()
+	digital_display.text = str(get_floor())
 
 func get_floor() -> int:
 	return floor_detector_component.get_floor()
