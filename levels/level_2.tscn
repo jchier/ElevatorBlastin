@@ -21,7 +21,9 @@
 [ext_resource type="PackedScene" uid="uid://dc1ersna2wa3o" path="res://entities/item/ItemPickup.tscn" id="20_3582p"]
 [ext_resource type="Script" uid="uid://cen1ayeepsio" path="res://entities/item/item.gd" id="21_nomkf"]
 [ext_resource type="Texture2D" uid="uid://du4mn338cfknh" path="res://entities/item/heart.png" id="22_rddwe"]
+[ext_resource type="Resource" uid="uid://xai6ick188af" path="res://entities/item/cash.tres" id="22_xrja0"]
 [ext_resource type="Texture2D" uid="uid://cafe7r6tc04yb" path="res://entities/item/life.png" id="23_he6wg"]
+[ext_resource type="Texture2D" uid="uid://bst54evgv5vh8" path="res://entities/item/cash.png" id="23_jqt73"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lrvbd"]
 texture = ExtResource("9_m4706")
@@ -130,21 +132,101 @@ size = Vector2(658, 720)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oark8"]
 size = Vector2(664, 68)
 
-[sub_resource type="Resource" id="Resource_ngvhw"]
-script = ExtResource("21_nomkf")
-display_name = "Heart"
-texture = ExtResource("22_rddwe")
-points = 200
-metadata/_custom_type_script = "uid://cen1ayeepsio"
-
-[sub_resource type="Resource" id="Resource_itbe0"]
-script = ExtResource("21_nomkf")
-display_name = "Heart"
-texture = ExtResource("22_rddwe")
-points = 200
-metadata/_custom_type_script = "uid://cen1ayeepsio"
-
 [sub_resource type="Resource" id="Resource_xrja0"]
+script = ExtResource("21_nomkf")
+display_name = "Heart"
+texture = ExtResource("22_rddwe")
+points = 200
+metadata/_custom_type_script = "uid://cen1ayeepsio"
+
+[sub_resource type="Resource" id="Resource_he6wg"]
+script = ExtResource("21_nomkf")
+display_name = "Heart"
+texture = ExtResource("22_rddwe")
+points = 200
+metadata/_custom_type_script = "uid://cen1ayeepsio"
+
+[sub_resource type="Resource" id="Resource_amxoe"]
+script = ExtResource("21_nomkf")
+display_name = "Cash"
+texture = ExtResource("23_jqt73")
+effect = 4
+points = 10000
+metadata/_custom_type_script = "uid://cen1ayeepsio"
+
+[sub_resource type="Resource" id="Resource_cp3aq"]
+script = ExtResource("21_nomkf")
+display_name = "Cash"
+texture = ExtResource("23_jqt73")
+effect = 4
+points = 10000
+metadata/_custom_type_script = "uid://cen1ayeepsio"
+
+[sub_resource type="Resource" id="Resource_wgvos"]
+script = ExtResource("21_nomkf")
+display_name = "Cash"
+texture = ExtResource("23_jqt73")
+effect = 4
+points = 10000
+metadata/_custom_type_script = "uid://cen1ayeepsio"
+
+[sub_resource type="Resource" id="Resource_m4706"]
+script = ExtResource("21_nomkf")
+display_name = "Cash"
+texture = ExtResource("23_jqt73")
+effect = 4
+points = 10000
+metadata/_custom_type_script = "uid://cen1ayeepsio"
+
+[sub_resource type="Resource" id="Resource_4xp61"]
+script = ExtResource("21_nomkf")
+display_name = "Cash"
+texture = ExtResource("23_jqt73")
+effect = 4
+points = 10000
+metadata/_custom_type_script = "uid://cen1ayeepsio"
+
+[sub_resource type="Resource" id="Resource_4yoxl"]
+script = ExtResource("21_nomkf")
+display_name = "Cash"
+texture = ExtResource("23_jqt73")
+effect = 4
+points = 10000
+metadata/_custom_type_script = "uid://cen1ayeepsio"
+
+[sub_resource type="Resource" id="Resource_6dcgf"]
+script = ExtResource("21_nomkf")
+display_name = "Cash"
+texture = ExtResource("23_jqt73")
+effect = 4
+points = 10000
+metadata/_custom_type_script = "uid://cen1ayeepsio"
+
+[sub_resource type="Resource" id="Resource_ubuva"]
+script = ExtResource("21_nomkf")
+display_name = "Cash"
+texture = ExtResource("23_jqt73")
+effect = 4
+points = 10000
+metadata/_custom_type_script = "uid://cen1ayeepsio"
+
+[sub_resource type="Resource" id="Resource_0nm7o"]
+script = ExtResource("21_nomkf")
+display_name = "Cash"
+texture = ExtResource("23_jqt73")
+effect = 4
+points = 10000
+metadata/_custom_type_script = "uid://cen1ayeepsio"
+
+[sub_resource type="Resource" id="Resource_pjs8f"]
+script = ExtResource("21_nomkf")
+display_name = "Cash"
+texture = ExtResource("23_jqt73")
+effect = 4
+points = 10000
+metadata/_custom_type_script = "uid://cen1ayeepsio"
+
+[sub_resource type="Resource" id="Resource_00pa0"]
 script = ExtResource("21_nomkf")
 display_name = "Life"
 texture = ExtResource("23_he6wg")
@@ -430,7 +512,7 @@ z_index = -1
 position = Vector2(751, 601)
 
 [node name="PlayerMarker" type="Marker2D" parent="." unique_id=1946072525]
-position = Vector2(343, -2633)
+position = Vector2(311, -2603)
 script = ExtResource("11_4yoxl")
 
 [node name="EnemyMarker" type="Marker2D" parent="." unique_id=641922445]
@@ -1192,15 +1274,59 @@ shape = SubResource("RectangleShape2D_oark8")
 
 [node name="ItemPickup" parent="." unique_id=712698818 instance=ExtResource("20_3582p")]
 position = Vector2(306, 301)
-item = SubResource("Resource_ngvhw")
+item = SubResource("Resource_xrja0")
 
 [node name="ItemPickup2" parent="." unique_id=232273606 instance=ExtResource("20_3582p")]
 position = Vector2(517, -775)
-item = SubResource("Resource_itbe0")
+item = SubResource("Resource_he6wg")
 
 [node name="ItemPickup3" parent="." unique_id=1755926154 instance=ExtResource("20_3582p")]
+position = Vector2(437, -2581)
+item = ExtResource("22_xrja0")
+
+[node name="ItemPickup5" parent="." unique_id=216728891 instance=ExtResource("20_3582p")]
+position = Vector2(407, -2581)
+item = SubResource("Resource_amxoe")
+
+[node name="ItemPickup6" parent="." unique_id=515557422 instance=ExtResource("20_3582p")]
+position = Vector2(374, -2581)
+item = SubResource("Resource_cp3aq")
+
+[node name="ItemPickup7" parent="." unique_id=468213213 instance=ExtResource("20_3582p")]
+position = Vector2(389, -2610)
+item = SubResource("Resource_wgvos")
+
+[node name="ItemPickup8" parent="." unique_id=12122966 instance=ExtResource("20_3582p")]
+position = Vector2(423, -2610)
+item = SubResource("Resource_m4706")
+
+[node name="ItemPickup9" parent="." unique_id=422593871 instance=ExtResource("20_3582p")]
+position = Vector2(457, -2609)
+item = SubResource("Resource_4xp61")
+
+[node name="ItemPickup10" parent="." unique_id=650385401 instance=ExtResource("20_3582p")]
+position = Vector2(469, -2579)
+item = SubResource("Resource_4yoxl")
+
+[node name="ItemPickup11" parent="." unique_id=1243077962 instance=ExtResource("20_3582p")]
+position = Vector2(439, -2472)
+item = SubResource("Resource_6dcgf")
+
+[node name="ItemPickup12" parent="." unique_id=124066637 instance=ExtResource("20_3582p")]
+position = Vector2(407, -2471)
+item = SubResource("Resource_ubuva")
+
+[node name="ItemPickup13" parent="." unique_id=1293994967 instance=ExtResource("20_3582p")]
+position = Vector2(374, -2471)
+item = SubResource("Resource_0nm7o")
+
+[node name="ItemPickup14" parent="." unique_id=375983163 instance=ExtResource("20_3582p")]
+position = Vector2(341, -2471)
+item = SubResource("Resource_pjs8f")
+
+[node name="ItemPickup4" parent="." unique_id=1605710738 instance=ExtResource("20_3582p")]
 position = Vector2(451, 1142)
-item = SubResource("Resource_xrja0")
+item = SubResource("Resource_00pa0")
 
 [node name="Window" parent="." unique_id=1344693668 instance=ExtResource("16_bf7t1")]
 position = Vector2(302, -2479)

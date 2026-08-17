@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="Item" format=3 uid="uid://xai6ick188af"]
+
+[ext_resource type="Script" uid="uid://cen1ayeepsio" path="res://entities/item/item.gd" id="1_jlmrk"]
+[ext_resource type="Texture2D" uid="uid://bst54evgv5vh8" path="res://entities/item/cash.png" id="2_snbmf"]
+
+[resource]
+script = ExtResource("1_jlmrk")
+display_name = "Cash"
+texture = ExtResource("2_snbmf")
+effect = 4
+points = 10000
+metadata/_custom_type_script = "uid://cen1ayeepsio"
