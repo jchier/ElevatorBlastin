@@ -46,7 +46,6 @@ var disabled: bool = true:
 		elevator_vision_ray.enabled = !value
 		movement_component.disabled = value
 		floor_detector_collision_shape_2d.set_deferred("disabled", value)
-		#hurtbox_component.disabled = value
 		
 var direction: int = 1
 var last_direction: int = 1
@@ -81,6 +80,8 @@ func _ready():
 	health_component.died.connect(_on_died)
 	dark_room_detector_component.darken.connect(_on_darken)
 	dark_room_detector_component.lighten.connect(_on_lighten)
+	on_screen_notifier.screen_entered.connect(_on_screen_entered)
+	on_screen_notifier.screen_exited.connect(_on_screen_exited)
 	crouching_collision_shape.disabled = true
 	state_chart.send_event("docile")
 	direction = 1
@@ -495,3 +496,9 @@ func _on_darken():
 	
 func _on_lighten():
 	darkened = false
+
+func _on_screen_exited():
+	can_shoot = false
+
+func _on_screen_entered():
+	can_shoot = true

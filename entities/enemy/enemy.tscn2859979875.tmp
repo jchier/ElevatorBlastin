@@ -574,7 +574,6 @@ z_as_relative = false
 collision_layer = 8
 collision_mask = 337
 script = ExtResource("1_ogeq8")
-starting_floor = null
 
 [node name="FloorDetectorComponent" type="Area2D" parent="." unique_id=1055282861]
 position = Vector2(0, 4)

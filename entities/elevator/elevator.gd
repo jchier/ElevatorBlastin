@@ -32,6 +32,7 @@ func _ready():
 	floor_animatable_body.crushed.connect(_generate_crush_score)
 	roof_animatable_body.crushed.connect(_generate_crush_score)
 	digital_display.text = str(get_floor())
+	GameEvent.player_died.connect(_on_player_died)
 	
 func _physics_process(_delta: float) -> void:
 	if locked:
@@ -118,3 +119,7 @@ func get_floor() -> int:
 func _generate_crush_score():
 	if occupant_area.player_occupied:
 		GameEvent.add_score.emit(Global.SCORE_CRUSHED_ENEMY)
+		
+func _on_player_died():
+	if occupant_area.player_occupied:
+		digital_display.text = str("DAMN")

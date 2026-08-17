@@ -7,6 +7,7 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_oark8"]
 
 [node name="PlayerBullet" type="Node2D" unique_id=1703273686 groups=["player_bullet"]]
+z_index = 10
 scale = Vector2(0.5, 0.5)
 script = ExtResource("1_v7aoo")
 

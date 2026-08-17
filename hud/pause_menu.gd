@@ -19,14 +19,7 @@ func _ready() -> void:
 	sfx_volume_slider.value = Music.get_sfx_volume()
 
 
-func _input(event):
-	if event.is_action_pressed("pause"):
-		if !visible:
-			show()
-			get_tree().paused = true
-		else:
-			hide()
-			get_tree().paused = false
+
 
 
 func _on_resume_button_pressed():

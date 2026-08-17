@@ -57,5 +57,11 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("pause"):
 		heads_up_dialog.visible = !heads_up_dialog.visible
 
+		if !pause_menu.visible:
+			pause_menu.show()
+			get_tree().paused = true
+		else:
+			pause_menu.hide()
+			get_tree().paused = false
 		
 	

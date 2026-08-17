@@ -270,6 +270,7 @@ func _on_died():
 
 
 func _on_dead_state_entered() -> void:
+	GameEvent.player_died.emit()
 	hurt_timer.stop()
 	hurt_timer.paused = true
 	animation_component.start("dead")

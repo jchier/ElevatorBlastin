@@ -7,7 +7,7 @@ extends Node
 
 func _ready():
 	bg_music.finished.connect(_on_audio_stream_player_finished)
-	GameEvent.player_died.connect(_on_player_died)
+	#GameEvent.player_died.connect(_on_player_died)
 	GameEvent.player_spawned.connect(_on_player_spawned)
 
 
@@ -15,12 +15,11 @@ func _on_audio_stream_player_finished():
 	bg_music.play()
 
 
-func _on_player_died():
-	bg_music.stop()
 
 
 func _on_player_spawned(_player):
-	bg_music.play()
+#	bg_music.play()
+	pass
 
 
 func get_music_volume() -> float:

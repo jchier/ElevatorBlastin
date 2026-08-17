@@ -22,6 +22,7 @@
 [ext_resource type="Script" uid="uid://cen1ayeepsio" path="res://entities/item/item.gd" id="21_nomkf"]
 [ext_resource type="Texture2D" uid="uid://du4mn338cfknh" path="res://entities/item/heart.png" id="22_rddwe"]
 [ext_resource type="Texture2D" uid="uid://cafe7r6tc04yb" path="res://entities/item/life.png" id="23_he6wg"]
+[ext_resource type="Resource" uid="uid://xai6ick188af" path="res://entities/item/cash.tres" id="23_itbe0"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lrvbd"]
 texture = ExtResource("9_m4706")
@@ -1239,3 +1240,7 @@ item = SubResource("Resource_xrja0")
 
 [node name="Window" parent="." unique_id=1344693668 instance=ExtResource("16_bf7t1")]
 position = Vector2(302, -2479)
+
+[node name="ItemPickup3" parent="." unique_id=244477145 instance=ExtResource("20_3582p")]
+position = Vector2(358, -2582)
+item = ExtResource("23_itbe0")
