@@ -78,12 +78,14 @@ func _ready():
 	interactor_component.interaction_valid.connect(valid_interaction)
 	hurtbox_component.hit_by_player_bullet.connect(_on_hit_by_player_bullet)
 	GameEvent.player_changed_floor.connect(_changed_floor)
+	GameEvent.player_died.connect(_on_player_died)
 	crush_component.crushed.connect(die)
 	health_component.died.connect(_on_died)
 	dark_room_detector_component.darken.connect(_on_darken)
 	dark_room_detector_component.lighten.connect(_on_lighten)
 	on_screen_notifier.screen_entered.connect(_on_screen_entered)
 	on_screen_notifier.screen_exited.connect(_on_screen_exited)
+	
 	crouching_collision_shape.disabled = true
 	state_chart.send_event("docile")
 	direction = 1
@@ -110,7 +112,7 @@ func _on_alive_state_processing(delta: float) -> void:
 
 	if player_vision_ray.is_colliding():
 		var collided = player_vision_ray.get_collider()
-		if collided is Player:
+		if collided is Player and !collided.dead:
 			navigation_component.set_destination(collided.global_position.x)
 			state_chart.send_event("aggro")
 			return
@@ -510,3 +512,6 @@ func _on_screen_exited():
 
 func _on_screen_entered():
 	can_shoot = true
+
+func _on_player_died():
+	state_chart.send_event("docile")
