@@ -29,6 +29,7 @@ const PLAYER_STARTING_LIVES: int = 2
 @onready var sound_component: Node = $CharacterSoundComponent
 @onready var kick_hitbox: HitboxComponent = $KickHitbox
 @onready var kick_hitbox_collision: CollisionShape2D = $KickHitbox/CollisionShape2D
+@onready var camera_2d: Camera2D = $Camera2D
 
 signal died
 
@@ -83,7 +84,6 @@ func _ready():
 	health_component.health_changed.connect(_update_player_health)
 	health_component.died.connect(_on_died)
 	hurtbox_component.hit.connect(_knockback)
-	kick_hitbox.hit_hurtbox.connect(_enemy_kicked)
 	interactor_component.interaction_valid.connect(_valid_interaction)
 	floor_detector_component.changed_floor.connect(_changed_floor)
 	crush_component.crushed.connect(die)
@@ -364,5 +364,27 @@ func respawn(spawn_location: Vector2) -> void:
 		state_chart.send_event("to_stand")
 
 
-func _enemy_kicked(_hurtbox_component: HurtboxComponent):
-	GameEvent.add_score.emit(Global.SCORE_ENEMY_KICKED)
+func _on_kick_hitbox_area_entered(area: Area2D) -> void:
+	if area.is_in_group("enemy"):
+		GameEvent.add_score.emit(Global.SCORE_ENEMY_KICKED)
+		
+
+func _on_win_state_entered() -> void:
+	animation_component.disabled = true
+		
+func win(car_pos: Vector2) -> void:
+	set_orientation(signf(global_position.direction_to(car_pos).x))
+	state_chart.send_event("won")
+	var tween1 := create_tween()
+	tween1.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+	tween1.tween_property(camera_2d, "global_position", car_pos, 1.0)
+	var tween2 := create_tween()
+	animation_component.play_direct("walk")
+	tween2.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+	tween2.tween_property(self, "global_position", Vector2(car_pos.x, global_position.y), 2.0)
+	await tween2.finished
+	disable_player(true)
+
+
+#func _on_win_state_processing(delta: float) -> void:
+#	animation_component.move(1.0)

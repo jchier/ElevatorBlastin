@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://dono18b6socj7"]
+
+[ext_resource type="Script" uid="uid://27amkuy3twb8" path="res://entities/car/car.gd" id="1_1ang0"]
+[ext_resource type="Texture2D" uid="uid://bxxg8ir4o510r" path="res://entities/car/car.png" id="2_x0apo"]
+
+[node name="Car" type="Node2D" unique_id=489492451]
+script = ExtResource("1_1ang0")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=527759405]
+texture = ExtResource("2_x0apo")
+hframes = 2

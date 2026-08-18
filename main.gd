@@ -149,5 +149,6 @@ func _check_win():
 		player_spawn.global_position = player_doors[0].global_position
 		reset_physics_interpolation()
 	else:
-		GameEvent.advance_level.emit()
-		get_tree().reload_current_scene()
+		#GameEvent.advance_level.emit()
+		#get_tree().reload_current_scene()
+		GameEvent.player_win.emit()

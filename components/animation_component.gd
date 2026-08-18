@@ -14,6 +14,10 @@ animation_tree.get("parameters/StateMachineLegs/playback")
 @onready var state_machine_torso: AnimationNodeStateMachinePlayback = \
 animation_tree.get("parameters/StateMachineTorso/playback")
 
+var disabled: bool:
+	set(value):
+		animation_tree.active = !value
+
 func play_idle():
 	animation_tree.travel("idle")
 
@@ -61,6 +65,12 @@ func _interaction_complete():
 
 func dead():
 	state_machine_torso.start("dead")
+
+func play_direct(toplay: String):
+	animation_legs.stop()
+	animation_torso.stop()
+	animation_legs.play(toplay)
+	animation_torso.play(toplay)
 	
 func is_animation_playing() -> bool:
 	if animation_torso.is_playing() or animation_legs.is_playing():

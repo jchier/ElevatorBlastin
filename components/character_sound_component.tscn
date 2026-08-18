@@ -4,6 +4,7 @@
 [ext_resource type="AudioStream" uid="uid://djmnjoocc31bf" path="res://sound/shoot.wav" id="2_n8w8k"]
 [ext_resource type="AudioStream" uid="uid://bimc3lhixoekv" path="res://sound/hit.wav" id="3_rhgib"]
 [ext_resource type="AudioStream" uid="uid://dq6paj0ihyerj" path="res://sound/jump.wav" id="4_o623p"]
+[ext_resource type="AudioStream" uid="uid://cb1hn28x06f1m" path="res://sound/crush.wav" id="5_n8w8k"]
 
 [node name="CharacterSoundComponent" type="Node2D" unique_id=81484604]
 script = ExtResource("1_hq8ao")
@@ -20,5 +21,10 @@ area_mask = 1
 
 [node name="jump" type="AudioStreamPlayer2D" parent="." unique_id=1158629107]
 stream = ExtResource("4_o623p")
+bus = &"sfx"
+area_mask = 1
+
+[node name="crush" type="AudioStreamPlayer2D" parent="." unique_id=1808724995]
+stream = ExtResource("5_n8w8k")
 bus = &"sfx"
 area_mask = 1

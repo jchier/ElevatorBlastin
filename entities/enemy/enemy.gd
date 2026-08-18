@@ -384,7 +384,10 @@ func _on_died():
 	state_chart.send_event("dead")
 
 func _on_dead_state_entered() -> void:
-	sound_component.hit()
+	if crush_component.was_crushed:
+		sound_component.crush()
+	else:
+		sound_component.hit()
 	hurtbox_component.disabled = true
 	elevator_vision_ray.enabled = false
 	player_vision_ray.enabled = false

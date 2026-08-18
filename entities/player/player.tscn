@@ -18,9 +18,11 @@
 [ext_resource type="PackedScene" uid="uid://cmh5yetqv4k2r" path="res://components/hurtbox_component.tscn" id="9_gx6sm"]
 [ext_resource type="Script" uid="uid://cf1nsco3w0mf6" path="res://addons/godot_state_charts/transition.gd" id="9_j3ovn"]
 [ext_resource type="PackedScene" uid="uid://d3ybrc1g2dpl4" path="res://components/interactor_component.tscn" id="10_b2kln"]
+[ext_resource type="PackedScene" uid="uid://dcvp37of238fb" path="res://components/navigation_component.tscn" id="11_221hk"]
 [ext_resource type="PackedScene" uid="uid://ddj26eine24hx" path="res://components/CrushComponent.tscn" id="11_we0b7"]
 [ext_resource type="PackedScene" uid="uid://bvvr0rbvrjxjs" path="res://entities/bullet/player_bullet.tscn" id="14_eyb6c"]
 [ext_resource type="Script" uid="uid://b4nkm5erhf1f1" path="res://components/hitbox_component.gd" id="20_mtric"]
+[ext_resource type="PackedScene" uid="uid://bcwkugn6v3oy7" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="23_ghoj8"]
 
 [sub_resource type="Animation" id="Animation_eyb6c"]
 length = 0.001
@@ -580,7 +582,6 @@ _data = {
 [sub_resource type="AnimationNodeAdd2" id="AnimationNodeAdd2_a1qjk"]
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_afbqv"]
-graph_offset = Vector2(-355.7844, 72.66715)
 nodes/output/position = Vector2(360, 140)
 nodes/Add2/node = SubResource("AnimationNodeAdd2_a1qjk")
 nodes/Add2/position = Vector2(180, 120)
@@ -671,6 +672,8 @@ offset = Vector2(0, -26)
 hframes = 4
 vframes = 4
 frame = 12
+
+[node name="NavigationComponent" parent="." unique_id=1630912613 instance=ExtResource("11_221hk")]
 
 [node name="InteractorComponent" parent="." unique_id=18262948 instance=ExtResource("10_b2kln")]
 visible = false
@@ -802,6 +805,12 @@ to = NodePath("../../Stand")
 event = &"to_stand_from_interact"
 delay_in_seconds = "0.0"
 
+[node name="Win" type="Node" parent="StateChart/Root/Grounded" unique_id=561334886]
+script = ExtResource("9_j3ovn")
+to = NodePath("../../Win")
+event = &"won"
+delay_in_seconds = "0.0"
+
 [node name="Airborne" type="Node" parent="StateChart/Root" unique_id=414048615]
 script = ExtResource("8_a1qjk")
 
@@ -815,6 +824,12 @@ delay_in_seconds = "0.0"
 script = ExtResource("9_j3ovn")
 to = NodePath("../../Dead")
 event = &"dead"
+delay_in_seconds = "0.0"
+
+[node name="Win" type="Node" parent="StateChart/Root/Airborne" unique_id=743203159]
+script = ExtResource("9_j3ovn")
+to = NodePath("../../Win")
+event = &"won"
 delay_in_seconds = "0.0"
 
 [node name="Dead" type="Node" parent="StateChart/Root" unique_id=281422517]
@@ -842,10 +857,22 @@ to = NodePath("../../Dead")
 event = &"dead"
 delay_in_seconds = "0.0"
 
+[node name="Win" type="Node" parent="StateChart/Root" unique_id=120549391]
+script = ExtResource("8_a1qjk")
+
 [node name="Camera2D" type="Camera2D" parent="." unique_id=162436934]
+position = Vector2(1, 0)
 process_callback = 0
 position_smoothing_enabled = true
 drag_vertical_enabled = true
+
+[node name="StateChartDebugger" parent="." unique_id=1147276148 instance=ExtResource("23_ghoj8")]
+offset_left = -113.0
+offset_top = -234.0
+offset_right = 281.0
+offset_bottom = 76.0
+scale = Vector2(0.5634983, 0.56850344)
+initial_node_to_watch = NodePath("../StateChart")
 
 [connection signal="area_entered" from="KickHitbox" to="." method="_on_kick_hitbox_area_entered"]
 [connection signal="timeout" from="HurtTimer" to="." method="_on_hurt_timer_timeout"]
@@ -866,3 +893,5 @@ drag_vertical_enabled = true
 [connection signal="state_entered" from="StateChart/Root/Dead" to="." method="_on_dead_state_entered"]
 [connection signal="state_exited" from="StateChart/Root/Dead" to="." method="_on_dead_state_exited"]
 [connection signal="state_exited" from="StateChart/Root/Hurt" to="." method="_on_hurt_state_exited"]
+[connection signal="state_entered" from="StateChart/Root/Win" to="." method="_on_win_state_entered"]
+[connection signal="state_processing" from="StateChart/Root/Win" to="." method="_on_win_state_processing"]
