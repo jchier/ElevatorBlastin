@@ -67,9 +67,10 @@ func dead():
 	state_machine_torso.start("dead")
 
 func play_direct(toplay: String):
-	animation_legs.stop()
-	animation_torso.stop()
+	#animation_legs.stop()
+	#animation_torso.stop()
 	animation_legs.play(toplay)
+	#animation_torso.play("torso/" + toplay)
 	animation_torso.play(toplay)
 	
 func is_animation_playing() -> bool:

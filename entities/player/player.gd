@@ -372,18 +372,8 @@ func _on_kick_hitbox_area_entered(area: Area2D) -> void:
 func _on_win_state_entered() -> void:
 	animation_component.disabled = true
 		
-func win(car_pos: Vector2) -> void:
-	set_orientation(signf(global_position.direction_to(car_pos).x))
+func win() -> void:
 	state_chart.send_event("won")
-	var tween1 := create_tween()
-	tween1.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
-	tween1.tween_property(camera_2d, "global_position", car_pos, 1.0)
-	var tween2 := create_tween()
-	animation_component.play_direct("walk")
-	tween2.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
-	tween2.tween_property(self, "global_position", Vector2(car_pos.x, global_position.y), 2.0)
-	await tween2.finished
-	disable_player(true)
 
 
 #func _on_win_state_processing(delta: float) -> void:
