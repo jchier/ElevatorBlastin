@@ -55,12 +55,12 @@ func _score_changed(_points: int):
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("pause"):
-		heads_up_dialog.visible = !heads_up_dialog.visible
-
 		if !pause_menu.visible:
+			heads_up_dialog.hide()
 			pause_menu.show()
 			get_tree().paused = true
 		else:
+			heads_up_dialog.show()
 			pause_menu.hide()
 			get_tree().paused = false
 		
