@@ -22,7 +22,7 @@
 [ext_resource type="Script" uid="uid://cen1ayeepsio" path="res://entities/item/item.gd" id="21_nomkf"]
 [ext_resource type="Texture2D" uid="uid://du4mn338cfknh" path="res://entities/item/heart.png" id="22_rddwe"]
 [ext_resource type="Texture2D" uid="uid://cafe7r6tc04yb" path="res://entities/item/life.png" id="23_he6wg"]
-[ext_resource type="Texture2D" uid="uid://bst54evgv5vh8" path="res://entities/item/cash.png" id="23_itbe0"]
+[ext_resource type="Resource" uid="uid://unn83crdxoul" path="res://entities/item/machine_gun.tres" id="23_itbe0"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lrvbd"]
 texture = ExtResource("9_m4706")
@@ -151,14 +151,6 @@ display_name = "Life"
 texture = ExtResource("23_he6wg")
 effect = 1
 points = 500
-metadata/_custom_type_script = "uid://cen1ayeepsio"
-
-[sub_resource type="Resource" id="Resource_00pa0"]
-script = ExtResource("21_nomkf")
-display_name = "Cash"
-texture = ExtResource("23_itbe0")
-effect = 4
-points = 10000
 metadata/_custom_type_script = "uid://cen1ayeepsio"
 
 [node name="Level2" type="Node2D" unique_id=1570879048]
@@ -467,7 +459,7 @@ z_index = -1
 position = Vector2(751, 601)
 
 [node name="PlayerMarker" type="Marker2D" parent="." unique_id=1946072525]
-position = Vector2(351, 36)
+position = Vector2(410, -2635)
 script = ExtResource("11_4yoxl")
 
 [node name="EnemyMarker" type="Marker2D" parent="." unique_id=641922445]
@@ -1244,4 +1236,4 @@ position = Vector2(302, -2479)
 
 [node name="ItemPickup3" parent="." unique_id=244477145 instance=ExtResource("20_3582p")]
 position = Vector2(358, -2582)
-item = SubResource("Resource_00pa0")
+item = ExtResource("23_itbe0")

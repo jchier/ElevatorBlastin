@@ -295,10 +295,6 @@ script = ExtResource("9_3sk1a")
 position = Vector2(-9, 597)
 script = ExtResource("8_aerfg")
 
-[node name="EnemyMarker5" type="Marker2D" parent="." unique_id=1036903525]
-position = Vector2(181, 221)
-script = ExtResource("8_aerfg")
-
 [node name="EnemyMarker2" type="Marker2D" parent="." unique_id=654291317]
 position = Vector2(319, 1074)
 script = ExtResource("8_aerfg")
