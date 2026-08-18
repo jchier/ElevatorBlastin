@@ -40,12 +40,13 @@ var chosen_elevator: Elevator
 
 
 enum {BELOW, EQUAL, ABOVE}
-var disabled: bool = true:
+var disabled: bool:
 	set(value):
 		player_vision_ray.enabled = !value
 		elevator_vision_ray.enabled = !value
 		movement_component.disabled = value
 		floor_detector_collision_shape_2d.set_deferred("disabled", value)
+		interactor_component.disabled = value
 		
 var direction: int = 1
 var last_direction: int = 1
@@ -64,6 +65,7 @@ var player_close = false
 var darkened: bool = false
 
 func _ready():
+	disabled = true
 	player = GameState.player
 	rider_component.set_current_occupancy.connect(_set_current_occupancy)
 	rider_component.clear_current_occupancy.connect(_clear_current_occupancy)
@@ -215,6 +217,7 @@ func jump():
 #====================================== BEHAVIOR STATES ===========================================================	
 #====================================== DOCILE STATE ==============================================================
 func _on_docile_state_entered() -> void:
+	disabled = false
 	chosen_elevator = null
 	patrol_timer.start()
 	navigation_component.on_docile_state_entered()
@@ -256,6 +259,7 @@ func _on_patrol_timer_timeout() -> void:
 #====================================== AGGRO STATE ==============================================================
 
 func _on_aggro_state_entered() -> void:
+	disabled = false
 	reaction_timer.paused = false
 	reaction_timer.start(randf_range(0.0, 0.5))
 	movement_component.disabled = false
@@ -469,7 +473,7 @@ func _on_spawn_state_entered() -> void:
 	player_vision_ray.enabled = true
 	animation_component.interaction_complete.connect(_spawn_complete)
 	start_animation(spawn_animation)
-	
+
 
 func _spawn_complete():
 	#set_orientation(signf(global_position.direction_to(GameState.player.global_position).x))

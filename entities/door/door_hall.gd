@@ -94,7 +94,6 @@ func spawn_enemy():
 	enemy_scene.global_position = global_position
 	animation_player.play("open")
 	await animation_player.animation_finished
-
 	
 	
 func get_floor() -> int:
