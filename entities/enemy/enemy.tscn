@@ -538,6 +538,7 @@ _data = {
 [sub_resource type="AnimationNodeAdd2" id="AnimationNodeAdd2_a1qjk"]
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_5s4bh"]
+graph_offset = Vector2(-545.1078, 122.62799)
 nodes/output/position = Vector2(360, 140)
 nodes/Add2/node = SubResource("AnimationNodeAdd2_a1qjk")
 nodes/Add2/position = Vector2(160, 120)
@@ -937,13 +938,11 @@ wait_time = 15.0
 one_shot = true
 
 [node name="StateChartDebugger" parent="." unique_id=747944174 instance=ExtResource("21_fktuf")]
-visible = false
 offset_left = -87.0
 offset_top = -232.0
 offset_right = 242.0
 offset_bottom = 82.0
 scale = Vector2(0.56046784, 0.5512531)
-enabled = false
 initial_node_to_watch = NodePath("../StateChart")
 
 [connection signal="body_entered" from="PlayerBufferZone" to="." method="_on_player_buffer_zone_body_entered"]

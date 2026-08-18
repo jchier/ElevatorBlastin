@@ -80,7 +80,7 @@ func _ready():
 	GameEvent.player_changed_floor.connect(_changed_floor)
 	GameEvent.player_died.connect(_on_player_died)
 	crush_component.crushed.connect(die)
-	health_component.died.connect(_on_died)
+
 	dark_room_detector_component.darken.connect(_on_darken)
 	dark_room_detector_component.lighten.connect(_on_lighten)
 	on_screen_notifier.screen_entered.connect(_on_screen_entered)
@@ -472,6 +472,7 @@ func _changed_floor():
 
 
 func _on_spawn_state_entered() -> void:
+	health_component.died.connect(_spawn_complete)
 	player_vision_ray.enabled = true
 	animation_component.interaction_complete.connect(_spawn_complete)
 	start_animation(spawn_animation)
@@ -487,6 +488,8 @@ func _spawn_complete():
 	
 
 func _on_spawn_state_exited() -> void:
+	health_component.died.disconnect(_spawn_complete)
+	health_component.died.connect(_on_died)
 	player_vision_ray.enabled = true
 	disabled = false
 	animation_component.interaction_complete.disconnect(_spawn_complete)
