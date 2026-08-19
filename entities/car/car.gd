@@ -1,9 +1,11 @@
 extends Node2D
 var player: Player
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
-func _ready():
-	GameEvent.player_win.connect(_on_player_win)
 
+@onready var car_sfx: AudioStreamPlayer2D = $CarSFX
+func _ready():
+
+	GameEvent.player_win.connect(_on_player_win)
 func _on_player_win():
 	player = GameState.player
 	player.win()
@@ -19,3 +21,10 @@ func _on_player_win():
 	await tween2.finished
 	player.animation_component.play_direct("enter_car")
 	animation_player.play("player_enter")
+	
+func drive_away():
+	#var tween := create_tween()
+	#tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+	animation_player.play("drive")
+	#tween.tween_property(self, "global_position", Vector2(global_position.x - 10000, global_position.y), 50.0)	
+	#audio.play()

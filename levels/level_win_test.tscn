@@ -23,8 +23,7 @@
 [ext_resource type="Script" uid="uid://cen1ayeepsio" path="res://entities/item/item.gd" id="21_6nb6v"]
 [ext_resource type="Texture2D" uid="uid://du4mn338cfknh" path="res://entities/item/heart.png" id="22_woq5k"]
 [ext_resource type="Texture2D" uid="uid://cafe7r6tc04yb" path="res://entities/item/life.png" id="23_0to3k"]
-[ext_resource type="Script" uid="uid://27amkuy3twb8" path="res://entities/car/car.gd" id="24_m8bd2"]
-[ext_resource type="Texture2D" uid="uid://bxxg8ir4o510r" path="res://entities/car/car.png" id="25_v72i2"]
+[ext_resource type="PackedScene" uid="uid://dono18b6socj7" path="res://entities/car/car.tscn" id="24_6nod5"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lrvbd"]
 texture = ExtResource("9_6mhkb")
@@ -145,44 +144,6 @@ texture = ExtResource("23_0to3k")
 effect = 1
 points = 500
 metadata/_custom_type_script = "uid://cen1ayeepsio"
-
-[sub_resource type="Animation" id="Animation_1ang0"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-
-[sub_resource type="Animation" id="Animation_x0apo"]
-resource_name = "player_enter"
-length = 1.5
-step = 0.083333336
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5, 0.5833334, 0.6666667, 1.25, 1.3333334, 1.4166667),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [0, 1, 2, 3, 2, 1, 0]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_qxogl"]
-_data = {
-&"RESET": SubResource("Animation_1ang0"),
-&"player_enter": SubResource("Animation_x0apo")
-}
 
 [node name="Level1" type="Node2D" unique_id=1570879048]
 z_as_relative = false
@@ -520,15 +481,5 @@ item = SubResource("Resource_i06ef")
 position = Vector2(-464, 854)
 item = SubResource("Resource_s7jfq")
 
-[node name="Car" type="Node2D" parent="." unique_id=489492451]
-position = Vector2(0, 1386)
-script = ExtResource("24_m8bd2")
-
-[node name="Sprite2D" type="Sprite2D" parent="Car" unique_id=527759405]
-texture = ExtResource("25_v72i2")
-offset = Vector2(-19.79, -11)
-hframes = 2
-vframes = 4
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Car" unique_id=1715591283]
-libraries/ = SubResource("AnimationLibrary_qxogl")
+[node name="Car" parent="." unique_id=489492451 instance=ExtResource("24_6nod5")]
+position = Vector2(-81, 1386)
