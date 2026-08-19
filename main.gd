@@ -154,6 +154,7 @@ func _check_win():
 		GameState.player.global_position = player_doors[0].global_position
 		player_spawn.global_position = player_doors[0].global_position
 		reset_physics_interpolation()
+		Music.error()
 	else:
 		GameEvent.player_win.emit()
 		

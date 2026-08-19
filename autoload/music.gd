@@ -5,6 +5,7 @@ extends Node
 
 @onready var bg_music: AudioStreamPlayer = $BgMusic
 @onready var sfx_item: AudioStreamPlayer = $sfx_item
+@onready var sfx_error: AudioStreamPlayer = $sfx_error
 
 func _ready():
 	bg_music.finished.connect(_on_audio_stream_player_finished)
@@ -39,3 +40,6 @@ func set_sfx_volume(value: float) -> void:
 
 func item_get():
 	sfx_item.play()
+
+func error():
+	sfx_error.play()

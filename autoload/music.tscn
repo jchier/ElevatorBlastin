@@ -3,6 +3,7 @@
 [ext_resource type="AudioStream" uid="uid://b1ir7nhu6lo20" path="res://sound/balladofthebuilding.wav" id="1_66iyn"]
 [ext_resource type="Script" uid="uid://cbrx8tcfopuwk" path="res://autoload/music.gd" id="1_rs757"]
 [ext_resource type="AudioStream" uid="uid://crnp1cgya1txo" path="res://sound/item_pickup.wav" id="3_vnik8"]
+[ext_resource type="AudioStream" uid="uid://cqfh4oipcn02t" path="res://sound/error.wav" id="4_v77v8"]
 
 [node name="Music" type="Node" unique_id=964570299]
 script = ExtResource("1_rs757")
@@ -14,4 +15,8 @@ bus = &"music"
 
 [node name="sfx_item" type="AudioStreamPlayer" parent="." unique_id=2125723148]
 stream = ExtResource("3_vnik8")
+bus = &"sfx"
+
+[node name="sfx_error" type="AudioStreamPlayer" parent="." unique_id=2070612241]
+stream = ExtResource("4_v77v8")
 bus = &"sfx"
