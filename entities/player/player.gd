@@ -94,7 +94,10 @@ func _ready():
 	#_update_player_lives(life_counter)
 	
 func _physics_process(delta: float) -> void:
+	pass
 
+
+func _on_alive_state_physics_processing(delta: float) -> void:
 	if Input.is_action_just_pressed("jump"):
 		movement_component.jump()	
 		
@@ -115,6 +118,8 @@ func _physics_process(delta: float) -> void:
 		
 	if Input.is_action_just_released("down"):
 		state_chart.send_event("stand")
+		
+
 
 func _jumped():
 	sound_component.jump()
@@ -202,13 +207,6 @@ func _on_airborne_state_exited() -> void:
 	hurtbox_component.toggle_airborne()
 	kick_hitbox_collision.set_deferred("disabled", true)
 
-#func _on_airborne_state_input(_event: InputEvent) -> void:
-#	if !has_machine_gun:
-#		if Input.is_action_just_pressed("shoot"):
-#			try_stand_fire()
-#	else:
-#		if Input.is_action_pressed("shoot"):
-#			try_stand_fire()
 			
 func _on_stand_state_physics_processing(_delta: float) -> void:
 	#print(velocity.length_squared())
@@ -226,23 +224,6 @@ func _on_stand_state_physics_processing(_delta: float) -> void:
 		else:
 			if Input.is_action_pressed("shoot"):
 				try_stand_fire()
-
-#func _on_duck_state_input(_event: InputEvent) -> void:
-#	if !has_machine_gun:
-#		if Input.is_action_just_pressed("shoot"):
-#			try_stand_fire()
-#	else:
-#		if Input.is_action_pressed("shoot"):
-#			try_duck_fire()
-
-
-#func _on_stand_state_input(_event: InputEvent) -> void:
-#	if !has_machine_gun:
-#		if Input.is_action_just_pressed("shoot"):
-#			try_stand_fire()
-#	else:
-#		if Input.is_action_pressed("shoot"):
-#			try_stand_fire()
 
 
 func _on_to_grounded_taken() -> void:
@@ -274,8 +255,11 @@ func _on_dead_state_entered() -> void:
 	hurt_timer.stop()
 	hurt_timer.paused = true
 	animation_component.start("dead")
-	disable_player(true)
-	movement_component.disabled = true
+	kick_hitbox_collision.set_deferred("disabled", true)
+	hurtbox_component.disabled = true
+	crouching_collision_shape.set_deferred("disabled", true)
+	standing_collision_shape.set_deferred("disabled", false)
+	can_shoot = false
 	hurtbox_component.disabled = true
 	#despawn_timer.start()
 	died.emit()
@@ -379,3 +363,8 @@ func win() -> void:
 
 #func _on_win_state_processing(delta: float) -> void:
 #	animation_component.move(1.0)
+
+
+func _on_dead_state_processing(delta: float) -> void:
+	movement_component.generate_velocity(delta, 0)
+	move_and_slide()

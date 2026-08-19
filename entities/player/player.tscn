@@ -808,94 +808,114 @@ metadata/_custom_type_script = "uid://couw105c3bde4"
 
 [node name="Root" type="Node" parent="StateChart" unique_id=1818440252]
 script = ExtResource("7_7thud")
+initial_state = NodePath("Alive")
+
+[node name="Alive" type="Node" parent="StateChart/Root" unique_id=331944469]
+script = ExtResource("7_7thud")
 initial_state = NodePath("Grounded")
 
-[node name="Grounded" type="Node" parent="StateChart/Root" unique_id=576785901]
+[node name="Grounded" type="Node" parent="StateChart/Root/Alive" unique_id=576785901]
 script = ExtResource("7_7thud")
 initial_state = NodePath("Stand")
 
-[node name="Stand" type="Node" parent="StateChart/Root/Grounded" unique_id=1303686531]
+[node name="Stand" type="Node" parent="StateChart/Root/Alive/Grounded" unique_id=1303686531]
 script = ExtResource("8_a1qjk")
 
-[node name="ToDuck" type="Node" parent="StateChart/Root/Grounded/Stand" unique_id=324150903]
+[node name="ToDuck" type="Node" parent="StateChart/Root/Alive/Grounded/Stand" unique_id=324150903]
 script = ExtResource("9_j3ovn")
 to = NodePath("../../Duck")
 event = &"duck"
 delay_in_seconds = "0.0"
 
-[node name="Airborne" type="Node" parent="StateChart/Root/Grounded/Stand" unique_id=351135610]
+[node name="Airborne" type="Node" parent="StateChart/Root/Alive/Grounded/Stand" unique_id=351135610]
 script = ExtResource("9_j3ovn")
 to = NodePath("../../../Airborne")
 event = &"airborne"
 delay_in_seconds = "0.0"
 
-[node name="ToInteracting" type="Node" parent="StateChart/Root/Grounded/Stand" unique_id=777988848]
+[node name="ToInteracting" type="Node" parent="StateChart/Root/Alive/Grounded/Stand" unique_id=777988848]
 script = ExtResource("9_j3ovn")
 to = NodePath("../../Interacting")
 event = &"interact"
 delay_in_seconds = "0.0"
 
-[node name="Duck" type="Node" parent="StateChart/Root/Grounded" unique_id=694636133]
+[node name="Duck" type="Node" parent="StateChart/Root/Alive/Grounded" unique_id=694636133]
 script = ExtResource("8_a1qjk")
 
-[node name="ToStandFromDuck" type="Node" parent="StateChart/Root/Grounded/Duck" unique_id=1781552016]
+[node name="ToStandFromDuck" type="Node" parent="StateChart/Root/Alive/Grounded/Duck" unique_id=1781552016]
 script = ExtResource("9_j3ovn")
 to = NodePath("../../Stand")
 event = &"stand"
 delay_in_seconds = "0.0"
 
-[node name="Airborne" type="Node" parent="StateChart/Root/Grounded/Duck" unique_id=968713799]
+[node name="Airborne" type="Node" parent="StateChart/Root/Alive/Grounded/Duck" unique_id=968713799]
 script = ExtResource("9_j3ovn")
 to = NodePath("../../../Airborne")
 event = &"airborne"
 delay_in_seconds = "0.0"
 
-[node name="ToDie" type="Node" parent="StateChart/Root/Grounded" unique_id=954766725]
+[node name="ToDie" type="Node" parent="StateChart/Root/Alive/Grounded" unique_id=954766725]
 script = ExtResource("9_j3ovn")
-to = NodePath("../../Dead")
+to = NodePath("../../../Dead")
 event = &"dead"
 delay_in_seconds = "0.0"
 
-[node name="ToHurt" type="Node" parent="StateChart/Root/Grounded" unique_id=2132714929]
+[node name="ToHurt" type="Node" parent="StateChart/Root/Alive/Grounded" unique_id=2132714929]
 script = ExtResource("9_j3ovn")
 to = NodePath("../../Hurt")
 event = &"to_hurt"
 delay_in_seconds = "0.0"
 
-[node name="Interacting" type="Node" parent="StateChart/Root/Grounded" unique_id=1870361140]
+[node name="Interacting" type="Node" parent="StateChart/Root/Alive/Grounded" unique_id=1870361140]
 script = ExtResource("8_a1qjk")
 
-[node name="ToStand" type="Node" parent="StateChart/Root/Grounded/Interacting" unique_id=639169820]
+[node name="ToStand" type="Node" parent="StateChart/Root/Alive/Grounded/Interacting" unique_id=639169820]
 script = ExtResource("9_j3ovn")
 to = NodePath("../../Stand")
 event = &"to_stand_from_interact"
 delay_in_seconds = "0.0"
 
-[node name="Win" type="Node" parent="StateChart/Root/Grounded" unique_id=561334886]
+[node name="Win" type="Node" parent="StateChart/Root/Alive/Grounded" unique_id=561334886]
 script = ExtResource("9_j3ovn")
-to = NodePath("../../Win")
+to = NodePath("../../../Win")
 event = &"won"
 delay_in_seconds = "0.0"
 
-[node name="Airborne" type="Node" parent="StateChart/Root" unique_id=414048615]
+[node name="Airborne" type="Node" parent="StateChart/Root/Alive" unique_id=414048615]
 script = ExtResource("8_a1qjk")
 
-[node name="ToGrounded" type="Node" parent="StateChart/Root/Airborne" unique_id=286403581]
+[node name="ToGrounded" type="Node" parent="StateChart/Root/Alive/Airborne" unique_id=286403581]
 script = ExtResource("9_j3ovn")
 to = NodePath("../../Grounded")
 event = &"grounded"
 delay_in_seconds = "0.0"
 
-[node name="ToDie" type="Node" parent="StateChart/Root/Airborne" unique_id=230029214]
+[node name="ToDie" type="Node" parent="StateChart/Root/Alive/Airborne" unique_id=230029214]
 script = ExtResource("9_j3ovn")
-to = NodePath("../../Dead")
+to = NodePath("../../../Dead")
 event = &"dead"
 delay_in_seconds = "0.0"
 
-[node name="Win" type="Node" parent="StateChart/Root/Airborne" unique_id=743203159]
+[node name="Win" type="Node" parent="StateChart/Root/Alive/Airborne" unique_id=743203159]
 script = ExtResource("9_j3ovn")
-to = NodePath("../../Win")
+to = NodePath("../../../Win")
 event = &"won"
+delay_in_seconds = "0.0"
+
+[node name="Hurt" type="Node" parent="StateChart/Root/Alive" unique_id=1768991383]
+script = ExtResource("8_a1qjk")
+
+[node name="ToStand" type="Node" parent="StateChart/Root/Alive/Hurt" unique_id=606886853]
+script = ExtResource("9_j3ovn")
+to = NodePath("../../Grounded/Stand")
+event = &"to_stand"
+delay_in_seconds = "0.0
+"
+
+[node name="ToDie" type="Node" parent="StateChart/Root/Alive/Hurt" unique_id=491181191]
+script = ExtResource("9_j3ovn")
+to = NodePath("../../../Dead")
+event = &"dead"
 delay_in_seconds = "0.0"
 
 [node name="Dead" type="Node" parent="StateChart/Root" unique_id=281422517]
@@ -903,24 +923,8 @@ script = ExtResource("8_a1qjk")
 
 [node name="ToStand" type="Node" parent="StateChart/Root/Dead" unique_id=1794366959]
 script = ExtResource("9_j3ovn")
-to = NodePath("../../Grounded/Stand")
+to = NodePath("../../Alive/Grounded/Stand")
 event = &"to_stand"
-delay_in_seconds = "0.0"
-
-[node name="Hurt" type="Node" parent="StateChart/Root" unique_id=1768991383]
-script = ExtResource("8_a1qjk")
-
-[node name="ToStand" type="Node" parent="StateChart/Root/Hurt" unique_id=606886853]
-script = ExtResource("9_j3ovn")
-to = NodePath("../../Grounded/Stand")
-event = &"to_stand"
-delay_in_seconds = "0.0
-"
-
-[node name="ToDie" type="Node" parent="StateChart/Root/Hurt" unique_id=491181191]
-script = ExtResource("9_j3ovn")
-to = NodePath("../../Dead")
-event = &"dead"
 delay_in_seconds = "0.0"
 
 [node name="Win" type="Node" parent="StateChart/Root" unique_id=120549391]
@@ -944,22 +948,24 @@ initial_node_to_watch = NodePath("../StateChart")
 
 [connection signal="area_entered" from="KickHitbox" to="." method="_on_kick_hitbox_area_entered"]
 [connection signal="timeout" from="HurtTimer" to="." method="_on_hurt_timer_timeout"]
-[connection signal="state_entered" from="StateChart/Root/Grounded/Stand" to="." method="_on_stand_state_entered"]
-[connection signal="state_input" from="StateChart/Root/Grounded/Stand" to="." method="_on_stand_state_input"]
-[connection signal="state_physics_processing" from="StateChart/Root/Grounded/Stand" to="." method="_on_stand_state_physics_processing"]
-[connection signal="state_entered" from="StateChart/Root/Grounded/Duck" to="." method="_on_duck_state_entered"]
-[connection signal="state_exited" from="StateChart/Root/Grounded/Duck" to="." method="_on_duck_state_exited"]
-[connection signal="state_input" from="StateChart/Root/Grounded/Duck" to="." method="_on_duck_state_input"]
-[connection signal="state_physics_processing" from="StateChart/Root/Grounded/Duck" to="." method="_on_duck_state_physics_processing"]
-[connection signal="state_entered" from="StateChart/Root/Grounded/Interacting" to="." method="_on_interacting_state_entered"]
-[connection signal="state_exited" from="StateChart/Root/Grounded/Interacting" to="." method="_on_interacting_state_exited"]
-[connection signal="state_entered" from="StateChart/Root/Airborne" to="." method="_on_airborne_state_entered"]
-[connection signal="state_exited" from="StateChart/Root/Airborne" to="." method="_on_airborne_state_exited"]
-[connection signal="state_input" from="StateChart/Root/Airborne" to="." method="_on_airborne_state_input"]
-[connection signal="state_physics_processing" from="StateChart/Root/Airborne" to="." method="_on_airborne_state_physics_processing"]
-[connection signal="taken" from="StateChart/Root/Airborne/ToGrounded" to="." method="_on_to_grounded_taken"]
+[connection signal="state_physics_processing" from="StateChart/Root/Alive" to="." method="_on_alive_state_physics_processing"]
+[connection signal="state_entered" from="StateChart/Root/Alive/Grounded/Stand" to="." method="_on_stand_state_entered"]
+[connection signal="state_input" from="StateChart/Root/Alive/Grounded/Stand" to="." method="_on_stand_state_input"]
+[connection signal="state_physics_processing" from="StateChart/Root/Alive/Grounded/Stand" to="." method="_on_stand_state_physics_processing"]
+[connection signal="state_entered" from="StateChart/Root/Alive/Grounded/Duck" to="." method="_on_duck_state_entered"]
+[connection signal="state_exited" from="StateChart/Root/Alive/Grounded/Duck" to="." method="_on_duck_state_exited"]
+[connection signal="state_input" from="StateChart/Root/Alive/Grounded/Duck" to="." method="_on_duck_state_input"]
+[connection signal="state_physics_processing" from="StateChart/Root/Alive/Grounded/Duck" to="." method="_on_duck_state_physics_processing"]
+[connection signal="state_entered" from="StateChart/Root/Alive/Grounded/Interacting" to="." method="_on_interacting_state_entered"]
+[connection signal="state_exited" from="StateChart/Root/Alive/Grounded/Interacting" to="." method="_on_interacting_state_exited"]
+[connection signal="state_entered" from="StateChart/Root/Alive/Airborne" to="." method="_on_airborne_state_entered"]
+[connection signal="state_exited" from="StateChart/Root/Alive/Airborne" to="." method="_on_airborne_state_exited"]
+[connection signal="state_input" from="StateChart/Root/Alive/Airborne" to="." method="_on_airborne_state_input"]
+[connection signal="state_physics_processing" from="StateChart/Root/Alive/Airborne" to="." method="_on_airborne_state_physics_processing"]
+[connection signal="taken" from="StateChart/Root/Alive/Airborne/ToGrounded" to="." method="_on_to_grounded_taken"]
+[connection signal="state_exited" from="StateChart/Root/Alive/Hurt" to="." method="_on_hurt_state_exited"]
 [connection signal="state_entered" from="StateChart/Root/Dead" to="." method="_on_dead_state_entered"]
 [connection signal="state_exited" from="StateChart/Root/Dead" to="." method="_on_dead_state_exited"]
-[connection signal="state_exited" from="StateChart/Root/Hurt" to="." method="_on_hurt_state_exited"]
+[connection signal="state_processing" from="StateChart/Root/Dead" to="." method="_on_dead_state_processing"]
 [connection signal="state_entered" from="StateChart/Root/Win" to="." method="_on_win_state_entered"]
 [connection signal="state_processing" from="StateChart/Root/Win" to="." method="_on_win_state_processing"]

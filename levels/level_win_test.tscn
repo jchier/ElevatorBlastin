@@ -121,7 +121,14 @@ size = Vector2(482.5, 723)
 size = Vector2(1080, 357)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oark8"]
-size = Vector2(1078, 12)
+size = Vector2(1078, 11)
+
+[sub_resource type="Resource" id="Resource_3tvka"]
+script = ExtResource("21_6nb6v")
+display_name = "Heart"
+texture = ExtResource("22_woq5k")
+points = 200
+metadata/_custom_type_script = "uid://cen1ayeepsio"
 
 [sub_resource type="Resource" id="Resource_m8bd2"]
 script = ExtResource("21_6nb6v")
@@ -132,20 +139,13 @@ metadata/_custom_type_script = "uid://cen1ayeepsio"
 
 [sub_resource type="Resource" id="Resource_v72i2"]
 script = ExtResource("21_6nb6v")
-display_name = "Heart"
-texture = ExtResource("22_woq5k")
-points = 200
-metadata/_custom_type_script = "uid://cen1ayeepsio"
-
-[sub_resource type="Resource" id="Resource_0xm1g"]
-script = ExtResource("21_6nb6v")
 display_name = "Life"
 texture = ExtResource("23_0to3k")
 effect = 1
 points = 500
 metadata/_custom_type_script = "uid://cen1ayeepsio"
 
-[sub_resource type="Resource" id="Resource_i06ef"]
+[sub_resource type="Resource" id="Resource_0xm1g"]
 script = ExtResource("21_6nb6v")
 display_name = "Machine Gun"
 texture = ExtResource("23_3tvka")
@@ -455,27 +455,26 @@ collision_shape = NodePath("CollisionShape2D2")
 shape = SubResource("RectangleShape2D_r7jra")
 
 [node name="WinDetectorComponent" parent="." unique_id=1011814729 instance=ExtResource("19_co5vo")]
-visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WinDetectorComponent" unique_id=1650312855]
-position = Vector2(60, 1405)
+position = Vector2(60, 1404.5)
 shape = SubResource("RectangleShape2D_oark8")
 
 [node name="ItemPickup" parent="." unique_id=712698818 instance=ExtResource("20_me3ms")]
 position = Vector2(588, 489)
-item = SubResource("Resource_m8bd2")
+item = SubResource("Resource_3tvka")
 
 [node name="ItemPickup2" parent="." unique_id=232273606 instance=ExtResource("20_me3ms")]
 position = Vector2(28, 1211)
-item = SubResource("Resource_v72i2")
+item = SubResource("Resource_m8bd2")
 
 [node name="ItemPickup3" parent="." unique_id=1755926154 instance=ExtResource("20_me3ms")]
 position = Vector2(-464, 854)
-item = SubResource("Resource_0xm1g")
+item = SubResource("Resource_v72i2")
 
 [node name="ItemPickup4" parent="." unique_id=2019893831 instance=ExtResource("20_me3ms")]
 position = Vector2(222, 1210)
-item = SubResource("Resource_i06ef")
+item = SubResource("Resource_0xm1g")
 
 [node name="Car" parent="." unique_id=489492451 instance=ExtResource("24_6nod5")]
 position = Vector2(-81, 1386)
