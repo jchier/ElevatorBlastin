@@ -273,11 +273,7 @@ func _on_aggro_state_entered() -> void:
 	disabled = false
 	reaction_timer.paused = false
 	reaction_timer.start(randf_range(current_reaction_time[0], current_reaction_time[1]))
-	print("darkened = ", darkened)
-	if darkened:
-		assert(current_reaction_time[0] == REACTION_RANGE_DARK[0], "error: current reaction time should be darkend reaction time but is not")
-	print("current reaction time range:", current_reaction_time[0], " ", current_reaction_time[1])
-	print_debug(reaction_timer.time_left)
+
 	movement_component.disabled = false
 	cool_down_timer.start()
 	elevator_floor_detector.enabled = false
@@ -296,7 +292,7 @@ func _on_aggro_state_processing(_delta: float) -> void:
 
 func _on_reaction_timer_timeout() -> void:	
 	reaction_timer.start(randf_range(0.5, 1.0))
-	print_debug(reaction_timer.time_left)
+
 	if randi_range(0, 4) > 1:
 		if last_stance != "stand":
 			state_chart.send_event("stand")

@@ -25,12 +25,14 @@ var ammo: int:
 			player.has_machine_gun = false
 	
 		
-var score_threshold = {
+var starting_score_threshold = {
 	10000: "false",
 	25000: "false",
 	50000: "false",
 	100000: "false"
 }
+
+var score_threshold = starting_score_threshold.duplicate()
 
 func _ready():
 	GameEvent.player_spawned.connect(_on_player_spawned)
@@ -60,8 +62,8 @@ func _update_player_lives(lives: int):
 	GameEvent.player_lives_changed.emit(lives)
 	
 func restart_game() -> void:
+	score = 0
 	ammo = Global.MAX_AMMO
 	life_counter = Global.PLAYER_STARTING_LIVES
 	starting_health = Global.PLAYER_STARTING_HEALTH
-	score = 0
-	
+	score_threshold = starting_score_threshold.duplicate()
