@@ -25,7 +25,7 @@ func damage(amount: int):
 	if dead:
 		died.emit()
 		return
-	current_health = clamp(current_health - amount, 0, max_health)
+	current_health = current_health - 1
 	damaged.emit(current_health)
 	if current_health <= 0:
 		dead = true

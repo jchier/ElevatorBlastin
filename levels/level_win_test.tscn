@@ -139,13 +139,27 @@ metadata/_custom_type_script = "uid://cen1ayeepsio"
 
 [sub_resource type="Resource" id="Resource_v72i2"]
 script = ExtResource("21_6nb6v")
+display_name = "Heart"
+texture = ExtResource("22_woq5k")
+points = 200
+metadata/_custom_type_script = "uid://cen1ayeepsio"
+
+[sub_resource type="Resource" id="Resource_0xm1g"]
+script = ExtResource("21_6nb6v")
+display_name = "Heart"
+texture = ExtResource("22_woq5k")
+points = 200
+metadata/_custom_type_script = "uid://cen1ayeepsio"
+
+[sub_resource type="Resource" id="Resource_i06ef"]
+script = ExtResource("21_6nb6v")
 display_name = "Life"
 texture = ExtResource("23_0to3k")
 effect = 1
 points = 500
 metadata/_custom_type_script = "uid://cen1ayeepsio"
 
-[sub_resource type="Resource" id="Resource_0xm1g"]
+[sub_resource type="Resource" id="Resource_s7jfq"]
 script = ExtResource("21_6nb6v")
 display_name = "Machine Gun"
 texture = ExtResource("23_3tvka")
@@ -465,16 +479,24 @@ position = Vector2(588, 489)
 item = SubResource("Resource_3tvka")
 
 [node name="ItemPickup2" parent="." unique_id=232273606 instance=ExtResource("20_me3ms")]
-position = Vector2(28, 1211)
+position = Vector2(97, 1181)
 item = SubResource("Resource_m8bd2")
+
+[node name="ItemPickup6" parent="." unique_id=625587804 instance=ExtResource("20_me3ms")]
+position = Vector2(80, 1208)
+item = SubResource("Resource_v72i2")
+
+[node name="ItemPickup5" parent="." unique_id=1829175668 instance=ExtResource("20_me3ms")]
+position = Vector2(115, 1208)
+item = SubResource("Resource_0xm1g")
 
 [node name="ItemPickup3" parent="." unique_id=1755926154 instance=ExtResource("20_me3ms")]
 position = Vector2(-464, 854)
-item = SubResource("Resource_v72i2")
+item = SubResource("Resource_i06ef")
 
 [node name="ItemPickup4" parent="." unique_id=2019893831 instance=ExtResource("20_me3ms")]
 position = Vector2(222, 1210)
-item = SubResource("Resource_0xm1g")
+item = SubResource("Resource_s7jfq")
 
 [node name="Car" parent="." unique_id=489492451 instance=ExtResource("24_6nod5")]
 position = Vector2(-81, 1386)

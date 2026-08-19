@@ -5,7 +5,13 @@ var docs_remaining: int
 var score: int
 var high_score: int
 var current_level: int = 0
-
+var starting_health: int = 3:
+	set(value):
+		if value < 3:
+			starting_health = 3
+		else:
+			starting_health = value
+			
 var life_counter: int:
 	set(value):
 		life_counter = value
@@ -45,6 +51,7 @@ func _score_changed(points: int):
 		var passed_score_threshold = score_threshold.find_key("false")
 		score_threshold.erase(passed_score_threshold)
 		player.life_up()
+		Music.item_get()
 
 func _on_advanced_level():
 	current_level = current_level + 1

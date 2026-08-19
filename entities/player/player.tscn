@@ -793,6 +793,7 @@ script = ExtResource("20_mtric")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="KickHitbox" unique_id=1350611732]
 shape = SubResource("CapsuleShape2D_pd1ga")
+disabled = true
 
 [node name="FireRateTimer" type="Timer" parent="." unique_id=1793356038]
 wait_time = 0.3

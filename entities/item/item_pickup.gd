@@ -9,7 +9,6 @@ extends Node2D
 		update_sprite()
 
 @onready var sprite: Sprite2D = $Sprite2D
-@onready var audio_stream_player_2d: AudioStreamPlayer2D = $AudioStreamPlayer2D
 var picked_up: bool = false
 
 
@@ -40,6 +39,5 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 		picked_up = true
 		use_item(body)
 		sprite.queue_free()
-		audio_stream_player_2d.play()
-		await audio_stream_player_2d.finished
+		Music.item_get()
 		queue_free()

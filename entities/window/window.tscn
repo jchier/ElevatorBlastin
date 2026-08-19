@@ -38,8 +38,10 @@ shape = SubResource("RectangleShape2D_m5bs3")
 
 [node name="GlassHit" type="AudioStreamPlayer2D" parent="." unique_id=959859731]
 stream = ExtResource("3_yci3q")
+bus = &"sfx"
 
 [node name="GlassBreak" type="AudioStreamPlayer2D" parent="." unique_id=1417304221]
 stream = ExtResource("4_gqcop")
+bus = &"sfx"
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]

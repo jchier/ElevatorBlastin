@@ -4,6 +4,7 @@ extends Node
 @onready var _sfx_idx: int = AudioServer.get_bus_index("sfx")
 
 @onready var bg_music: AudioStreamPlayer = $BgMusic
+@onready var sfx_item: AudioStreamPlayer = $sfx_item
 
 func _ready():
 	bg_music.finished.connect(_on_audio_stream_player_finished)
@@ -13,7 +14,6 @@ func _ready():
 
 func _on_audio_stream_player_finished():
 	bg_music.play()
-
 
 
 
@@ -36,3 +36,6 @@ func get_sfx_volume() -> float:
 
 func set_sfx_volume(value: float) -> void:
 	AudioServer.set_bus_volume_linear(_sfx_idx, value)
+
+func item_get():
+	sfx_item.play()

@@ -78,6 +78,7 @@ func _ready():
 	crouching_collision_shape.disabled = true
 	_update_player_health(health_component.current_health)
 	GameEvent.player_lives_changed.emit(GameState.life_counter)
+	health_component.current_health = GameState.starting_health
 	has_machine_gun = false
 	#_update_player_lives(life_counter)
 	
@@ -343,8 +344,10 @@ func _on_kick_hitbox_area_entered(area: Area2D) -> void:
 		
 
 func _on_win_state_entered() -> void:
+	GameState.starting_health = health_component.current_health
 	disable_player(true)
 	animation_component.disabled = true
+
 		
 func win() -> void:
 	state_chart.send_event("won")
