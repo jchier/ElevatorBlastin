@@ -89,6 +89,8 @@ func enemy_act(body: Enemy):
 	
 	
 func spawn_enemy():
+	if animation_player.current_animation == "open":
+		return
 	var enemy_scene: Enemy = ENEMY_SCENE.instantiate()
 	add_sibling(enemy_scene)
 	enemy_scene.global_position = global_position

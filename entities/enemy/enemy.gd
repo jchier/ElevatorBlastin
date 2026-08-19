@@ -4,6 +4,8 @@ extends CharacterBody2D
 signal enemy_despawn
 
 const ENEMY_SCENE: PackedScene = preload("uid://bftk50lxpoojr")
+const REACTION_RANGE_NORMAL: Array = [0.0,0.5]
+const REACTION_RANGE_DARK: Array = [0.3, 0.8]
 
 @onready var movement_component: MovementComponent = $MovementComponent
 @onready var navigation_component: NavigationComponent = $NavigationComponent
@@ -63,7 +65,7 @@ var player: Player
 var destination_met: bool = true
 var player_close = false
 var darkened: bool = false
-
+var current_reaction_time: Array = REACTION_RANGE_NORMAL
 func _ready():
 	disabled = true
 	player = GameState.player
@@ -263,7 +265,7 @@ func _on_patrol_timer_timeout() -> void:
 func _on_aggro_state_entered() -> void:
 	disabled = false
 	reaction_timer.paused = false
-	reaction_timer.start(randf_range(0.0, 0.5))
+	reaction_timer.start(randf_range(current_reaction_time[0], current_reaction_time[1]))
 	movement_component.disabled = false
 	cool_down_timer.start()
 	elevator_floor_detector.enabled = false
@@ -517,10 +519,12 @@ func set_floor(value: int):
 	
 func _on_darken():
 	darkened = true
+	current_reaction_time = REACTION_RANGE_DARK
 	
 func _on_lighten():
 	darkened = false
-
+	current_reaction_time = REACTION_RANGE_NORMAL
+	
 func _on_screen_exited():
 	can_shoot = false
 
