@@ -5,7 +5,7 @@ signal enemy_despawn
 
 const ENEMY_SCENE: PackedScene = preload("uid://bftk50lxpoojr")
 const REACTION_RANGE_NORMAL: Array = [0.0,0.5]
-const REACTION_RANGE_DARK: Array = [0.3, 0.8]
+const REACTION_RANGE_DARK: Array = [1.0, 2.0]
 
 @onready var movement_component: MovementComponent = $MovementComponent
 @onready var navigation_component: NavigationComponent = $NavigationComponent
@@ -64,7 +64,14 @@ var callable_shoot
 var player: Player
 var destination_met: bool = true
 var player_close = false
-var darkened: bool = false
+var darkened: bool:
+	set(value):
+		darkened = value
+		if value:
+			current_reaction_time = REACTION_RANGE_DARK
+		else:
+			current_reaction_time = REACTION_RANGE_NORMAL
+
 var current_reaction_time: Array = REACTION_RANGE_NORMAL
 func _ready():
 	disabled = true
@@ -266,6 +273,11 @@ func _on_aggro_state_entered() -> void:
 	disabled = false
 	reaction_timer.paused = false
 	reaction_timer.start(randf_range(current_reaction_time[0], current_reaction_time[1]))
+	print("darkened = ", darkened)
+	if darkened:
+		assert(current_reaction_time[0] == REACTION_RANGE_DARK[0], "error: current reaction time should be darkend reaction time but is not")
+	print("current reaction time range:", current_reaction_time[0], " ", current_reaction_time[1])
+	print_debug(reaction_timer.time_left)
 	movement_component.disabled = false
 	cool_down_timer.start()
 	elevator_floor_detector.enabled = false
@@ -284,20 +296,21 @@ func _on_aggro_state_processing(_delta: float) -> void:
 
 func _on_reaction_timer_timeout() -> void:	
 	reaction_timer.start(randf_range(0.5, 1.0))
+	print_debug(reaction_timer.time_left)
 	if randi_range(0, 4) > 1:
 		if last_stance != "stand":
 			state_chart.send_event("stand")
 			await animation_component.stance_changed
 			last_stance = "stand"
 
-		#print("callable shoot = stand fire")
+		#"callable shoot = stand fire")
 	else:
 		if last_stance != "duck":
 			state_chart.send_event("duck")
 			await animation_component.stance_changed
 			last_stance = "duck"
 #		callable_shoot = try_duck_fire
-		#print("callable shoot = duck fire")
+		#"callable shoot = duck fire")
 	if player_vision_ray.is_colliding():
 		sound_component.shoot()
 		callable_shoot.call()	
@@ -359,7 +372,7 @@ func _on_get_off_elevator_state_physics_processing(_delta: float) -> void:
 #====================================== INTERACT STATE =================================================================
 	
 func _on_interact_state_entered() -> void:
-	print(get_instance_id(), ": interact state entered")
+	#get_instance_id(), ": interact state entered")
 	disabled = true
 
 
@@ -381,11 +394,11 @@ func _on_interact_state_exited() -> void:
 #====================================== DEAD STATE =================================================================
 	
 func _on_died():
-	print(get_instance_id(), ":on died")
+	#get_instance_id(), ":on died")
 	state_chart.send_event("dead")
 
 func _on_dead_state_entered() -> void:
-	print(get_instance_id(), ":on dead state entered")
+	#get_instance_id(), ":on dead state entered")
 	if crush_component.was_crushed:
 		sound_component.crush()
 	else:
@@ -415,7 +428,7 @@ func despawn():
 func _player_floor_relation() -> int:
 	#if player is on floor 5, and enemy is on floor 7,
 	#return -2
-	#print("player floor - enemy floor = ", player.get_floor() - get_floor())
+	#"player floor - enemy floor = ", player.get_floor() - get_floor())
 	return player.get_floor() - get_floor()
 
 
@@ -463,7 +476,7 @@ func on_area_entered(interactive: InteractiveComponent):
 			interactor_component.try_interact(self)
 			
 	if interactive.is_in_group("door_hall") and absi(player_floor_relation) >= 2 and spawned_from_door:
-		print(get_instance_id(), ": enemy ", player_floor_relation, " floors away from player exited")
+		#get_instance_id(), ": enemy ", player_floor_relation, " floors away from player exited")
 		interactor_component.try_interact(self)
 		
 func die():
@@ -479,7 +492,7 @@ func _changed_floor():
 
 func _on_spawn_state_entered() -> void:
 	health_component.died.connect(_spawn_complete)
-	print(get_instance_id(), ":enemy spawn")
+	#get_instance_id(), ":enemy spawn")
 	player_vision_ray.enabled = true
 	animation_component.interaction_complete.connect(_spawn_complete)
 	start_animation(spawn_animation)
@@ -491,13 +504,13 @@ func _spawn_complete():
 	
 	navigation_component.set_direction(player_dir_from_self)
 	GameEvent.enemy_spawned.emit()
-	print(get_instance_id(), ": spawn complete")
+	#get_instance_id(), ": spawn complete")
 	state_chart.send_event("to_alive")
 	
 	
 
 func _on_spawn_state_exited() -> void:
-	print(get_instance_id(), ": spawn state exited")
+	#get_instance_id(), ": spawn state exited")
 	health_component.died.disconnect(_spawn_complete)
 	health_component.died.connect(_on_died)
 	player_vision_ray.enabled = true
@@ -519,11 +532,11 @@ func set_floor(value: int):
 	
 func _on_darken():
 	darkened = true
-	current_reaction_time = REACTION_RANGE_DARK
+
 	
 func _on_lighten():
 	darkened = false
-	current_reaction_time = REACTION_RANGE_NORMAL
+
 	
 func _on_screen_exited():
 	can_shoot = false

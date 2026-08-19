@@ -16,6 +16,7 @@ const COLLISION_LAYER_VALUE: int = 19
 @onready var sound_document_get: AudioStreamPlayer2D = $SoundDocumentGet
 @onready var sound_door_open: AudioStreamPlayer2D = $SoundDoorOpen
 
+var darkened: bool = false
 var on_screen: bool = false
 var player_has_entered: bool = false
 var bullet_proof_disabled: bool:
@@ -92,6 +93,7 @@ func spawn_enemy():
 	if animation_player.current_animation == "open":
 		return
 	var enemy_scene: Enemy = ENEMY_SCENE.instantiate()
+	enemy_scene.darkened = darkened
 	add_sibling(enemy_scene)
 	enemy_scene.global_position = global_position
 	enemy_scene.set_floor(get_floor())
@@ -111,9 +113,11 @@ func can_spawn_enemy() -> bool:
 
 
 func _darken():
+	darkened = true
 	sprite_2d.visible = false
 	
 func _lighten():
+	darkened = false
 	sprite_2d.visible = true
 
 func toggle_bullet_proof():
