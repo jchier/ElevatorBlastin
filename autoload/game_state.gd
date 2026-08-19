@@ -58,3 +58,10 @@ func _on_advanced_level():
 
 func _update_player_lives(lives: int):
 	GameEvent.player_lives_changed.emit(lives)
+	
+func restart_game() -> void:
+	ammo = Global.MAX_AMMO
+	life_counter = Global.PLAYER_STARTING_LIVES
+	starting_health = Global.PLAYER_STARTING_HEALTH
+	score = 0
+	

@@ -5,6 +5,7 @@ extends MarginContainer
 
 
 func _on_start_button_pressed() -> void:
+	GameState.restart_game()
 	start_button.disabled = true
 	animation_player.play(("fade_out"))
 
