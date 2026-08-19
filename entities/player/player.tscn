@@ -33,10 +33,10 @@ tracks/0/path = NodePath("Visuals/Sprite2DTorso:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
 "update": 1,
-"values": [0]
+"values": []
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -48,7 +48,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [0]
+"values": [12]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -737,6 +737,7 @@ texture = ExtResource("7_j3ovn")
 offset = Vector2(0, -26)
 hframes = 4
 vframes = 4
+frame = 12
 
 [node name="NavigationComponent" parent="." unique_id=1630912613 instance=ExtResource("11_221hk")]
 
