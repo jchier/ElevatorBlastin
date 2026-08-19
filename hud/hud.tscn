@@ -233,7 +233,7 @@ texture = ExtResource("3_318vg")
 [node name="LivesCounterLabel" type="Label" parent="HeadsUpDialog/HBoxContainer/CornerHudContainer/HBoxContainer" unique_id=1427082600]
 unique_name_in_owner = true
 layout_mode = 2
-text = " x 3"
+text = " x 5"
 label_settings = SubResource("LabelSettings_ksmh2")
 
 [node name="MachineGunContainer" type="HBoxContainer" parent="HeadsUpDialog/HBoxContainer/CornerHudContainer" unique_id=2116154953]

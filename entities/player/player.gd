@@ -5,8 +5,6 @@ const KNOCKBACK_POWER: int = 200
 const STARTING_HEALTH: int = 3
 const MG_FIRE_RATE: float = 0.1
 const NORMAL_FIRE_RATE: float = 0.3
-const MAX_AMMO: int = 200
-const PLAYER_STARTING_LIVES: int = 2
 
 @export var max_speed: float = 80.0
 @export var jump_velocity: float = -200.0
@@ -41,15 +39,8 @@ var _current_occupancy: Occupant_Component = null
 var can_shoot: bool = false
 var dead: bool = false
 var current_fire_rate: float
-var shoot_input_type
 
-var ammo: int:
-	set(value):
-		ammo = value
-		GameEvent.player_ammo_changed.emit(ammo)
-		if ammo <= 0:
-			has_machine_gun = false
-	
+
 @onready var has_machine_gun: bool:
 	set(value):
 		has_machine_gun = value
@@ -59,10 +50,7 @@ var ammo: int:
 			current_fire_rate = NORMAL_FIRE_RATE
 		GameEvent.player_gun_changed.emit(value)
 
-var life_counter: int:
-	set(value):
-		life_counter = value
-		GameEvent.player_lives_changed.emit(life_counter)
+
 
 func disable_player(value: bool):
 		#print("disabled set to ",value)
@@ -89,7 +77,7 @@ func _ready():
 	crush_component.crushed.connect(die)
 	crouching_collision_shape.disabled = true
 	_update_player_health(health_component.current_health)
-	life_counter = PLAYER_STARTING_LIVES
+	GameEvent.player_lives_changed.emit(GameState.life_counter)
 	has_machine_gun = false
 	#_update_player_lives(life_counter)
 	
@@ -140,7 +128,8 @@ func fire():
 	sound_component.shoot()
 	bullet_component.fire()
 	fire_rate_timer.start(current_fire_rate)
-	ammo = ammo - 1
+	GameState.ammo = GameState.ammo - 1
+	
 func set_orientation(sign_f: float):
 	movement_component.orientation = sign_f
 	bullet_component.flip_horizontal(sign_f)
@@ -326,22 +315,22 @@ func _on_hurt_state_exited() -> void:
 func _update_player_health(health: int):
 	GameEvent.player_health_changed.emit(health)
 
-func _update_player_lives(lives: int):
-	GameEvent.player_lives_changed.emit(lives)
+#func _update_player_lives(lives: int):
+#	GameEvent.player_lives_changed.emit(lives)
 
 func health_up():
 	health_component.current_health += 1
 func life_up():
-	life_counter += 1
+	GameState.life_counter += 1
 func get_mg():
 	has_machine_gun = true
-	ammo = MAX_AMMO
+	GameState.ammo = Global.MAX_AMMO
 	
 func respawn(spawn_location: Vector2) -> void:
-	if life_counter <= 0:
+	if GameState.life_counter <= 0:
 		GameEvent.gameover.emit()
 	else:
-		life_counter = life_counter - 1
+		GameState.life_counter = GameState.life_counter - 1
 		health_component.current_health = STARTING_HEALTH
 		global_position = spawn_location
 		reset_physics_interpolation()
@@ -359,7 +348,6 @@ func _on_win_state_entered() -> void:
 		
 func win() -> void:
 	state_chart.send_event("won")
-
 
 #func _on_win_state_processing(delta: float) -> void:
 #	animation_component.move(1.0)

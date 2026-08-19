@@ -5,6 +5,8 @@ const RIGHT: int = 2
 const LEFT: int = 3
 
 const DARKEN_LENGTH: float = 10
+const MAX_AMMO: int = 200
+const PLAYER_STARTING_LIVES: int = 2
 
 const SCORE_ENEMY_HIT: int = 100
 const SCORE_ENEMY_KICKED: int = 150
