@@ -933,11 +933,13 @@ position_smoothing_enabled = true
 drag_vertical_enabled = true
 
 [node name="StateChartDebugger" parent="." unique_id=1147276148 instance=ExtResource("23_ghoj8")]
+visible = false
 offset_left = -113.0
 offset_top = -234.0
 offset_right = 281.0
 offset_bottom = 76.0
 scale = Vector2(0.5634983, 0.56850344)
+enabled = false
 initial_node_to_watch = NodePath("../StateChart")
 
 [connection signal="area_entered" from="KickHitbox" to="." method="_on_kick_hitbox_area_entered"]

@@ -370,6 +370,7 @@ func _on_kick_hitbox_area_entered(area: Area2D) -> void:
 		
 
 func _on_win_state_entered() -> void:
+	disable_player(true)
 	animation_component.disabled = true
 		
 func win() -> void:

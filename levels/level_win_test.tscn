@@ -24,6 +24,7 @@
 [ext_resource type="Texture2D" uid="uid://du4mn338cfknh" path="res://entities/item/heart.png" id="22_woq5k"]
 [ext_resource type="Texture2D" uid="uid://cafe7r6tc04yb" path="res://entities/item/life.png" id="23_0to3k"]
 [ext_resource type="PackedScene" uid="uid://dono18b6socj7" path="res://entities/car/car.tscn" id="24_6nod5"]
+[ext_resource type="Resource" uid="uid://unn83crdxoul" path="res://entities/item/machine_gun.tres" id="24_m8bd2"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lrvbd"]
 texture = ExtResource("9_6mhkb")
@@ -123,6 +124,13 @@ size = Vector2(1080, 357)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oark8"]
 size = Vector2(1078, 12)
 
+[sub_resource type="Resource" id="Resource_v72i2"]
+script = ExtResource("21_6nb6v")
+display_name = "Heart"
+texture = ExtResource("22_woq5k")
+points = 200
+metadata/_custom_type_script = "uid://cen1ayeepsio"
+
 [sub_resource type="Resource" id="Resource_0xm1g"]
 script = ExtResource("21_6nb6v")
 display_name = "Heart"
@@ -131,13 +139,6 @@ points = 200
 metadata/_custom_type_script = "uid://cen1ayeepsio"
 
 [sub_resource type="Resource" id="Resource_i06ef"]
-script = ExtResource("21_6nb6v")
-display_name = "Heart"
-texture = ExtResource("22_woq5k")
-points = 200
-metadata/_custom_type_script = "uid://cen1ayeepsio"
-
-[sub_resource type="Resource" id="Resource_s7jfq"]
 script = ExtResource("21_6nb6v")
 display_name = "Life"
 texture = ExtResource("23_0to3k")
@@ -471,15 +472,19 @@ shape = SubResource("RectangleShape2D_oark8")
 
 [node name="ItemPickup" parent="." unique_id=712698818 instance=ExtResource("20_me3ms")]
 position = Vector2(588, 489)
-item = SubResource("Resource_0xm1g")
+item = SubResource("Resource_v72i2")
 
 [node name="ItemPickup2" parent="." unique_id=232273606 instance=ExtResource("20_me3ms")]
 position = Vector2(28, 1211)
-item = SubResource("Resource_i06ef")
+item = SubResource("Resource_0xm1g")
 
 [node name="ItemPickup3" parent="." unique_id=1755926154 instance=ExtResource("20_me3ms")]
 position = Vector2(-464, 854)
-item = SubResource("Resource_s7jfq")
+item = SubResource("Resource_i06ef")
+
+[node name="ItemPickup4" parent="." unique_id=2019893831 instance=ExtResource("20_me3ms")]
+position = Vector2(222, 1210)
+item = ExtResource("24_m8bd2")
 
 [node name="Car" parent="." unique_id=489492451 instance=ExtResource("24_6nod5")]
 position = Vector2(-81, 1386)
