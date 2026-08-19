@@ -1,8 +1,11 @@
+class_name Car
 extends Node2D
 var player: Player
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 @onready var car_sfx: AudioStreamPlayer2D = $CarSFX
+signal drove_away
+
 func _ready():
 
 	GameEvent.player_win.connect(_on_player_win)
@@ -28,3 +31,6 @@ func drive_away():
 	animation_player.play("drive")
 	#tween.tween_property(self, "global_position", Vector2(global_position.x - 10000, global_position.y), 50.0)	
 	#audio.play()
+
+func on_driven_away():
+	drove_away.emit()

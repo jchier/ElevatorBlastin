@@ -92,6 +92,7 @@ func spawn_enemy():
 	var enemy_scene: Enemy = ENEMY_SCENE.instantiate()
 	add_sibling(enemy_scene)
 	enemy_scene.global_position = global_position
+	enemy_scene.set_floor(get_floor())
 	animation_player.play("open")
 	await animation_player.animation_finished
 	

@@ -31,6 +31,7 @@ func _ready():
 	initialize_enemy_manager()
 	spawn_door_hall()
 	initialize_win_component()
+	initialize_car()
 	GameEvent.player_changed_floor.connect(_player_changed_floor)
 	GameEvent.enemy_spawned.connect(_enemy_spawned)
 	GameEvent.enemy_despawned.connect(_enemy_despawned)
@@ -99,6 +100,11 @@ func spawn_door_hall():
 			doors.append(door_hall_scene)
 			door_hall_scene.global_position = door_hall_marker.global_position
 			
+func initialize_car():
+	for car in level.get_children():
+		if car is Car:
+			car.drove_away.connect(_on_car_drove_away)
+
 
 func initialize_win_component():
 	for win_component in level.get_children():
@@ -149,6 +155,8 @@ func _check_win():
 		player_spawn.global_position = player_doors[0].global_position
 		reset_physics_interpolation()
 	else:
-		#GameEvent.advance_level.emit()
-		#get_tree().reload_current_scene()
 		GameEvent.player_win.emit()
+		
+func _on_car_drove_away():
+	GameEvent.advance_level.emit()
+	get_tree().reload_current_scene()

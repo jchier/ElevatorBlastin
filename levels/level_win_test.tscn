@@ -11,7 +11,6 @@
 [ext_resource type="Texture2D" uid="uid://cdjxyaqarfpx" path="res://level_assets/enemy_wall_tiles.png" id="9_6mhkb"]
 [ext_resource type="PackedScene" uid="uid://cptp4opi28g3m" path="res://entities/elevator/elevator.tscn" id="10_shiqc"]
 [ext_resource type="Script" uid="uid://bgpd75t0gfyl7" path="res://entities/player/player_marker.gd" id="11_fwbc0"]
-[ext_resource type="Script" uid="uid://bpv6re8vjeo51" path="res://entities/enemy/enemy_marker.gd" id="12_3i2oi"]
 [ext_resource type="Script" uid="uid://b6a2fog0fbkdh" path="res://entities/door/door_hall_marker.gd" id="13_enhre"]
 [ext_resource type="PackedScene" uid="uid://hdtr8ria6v7g" path="res://entities/stairs/stairs_m.tscn" id="14_r7lem"]
 [ext_resource type="PackedScene" uid="uid://cw4f70u4bxktk" path="res://entities/stairs/stairs.tscn" id="15_ih2gt"]
@@ -23,8 +22,8 @@
 [ext_resource type="Script" uid="uid://cen1ayeepsio" path="res://entities/item/item.gd" id="21_6nb6v"]
 [ext_resource type="Texture2D" uid="uid://du4mn338cfknh" path="res://entities/item/heart.png" id="22_woq5k"]
 [ext_resource type="Texture2D" uid="uid://cafe7r6tc04yb" path="res://entities/item/life.png" id="23_0to3k"]
+[ext_resource type="Texture2D" uid="uid://b5j7jpvmajmtl" path="res://entities/item/machine_gun.png" id="23_3tvka"]
 [ext_resource type="PackedScene" uid="uid://dono18b6socj7" path="res://entities/car/car.tscn" id="24_6nod5"]
-[ext_resource type="Resource" uid="uid://unn83crdxoul" path="res://entities/item/machine_gun.tres" id="24_m8bd2"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lrvbd"]
 texture = ExtResource("9_6mhkb")
@@ -124,6 +123,13 @@ size = Vector2(1080, 357)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oark8"]
 size = Vector2(1078, 12)
 
+[sub_resource type="Resource" id="Resource_m8bd2"]
+script = ExtResource("21_6nb6v")
+display_name = "Heart"
+texture = ExtResource("22_woq5k")
+points = 200
+metadata/_custom_type_script = "uid://cen1ayeepsio"
+
 [sub_resource type="Resource" id="Resource_v72i2"]
 script = ExtResource("21_6nb6v")
 display_name = "Heart"
@@ -133,17 +139,18 @@ metadata/_custom_type_script = "uid://cen1ayeepsio"
 
 [sub_resource type="Resource" id="Resource_0xm1g"]
 script = ExtResource("21_6nb6v")
-display_name = "Heart"
-texture = ExtResource("22_woq5k")
-points = 200
-metadata/_custom_type_script = "uid://cen1ayeepsio"
-
-[sub_resource type="Resource" id="Resource_i06ef"]
-script = ExtResource("21_6nb6v")
 display_name = "Life"
 texture = ExtResource("23_0to3k")
 effect = 1
 points = 500
+metadata/_custom_type_script = "uid://cen1ayeepsio"
+
+[sub_resource type="Resource" id="Resource_i06ef"]
+script = ExtResource("21_6nb6v")
+display_name = "Machine Gun"
+texture = ExtResource("23_3tvka")
+effect = 3
+points = 300
 metadata/_custom_type_script = "uid://cen1ayeepsio"
 
 [node name="Level1" type="Node2D" unique_id=1570879048]
@@ -292,22 +299,6 @@ position = Vector2(151, 1390)
 [node name="PlayerMarker" type="Marker2D" parent="." unique_id=1946072525]
 position = Vector2(211, 1176)
 script = ExtResource("11_fwbc0")
-
-[node name="EnemyMarker" type="Marker2D" parent="." unique_id=641922445]
-position = Vector2(-9, 597)
-script = ExtResource("12_3i2oi")
-
-[node name="EnemyMarker2" type="Marker2D" parent="." unique_id=654291317]
-position = Vector2(319, 1074)
-script = ExtResource("12_3i2oi")
-
-[node name="EnemyMarker3" type="Marker2D" parent="." unique_id=870701810]
-position = Vector2(-138, 1205)
-script = ExtResource("12_3i2oi")
-
-[node name="EnemyMarker4" type="Marker2D" parent="." unique_id=24219440]
-position = Vector2(341, 832)
-script = ExtResource("12_3i2oi")
 
 [node name="DoorHallMarker41" type="Marker2D" parent="." unique_id=1031692950]
 position = Vector2(256, 1223)
@@ -472,19 +463,19 @@ shape = SubResource("RectangleShape2D_oark8")
 
 [node name="ItemPickup" parent="." unique_id=712698818 instance=ExtResource("20_me3ms")]
 position = Vector2(588, 489)
-item = SubResource("Resource_v72i2")
+item = SubResource("Resource_m8bd2")
 
 [node name="ItemPickup2" parent="." unique_id=232273606 instance=ExtResource("20_me3ms")]
 position = Vector2(28, 1211)
-item = SubResource("Resource_0xm1g")
+item = SubResource("Resource_v72i2")
 
 [node name="ItemPickup3" parent="." unique_id=1755926154 instance=ExtResource("20_me3ms")]
 position = Vector2(-464, 854)
-item = SubResource("Resource_i06ef")
+item = SubResource("Resource_0xm1g")
 
 [node name="ItemPickup4" parent="." unique_id=2019893831 instance=ExtResource("20_me3ms")]
 position = Vector2(222, 1210)
-item = ExtResource("24_m8bd2")
+item = SubResource("Resource_i06ef")
 
 [node name="Car" parent="." unique_id=489492451 instance=ExtResource("24_6nod5")]
 position = Vector2(-81, 1386)

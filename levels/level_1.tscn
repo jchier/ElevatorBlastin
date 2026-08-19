@@ -592,7 +592,7 @@ shape = SubResource("RectangleShape2D_r7jra")
 [node name="WinDetectorComponent" parent="." unique_id=1011814729 instance=ExtResource("16_lrvbd")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WinDetectorComponent" unique_id=1650312855]
-position = Vector2(60, 1408.5)
+position = Vector2(61, 1405)
 shape = SubResource("RectangleShape2D_oark8")
 
 [node name="ItemPickup" parent="." unique_id=712698818 instance=ExtResource("20_w75he")]

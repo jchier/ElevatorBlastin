@@ -357,6 +357,7 @@ func _on_get_off_elevator_state_physics_processing(_delta: float) -> void:
 #====================================== INTERACT STATE =================================================================
 	
 func _on_interact_state_entered() -> void:
+	print(get_instance_id(), ": interact state entered")
 	disabled = true
 
 
@@ -378,9 +379,11 @@ func _on_interact_state_exited() -> void:
 #====================================== DEAD STATE =================================================================
 	
 func _on_died():
+	print(get_instance_id(), ":on died")
 	state_chart.send_event("dead")
 
 func _on_dead_state_entered() -> void:
+	print(get_instance_id(), ":on dead state entered")
 	if crush_component.was_crushed:
 		sound_component.crush()
 	else:
@@ -391,6 +394,7 @@ func _on_dead_state_entered() -> void:
 	animation_component.start("dead")
 	navigation_component.stop()
 	hurtbox_component.disabled = true
+	disabled = true
 	despawn_timer.start()
 	
 func _on_dead_state_processing(delta: float) -> void:
@@ -457,7 +461,7 @@ func on_area_entered(interactive: InteractiveComponent):
 			interactor_component.try_interact(self)
 			
 	if interactive.is_in_group("door_hall") and absi(player_floor_relation) >= 2 and spawned_from_door:
-		print("enemy ", player_floor_relation, " floors away from player exited")
+		print(get_instance_id(), ": enemy ", player_floor_relation, " floors away from player exited")
 		interactor_component.try_interact(self)
 		
 func die():
@@ -473,6 +477,7 @@ func _changed_floor():
 
 func _on_spawn_state_entered() -> void:
 	health_component.died.connect(_spawn_complete)
+	print(get_instance_id(), ":enemy spawn")
 	player_vision_ray.enabled = true
 	animation_component.interaction_complete.connect(_spawn_complete)
 	start_animation(spawn_animation)
@@ -484,10 +489,13 @@ func _spawn_complete():
 	
 	navigation_component.set_direction(player_dir_from_self)
 	GameEvent.enemy_spawned.emit()
+	print(get_instance_id(), ": spawn complete")
 	state_chart.send_event("to_alive")
+	
 	
 
 func _on_spawn_state_exited() -> void:
+	print(get_instance_id(), ": spawn state exited")
 	health_component.died.disconnect(_spawn_complete)
 	health_component.died.connect(_on_died)
 	player_vision_ray.enabled = true
@@ -503,6 +511,9 @@ func _on_hit_by_player_bullet():
 	if darkened:
 		GameEvent.add_score.emit(Global.SCORE_DARKEN_BONUS)
 	GameEvent.add_score.emit(Global.SCORE_ENEMY_HIT)
+	
+func set_floor(value: int):
+	floor_detector_component.set_current_floor(value)	
 	
 func _on_darken():
 	darkened = true
