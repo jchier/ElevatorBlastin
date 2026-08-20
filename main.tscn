@@ -2,13 +2,13 @@
 
 [ext_resource type="Script" uid="uid://cvm8bm4tvwvh7" path="res://main.gd" id="1_ig7tw"]
 [ext_resource type="PackedScene" uid="uid://duees6xrwud5f" path="res://hud/hud.tscn" id="2_0xm2m"]
-[ext_resource type="PackedScene" uid="uid://o3u05fk60mn" path="res://levels/level_2.tscn" id="2_1bvp3"]
+[ext_resource type="PackedScene" uid="uid://o3u05fk60mn" path="res://levels/level_3.tscn" id="2_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://c7wauk7l0nngx" path="res://entities/enemy/enemy_manager.tscn" id="3_h2yge"]
 
 [node name="Main" type="Node" unique_id=1280934045]
 script = ExtResource("1_ig7tw")
 level_one = ExtResource("2_1bvp3")
-levels = ["uid://s14ubfch7tr", "uid://cflxxyn4pet7d", "uid://o3u05fk60mn"]
+levels = ["uid://s14ubfch7tr", "uid://cflxxyn4pet7d", "uid://cl02e00q53llv", "uid://o3u05fk60mn"]
 
 [node name="EnemySpawnTimer" type="Timer" parent="." unique_id=1103072764]
 wait_time = 3.0
