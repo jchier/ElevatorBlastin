@@ -110,6 +110,7 @@ func initialize_win_component():
 	for win_component in level.get_children():
 		if win_component is WinDetectorComponent:
 			win_detector_component = win_component
+	assert(win_detector_component != null, "error: win detector component not initialized.")
 
 func _got_document(door: DoorHall):
 	player_doors.erase(door)

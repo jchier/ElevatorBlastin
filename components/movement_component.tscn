@@ -4,3 +4,9 @@
 
 [node name="MovementComponent" type="Node" unique_id=743977151]
 script = ExtResource("1_3uaqq")
+
+[node name="CoyoteTimer" type="Timer" parent="." unique_id=1723732830]
+wait_time = 0.3
+one_shot = true
+
+[connection signal="timeout" from="CoyoteTimer" to="." method="_on_coyote_timer_timeout"]

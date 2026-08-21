@@ -374,7 +374,6 @@ floor_number = 31
 metadata/_edit_lock_ = true
 
 [node name="FloorMarkerComponent32" parent="." unique_id=1879400218 instance=ExtResource("4_e28pm")]
-visible = false
 position = Vector2(614, -2550)
 floor_number = 32
 metadata/_edit_lock_ = true

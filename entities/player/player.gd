@@ -108,7 +108,8 @@ func _on_alive_state_physics_processing(delta: float) -> void:
 	if Input.is_action_just_released("down"):
 		state_chart.send_event("stand")
 		
-
+	if Input.is_action_just_pressed("kill"):
+		health_component.damage(5)
 
 func _jumped():
 	sound_component.jump()
