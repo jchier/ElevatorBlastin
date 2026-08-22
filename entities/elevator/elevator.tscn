@@ -115,8 +115,7 @@ position = Vector2(-0.5, 9)
 shape = SubResource("RectangleShape2D_oark8")
 
 [node name="RoofAnimatableBody" type="AnimatableBody2D" parent="." unique_id=154619614]
-visible = false
-position = Vector2(0, -13)
+position = Vector2(0, -17)
 collision_layer = 8192
 collision_mask = 4
 sync_to_physics = false

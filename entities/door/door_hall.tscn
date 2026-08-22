@@ -165,3 +165,6 @@ bus = &"sfx"
 stream = ExtResource("7_31eox")
 volume_db = 2.0
 bus = &"sfx"
+
+[connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

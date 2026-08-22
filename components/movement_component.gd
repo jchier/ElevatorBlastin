@@ -33,10 +33,7 @@ var orientation: float:
 			set_orientation.emit(value)
 var last_orientation = 1
 var _jump: bool = false
-var _can_coyote_jump = true:
-	set(value):
-		_can_coyote_jump = value
-		print("can coyote jump: ", value)
+var _can_coyote_jump = true
 		
 var orientation_lock: bool = false
 
@@ -52,7 +49,6 @@ func toggle_movement():
 func generate_velocity(delta: float, x_input: float):
 	
 	if _character_body.velocity.y > MAX_FALL_SPEED and !disabled:
-		#print(_character_body.velocity.y)
 		die_on_land = true
 	
 

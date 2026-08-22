@@ -76,7 +76,6 @@ func player_act(body: Player):
 	GameEvent.add_score.emit(Global.SCORE_GOT_DOCUMENT)
 	
 func enemy_act(body: Enemy):
-	
 	body.disabled = true
 	body.set_orientation(1.0)
 	var tween := create_tween()
@@ -99,13 +98,14 @@ func spawn_enemy():
 	enemy_scene.set_floor(get_floor())
 	animation_player.play("open")
 	await animation_player.animation_finished
-	
+	print("enemy spawned")
 	
 func get_floor() -> int:
 	return floor_detector_component.get_floor()
 
 func can_spawn_enemy() -> bool:
-
+	if !on_screen:
+		return false
 	var value = GameState.player.get_floor() - get_floor()
 	if value == 1 or value == 0:
 			return true
@@ -122,3 +122,11 @@ func _lighten():
 
 func toggle_bullet_proof():
 	bullet_proof_disabled = !bullet_proof_disabled
+
+
+func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
+	on_screen = true
+	
+	
+func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
+	on_screen = false
