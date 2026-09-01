@@ -8,7 +8,7 @@
 [node name="Main" type="Node" unique_id=1280934045]
 script = ExtResource("1_ig7tw")
 level_one = ExtResource("2_1bvp3")
-levels = ["uid://o3u05fk60mn", "uid://cflxxyn4pet7d", "uid://cl02e00q53llv", "uid://o3u05fk60mn"]
+levels = ["uid://cflxxyn4pet7d", "uid://cl02e00q53llv", "uid://o3u05fk60mn", "uid://bbpx6qyly52fw"]
 
 [node name="EnemySpawnTimer" type="Timer" parent="." unique_id=1103072764]
 wait_time = 3.0

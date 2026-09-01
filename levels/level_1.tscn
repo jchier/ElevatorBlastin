@@ -347,7 +347,7 @@ position = Vector2(159, 383)
 script = ExtResource("9_5ot28")
 
 [node name="DoorHallMarker5" type="Marker2D" parent="." unique_id=561146942]
-position = Vector2(-146, 383)
+position = Vector2(-146, 384)
 script = ExtResource("9_5ot28")
 
 [node name="DoorHallMarker6" type="Marker2D" parent="." unique_id=1852016088]
@@ -428,7 +428,7 @@ position = Vector2(94, 1223)
 script = ExtResource("9_5ot28")
 
 [node name="DoorHallMarker39" type="Marker2D" parent="." unique_id=1068049082]
-position = Vector2(430, 1223)
+position = Vector2(380, 1223)
 script = ExtResource("9_5ot28")
 
 [node name="DoorHallMarker40" type="Marker2D" parent="." unique_id=224373066]

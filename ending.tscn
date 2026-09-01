@@ -1,0 +1,137 @@
+[gd_scene format=3 uid="uid://bbpx6qyly52fw"]
+
+[ext_resource type="Script" uid="uid://45umjph13m0a" path="res://ending.gd" id="1_dmh3q"]
+[ext_resource type="Texture2D" uid="uid://dju0wx4vthhaa" path="res://level_assets/ending.png" id="2_dmh3q"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_4jooh"]
+font_size = 32
+outline_size = 12
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Animation" id="Animation_fu7sn"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("fade:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_dmh3q"]
+resource_name = "fade_in"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("fade:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(0, 0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_jix8l"]
+resource_name = "fade_out"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("fade:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"load_main"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_k7rdy"]
+_data = {
+&"RESET": SubResource("Animation_fu7sn"),
+&"fade_in": SubResource("Animation_dmh3q"),
+&"fade_out": SubResource("Animation_jix8l")
+}
+
+[node name="Ending" type="MarginContainer" unique_id=350416960]
+offset_left = -56.0
+offset_top = -270.0
+offset_right = 944.0
+offset_bottom = 730.0
+script = ExtResource("1_dmh3q")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1406845114]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("2_dmh3q")
+stretch_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=2017210402]
+custom_minimum_size = Vector2(320, 132.53)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+color = Color(0, 0, 0, 0.5058824)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect" unique_id=1764478055]
+custom_minimum_size = Vector2(320, 80)
+layout_mode = 0
+offset_top = -2.5
+offset_right = 320.0
+offset_bottom = 126.5
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="title_label" type="Label" parent="ColorRect/VBoxContainer" unique_id=1837423386]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "YOU WON!"
+label_settings = SubResource("LabelSettings_4jooh")
+horizontal_alignment = 1
+
+[node name="score_label" type="Label" parent="ColorRect/VBoxContainer" unique_id=1774683350]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+text = "score: "
+label_settings = SubResource("LabelSettings_4jooh")
+horizontal_alignment = 1
+
+[node name="start_button" type="Button" parent="ColorRect/VBoxContainer" unique_id=1128686594]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Return to Main Menu"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1783347800]
+libraries/ = SubResource("AnimationLibrary_k7rdy")
+autoplay = &"fade_in"
+
+[node name="fade" type="ColorRect" parent="." unique_id=1895722266]
+visible = false
+layout_mode = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0)

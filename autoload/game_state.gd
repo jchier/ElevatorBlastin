@@ -67,3 +67,4 @@ func restart_game() -> void:
 	life_counter = Global.PLAYER_STARTING_LIVES
 	starting_health = Global.PLAYER_STARTING_HEALTH
 	score_threshold = starting_score_threshold.duplicate()
+	current_level = 0

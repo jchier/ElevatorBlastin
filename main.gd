@@ -10,6 +10,7 @@ const MAX_ENEMY_COUNT: int = 8
 @onready var enemy_manager: EnemyManager = $EnemyManager
 @onready var hud: CanvasLayer = $Hud
 @onready var main_menu_scene: PackedScene = load("uid://c3qu1tjmxrl3n")
+@onready var ending_scene: PackedScene = load("uid://bbpx6qyly52fw")
 @export var levels: Array
 
 var level: Node
@@ -139,7 +140,6 @@ func _on_enemy_spawn_timer_timeout():
 func _player_died():
 	retry_timer.start()
 	
-
 func _on_retry_timer_timeout() -> void:
 	GameState.player.respawn(player_spawn.global_position)
 	
