@@ -23,6 +23,7 @@ var enemy_count: int
 var last_floor_spawned: int
 var win_detector_component: WinDetectorComponent
 var player_spawn: PlayerMarker
+var cheat: bool = false
 
 func _ready():
 	enemy_spawn_timer.timeout.connect(_on_enemy_spawn_timer_timeout)
@@ -102,10 +103,12 @@ func spawn_door_hall():
 			door_hall_scene.global_position = door_hall_marker.global_position
 			
 func initialize_car():
+	var car_initialized: bool = false
 	for car in level.get_children():
 		if car is Car:
 			car.drove_away.connect(_on_car_drove_away)
-
+			car_initialized = true
+	assert(car_initialized == true, "Error: car not initialized")
 
 func initialize_win_component():
 	for win_component in level.get_children():
@@ -150,15 +153,20 @@ func _gameover():
 	get_tree().change_scene_to_packed(main_menu_scene)
 	
 func _check_win():
-	if player_doors.size() > 0:
+	if player_doors.size() <= 0 or cheat:
+		GameEvent.player_win.emit()
+	elif player_doors.size() > 0:
 		hud.display_warning("There are still documents to find!\nGo in the red doors.")
 		GameState.player.global_position = player_doors[0].global_position
 		player_spawn.global_position = player_doors[0].global_position
 		reset_physics_interpolation()
 		Music.error()
-	else:
-		GameEvent.player_win.emit()
 		
 func _on_car_drove_away():
 	GameEvent.advance_level.emit()
 	get_tree().reload_current_scene()
+	
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("debug"):
+		cheat = true
+		print("cheats on")

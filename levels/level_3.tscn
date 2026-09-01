@@ -429,7 +429,7 @@ position = Vector2(-328, -645)
 locked = true
 
 [node name="PlayerMarker" type="Marker2D" parent="." unique_id=1946072525]
-position = Vector2(841, 748)
+position = Vector2(-377, 525)
 script = ExtResource("10_q26s8")
 
 [node name="EnemyMarker" type="Marker2D" parent="." unique_id=641922445]
@@ -1036,11 +1036,11 @@ script = ExtResource("21_eg35p")
 position = Vector2(-151, 563)
 script = ExtResource("21_eg35p")
 
+[node name="Car" parent="." unique_id=489492451 instance=ExtResource("24_f34o0")]
+position = Vector2(-431, 786)
+
 [node name="WinDetectorComponent" parent="." unique_id=1011814729 instance=ExtResource("10_67vg4")]
 position = Vector2(-393, 739)
-
-[node name="Car" parent="WinDetectorComponent" unique_id=489492451 instance=ExtResource("24_f34o0")]
-position = Vector2(-38, 47)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WinDetectorComponent" unique_id=1687331219]
 position = Vector2(-37, 65.5)
