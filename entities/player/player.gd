@@ -356,3 +356,6 @@ func _on_dead_state_processing(delta: float) -> void:
 func _fell_to_death():
 	if !dead:
 		state_chart.send_event("dead")
+
+func get_health() -> int:
+	return health_component.current_health

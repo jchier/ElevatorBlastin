@@ -52,6 +52,7 @@ func _load_level() -> bool:
 		get_tree().change_scene_to_packed(ending_scene)
 		return false
 	level = load(levels[GameState.current_level]).instantiate()
+
 	return true
 	
 func spawn_player():
@@ -63,6 +64,7 @@ func spawn_player():
 			player_scene.died.connect(_player_died)
 			GameEvent.player_spawned.emit(player_scene)
 			player_spawn = player_marker
+			hud.update_all()
 			
 func initialize_enemy_manager():
 	for enemy_marker in level.get_children():

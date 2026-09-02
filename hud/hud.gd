@@ -16,7 +16,6 @@ const HEART = preload("uid://du4mn338cfknh")
 var document_count: int = 0
 		
 func _ready():
-	update_document_count(document_count)
 	GameEvent.player_health_changed.connect(update_hearts)
 	GameEvent.player_lives_changed.connect(update_lives)
 	GameEvent.player_ammo_changed.connect(change_ammo)
@@ -27,6 +26,13 @@ func update_document_count(new_document_count: int):
 	document_count = new_document_count
 	documents_label.text = str("Documents Remaining: ", document_count)
 
+func update_all():
+	update_lives(GameState.life_counter)
+	_score_changed(GameState.score)
+	change_ammo(GameState.ammo)
+	update_hearts(GameState.player.get_health())
+	update_document_count(document_count)
+	
 func display_warning(warning_text):
 	warning_label.text = warning_text
 	animation_player.play("blink")
