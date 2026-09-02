@@ -128,4 +128,4 @@ debug={
 textures/canvas_textures/default_texture_filter=0
 rendering_device/driver.windows="d3d12"
 textures/default_filters/use_nearest_mipmap_filter=true
-environment/defaults/default_clear_color=Color(0.28547627, 0.59419745, 0.5254199, 1)
+environment/defaults/default_clear_color=Color(0, 0, 0, 1)

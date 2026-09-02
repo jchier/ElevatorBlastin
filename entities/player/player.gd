@@ -67,6 +67,7 @@ func _ready():
 	movement_component.state_chart_event.connect(state_chart_event)
 	movement_component.set_orientation.connect(set_orientation)
 	movement_component.jump_good.connect(_jumped)
+	movement_component.died_from_fall.connect(_fell_to_death)
 	animation_component.can_shoot.connect(_can_shoot)
 	animation_component.interaction_complete.connect(_interaction_complete)
 	health_component.health_changed.connect(_update_player_health)
@@ -92,8 +93,8 @@ func _on_alive_state_physics_processing(delta: float) -> void:
 		
 	var x_input: float = Input.get_action_strength("right") - Input.get_action_strength("left")
 	movement_component.generate_velocity(delta, x_input)
-	if !crush_component.was_crushed:
-		move_and_slide()
+
+	move_and_slide()
 	
 	if _current_occupancy:	
 		if Input.is_action_pressed("up"):
@@ -252,17 +253,16 @@ func _on_dead_state_entered() -> void:
 	standing_collision_shape.set_deferred("disabled", false)
 	can_shoot = false
 	hurtbox_component.disabled = true
-	#despawn_timer.start()
 	died.emit()
 
 func _on_dead_state_exited() -> void:
 	dead = false
 	hurt_timer.paused = false
 	disable_player(false)
-	movement_component.disabled = false
 	movement_component.die_on_land = false
 	hurtbox_component.disabled = false
 	crush_component.was_crushed = false
+	movement_component.disabled = false
 	
 func state_chart_event(event: String):
 	state_chart.send_event(event)
@@ -306,19 +306,14 @@ func _on_interacting_state_exited() -> void:
 	disable_player(false)
 	velocity = Vector2.ZERO
 
-
 func _on_hurt_timer_timeout() -> void:
 	state_chart.send_event("to_stand")
-
 
 func _on_hurt_state_exited() -> void:
 	velocity.x = 0
 	
 func _update_player_health(health: int):
 	GameEvent.player_health_changed.emit(health)
-
-#func _update_player_lives(lives: int):
-#	GameEvent.player_lives_changed.emit(lives)
 
 func health_up():
 	health_component.current_health += 1
@@ -338,7 +333,6 @@ func respawn(spawn_location: Vector2) -> void:
 		reset_physics_interpolation()
 		state_chart.send_event("to_stand")
 
-
 func _on_kick_hitbox_area_entered(area: Area2D) -> void:
 	if area.is_in_group("enemy"):
 		GameEvent.add_score.emit(Global.SCORE_ENEMY_KICKED)
@@ -353,10 +347,12 @@ func _on_win_state_entered() -> void:
 func win() -> void:
 	state_chart.send_event("won")
 
-#func _on_win_state_processing(delta: float) -> void:
-#	animation_component.move(1.0)
-
 
 func _on_dead_state_processing(delta: float) -> void:
-	movement_component.generate_velocity(delta, 0)
-	move_and_slide()
+	if !crush_component.was_crushed:
+		movement_component.generate_velocity(delta, 0)
+		move_and_slide()
+		
+func _fell_to_death():
+	if !dead:
+		state_chart.send_event("dead")

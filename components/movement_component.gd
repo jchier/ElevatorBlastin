@@ -5,6 +5,7 @@ extends Node
 signal state_chart_event(event: String)
 signal set_orientation(signf: float)
 signal jump_good
+signal died_from_fall
 
 @export var _character_body: CharacterBody2D
 @onready var coyote_timer: Timer = $CoyoteTimer
@@ -24,6 +25,8 @@ var velocity: Vector2 = Vector2.ZERO
 var disabled: bool:
 	set(value):
 		disabled = value
+		if !value and die_on_land:
+			die_on_land = false
 var die_on_land: bool = false		
 var orientation: float:
 	set(value):
@@ -59,7 +62,8 @@ func generate_velocity(delta: float, x_input: float):
 		_character_body.velocity.y = clamp(_character_body.velocity.y, 0, 300)
 		if not was_on_floor:
 			if die_on_land:
-				state_chart_event.emit("dead")
+				died_from_fall.emit()
+				die_on_land = false
 			was_on_floor = true
 			state_chart_event.emit("grounded")
 			coyote_timer.stop()
@@ -97,4 +101,5 @@ func jump():
 
 
 func _on_coyote_timer_timeout() -> void:
-	_can_coyote_jump = false
+	if !_character_body.is_on_floor():
+		_can_coyote_jump = false

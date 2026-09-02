@@ -98,7 +98,6 @@ func spawn_enemy():
 	enemy_scene.set_floor(get_floor())
 	animation_player.play("open")
 	await animation_player.animation_finished
-	print("enemy spawned")
 	
 func get_floor() -> int:
 	return floor_detector_component.get_floor()

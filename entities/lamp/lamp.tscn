@@ -86,6 +86,7 @@ _data = {
 radius = 7.0
 
 [node name="Lamp" type="Node2D" unique_id=564443821]
+z_index = 4
 script = ExtResource("1_mdl3d")
 
 [node name="HealthComponent" parent="." unique_id=1275662400 instance=ExtResource("2_ipsl6")]

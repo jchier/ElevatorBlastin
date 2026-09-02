@@ -167,7 +167,7 @@ func _check_win():
 		hud.display_warning("There are still documents to find!\nGo in the red doors.")
 		GameState.player.global_position = player_doors[0].global_position
 		player_spawn.global_position = player_doors[0].global_position
-		reset_physics_interpolation()
+		GameState.player.reset_physics_interpolation()
 		Music.error()
 		
 func _on_car_drove_away():
