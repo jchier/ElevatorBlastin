@@ -132,7 +132,7 @@ size = Vector2(421, 360)
 size = Vector2(424, 359)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xe1ru"]
-size = Vector2(778, 471)
+size = Vector2(786, 471)
 
 [sub_resource type="Resource" id="Resource_6anhs"]
 script = ExtResource("20_ro52v")
@@ -727,7 +727,7 @@ shape = SubResource("RectangleShape2D_ky1h8")
 metadata/_edit_lock_ = true
 
 [node name="DarkRoomComponent9" parent="." unique_id=839293827 node_paths=PackedStringArray("collision_shape") instance=ExtResource("17_fxw2g")]
-position = Vector2(394, -31)
+position = Vector2(393, -31)
 collision_shape = NodePath("CollisionShape2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DarkRoomComponent9" unique_id=1103774332]

@@ -36,11 +36,7 @@ var orientation: float:
 			set_orientation.emit(value)
 var last_orientation = 1
 var _jump: bool = false
-var _can_coyote_jump: bool = false:
-	set(value):
-		_can_coyote_jump = value
-		print("_can_coyote_jump = ", value)
-			
+var _can_coyote_jump: bool = false
 var orientation_lock: bool = false
 
 func _ready():

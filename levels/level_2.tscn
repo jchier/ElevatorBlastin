@@ -168,13 +168,12 @@ position = Vector2(-340, 2624)
 script = ExtResource("1_8swdu")
 
 [node name="Parallax2D" type="Parallax2D" parent="." unique_id=140230234]
-scroll_scale = Vector2(0.5, 0.5)
-scroll_offset = Vector2(490, -4568)
+scroll_scale = Vector2(0.9, 0.9)
 
 [node name="BgImage2" type="Sprite2D" parent="Parallax2D" unique_id=1558964214]
 z_index = -30
 texture_filter = 1
-position = Vector2(70, 311)
+position = Vector2(545, -1386)
 scale = Vector2(3.34375, 3.3814285)
 texture = ExtResource("2_xe1ru")
 
@@ -420,7 +419,7 @@ locked = true
 
 [node name="Elevator2" parent="." unique_id=463176883 instance=ExtResource("9_mb3d3")]
 z_index = -1
-position = Vector2(512, -648)
+position = Vector2(512, -644)
 
 [node name="Elevator3" parent="." unique_id=117674239 instance=ExtResource("9_mb3d3")]
 z_index = -1
@@ -437,6 +436,7 @@ position = Vector2(212, -269)
 [node name="Elevator6" parent="." unique_id=1973875802 instance=ExtResource("9_mb3d3")]
 z_index = -1
 position = Vector2(812, -148)
+locked = true
 
 [node name="Elevator7" parent="." unique_id=944936838 instance=ExtResource("9_mb3d3")]
 z_index = -1
