@@ -83,8 +83,8 @@ func _ready():
 	has_machine_gun = false
 	#_update_player_lives(life_counter)
 	
-func _physics_process(delta: float) -> void:
-	pass
+#func _physics_process(_delta: float) -> void:
+#	pass
 
 
 func _on_alive_state_physics_processing(delta: float) -> void:

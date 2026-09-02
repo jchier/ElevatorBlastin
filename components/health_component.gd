@@ -21,7 +21,7 @@ var current_health: int:
 func _ready() -> void:
 	current_health = max_health
 
-func damage(amount: int):
+func damage(_amount: int):
 	if dead:
 		died.emit()
 		return

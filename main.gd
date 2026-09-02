@@ -118,13 +118,13 @@ func initialize_car():
 		if car is Car:
 			car.drove_away.connect(_on_car_drove_away)
 			car_initialized = true
-#	assert(car_initialized == true, "Error: car not initialized")
+	assert(car_initialized == true, "Error: car not initialized")
 
 func initialize_win_component():
 	for win_component in level.get_children():
 		if win_component is WinDetectorComponent:
 			win_detector_component = win_component
-#	assert(win_detector_component != null, "error: win detector component not initialized.")
+	assert(win_detector_component != null, "error: win detector component not initialized.")
 
 func _got_document(door: DoorHall):
 	player_doors.erase(door)
