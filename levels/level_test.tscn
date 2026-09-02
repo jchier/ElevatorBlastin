@@ -1,18 +1,16 @@
 [gd_scene format=4 uid="uid://h8i31wovkddr"]
 
 [ext_resource type="PackedScene" uid="uid://fb5pvrms6cc" path="res://components/floor_marker_component.tscn" id="1_gcim3"]
-[ext_resource type="PackedScene" uid="uid://ddo3hnjqf5y25" path="res://entities/door/door.tscn" id="2_d4l3b"]
 [ext_resource type="TileSet" uid="uid://dcpicyh2ebhcf" path="res://level_assets/tile.tres" id="3_41qk1"]
 [ext_resource type="TileSet" uid="uid://b87e14execfyn" path="res://level_assets/tileY1.tres" id="4_ca4i1"]
 [ext_resource type="TileSet" uid="uid://dasiua747450b" path="res://level_assets/tileY2.tres" id="5_8sp67"]
 [ext_resource type="PackedScene" uid="uid://cptp4opi28g3m" path="res://entities/elevator/elevator.tscn" id="6_qyf36"]
 [ext_resource type="Script" uid="uid://bgpd75t0gfyl7" path="res://entities/player/player_marker.gd" id="7_f33k1"]
-[ext_resource type="Script" uid="uid://bpv6re8vjeo51" path="res://entities/enemy/enemy_marker.gd" id="8_6hwsd"]
-[ext_resource type="Script" uid="uid://b6a2fog0fbkdh" path="res://entities/door/door_hall_marker.gd" id="9_p60vf"]
 [ext_resource type="PackedScene" uid="uid://cw4f70u4bxktk" path="res://entities/stairs/stairs.tscn" id="10_o6ev6"]
-[ext_resource type="PackedScene" uid="uid://dmn4ui4jcf713" path="res://entities/door/door_hall.tscn" id="11_4skyc"]
-[ext_resource type="PackedScene" uid="uid://bftk50lxpoojr" path="res://entities/enemy/enemy.tscn" id="12_41qk1"]
-[ext_resource type="PackedScene" uid="uid://c2rgnnuoe4mpu" path="res://entities/player/player.tscn" id="13_ca4i1"]
+[ext_resource type="PackedScene" uid="uid://bhx8g287s5moa" path="res://components/win_detector_component.tscn" id="13_41qk1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ca4i1"]
+size = Vector2(1078, 8.5)
 
 [node name="Level1" type="Node2D" unique_id=1570879048]
 z_as_relative = false
@@ -56,10 +54,6 @@ floor_number = 2
 [node name="FloorMarkerComponent10" parent="." unique_id=1034043607 instance=ExtResource("1_gcim3")]
 position = Vector2(105, 1352)
 floor_number = 1
-
-[node name="Door" parent="." unique_id=162893821 instance=ExtResource("2_d4l3b")]
-z_index = 1
-position = Vector2(-120, 240)
 
 [node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=590717441]
 z_index = -1
@@ -125,103 +119,13 @@ position = Vector2(152, 1200)
 position = Vector2(201, 601)
 script = ExtResource("7_f33k1")
 
-[node name="EnemyMarker" type="Marker2D" parent="." unique_id=1151110767]
-position = Vector2(247, 338)
-script = ExtResource("8_6hwsd")
-starting_floor = 3
-
-[node name="DoorHallMarker" type="Marker2D" parent="." unique_id=1914852396]
-position = Vector2(176, 263)
-script = ExtResource("9_p60vf")
-player_door = true
-
-[node name="DoorHallMarker2" type="Marker2D" parent="." unique_id=1024379824]
-position = Vector2(240, 263)
-script = ExtResource("9_p60vf")
-
-[node name="DoorHallMarker3" type="Marker2D" parent="." unique_id=1321508098]
-position = Vector2(159, 383)
-script = ExtResource("9_p60vf")
-
-[node name="DoorHallMarker4" type="Marker2D" parent="." unique_id=1824737960]
-position = Vector2(25, 383)
-script = ExtResource("9_p60vf")
-
-[node name="DoorHallMarker5" type="Marker2D" parent="." unique_id=561146942]
-position = Vector2(-146, 383)
-script = ExtResource("9_p60vf")
-
-[node name="DoorHallMarker6" type="Marker2D" parent="." unique_id=1852016088]
-position = Vector2(-143, 503)
-script = ExtResource("9_p60vf")
-
-[node name="DoorHallMarker7" type="Marker2D" parent="." unique_id=1592070701]
-position = Vector2(-81, 503)
-script = ExtResource("9_p60vf")
-
-[node name="DoorHallMarker8" type="Marker2D" parent="." unique_id=450186843]
-position = Vector2(69, 503)
-script = ExtResource("9_p60vf")
-
-[node name="DoorHallMarker9" type="Marker2D" parent="." unique_id=587551069]
-position = Vector2(252, 503)
-script = ExtResource("9_p60vf")
-
-[node name="DoorHallMarker10" type="Marker2D" parent="." unique_id=6127708]
-position = Vector2(252, 623)
-script = ExtResource("9_p60vf")
-
-[node name="DoorHallMarker11" type="Marker2D" parent="." unique_id=1231126310]
-position = Vector2(-116, 623)
-script = ExtResource("9_p60vf")
-
-[node name="DoorHallMarker13" type="Marker2D" parent="." unique_id=585919687]
-position = Vector2(-116, 743)
-script = ExtResource("9_p60vf")
-
-[node name="DoorHallMarker14" type="Marker2D" parent="." unique_id=1163862758]
-position = Vector2(34, 743)
-script = ExtResource("9_p60vf")
-
-[node name="DoorHallMarker15" type="Marker2D" parent="." unique_id=110766411]
-position = Vector2(114, 743)
-script = ExtResource("9_p60vf")
-
-[node name="DoorHallMarker16" type="Marker2D" parent="." unique_id=1531315987]
-position = Vector2(278, 743)
-script = ExtResource("9_p60vf")
-
-[node name="DoorHallMarker17" type="Marker2D" parent="." unique_id=684120594]
-position = Vector2(255, 862)
-script = ExtResource("9_p60vf")
-
-[node name="DoorHallMarker18" type="Marker2D" parent="." unique_id=809863821]
-position = Vector2(172, 863)
-script = ExtResource("9_p60vf")
-
-[node name="DoorHallMarker19" type="Marker2D" parent="." unique_id=109881035]
-position = Vector2(16, 863)
-script = ExtResource("9_p60vf")
-
-[node name="DoorHallMarker20" type="Marker2D" parent="." unique_id=1403293422]
-position = Vector2(-102, 863)
-script = ExtResource("9_p60vf")
-
-[node name="DoorHallMarker12" type="Marker2D" parent="." unique_id=383973137]
-position = Vector2(90, 623)
-script = ExtResource("9_p60vf")
-
 [node name="Stairs2" parent="." unique_id=652959830 instance=ExtResource("10_o6ev6")]
 position = Vector2(-49, 429)
 top_level_floor = 3
 bottom_level_floor = 2
 
-[node name="DoorHall" parent="." unique_id=653102736 instance=ExtResource("11_4skyc")]
-position = Vector2(-48, 263)
-player_door = true
+[node name="WinDetectorComponent" parent="." unique_id=1011814729 instance=ExtResource("13_41qk1")]
 
-[node name="Enemy" parent="." unique_id=834976139 instance=ExtResource("12_41qk1")]
-position = Vector2(-76, 725)
-
-[node name="Player" parent="." unique_id=1810305085 instance=ExtResource("13_ca4i1")]
-position = Vector2(-78, 841)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WinDetectorComponent" unique_id=1991647829]
+position = Vector2(61, 1403.25)
+shape = SubResource("RectangleShape2D_ca4i1")

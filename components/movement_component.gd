@@ -18,7 +18,7 @@ const FRICTION: float = 10.0
 const ACCELERATION: float = 8.0
 const MAX_FALL_SPEED: float = 600.0
 var forward: bool = true
-var was_on_floor: bool = false		
+var was_on_floor: bool = false
 var was_idle:bool = false
 var current_speed: float
 var velocity: Vector2 = Vector2.ZERO
@@ -36,8 +36,11 @@ var orientation: float:
 			set_orientation.emit(value)
 var last_orientation = 1
 var _jump: bool = false
-var _can_coyote_jump = true
-		
+var _can_coyote_jump: bool = false:
+	set(value):
+		_can_coyote_jump = value
+		print("_can_coyote_jump = ", value)
+			
 var orientation_lock: bool = false
 
 func _ready():
@@ -56,7 +59,7 @@ func generate_velocity(delta: float, x_input: float):
 	
 
 	
-	if _character_body.is_on_floor():
+	if _character_body.is_on_floor() and not _jump:
 		_character_body.velocity.y = 0
 		_character_body.velocity.y += FALL_GRAVITY * delta
 		_character_body.velocity.y = clamp(_character_body.velocity.y, 0, 300)
@@ -78,8 +81,10 @@ func generate_velocity(delta: float, x_input: float):
 			
 	if _jump:
 		_character_body.velocity.y = JUMP_VELOCITY
+		_can_coyote_jump = false
 		_jump = false
-
+#		if _character_body.is_on_floor():
+#			_can_coyote_jump = true
 		
 	var velocity_weight : float = delta * (ACCELERATION if x_input else FRICTION)
 	_character_body.velocity.x = lerp(_character_body.velocity.x, x_input * current_speed, velocity_weight)
@@ -95,7 +100,7 @@ func generate_velocity(delta: float, x_input: float):
 
 func jump():
 	if _can_coyote_jump and disabled == false:
-		_can_coyote_jump = false
+#		_can_coyote_jump = false
 		jump_good.emit()
 		_jump = true
 
@@ -103,3 +108,4 @@ func jump():
 func _on_coyote_timer_timeout() -> void:
 	if !_character_body.is_on_floor():
 		_can_coyote_jump = false
+	

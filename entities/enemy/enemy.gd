@@ -80,6 +80,7 @@ func _ready():
 	rider_component.clear_current_occupancy.connect(_clear_current_occupancy)
 	movement_component.state_chart_event.connect(_state_chart_event)
 	movement_component.set_orientation.connect(set_orientation)
+	movement_component.died_from_fall.connect(_fell_to_death)
 	navigation_component.set_orientation.connect(set_orientation)
 	animation_component.can_shoot.connect(_can_shoot)
 	animation_component.stance_changed.connect(_stance_changed)
@@ -542,3 +543,6 @@ func _on_screen_entered():
 
 func _on_player_died():
 	state_chart.send_event("docile")
+	
+func _fell_to_death():
+	state_chart.send_event("dead")
