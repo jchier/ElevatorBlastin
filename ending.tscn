@@ -76,9 +76,9 @@ _data = {
 
 [node name="Ending" type="MarginContainer" unique_id=350416960]
 offset_left = -56.0
-offset_top = -270.0
+offset_top = -256.0
 offset_right = 944.0
-offset_bottom = 730.0
+offset_bottom = 744.0
 script = ExtResource("1_dmh3q")
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=1406845114]
@@ -119,7 +119,7 @@ text = "score: "
 label_settings = SubResource("LabelSettings_4jooh")
 horizontal_alignment = 1
 
-[node name="start_button" type="Button" parent="ColorRect/VBoxContainer" unique_id=1128686594]
+[node name="main_menu_button" type="Button" parent="ColorRect/VBoxContainer" unique_id=1128686594]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
@@ -131,7 +131,8 @@ libraries/ = SubResource("AnimationLibrary_k7rdy")
 autoplay = &"fade_in"
 
 [node name="fade" type="ColorRect" parent="." unique_id=1895722266]
-visible = false
 layout_mode = 2
 mouse_filter = 2
 color = Color(0, 0, 0, 0)
+
+[connection signal="pressed" from="ColorRect/VBoxContainer/main_menu_button" to="." method="_on_main_menu_button_pressed"]

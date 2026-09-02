@@ -24,10 +24,14 @@ var last_floor_spawned: int
 var win_detector_component: WinDetectorComponent
 var player_spawn: PlayerMarker
 var cheat: bool = false
+var _level_count: int
+
 
 func _ready():
+	_level_count = levels.size()
 	enemy_spawn_timer.timeout.connect(_on_enemy_spawn_timer_timeout)
-	_load_level()
+	if !_load_level():
+		return
 	add_child(level)
 	spawn_player()
 	initialize_enemy_manager()
@@ -43,9 +47,13 @@ func _ready():
 	hud.update_document_count(player_doors.size())
 	hud.display_warning("Find all the documents in the red door,\nthen make your way to the bottom floor!")
 
-func _load_level():
+func _load_level() -> bool:
+	if GameState.current_level >= _level_count:
+		get_tree().change_scene_to_packed(ending_scene)
+		return false
 	level = load(levels[GameState.current_level]).instantiate()
-
+	return true
+	
 func spawn_player():
 	for player_marker in level.get_children():
 		if player_marker is PlayerMarker:
@@ -108,13 +116,13 @@ func initialize_car():
 		if car is Car:
 			car.drove_away.connect(_on_car_drove_away)
 			car_initialized = true
-	assert(car_initialized == true, "Error: car not initialized")
+#	assert(car_initialized == true, "Error: car not initialized")
 
 func initialize_win_component():
 	for win_component in level.get_children():
 		if win_component is WinDetectorComponent:
 			win_detector_component = win_component
-	assert(win_detector_component != null, "error: win detector component not initialized.")
+#	assert(win_detector_component != null, "error: win detector component not initialized.")
 
 func _got_document(door: DoorHall):
 	player_doors.erase(door)

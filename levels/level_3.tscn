@@ -429,7 +429,7 @@ position = Vector2(-328, -645)
 locked = true
 
 [node name="PlayerMarker" type="Marker2D" parent="." unique_id=1946072525]
-position = Vector2(-377, 525)
+position = Vector2(847, 766)
 script = ExtResource("10_q26s8")
 
 [node name="EnemyMarker" type="Marker2D" parent="." unique_id=641922445]
